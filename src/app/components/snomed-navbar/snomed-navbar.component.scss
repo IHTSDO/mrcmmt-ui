@@ -1,0 +1,79 @@
+@import 'src/variables.scss';
+
+nav {
+    a {
+        height: 40px;
+        font-size: 1.6rem;
+
+        &:link {
+            text-decoration: none;
+        }
+
+        span.title {
+            color: $alto-white;
+            font-weight: 300;
+            letter-spacing: 1.5px;
+            line-height: 40px;
+            vertical-align: top;
+        }
+
+        img.logo {
+            vertical-align: initial;
+            height: 40px;
+        }
+    }
+
+    div.banner {
+        position: absolute;
+        top: 10px;
+        left: -30px;
+        transform: rotate(-45deg);
+        line-height: 1rem;
+        opacity: 0.8;
+        color: $white;
+    }
+
+    div.local::before {
+        content: 'LOC';
+        padding: 0 30px;
+        background-color: $emperor-grey;
+        border: 1px solid $yellow;
+    }
+
+    div.dev::before {
+        content: 'DEV';
+        padding: 0 30px;
+        background-color: $crimson-red;
+        border: 1px solid $yellow;
+    }
+
+    div.uat::before {
+        content: 'UAT';
+        padding: 0 30px;
+        background-color: $curious-blue;
+        border: 1px solid $yellow;
+    }
+
+    div.training::before {
+        content: 'TRN';
+        padding: 0 30px;
+        background-color: $forest-green;
+        border: 1px solid $yellow;
+    }
+
+    button {
+        border: none;
+    }
+}
+
+div#navbarToggleExternalContent {
+    a {
+        color: $alto-white;
+        font-weight: 300;
+
+        &:hover {
+            color: $pacific-blue;
+            text-decoration: none;
+        }
+    }
+}

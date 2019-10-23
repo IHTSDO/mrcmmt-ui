@@ -1,0 +1,93 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~src/variables.scss';
+
+html {
+    font-size: 62.5%;
+    position: relative;
+    min-height: 100%;
+}
+
+body#main-body {
+    font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('assets/Roboto-Light.ttf');
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('assets/Roboto-Regular.ttf');
+}
+
+div, p, h1, h2, h3, h4, h5, h6 {
+    font-weight: 300;
+}
+
+.footer-margin {
+    margin-bottom: 40px;
+}
+
+button, input, textarea {
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    border: none;
+    resize: none;
+
+    &:focus {
+        outline: none !important;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+button.btn {
+    font-size: 1.4rem;
+    letter-spacing: 1.5px;
+}
+
+.mat-tooltip {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: $gallery-white !important;
+    max-width: 30rem !important;
+}
+
+div.typeahead-box {
+    background-color: $gallery-white;
+    //border: 1px solid $alto-white;
+    max-height: 20rem;
+    position: absolute;
+    top: 4.5rem;
+    left: 0;
+    overflow-y: scroll;
+    z-index: 10002;
+
+    div.typeahead {
+        font-size: 1.4rem;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $alto-white;
+        }
+    }
+}
+
+div.typeahead-textarea {
+    top: 10rem;
+}
+
+ngb-typeahead-window.dropdown-menu {
+    font-size: 1.4rem;
+
+    button.dropdown-item {
+        font-weight: 300;
+    }
+}
