@@ -1,0 +1,20 @@
+@import "~src/variables";
+
+div#applicable-attributes-panel {
+    position: fixed;
+    margin-left: 33vw;
+    margin-right: 33vw;
+    width: 34vw;
+    height: calc(100vh - 9rem);
+    background-color: $gallery-white;
+    overflow: scroll;
+
+    h1 {
+        font-weight: 300;
+    }
+
+    input {
+        font-weight: 300;
+        font-size: 1.6rem;
+    }
+}

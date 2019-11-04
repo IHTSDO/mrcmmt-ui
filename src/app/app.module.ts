@@ -8,33 +8,45 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HeaderInterceptor } from './interceptors/header.interceptor';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
 // COMPONENT IMPORTS
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
+import { ApplicableAttributesPanelComponent } from './components/applicable-attributes-panel/applicable-attributes-panel.component';
+import { DomainPanelComponent } from './components/domain-panel/domain-panel.component';
+import { AttributeRangePanelComponent } from './components/attribute-range-panel/attribute-range-panel.component';
 
 // PIPE IMPORTS
 import { ExampleConceptSearchPipe } from './pipes/example-concept-search.pipe';
 
 // SERVICE IMPORTS
-import { ExampleServiceService } from './services/example-service.service';
+import { TerminologyServerService } from './services/terminologyServer.service';
+import { AuthoringService } from './services/authoring.service';
 
 @NgModule({
     declarations: [
         AppComponent,
         SnomedNavbarComponent,
         SnomedFooterComponent,
-        ExampleConceptSearchPipe
+        ExampleConceptSearchPipe,
+        DomainPanelComponent,
+        ApplicableAttributesPanelComponent,
+        AttributeRangePanelComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         HttpClientModule,
         BrowserAnimationsModule,
-        NgbTypeaheadModule
+        NgbTypeaheadModule,
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot([])
     ],
     providers: [
-        ExampleServiceService,
+        TerminologyServerService,
+        AuthoringService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: HeaderInterceptor,

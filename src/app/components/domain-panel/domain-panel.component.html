@@ -1,0 +1,7 @@
+<div id="domain-panel">
+    <h1 class="p-3 m-0">Domain:</h1>
+    <div class="p-3">
+        <input type="text" class="form-control" [(ngModel)]="searchTerm" [ngbTypeahead]="search" (ngModelChange)="retrieveDomains(searchTerm)"/>
+    </div>
+    <p *ngFor="let domain of domains">{{domain.fsn?.term}}</p>
+</div>
