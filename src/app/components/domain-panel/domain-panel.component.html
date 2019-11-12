@@ -3,5 +3,5 @@
     <div class="p-3">
         <input type="text" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
     </div>
-    <p *ngFor="let domain of domains | termMatch:domainFilter">{{domain.referencedComponent.fsn?.term}}</p>
+    <p *ngFor="let domain of domains | termMatch:domainFilter | idMatch:attributeIdFilter" (click)="matchedReferenceSets(domain.referencedComponentId)">{{domain.referencedComponent.fsn?.term}}</p>
 </div>

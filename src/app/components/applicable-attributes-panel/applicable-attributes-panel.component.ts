@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { RefSet } from '../../models/refset';
 
 @Component({
@@ -13,11 +13,17 @@ export class ApplicableAttributesPanelComponent implements OnInit {
 
     // filter
     attributeFilter: string;
+    @Input() domainIdFilter: string;
+    @Output() attributeIdEmitter = new EventEmitter();
 
     constructor() {
     }
 
     ngOnInit() {
         this.attributes = [];
+    }
+
+    matchedDomain(id) {
+        this.attributeIdEmitter.emit(id);
     }
 }

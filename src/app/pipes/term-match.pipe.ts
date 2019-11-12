@@ -19,5 +19,4 @@ export class TermMatchPipe implements PipeTransform {
         });
         return items;
     }
-
 }

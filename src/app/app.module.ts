@@ -24,6 +24,7 @@ import { TermMatchPipe } from './pipes/term-match.pipe';
 // SERVICE IMPORTS
 import { TerminologyServerService } from './services/terminologyServer.service';
 import { AuthoringService } from './services/authoring.service';
+import { IdMatchPipe } from './pipes/id-match.pipe';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { AuthoringService } from './services/authoring.service';
         DomainPanelComponent,
         ApplicableAttributesPanelComponent,
         AttributeRangePanelComponent,
-        TermMatchPipe
+        TermMatchPipe,
+        IdMatchPipe
     ],
     imports: [
         BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { RefSet } from '../../models/refset';
 
 @Component({
@@ -13,11 +13,17 @@ export class DomainPanelComponent implements OnInit {
 
     // filter
     domainFilter: string;
+    @Input() attributeIdFilter: string;
+    @Output() domainIdEmitter = new EventEmitter();
 
     constructor() {
     }
 
     ngOnInit() {
         this.domains = [];
+    }
+
+    matchedReferenceSets(id) {
+        this.domainIdEmitter.emit(id);
     }
 }
