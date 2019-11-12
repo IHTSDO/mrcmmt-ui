@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { TerminologyServerService } from '../../services/terminologyServer.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { RefSet } from '../../models/refset';
 
 @Component({
     selector: 'app-domain-panel',
@@ -11,31 +9,15 @@ import { TerminologyServerService } from '../../services/terminologyServer.servi
 export class DomainPanelComponent implements OnInit {
 
     // domains
-    domains: any[];
+    @Input() domains: RefSet[];
 
-    // typehahead
-    searchTerm: string;
-    search = (text$: Observable<string>) =>
-        text$.pipe(
-            debounceTime(300),
-            distinctUntilChanged(),
-            switchMap(term => term.length < 2 ? []
-                : this.terminologyService.getTypeahead(term))
-        )
+    // filter
+    domainFilter: string;
 
-    constructor(private terminologyService: TerminologyServerService) {
+    constructor() {
     }
 
     ngOnInit() {
         this.domains = [];
-    }
-
-    retrieveDomains(input): void {
-        this.terminologyService.getConcept(input.replace(/[^0-9,]/g, '')).subscribe(
-            data => {
-                console.log('DATA: ', data);
-                this.domains.push(data);
-            }
-        );
     }
 }

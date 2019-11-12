@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthoringService } from './services/authoring.service';
 import { Versions } from './models/versions';
 import { TerminologyServerService } from './services/terminologyServer.service';
+import { RefSet } from './models/refset';
 
 @Component({
     selector: 'app-root',
@@ -13,7 +14,8 @@ export class AppComponent implements OnInit {
     environment: string;
     versions: Versions;
 
-    attributes: any[];
+    domains: RefSet[];
+    attributes: RefSet[];
 
     constructor(private authoringService: AuthoringService, private terminologyService: TerminologyServerService) {
     }
@@ -31,6 +33,14 @@ export class AppComponent implements OnInit {
 
         this.authoringService.getUIConfiguration().subscribe(data => {
             this.authoringService.uiConfiguration = data;
+
+            this.terminologyService.getDomains().subscribe(domains => {
+                this.domains = domains;
+            });
+
+            this.terminologyService.getAttributes().subscribe(attributes => {
+                this.attributes = attributes;
+            });
         });
     }
 }

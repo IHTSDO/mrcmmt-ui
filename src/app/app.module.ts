@@ -19,7 +19,7 @@ import { DomainPanelComponent } from './components/domain-panel/domain-panel.com
 import { AttributeRangePanelComponent } from './components/attribute-range-panel/attribute-range-panel.component';
 
 // PIPE IMPORTS
-import { ExampleConceptSearchPipe } from './pipes/example-concept-search.pipe';
+import { TermMatchPipe } from './pipes/term-match.pipe';
 
 // SERVICE IMPORTS
 import { TerminologyServerService } from './services/terminologyServer.service';
@@ -30,10 +30,10 @@ import { AuthoringService } from './services/authoring.service';
         AppComponent,
         SnomedNavbarComponent,
         SnomedFooterComponent,
-        ExampleConceptSearchPipe,
         DomainPanelComponent,
         ApplicableAttributesPanelComponent,
-        AttributeRangePanelComponent
+        AttributeRangePanelComponent,
+        TermMatchPipe
     ],
     imports: [
         BrowserModule,
