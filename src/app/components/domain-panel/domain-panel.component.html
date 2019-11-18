@@ -3,5 +3,8 @@
     <div class="p-3">
         <input type="text" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
     </div>
-    <p *ngFor="let domain of domains | termMatch:domainFilter | idMatch:attributeIdFilter" (click)="matchedReferenceSets(domain.referencedComponentId)">{{domain.referencedComponent.fsn?.term}}</p>
+    <div class="px-3 py-2 domain" *ngFor="let domain of domains | termMatch:domainFilter"
+         (click)="matchedAttributes(domain.referencedComponentId)"
+         [class.active]="domain.referencedComponentId === activeDomainId"
+         [class.connected]="connectedAttributes(domain.referencedComponentId)">{{domain.referencedComponent.fsn?.term}}</div>
 </div>

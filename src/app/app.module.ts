@@ -25,6 +25,7 @@ import { TermMatchPipe } from './pipes/term-match.pipe';
 import { TerminologyServerService } from './services/terminologyServer.service';
 import { AuthoringService } from './services/authoring.service';
 import { IdMatchPipe } from './pipes/id-match.pipe';
+import { DuplicateFilterPipe } from './pipes/duplicate-filter.pipe';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { IdMatchPipe } from './pipes/id-match.pipe';
         ApplicableAttributesPanelComponent,
         AttributeRangePanelComponent,
         TermMatchPipe,
-        IdMatchPipe
+        IdMatchPipe,
+        DuplicateFilterPipe
     ],
     imports: [
         BrowserModule,

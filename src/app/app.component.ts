@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
             this.authoringService.uiConfiguration = data;
 
             this.terminologyService.getDomains().subscribe(domains => {
-                console.log('DOMAINS: ', domains);
+                // console.log('DOMAINS: ', domains);
                 this.domains = domains;
             });
 

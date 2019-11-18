@@ -16,6 +16,9 @@ export class ApplicableAttributesPanelComponent implements OnInit {
     @Input() domainIdFilter: string;
     @Output() attributeIdEmitter = new EventEmitter();
 
+    // active items
+    activeAttributeId: number;
+
     constructor() {
     }
 
@@ -23,7 +26,15 @@ export class ApplicableAttributesPanelComponent implements OnInit {
         this.attributes = [];
     }
 
-    matchedDomain(id) {
+    matchedDomain(id, refId) {
         this.attributeIdEmitter.emit(id);
+
+        if (this.activeAttributeId === refId) {
+            this.activeAttributeId = null;
+            this.attributeIdEmitter.emit(null);
+        } else {
+            this.activeAttributeId = refId;
+            this.attributeIdEmitter.emit(id);
+        }
     }
 }

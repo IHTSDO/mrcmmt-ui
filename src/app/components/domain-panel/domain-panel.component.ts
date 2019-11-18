@@ -16,6 +16,9 @@ export class DomainPanelComponent implements OnInit {
     @Input() attributeIdFilter: string;
     @Output() domainIdEmitter = new EventEmitter();
 
+    // active items
+    activeDomainId: number;
+
     constructor() {
     }
 
@@ -23,7 +26,25 @@ export class DomainPanelComponent implements OnInit {
         this.domains = [];
     }
 
-    matchedReferenceSets(id) {
-        this.domainIdEmitter.emit(id);
+    matchedAttributes(id) {
+
+        if (this.activeDomainId === id) {
+            this.activeDomainId = null;
+            this.domainIdEmitter.emit(null);
+        } else {
+            if (this.activeDomainId === null) {
+                this.attributeIdFilter = null;
+            }
+            this.activeDomainId = id;
+            this.domainIdEmitter.emit(id);
+        }
+    }
+
+    connectedAttributes(id) {
+        if (id.length > 0) {
+            return id === this.attributeIdFilter;
+        } else {
+
+        }
     }
 }

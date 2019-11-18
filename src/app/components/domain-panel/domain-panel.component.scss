@@ -16,4 +16,16 @@ div#domain-panel {
         font-weight: 300;
         font-size: 1.6rem;
     }
+
+    div.domain {
+        cursor: pointer;
+
+        &.connected {
+            background-color: $mango-orange;
+        }
+
+        &.active {
+            background-color: $tropical-blue;
+        }
+    }
 }

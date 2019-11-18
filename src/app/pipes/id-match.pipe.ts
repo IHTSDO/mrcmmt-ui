@@ -6,8 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class IdMatchPipe implements PipeTransform {
 
     transform(items: any[], text: string): any[] {
-        console.log('text: ', text);
-
         if (!items) {
             return [];
         }
@@ -15,7 +13,7 @@ export class IdMatchPipe implements PipeTransform {
             return items;
         }
 
-        const response = items.filter(item => {
+        items = items.filter(item => {
             if (item.additionalFields.domainId) {
                 return item.additionalFields.domainId === text;
             } else {
@@ -23,8 +21,6 @@ export class IdMatchPipe implements PipeTransform {
             }
         });
 
-        console.log('ITEMS: ', items);
-        console.log('RESPONSE: ', response);
-        return response;
+        return items;
     }
 }

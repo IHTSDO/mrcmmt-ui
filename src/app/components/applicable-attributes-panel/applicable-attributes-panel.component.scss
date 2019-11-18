@@ -17,4 +17,12 @@ div#applicable-attributes-panel {
         font-weight: 300;
         font-size: 1.6rem;
     }
+
+    div.attribute {
+        cursor: pointer;
+
+        &.active {
+            background-color: $tropical-blue;
+        }
+    }
 }
