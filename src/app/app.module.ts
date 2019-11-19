@@ -19,13 +19,14 @@ import { DomainPanelComponent } from './components/domain-panel/domain-panel.com
 import { AttributeRangePanelComponent } from './components/attribute-range-panel/attribute-range-panel.component';
 
 // PIPE IMPORTS
-import { TermMatchPipe } from './pipes/term-match.pipe';
+import { TextMatchPipe } from './pipes/text-match.pipe';
 
 // SERVICE IMPORTS
 import { TerminologyServerService } from './services/terminologyServer.service';
 import { AuthoringService } from './services/authoring.service';
 import { IdMatchPipe } from './pipes/id-match.pipe';
 import { DuplicateFilterPipe } from './pipes/duplicate-filter.pipe';
+import { DomainMatchPipe } from './pipes/domain-match.pipe';
 
 @NgModule({
     declarations: [
@@ -35,9 +36,10 @@ import { DuplicateFilterPipe } from './pipes/duplicate-filter.pipe';
         DomainPanelComponent,
         ApplicableAttributesPanelComponent,
         AttributeRangePanelComponent,
-        TermMatchPipe,
+        TextMatchPipe,
         IdMatchPipe,
-        DuplicateFilterPipe
+        DuplicateFilterPipe,
+        DomainMatchPipe
     ],
     imports: [
         BrowserModule,

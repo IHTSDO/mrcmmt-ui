@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'termMatch'
+    name: 'textMatch'
 })
-export class TermMatchPipe implements PipeTransform {
+export class TextMatchPipe implements PipeTransform {
 
     transform(items: any[], text: string): any[] {
         if (!items) {

@@ -15,9 +15,12 @@ export class AppComponent implements OnInit {
     versions: Versions;
 
     domains: RefSet[];
-    domainIdFilter: string;
-    attributeIdFilter: string;
+    // domainIdFilter: string;
+    activeDomain: RefSet;
+
     attributes: RefSet[];
+    // attributeIdFilter: string;
+    activeAttribute: RefSet;
 
     constructor(private authoringService: AuthoringService, private terminologyService: TerminologyServerService) {
     }
@@ -37,7 +40,7 @@ export class AppComponent implements OnInit {
             this.authoringService.uiConfiguration = data;
 
             this.terminologyService.getDomains().subscribe(domains => {
-                // console.log('DOMAINS: ', domains);
+                console.log('DOMAINS: ', domains);
                 this.domains = domains;
             });
 

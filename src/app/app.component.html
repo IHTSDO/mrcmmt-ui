@@ -1,5 +1,7 @@
 <app-snomed-navbar></app-snomed-navbar>
-<app-domain-panel [domains]="domains" [attributeIdFilter]="attributeIdFilter" (domainIdEmitter)="domainIdFilter = $event"></app-domain-panel>
+<app-domain-panel [domains]="domains" [activeDomain]="activeDomain" [activeAttribute]="activeAttribute"
+                  (activeDomainEmitter)="activeDomain = $event"></app-domain-panel>
 <app-attribute-range-panel></app-attribute-range-panel>
-<app-applicable-attributes-panel [attributes]="attributes" [domainIdFilter]="domainIdFilter" (attributeIdEmitter)="attributeIdFilter = $event"></app-applicable-attributes-panel>
+<app-applicable-attributes-panel [attributes]="attributes" [activeDomain]="activeDomain" [activeAttribute]="activeAttribute"
+                                 (activeAttributeEmitter)="activeAttribute = $event"></app-applicable-attributes-panel>
 <app-snomed-footer></app-snomed-footer>

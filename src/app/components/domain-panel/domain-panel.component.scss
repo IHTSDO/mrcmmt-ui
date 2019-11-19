@@ -20,7 +20,7 @@ div#domain-panel {
     div.domain {
         cursor: pointer;
 
-        &.connected {
+        &.attached {
             background-color: $mango-orange;
         }
 
