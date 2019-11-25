@@ -8,7 +8,7 @@ import { RefSet } from '../../models/refset';
 })
 export class DomainPanelComponent implements OnInit {
 
-    // domains
+    // bindings
     @Input() domains: RefSet[];
     @Input() activeAttribute: RefSet;
     @Input() activeDomain: RefSet;
@@ -25,7 +25,7 @@ export class DomainPanelComponent implements OnInit {
     }
 
     makeActiveDomain(domain) {
-        if (domain === this.activeDomain) {
+        if (this.activeDomain === domain) {
             this.activeDomain = null;
             this.activeDomainEmitter.emit(null);
         } else {

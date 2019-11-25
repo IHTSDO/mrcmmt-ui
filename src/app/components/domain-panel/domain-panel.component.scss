@@ -4,9 +4,13 @@ div#domain-panel {
     position: fixed;
     width: 33vw;
     height: calc(100vh - 9rem);
-    border-right: 1px solid $ghost-grey;
+    border-right: 1px solid $regent-grey;
     background-color: $alto-white;
     overflow: scroll;
+
+    &.details-open {
+        height: calc(100vh - 9rem - 44vh);
+    }
 
     h1 {
         font-weight: 300;
@@ -26,6 +30,30 @@ div#domain-panel {
 
         &.active {
             background-color: $tropical-blue;
+        }
+    }
+
+    div.details {
+        position: fixed;
+        width: 33vw;
+        bottom: 0;
+        background-color: $ghost-grey;
+        border-top: 1px solid $regent-grey;
+        border-right: 1px solid $regent-grey;
+        height: 44vh;
+        margin-bottom: 4rem;
+        overflow: scroll;
+
+        button {
+            font-size: 2.4rem;
+        }
+
+        h3.label {
+            font-weight: 300;
+        }
+
+        div.detail {
+            background-color: $white;
         }
     }
 }

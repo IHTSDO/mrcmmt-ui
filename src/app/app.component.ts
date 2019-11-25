@@ -15,12 +15,13 @@ export class AppComponent implements OnInit {
     versions: Versions;
 
     domains: RefSet[];
-    // domainIdFilter: string;
     activeDomain: RefSet;
 
     attributes: RefSet[];
-    // attributeIdFilter: string;
     activeAttribute: RefSet;
+
+    ranges: RefSet[];
+    activeRange: RefSet;
 
     constructor(private authoringService: AuthoringService, private terminologyService: TerminologyServerService) {
     }

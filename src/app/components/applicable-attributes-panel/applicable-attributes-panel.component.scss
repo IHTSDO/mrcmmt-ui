@@ -9,6 +9,10 @@ div#applicable-attributes-panel {
     background-color: $gallery-white;
     overflow: scroll;
 
+    &.details-open {
+        height: calc(100vh - 9rem - 44vh);
+    }
+
     h1 {
         font-weight: 300;
     }
@@ -23,6 +27,29 @@ div#applicable-attributes-panel {
 
         &.active {
             background-color: $tropical-blue;
+        }
+    }
+
+    div.details {
+        position: fixed;
+        width: 34vw;
+        bottom: 0;
+        background-color: $ghost-grey;
+        border-top: 1px solid $regent-grey;
+        height: 44vh;
+        margin-bottom: 4rem;
+        overflow: scroll;
+
+        button {
+            font-size: 2.4rem;
+        }
+
+        h3.label {
+            font-weight: 300;
+        }
+
+        div.detail {
+            background-color: $white;
         }
     }
 }

@@ -1,7 +1,20 @@
 <app-snomed-navbar></app-snomed-navbar>
-<app-domain-panel [domains]="domains" [activeDomain]="activeDomain" [activeAttribute]="activeAttribute"
-                  (activeDomainEmitter)="activeDomain = $event"></app-domain-panel>
-<app-attribute-range-panel></app-attribute-range-panel>
-<app-applicable-attributes-panel [attributes]="attributes" [activeDomain]="activeDomain" [activeAttribute]="activeAttribute"
-                                 (activeAttributeEmitter)="activeAttribute = $event"></app-applicable-attributes-panel>
+<app-domain-panel
+    [domains]="domains"
+    [activeDomain]="activeDomain"
+    [activeAttribute]="activeAttribute"
+    (activeDomainEmitter)="activeDomain = $event"></app-domain-panel>
+<app-attribute-range-panel
+    [ranges]="ranges"
+    [activeDomain]="activeDomain"
+    [activeAttribute]="activeAttribute"
+    [activeRange]="activeRange"
+    (activeRangeEmitter)="activeRange = $event"></app-attribute-range-panel>
+<app-applicable-attributes-panel
+    [attributes]="attributes"
+    [activeDomain]="activeDomain"
+    [activeAttribute]="activeAttribute"
+    (activeAttributeEmitter)="activeAttribute = $event"
+    (activeRangeEmitter)="activeRange = $event"
+    (rangesEmitter)="ranges = $event"></app-applicable-attributes-panel>
 <app-snomed-footer></app-snomed-footer>
