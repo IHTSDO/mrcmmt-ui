@@ -29,7 +29,7 @@
                             <signPackage>false</signPackage>
                             <dataSet>
                                 <data>
-                                    <src>${basedir}/dist/reporting-UI</src>
+                                    <src>${basedir}/dist/mrcmmt-ui</src>
                                     <type>directory</type>
                                     <mapper>
                                         <type>perm</type>
