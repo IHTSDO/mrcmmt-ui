@@ -24,9 +24,10 @@ import { TextMatchPipe } from './pipes/text-match.pipe';
 // SERVICE IMPORTS
 import { TerminologyServerService } from './services/terminologyServer.service';
 import { AuthoringService } from './services/authoring.service';
-import { IdMatchPipe } from './pipes/id-match.pipe';
 import { DuplicateFilterPipe } from './pipes/duplicate-filter.pipe';
 import { DomainMatchPipe } from './pipes/domain-match.pipe';
+import { BreadcrumbBarComponent } from './components/breadcrumb-bar/breadcrumb-bar.component';
+import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
 
 @NgModule({
     declarations: [
@@ -37,9 +38,10 @@ import { DomainMatchPipe } from './pipes/domain-match.pipe';
         ApplicableAttributesPanelComponent,
         AttributeRangePanelComponent,
         TextMatchPipe,
-        IdMatchPipe,
         DuplicateFilterPipe,
-        DomainMatchPipe
+        DomainMatchPipe,
+        BreadcrumbBarComponent,
+        AlphabeticalPipe
     ],
     imports: [
         BrowserModule,

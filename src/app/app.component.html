@@ -1,20 +1,43 @@
 <app-snomed-navbar></app-snomed-navbar>
+<app-breadcrumb-bar
+    [activeDomain]="activeDomain"
+    [activeAttribute]="activeAttribute"
+    [activeRange]="activeRange"
+
+    (resetEmitter)="resetTool()">
+</app-breadcrumb-bar>
 <app-domain-panel
     [domains]="domains"
     [activeDomain]="activeDomain"
     [activeAttribute]="activeAttribute"
-    (activeDomainEmitter)="activeDomain = $event"></app-domain-panel>
+    [activeRange]="activeRange"
+
+    (activeDomainEmitter)="activeDomain = $event"
+    (activeAttributeEmitter)="activeAttribute = $event"
+    (activeRangeEmitter)="activeRange = $event">
+</app-domain-panel>
+
 <app-attribute-range-panel
     [ranges]="ranges"
     [activeDomain]="activeDomain"
     [activeAttribute]="activeAttribute"
     [activeRange]="activeRange"
-    (activeRangeEmitter)="activeRange = $event"></app-attribute-range-panel>
+
+    (activeDomainEmitter)="activeDomain = $event"
+    (activeAttributeEmitter)="activeAttribute = $event"
+    (activeRangeEmitter)="activeRange = $event">
+</app-attribute-range-panel>
+
 <app-applicable-attributes-panel
     [attributes]="attributes"
     [activeDomain]="activeDomain"
     [activeAttribute]="activeAttribute"
+    [activeRange]="activeRange"
+
+    (activeDomainEmitter)="activeDomain = $event"
     (activeAttributeEmitter)="activeAttribute = $event"
     (activeRangeEmitter)="activeRange = $event"
-    (rangesEmitter)="ranges = $event"></app-applicable-attributes-panel>
+    (rangesEmitter)="ranges = $event">
+</app-applicable-attributes-panel>
+
 <app-snomed-footer></app-snomed-footer>

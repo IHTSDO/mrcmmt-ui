@@ -51,4 +51,11 @@ export class AppComponent implements OnInit {
             });
         });
     }
+
+    resetTool() {
+        this.activeDomain = null;
+        this.activeAttribute = null;
+        this.activeRange = null;
+        this.ranges = [];
+    }
 }

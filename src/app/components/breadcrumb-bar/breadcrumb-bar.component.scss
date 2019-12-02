@@ -1,0 +1,36 @@
+@import '~src/variables.scss';
+
+nav.navbar {
+    height: 3rem;
+    background-color: $slate-grey;
+
+    div.active-list {
+        span {
+            &.concept {
+                color: $alto-white;
+            }
+
+            &.slash {
+                color: $emperor-grey;
+            }
+        }
+    }
+
+    button {
+        height: 3rem;
+        font-weight: 300;
+        font-size: 1.4rem;
+        letter-spacing: 0.2rem;
+        color: $white;
+        border: none;
+
+        &.btn-purple {
+            background-color: $purple;
+        }
+
+        &.btn-green {
+            background-color: $forest-green;
+        }
+    }
+
+}

@@ -10,7 +10,7 @@ div#applicable-attributes-panel {
     overflow: scroll;
 
     &.details-open {
-        height: calc(100vh - 9rem - 44vh);
+        height: calc(100vh - 12rem - 33vh);
     }
 
     h1 {
@@ -20,6 +20,7 @@ div#applicable-attributes-panel {
     input {
         font-weight: 300;
         font-size: 1.6rem;
+        cursor: text;
     }
 
     div.attribute {
@@ -36,7 +37,7 @@ div#applicable-attributes-panel {
         bottom: 0;
         background-color: $ghost-grey;
         border-top: 1px solid $regent-grey;
-        height: 44vh;
+        height: 33vh;
         margin-bottom: 4rem;
         overflow: scroll;
 

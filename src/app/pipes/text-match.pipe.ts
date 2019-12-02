@@ -14,9 +14,14 @@ export class TextMatchPipe implements PipeTransform {
         }
 
         text = text.toLowerCase();
-        items = items.filter(item => {
-            return item.referencedComponent.fsn.term.toLowerCase().includes(text);
-        });
+
+        if (!isNaN(Number(text))) {
+            items = items.filter(item => item.referencedComponentId === text);
+        } else {
+            items = items.filter(item => {
+                return item.referencedComponent.fsn.term.toLowerCase().includes(text);
+            });
+        }
         return items;
     }
 }

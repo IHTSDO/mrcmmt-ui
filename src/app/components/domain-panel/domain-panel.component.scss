@@ -9,7 +9,7 @@ div#domain-panel {
     overflow: scroll;
 
     &.details-open {
-        height: calc(100vh - 9rem - 44vh);
+        height: calc(100vh - 12rem - 33vh);
     }
 
     h1 {
@@ -19,6 +19,7 @@ div#domain-panel {
     input {
         font-weight: 300;
         font-size: 1.6rem;
+        cursor: text;
     }
 
     div.domain {
@@ -40,7 +41,7 @@ div#domain-panel {
         background-color: $ghost-grey;
         border-top: 1px solid $regent-grey;
         border-right: 1px solid $regent-grey;
-        height: 44vh;
+        height: 33vh;
         margin-bottom: 4rem;
         overflow: scroll;
 
@@ -54,6 +55,12 @@ div#domain-panel {
 
         div.detail {
             background-color: $white;
+
+            &.short {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
         }
     }
 }

@@ -1,8 +1,8 @@
-@import 'src/variables.scss';
+@import '~src/variables.scss';
 
 nav {
     a {
-        height: 40px;
+        height: 4rem;
         font-size: 1.6rem;
 
         &:link {

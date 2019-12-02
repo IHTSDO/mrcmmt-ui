@@ -10,18 +10,28 @@ export class DomainPanelComponent implements OnInit {
 
     // bindings
     @Input() domains: RefSet[];
-    @Input() activeAttribute: RefSet;
     @Input() activeDomain: RefSet;
+    @Input() activeAttribute: RefSet;
+    @Input() activeRange: RefSet;
     @Output() activeDomainEmitter = new EventEmitter();
+    @Output() activeAttributeEmitter = new EventEmitter();
+    @Output() activeRangeEmitter = new EventEmitter();
 
     // filter
     domainFilter: string;
+
+    // visibility flags
+    preCoordination: boolean;
+    postCoordination: boolean;
+
 
     constructor() {
     }
 
     ngOnInit() {
         this.domains = [];
+        this.preCoordination = true;
+        this.postCoordination = true;
     }
 
     makeActiveDomain(domain) {

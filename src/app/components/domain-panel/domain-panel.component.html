@@ -3,7 +3,7 @@
     <div class="p-3">
         <input type="text" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
     </div>
-    <div class="px-3 py-2 domain" *ngFor="let domain of domains | textMatch:domainFilter"
+    <div class="domain px-3 py-2" *ngFor="let domain of domains | alphabetical | textMatch:domainFilter"
          (click)="makeActiveDomain(domain)"
          [class.active]="domain === activeDomain"
          [class.attached]="domain.referencedComponentId === activeAttribute?.additionalFields.domainId">{{domain.referencedComponent.fsn?.term}}</div>
@@ -29,11 +29,11 @@
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPrecoordination">
             <h3 class="label m-2">Precoordination Domain Template</h3>
-            <div class="detail m-2 mb-3 px-2 rounded">{{activeDomain.additionalFields.domainTemplateForPrecoordination}}</div>
+            <div class="detail m-2 mb-3 px-2 rounded" [class.short]="preCoordination" (click)="preCoordination = !preCoordination">{{activeDomain.additionalFields.domainTemplateForPrecoordination}}</div>
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPostcoordination">
             <h3 class="label m-2">Postcoordination Domain Template</h3>
-            <div class="detail m-2 mb-3 px-2 rounded">{{activeDomain.additionalFields.domainTemplateForPostcoordination}}</div>
+            <div class="detail m-2 mb-3 px-2 rounded" [class.short]="postCoordination" (click)="postCoordination = !postCoordination">{{activeDomain.additionalFields.domainTemplateForPostcoordination}}</div>
         </ng-container>
     </div>
 </div>
