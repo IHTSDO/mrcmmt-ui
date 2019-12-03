@@ -25,26 +25,35 @@ export class AttributeRangePanelComponent implements OnChanges {
     }
 
     ngOnChanges() {
+        this.results = [];
+
         if (this.activeRange) {
+            this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
+                this.results = data;
+            });
+        } else {
+            this.results = [];
+        }
+    }
+
+    makeActiveRange(range) {
+        if (this.activeRange === range) {
+            this.setActives(this.activeDomain, this.activeAttribute, null);
+            this.results = [];
+        } else {
+            this.activeRange = range;
+            this.setActives(this.activeDomain, this.activeAttribute, range);
+
             this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
                 this.results = data;
             });
         }
     }
 
-    makeActiveRange(range) {
-        if (this.activeRange === range) {
-            this.activeRange = null;
-            this.activeRangeEmitter.emit(null);
-            this.results = [];
-        } else {
-            this.activeRange = range;
-            this.activeRangeEmitter.emit(range);
-
-            this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
-                this.results = data;
-            });
-        }
+    setActives(domain, attribute, range) {
+        this.activeDomainEmitter.emit(domain);
+        this.activeAttributeEmitter.emit(attribute);
+        this.activeRangeEmitter.emit(range);
     }
 
     determineMandatoryField(id) {

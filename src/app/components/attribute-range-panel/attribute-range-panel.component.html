@@ -1,6 +1,6 @@
 <div id="attribute-range-panel">
     <h1 class="pt-3 px-3">Attribute Range:</h1>
-    <div class="px-3 py-2 range" *ngFor="let range of ranges"
+    <div class="px-3 py-2 range" *ngFor="let range of ranges | alphabetical"
         (click)="makeActiveRange(range)"
         [class.active]="range === activeRange">{{determineContentTypeField(range.additionalFields.contentTypeId)}}</div>
     <div *ngIf="activeAttribute && activeRange" class="details">

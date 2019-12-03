@@ -33,21 +33,28 @@ export class ApplicableAttributesPanelComponent implements OnInit {
         this.activeRangeEmitter.emit(null);
 
         if (this.activeAttribute === attribute) {
-            this.activeAttribute = null;
-            this.activeAttributeEmitter.emit(null);
+            this.setActives(this.activeDomain, null, null);
             this.rangesEmitter.emit([]);
         } else {
             this.activeAttribute = attribute;
-            this.activeAttributeEmitter.emit(this.activeAttribute);
+            this.setActives(this.activeDomain, attribute, null);
 
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
                 console.log('RANGES: ', ranges);
+                this.setActives(this.activeDomain, attribute, ranges[0]);
                 this.rangesEmitter.emit(ranges);
-                if (ranges.length === 1) {
-                    this.activeRangeEmitter.emit(ranges[0]);
-                }
+
+                // if (ranges) {
+                //     this.activeRangeEmitter.emit(ranges[0]);
+                // }
             });
         }
+    }
+
+    setActives(domain, attribute, range) {
+        this.activeDomainEmitter.emit(domain);
+        this.activeAttributeEmitter.emit(attribute);
+        this.activeRangeEmitter.emit(range);
     }
 
     determineMandatoryField(id) {
