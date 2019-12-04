@@ -12,6 +12,7 @@ export class DomainPanelComponent implements OnInit {
     @Input() domains: RefSet[];
     @Input() activeDomain: RefSet;
     @Input() activeAttribute: RefSet;
+    @Input() attributeMatchedDomains: RefSet[];
     @Input() activeRange: RefSet;
     @Output() activeDomainEmitter = new EventEmitter();
     @Output() activeAttributeEmitter = new EventEmitter();
@@ -39,6 +40,13 @@ export class DomainPanelComponent implements OnInit {
             this.setActives(null, this.activeAttribute, this.activeRange);
         } else {
             this.activeDomain = domain;
+            if(this.attributeMatchedDomains && this.attributeMatchedDomains.length > 1){
+                this.attributeMatchedDomains.forEach((item)=> {
+                    if(domain.referencedComponentId === item.additionalFields.domainId){
+                        this.activeAttribute = item;
+                    }
+                });
+            }
             this.setActives(domain, this.activeAttribute, this.activeRange);
 
             if (domain.referencedComponentId !== this.activeAttribute.additionalFields.domainId) {
@@ -53,5 +61,17 @@ export class DomainPanelComponent implements OnInit {
         this.activeDomainEmitter.emit(domain);
         this.activeAttributeEmitter.emit(attribute);
         this.activeRangeEmitter.emit(range);
+    }
+    
+    highlightDomains(referencedComponentId){
+        let domains = [];
+        if(this.attributeMatchedDomains && this.attributeMatchedDomains.length > 1){
+            this.attributeMatchedDomains.forEach((item)=> {
+                domains.push(item.additionalFields.domainId);
+            });
+        }
+        if(this.activeAttribute && referencedComponentId === this.activeAttribute.additionalFields.domainId || domains.length > 1 && domains.includes(referencedComponentId)){
+            return true
+        }
     }
 }
