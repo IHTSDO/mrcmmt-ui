@@ -22,4 +22,5 @@ export class RefSet {
             term: string;
         }
     };
+    memberId: string;
 }

@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
 
     attributes: RefSet[];
     activeAttribute: RefSet;
+    activeAttributes: RefSet[];
 
     ranges: RefSet[];
     activeRange: RefSet;
@@ -55,6 +56,7 @@ export class AppComponent implements OnInit {
     resetTool() {
         this.activeDomain = null;
         this.activeAttribute = null;
+        this.activeAttributes = null;
         this.activeRange = null;
         this.ranges = [];
     }

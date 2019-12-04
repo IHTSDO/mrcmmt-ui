@@ -13,9 +13,11 @@ export class ApplicableAttributesPanelComponent implements OnInit {
     @Input() attributes: RefSet[];
     @Input() activeDomain: RefSet;
     @Input() activeAttribute: RefSet;
+    @Input() activeAttributes: RefSet[];
     @Input() activeRange: RefSet;
     @Output() activeDomainEmitter = new EventEmitter();
     @Output() activeAttributeEmitter = new EventEmitter();
+    @Output() activeAttributesEmitter = new EventEmitter();
     @Output() activeRangeEmitter = new EventEmitter();
     @Output() rangesEmitter = new EventEmitter();
 
@@ -27,21 +29,32 @@ export class ApplicableAttributesPanelComponent implements OnInit {
 
     ngOnInit() {
         this.attributes = [];
+        this.activeAttributes = [];
     }
 
     makeActiveAttribute(attribute) {
+        let activeAttributes = [];
         this.activeRangeEmitter.emit(null);
 
         if (this.activeAttribute === attribute) {
-            this.setActives(this.activeDomain, null, null);
+            this.setActives(this.activeDomain, null, null, null);
             this.rangesEmitter.emit([]);
         } else {
             this.activeAttribute = attribute;
-            this.setActives(this.activeDomain, attribute, null);
+            activeAttributes.push(attribute);
+            this.attributes.forEach((item) => {
+                if(this.activeAttribute.memberId !== item.memberId && this.activeAttribute.referencedComponentId === item.referencedComponentId){
+                    activeAttributes.push(item);  
+                }
+            });
+            
+            this.activeAttributes = activeAttributes;
+            
+            this.setActives(this.activeDomain, attribute, null, this.activeAttributes);
 
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
                 console.log('RANGES: ', ranges);
-                this.setActives(this.activeDomain, attribute, ranges[0]);
+                this.setActives(this.activeDomain, attribute, ranges[0], this.activeAttributes);
                 this.rangesEmitter.emit(ranges);
 
                 // if (ranges) {
@@ -51,9 +64,10 @@ export class ApplicableAttributesPanelComponent implements OnInit {
         }
     }
 
-    setActives(domain, attribute, range) {
+    setActives(domain, attribute, range, attributes) {
         this.activeDomainEmitter.emit(domain);
         this.activeAttributeEmitter.emit(attribute);
+        this.activeAttributesEmitter.emit(attributes);
         this.activeRangeEmitter.emit(range);
     }
 

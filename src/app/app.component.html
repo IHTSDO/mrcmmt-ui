@@ -10,6 +10,7 @@
     [domains]="domains"
     [activeDomain]="activeDomain"
     [activeAttribute]="activeAttribute"
+    [activeAttributes]="activeAttributes"
     [activeRange]="activeRange"
 
     (activeDomainEmitter)="activeDomain = $event"
@@ -32,10 +33,12 @@
     [attributes]="attributes"
     [activeDomain]="activeDomain"
     [activeAttribute]="activeAttribute"
+    [activeAttributes]="activeAttributes"
     [activeRange]="activeRange"
 
     (activeDomainEmitter)="activeDomain = $event"
     (activeAttributeEmitter)="activeAttribute = $event"
+    (activeAttributesEmitter)="activeAttributes = $event"
     (activeRangeEmitter)="activeRange = $event"
     (rangesEmitter)="ranges = $event">
 </app-applicable-attributes-panel>

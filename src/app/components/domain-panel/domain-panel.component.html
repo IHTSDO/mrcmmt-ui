@@ -6,7 +6,7 @@
     <div class="domain px-3 py-2" *ngFor="let domain of domains | alphabetical | textMatch:domainFilter"
          (click)="makeActiveDomain(domain)"
          [class.active]="domain === activeDomain"
-         [class.attached]="domain.referencedComponentId === activeAttribute?.additionalFields.domainId">{{domain.referencedComponent.fsn?.term}}</div>
+         [class.attached]="highlightDomains(domain.referencedComponentId)">{{domain.referencedComponent.fsn?.term}}</div>
     <div *ngIf="activeDomain" class="details">
         <button type="button" class="close float-right px-2" (click)="makeActiveDomain(activeDomain)">
             <span aria-hidden="true">&times;</span>
