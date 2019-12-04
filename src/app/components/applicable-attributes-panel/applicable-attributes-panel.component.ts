@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { RefSet } from '../../models/refset';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
+import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
 
 @Component({
     selector: 'app-applicable-attributes-panel',
     templateUrl: './applicable-attributes-panel.component.html',
-    styleUrls: ['./applicable-attributes-panel.component.scss']
+    styleUrls: ['./applicable-attributes-panel.component.scss'],
+    providers: [ CustomOrderPipe ]
 })
 export class ApplicableAttributesPanelComponent implements OnInit {
 
@@ -22,7 +24,7 @@ export class ApplicableAttributesPanelComponent implements OnInit {
     // filter
     attributeFilter: string;
 
-    constructor(private terminologyService: TerminologyServerService) {
+    constructor(private terminologyService: TerminologyServerService, private customOrder: CustomOrderPipe) {
     }
 
     ngOnInit() {
@@ -41,12 +43,9 @@ export class ApplicableAttributesPanelComponent implements OnInit {
 
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
                 console.log('RANGES: ', ranges);
+                ranges = this.customOrder.transform(ranges, ['723596005', '723594008', '723593002', '723595009']);
                 this.setActives(this.activeDomain, attribute, ranges[0]);
                 this.rangesEmitter.emit(ranges);
-
-                // if (ranges) {
-                //     this.activeRangeEmitter.emit(ranges[0]);
-                // }
             });
         }
     }

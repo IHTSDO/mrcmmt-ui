@@ -28,6 +28,7 @@ import { DuplicateFilterPipe } from './pipes/duplicate-filter.pipe';
 import { DomainMatchPipe } from './pipes/domain-match.pipe';
 import { BreadcrumbBarComponent } from './components/breadcrumb-bar/breadcrumb-bar.component';
 import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
+import { CustomOrderPipe } from './pipes/custom-order.pipe';
 
 @NgModule({
     declarations: [
@@ -41,7 +42,8 @@ import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
         DuplicateFilterPipe,
         DomainMatchPipe,
         BreadcrumbBarComponent,
-        AlphabeticalPipe
+        AlphabeticalPipe,
+        CustomOrderPipe
     ],
     imports: [
         BrowserModule,
