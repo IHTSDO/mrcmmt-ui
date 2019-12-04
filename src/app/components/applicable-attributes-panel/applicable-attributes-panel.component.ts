@@ -13,11 +13,11 @@ export class ApplicableAttributesPanelComponent implements OnInit {
     @Input() attributes: RefSet[];
     @Input() activeDomain: RefSet;
     @Input() activeAttribute: RefSet;
-    @Input() activeAttributes: RefSet[];
+    @Input() attributeMatchedDomains: RefSet[];
     @Input() activeRange: RefSet;
     @Output() activeDomainEmitter = new EventEmitter();
     @Output() activeAttributeEmitter = new EventEmitter();
-    @Output() activeAttributesEmitter = new EventEmitter();
+    @Output() attributeMatchedDomainsEmitter = new EventEmitter();
     @Output() activeRangeEmitter = new EventEmitter();
     @Output() rangesEmitter = new EventEmitter();
 
@@ -29,11 +29,11 @@ export class ApplicableAttributesPanelComponent implements OnInit {
 
     ngOnInit() {
         this.attributes = [];
-        this.activeAttributes = [];
+        this.attributeMatchedDomains = [];
     }
 
     makeActiveAttribute(attribute) {
-        let activeAttributes = [];
+        let attributeMatchedDomains = [];
         this.activeRangeEmitter.emit(null);
 
         if (this.activeAttribute === attribute) {
@@ -41,20 +41,20 @@ export class ApplicableAttributesPanelComponent implements OnInit {
             this.rangesEmitter.emit([]);
         } else {
             this.activeAttribute = attribute;
-            activeAttributes.push(attribute);
+            attributeMatchedDomains.push(attribute);
             this.attributes.forEach((item) => {
                 if(this.activeAttribute.memberId !== item.memberId && this.activeAttribute.referencedComponentId === item.referencedComponentId){
-                    activeAttributes.push(item);  
+                    attributeMatchedDomains.push(item);  
                 }
             });
             
-            this.activeAttributes = activeAttributes;
+            this.attributeMatchedDomains = attributeMatchedDomains;
             
-            this.setActives(this.activeDomain, attribute, null, this.activeAttributes);
+            this.setActives(this.activeDomain, attribute, null, this.attributeMatchedDomains);
 
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
                 console.log('RANGES: ', ranges);
-                this.setActives(this.activeDomain, attribute, ranges[0], this.activeAttributes);
+                this.setActives(this.activeDomain, attribute, ranges[0], this.attributeMatchedDomains);
                 this.rangesEmitter.emit(ranges);
 
                 // if (ranges) {
@@ -67,7 +67,7 @@ export class ApplicableAttributesPanelComponent implements OnInit {
     setActives(domain, attribute, range, attributes) {
         this.activeDomainEmitter.emit(domain);
         this.activeAttributeEmitter.emit(attribute);
-        this.activeAttributesEmitter.emit(attributes);
+        this.attributeMatchedDomainsEmitter.emit(attributes);
         this.activeRangeEmitter.emit(range);
     }
 
