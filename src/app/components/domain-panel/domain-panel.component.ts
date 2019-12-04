@@ -40,9 +40,9 @@ export class DomainPanelComponent implements OnInit {
             this.setActives(null, this.activeAttribute, this.activeRange);
         } else {
             this.activeDomain = domain;
-            if(this.attributeMatchedDomains && this.attributeMatchedDomains.length > 1){
-                this.attributeMatchedDomains.forEach((item)=> {
-                    if(domain.referencedComponentId === item.additionalFields.domainId){
+            if (this.attributeMatchedDomains && this.attributeMatchedDomains.length > 1) {
+                this.attributeMatchedDomains.forEach((item) => {
+                    if (domain.referencedComponentId === item.additionalFields.domainId) {
                         this.activeAttribute = item;
                     }
                 });
@@ -62,16 +62,19 @@ export class DomainPanelComponent implements OnInit {
         this.activeAttributeEmitter.emit(attribute);
         this.activeRangeEmitter.emit(range);
     }
-    
-    highlightDomains(referencedComponentId){
-        let domains = [];
-        if(this.attributeMatchedDomains && this.attributeMatchedDomains.length > 1){
-            this.attributeMatchedDomains.forEach((item)=> {
+
+    highlightDomains(referencedComponentId) {
+        const domains = [];
+        if (this.attributeMatchedDomains && this.attributeMatchedDomains.length > 1) {
+            this.attributeMatchedDomains.forEach((item) => {
                 domains.push(item.additionalFields.domainId);
             });
         }
-        if(this.activeAttribute && referencedComponentId === this.activeAttribute.additionalFields.domainId || domains.length > 1 && domains.includes(referencedComponentId)){
-            return true
+        if (this.activeAttribute && referencedComponentId === this.activeAttribute.additionalFields.domainId) {
+            return true;
+        }
+        if (domains.length > 1 && domains.includes(referencedComponentId) ) {
+            return true;
         }
     }
 }

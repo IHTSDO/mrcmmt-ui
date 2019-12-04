@@ -24,6 +24,10 @@ div#domain-panel {
 
     div.domain {
         cursor: pointer;
+        
+        &.subdomain {
+            margin-left:1.5rem;
+        }
 
         &.attached {
             background-color: $ghost-grey;

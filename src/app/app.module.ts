@@ -29,6 +29,7 @@ import { DomainMatchPipe } from './pipes/domain-match.pipe';
 import { BreadcrumbBarComponent } from './components/breadcrumb-bar/breadcrumb-bar.component';
 import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
 import { CustomOrderPipe } from './pipes/custom-order.pipe';
+import { TopLevelDomainPipe } from './pipes/top-level-domain.pipe';
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import { CustomOrderPipe } from './pipes/custom-order.pipe';
         DomainMatchPipe,
         BreadcrumbBarComponent,
         AlphabeticalPipe,
-        CustomOrderPipe
+        CustomOrderPipe,
+        TopLevelDomainPipe
     ],
     imports: [
         BrowserModule,

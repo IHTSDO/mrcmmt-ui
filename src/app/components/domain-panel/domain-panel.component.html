@@ -3,8 +3,9 @@
     <div class="p-3">
         <input type="text" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
     </div>
-    <div class="domain px-3 py-2" *ngFor="let domain of domains | alphabetical | textMatch:domainFilter"
+    <div class="domain px-3 py-2" *ngFor="let domain of domains | alphabetical | textMatch:domainFilter | topLevelDomain"
          (click)="makeActiveDomain(domain)"
+         [class.subdomain]="domain.additionalFields.parentDomain"
          [class.active]="domain === activeDomain"
          [class.attached]="highlightDomains(domain.referencedComponentId)">{{domain.referencedComponent.fsn?.term}}</div>
     <div *ngIf="activeDomain" class="details">

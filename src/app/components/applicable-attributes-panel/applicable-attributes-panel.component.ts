@@ -35,7 +35,7 @@ export class ApplicableAttributesPanelComponent implements OnInit {
     }
 
     makeActiveAttribute(attribute) {
-        let attributeMatchedDomains = [];
+        const attributeMatchedDomains = [];
         this.activeRangeEmitter.emit(null);
 
         if (this.activeAttribute === attribute) {
@@ -45,7 +45,7 @@ export class ApplicableAttributesPanelComponent implements OnInit {
             this.activeAttribute = attribute;
             attributeMatchedDomains.push(attribute);
             this.attributes.forEach((item) => {
-                if(this.activeAttribute.memberId !== item.memberId && this.activeAttribute.referencedComponentId === item.referencedComponentId){
+                if (this.activeAttribute.memberId !== item.memberId && this.activeAttribute.referencedComponentId === item.referencedComponentId) {
                     attributeMatchedDomains.push(item);
                 }
             });
