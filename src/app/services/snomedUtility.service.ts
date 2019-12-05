@@ -40,11 +40,11 @@ export class SnomedUtilityService {
 
         return output;
     }
-    
+
     static getSemanticTagFromFsn(input): string {
         return input.replace( /(^.*\(|\).*$)/g, '');
     }
-    
+
     static getIdFromShortConcept(input): string {
         return input.replace(/\D/g, '');
     }
