@@ -23,6 +23,7 @@ import { TextMatchPipe } from './pipes/text-match.pipe';
 
 // SERVICE IMPORTS
 import { TerminologyServerService } from './services/terminologyServer.service';
+import { SnomedUtilityService } from './services/snomedUtility.service';
 import { AuthoringService } from './services/authoring.service';
 import { DuplicateFilterPipe } from './pipes/duplicate-filter.pipe';
 import { DomainMatchPipe } from './pipes/domain-match.pipe';

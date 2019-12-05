@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { SnomedUtilityService } from '../services/snomedUtility.service';
 
 @Pipe({
   name: 'topLevelDomain'
@@ -10,7 +11,7 @@ export class TopLevelDomainPipe implements PipeTransform {
     const itemsBySemtag = {};
     const orderedItems = [];
     for (let i = 0; i < items.length; i++) {
-        const semtag = items[i].referencedComponent.fsn.term.replace( /(^.*\(|\).*$)/g, '');
+        const semtag = SnomedUtilityService.getSemanticTagFromFsn(items[i].referencedComponent.fsn.term);
         if (!items[i].additionalFields.parentDomain) {
             if (!itemsBySemtag[semtag]) {
                 itemsBySemtag[semtag] = [];
@@ -21,10 +22,10 @@ export class TopLevelDomainPipe implements PipeTransform {
 
     for (let i = 0; i < items.length; i++) {
         if (items[i].additionalFields.parentDomain) {
-            const parent = items[i].additionalFields.parentDomain.replace(/\D/g, '');
+            const parent = SnomedUtilityService.getIdFromShortConcept(items[i].additionalFields.parentDomain);
             Object.values(itemsBySemtag).forEach((item) => {
                 if (parent === item[0].referencedComponentId) {
-                    itemsBySemtag[item[0].referencedComponent.fsn.term.replace( /(^.*\(|\).*$)/g, '')].push(items[i]);
+                    itemsBySemtag[SnomedUtilityService.getSemanticTagFromFsn(item[0].referencedComponent.fsn.term)].push(items[i]);
                 }
             });
         }
