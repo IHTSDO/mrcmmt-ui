@@ -32,6 +32,9 @@ import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
 import { CustomOrderPipe } from './pipes/custom-order.pipe';
 import { TopLevelDomainPipe } from './pipes/top-level-domain.pipe';
 
+// Interceptor Imports
+import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -62,7 +65,7 @@ import { TopLevelDomainPipe } from './pipes/top-level-domain.pipe';
         AuthoringService,
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: HeaderInterceptor,
+            useClass: AuthenticationInterceptor,
             multi: true
         }
     ],
