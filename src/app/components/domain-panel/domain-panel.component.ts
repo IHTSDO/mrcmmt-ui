@@ -50,8 +50,6 @@ export class DomainPanelComponent implements OnInit {
             this.setActives(domain, this.activeAttribute, this.activeRange);
 
             if (this.activeAttribute && domain.referencedComponentId !== this.activeAttribute.additionalFields.domainId) {
-                // this.activeAttributeEmitter.emit(null);
-                // this.activeRangeEmitter.emit([]);
                 this.setActives(this.activeDomain, null, null);
             }
         }

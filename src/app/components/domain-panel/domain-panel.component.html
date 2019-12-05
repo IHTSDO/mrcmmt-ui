@@ -5,9 +5,12 @@
     </div>
     <div class="domain px-3 py-2" *ngFor="let domain of domains | alphabetical | textMatch:domainFilter | topLevelDomain"
          (click)="makeActiveDomain(domain)"
-         [class.subdomain]="domain.additionalFields.parentDomain"
          [class.active]="domain === activeDomain"
-         [class.attached]="highlightDomains(domain.referencedComponentId)">{{domain.referencedComponent.fsn?.term}}</div>
+         [class.attached]="highlightDomains(domain.referencedComponentId)">
+        <span [class.subdomain]="domain.additionalFields.parentDomain">
+            {{domain.referencedComponent.fsn?.term}}
+        </span>
+    </div>
     <div *ngIf="activeDomain" class="details">
         <button type="button" class="close float-right px-2" (click)="makeActiveDomain(activeDomain)">
             <span aria-hidden="true">&times;</span>

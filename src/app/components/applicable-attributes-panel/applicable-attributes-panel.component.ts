@@ -13,6 +13,7 @@ export class ApplicableAttributesPanelComponent implements OnInit {
 
     // bindings
     @Input() attributes: RefSet[];
+    @Input() domains: RefSet[];
     @Input() activeDomain: RefSet;
     @Input() activeAttribute: RefSet;
     @Input() attributeMatchedDomains: RefSet[];
@@ -53,6 +54,7 @@ export class ApplicableAttributesPanelComponent implements OnInit {
 
             this.attributeMatchedDomains = attributeMatchedDomains;
 
+            this.automaticDomainSelect();
             this.setActives(this.activeDomain, attribute, null, this.attributeMatchedDomains);
 
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
@@ -69,6 +71,22 @@ export class ApplicableAttributesPanelComponent implements OnInit {
         this.activeAttributeEmitter.emit(attribute);
         this.attributeMatchedDomainsEmitter.emit(attributes);
         this.activeRangeEmitter.emit(range);
+    }
+
+    automaticDomainSelect() {
+        if (!this.activeDomain) {
+            const activeDomainList = [];
+
+            for (let i = 0; i < this.domains.length; i++) {
+                for (let j = 0; j < this.attributeMatchedDomains.length; j++) {
+                    if (this.domains[i].referencedComponentId === this.attributeMatchedDomains[j].additionalFields.domainId) {
+                        activeDomainList.push(this.domains[i]);
+                    }
+                }
+            }
+
+            this.activeDomain = activeDomainList[0];
+        }
     }
 
     determineMandatoryField(id) {
