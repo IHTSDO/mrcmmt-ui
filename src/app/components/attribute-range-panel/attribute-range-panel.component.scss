@@ -3,11 +3,13 @@
 div#attribute-range-panel {
     position: fixed;
     width: 33vw;
-    height: calc(100vh - 9rem);
+    height: calc(100vh - 12rem);
     right: 0;
     border-left: 1px solid $regent-grey;
     background-color: $alto-white;
-    overflow: scroll;
+    //overflow: scroll;
+    display: flex;
+    flex-direction: column;
 
     h1 {
         font-weight: 300;
@@ -15,6 +17,7 @@ div#attribute-range-panel {
 
     div.range {
         cursor: pointer;
+        flex-grow: 1;
 
         &.active {
             background-color: $tropical-blue;
@@ -23,13 +26,12 @@ div#attribute-range-panel {
 
     div.details {
         //position: fixed;
-        width: 34vw;
-        bottom: 0;
+        width: 33vw;
         background-color: $ghost-grey;
         border-top: 1px solid $regent-grey;
         border-bottom: 1px solid $regent-grey;
-        //height: 44vh;
-        //overflow: scroll;
+        //height: 33vh;
+        flex-grow: 1;
 
         h3.label {
             font-weight: 300;
@@ -41,6 +43,13 @@ div#attribute-range-panel {
     }
 
     div.results {
-        background-color: $slate-grey;
+        flex-grow: 1;
+        overflow: auto;
+
+        div.result {
+            &.odd {
+                background-color: $almost-white;
+            }
+        }
     }
 }

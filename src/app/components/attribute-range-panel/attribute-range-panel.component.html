@@ -21,7 +21,7 @@
             <div class="detail m-2 mb-3 px-2 rounded">{{determineContentTypeField(activeRange.additionalFields.contentTypeId)}}</div>
         </ng-container>
     </div>
-    <div *ngIf="activeRange" class="px-3 results">
-        <div class="px-3" *ngFor="let result of results">{{result?.fsn.term}}</div>
+    <div *ngIf="activeRange" class="results">
+        <div class="py-2 px-4 result" *ngFor="let result of results; let odd = odd" [class.odd]="odd">{{result?.fsn.term}}</div>
     </div>
 </div>
