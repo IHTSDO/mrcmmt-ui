@@ -1,4 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { AlphabeticalPipe } from '../../pipes/alphabetical.pipe';
 
 import { AttributeRangePanelComponent } from './attribute-range-panel.component';
 
@@ -8,7 +12,8 @@ describe('AttributeRangePanelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AttributeRangePanelComponent ]
+      imports: [ FormsModule, HttpClientTestingModule ],
+      declarations: [ AttributeRangePanelComponent, AlphabeticalPipe ]
     })
     .compileComponents();
   }));

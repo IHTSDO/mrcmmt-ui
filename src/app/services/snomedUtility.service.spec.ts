@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UtilityService } from './snomedUtility.service';
+import { SnomedUtilityService } from './snomedUtility.service';
 
 describe('SonemedUtilityService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
