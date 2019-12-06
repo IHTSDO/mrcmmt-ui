@@ -10,7 +10,7 @@ import { AuthoringService } from './authoring.service';
 
 describe('AuthoringService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule], 
+        imports: [HttpClientTestingModule],
         providers: [AuthoringService]
       }));
 

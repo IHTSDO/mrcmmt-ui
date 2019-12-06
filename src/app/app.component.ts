@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthoringService } from './services/authoring.service';
 import { Versions } from './models/versions';
-import {Title} from "@angular/platform-browser";
+import {Title} from '@angular/platform-browser';
 import { TerminologyServerService } from './services/terminologyServer.service';
 import { SnomedUtilityService } from './services/snomedUtility.service';
 import { RefSet } from './models/refset';
@@ -26,7 +26,8 @@ export class AppComponent implements OnInit {
     ranges: RefSet[];
     activeRange: RefSet;
 
-    constructor(private authoringService: AuthoringService, private terminologyService: TerminologyServerService, private titleService:Title) {
+    constructor(private authoringService: AuthoringService,
+                private terminologyService: TerminologyServerService, private titleService: Title ) {
     }
 
     ngOnInit() {

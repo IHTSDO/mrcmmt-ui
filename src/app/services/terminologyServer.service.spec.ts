@@ -11,7 +11,7 @@ import { TerminologyServerService } from './terminologyServer.service';
 
 describe('TerminologyServerService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule], 
+        imports: [HttpClientTestingModule],
         providers: [TerminologyServerService]
       }));
 
