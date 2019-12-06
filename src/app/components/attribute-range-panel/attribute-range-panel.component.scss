@@ -7,9 +7,11 @@ div#attribute-range-panel {
     right: 0;
     border-left: 1px solid $regent-grey;
     background-color: $alto-white;
-    //overflow: scroll;
-    display: flex;
     flex-direction: column;
+
+    &.flex-display {
+        display: flex;
+    }
 
     h1 {
         font-weight: 300;
