@@ -26,7 +26,10 @@ div#domain-panel {
         cursor: pointer;
 
         span.subdomain {
-            margin-left:1.5rem;
+            margin-left:1rem;
+        }
+        span.subdomain:before {
+            content: "-";
         }
 
         &.attached {
