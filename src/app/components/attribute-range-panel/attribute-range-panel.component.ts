@@ -27,8 +27,11 @@ export class AttributeRangePanelComponent implements OnChanges {
     ngOnChanges() {
         this.results = [];
 
+        console.log('R1: ', this.results);
+
         if (this.activeRange) {
             this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
+                console.log('R2: ', this.results);
                 this.results = data;
             });
         } else {

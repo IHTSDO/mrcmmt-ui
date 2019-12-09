@@ -19,7 +19,6 @@ div#attribute-range-panel {
 
     div.range {
         cursor: pointer;
-        flex-grow: 1;
 
         &.active {
             background-color: $tropical-blue;
@@ -27,13 +26,10 @@ div#attribute-range-panel {
     }
 
     div.details {
-        //position: fixed;
         width: 33vw;
         background-color: $ghost-grey;
         border-top: 1px solid $regent-grey;
         border-bottom: 1px solid $regent-grey;
-        //height: 33vh;
-        flex-grow: 1;
 
         h3.label {
             font-weight: 300;
