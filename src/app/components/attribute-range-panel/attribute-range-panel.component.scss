@@ -38,6 +38,12 @@ div#attribute-range-panel {
         div.detail {
             background-color: $white;
         }
+
+        &.short {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
     div.results {

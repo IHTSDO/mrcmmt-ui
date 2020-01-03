@@ -1,15 +1,18 @@
-<div id="applicable-attributes-panel" [class.details-open]="activeAttribute">
-    <h1 class="pt-3 px-3 m-0">Applicable Attributes:</h1>
+<div id="applicable-attributes-panel" [class.details-open]="activeAttribute" [class.details-minimized]="!detailsExpanded">
+    <h1 class="pt-3 px-3 m-0">Applicable Attributes</h1>
     <div class="p-3">
         <input type="text" class="form-control" [(ngModel)]="attributeFilter" placeholder="Filter Attributes...">
     </div>
     <div class="px-3 py-2 attribute" *ngFor="let attribute of attributes | alphabetical | textMatch:attributeFilter | domainMatch:activeDomain | duplicateFilter:activeDomain?.referencedComponentId"
          (click)="makeActiveAttribute(attribute)"
          [class.active]="attribute === activeAttribute">{{attribute.referencedComponent.fsn?.term}}</div>
-    <div *ngIf="activeAttribute" class="details">
-        <button type="button" class="close float-right px-2" (click)="makeActiveAttribute(activeAttribute)">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div *ngIf="activeAttribute" class="details" [class.minimized]="!detailsExpanded">
+        <h2 class="detail-title p-2">{{activeDomain?.referencedComponent.fsn.term}}
+            <span class="float-right" (click)="detailsExpanded = !detailsExpanded">
+                <i *ngIf="detailsExpanded" class="fas fa-level-down-alt"></i>
+                <i *ngIf="!detailsExpanded" class="fas fa-level-up-alt"></i>
+            </span>
+        </h2>
         <ng-container *ngIf="activeAttribute.additionalFields.grouped">
             <h3 class="label m-2">Grouped</h3>
             <div class="detail m-2 mb-3 px-2 rounded">{{activeAttribute.additionalFields.grouped}}</div>

@@ -1,16 +1,16 @@
 <div id="attribute-range-panel" [class.flex-display]="results?.length">
-    <h1 class="pt-3 px-3">Attribute Range:</h1>
+    <h1 class="pt-3 px-3">Attribute Range</h1>
     <div class="px-3 py-2 range" *ngFor="let range of ranges | alphabetical"
         (click)="makeActiveRange(range)"
         [class.active]="range === activeRange">{{determineContentTypeField(range.additionalFields.contentTypeId)}}</div>
     <div *ngIf="activeAttribute && activeRange" class="details">
         <ng-container *ngIf="activeRange.additionalFields.rangeConstraint">
             <h3 class="label m-2">Range Constraint</h3>
-            <div class="detail m-2 mb-3 px-2 rounded">{{activeRange.additionalFields.rangeConstraint}}</div>
+            <div class="detail m-2 mb-3 px-2 rounded" [class.short]="rangeConstraint" (click)="rangeConstraint = !rangeConstraint">{{activeRange.additionalFields.rangeConstraint}}</div>
         </ng-container>
         <ng-container *ngIf="activeRange.additionalFields.attributeRule">
             <h3 class="label m-2">Attribute Rule</h3>
-            <div class="detail m-2 mb-3 px-2 rounded">{{activeRange.additionalFields.attributeRule}}</div>
+            <div class="detail m-2 mb-3 px-2 rounded" [class.short]="attributeRule" (click)="attributeRule = !attributeRule">{{activeRange.additionalFields.attributeRule}}</div>
         </ng-container>
         <ng-container *ngIf="activeRange.additionalFields.ruleStrengthId">
             <h3 class="label m-2">Mandatory</h3>

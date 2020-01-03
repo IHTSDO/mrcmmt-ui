@@ -24,7 +24,7 @@ export class DomainPanelComponent implements OnInit {
     // visibility flags
     preCoordination: boolean;
     postCoordination: boolean;
-
+    detailsExpanded: boolean;
 
     constructor() {
     }
@@ -33,10 +33,12 @@ export class DomainPanelComponent implements OnInit {
         this.domains = [];
         this.preCoordination = true;
         this.postCoordination = true;
+        this.detailsExpanded = true;
     }
 
     makeActiveDomain(domain) {
         if (this.activeDomain === domain) {
+            this.detailsExpanded = true;
             this.setActives(null, this.activeAttribute, this.activeRange);
         } else {
             this.activeDomain = domain;

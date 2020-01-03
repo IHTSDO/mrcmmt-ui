@@ -12,6 +12,10 @@ div#domain-panel {
         height: calc(100vh - 12rem - 33vh);
     }
 
+    &.details-minimized {
+        height: calc(100vh - 15rem);
+    }
+
     h1 {
         font-weight: 300;
     }
@@ -52,8 +56,19 @@ div#domain-panel {
         margin-bottom: 4rem;
         overflow: scroll;
 
-        button {
-            font-size: 2.4rem;
+        &.minimized {
+            height: 3.4rem;
+            overflow: hidden;
+        }
+
+        h2.detail-title {
+            font-weight: 300;
+            color: $black;
+            background-color: $regent-grey;
+
+            span:hover {
+                cursor: pointer;
+            }
         }
 
         h3.label {

@@ -27,12 +27,16 @@ export class ApplicableAttributesPanelComponent implements OnInit {
     // filter
     attributeFilter: string;
 
+    // visibility flags
+    detailsExpanded: boolean;
+
     constructor(private terminologyService: TerminologyServerService, private customOrder: CustomOrderPipe) {
     }
 
     ngOnInit() {
         this.attributes = [];
         this.attributeMatchedDomains = [];
+        this.detailsExpanded = true;
     }
 
     makeActiveAttribute(attribute) {
@@ -40,6 +44,7 @@ export class ApplicableAttributesPanelComponent implements OnInit {
         this.activeRangeEmitter.emit(null);
 
         if (this.activeAttribute === attribute) {
+            this.detailsExpanded = true;
             this.setActives(this.activeDomain, null, null, null);
             this.rangesEmitter.emit([]);
         } else {
@@ -69,8 +74,8 @@ export class ApplicableAttributesPanelComponent implements OnInit {
     setActives(domain, attribute, range, attributes) {
         this.activeDomainEmitter.emit(domain);
         this.activeAttributeEmitter.emit(attribute);
-        this.attributeMatchedDomainsEmitter.emit(attributes);
         this.activeRangeEmitter.emit(range);
+        this.attributeMatchedDomainsEmitter.emit(attributes);
     }
 
     automaticDomainSelect() {

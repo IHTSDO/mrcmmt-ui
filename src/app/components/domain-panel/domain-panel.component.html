@@ -1,5 +1,5 @@
-<div id="domain-panel" [class.details-open]="activeDomain">
-    <h1 class="pt-3 px-3 m-0">Domain:</h1>
+<div id="domain-panel" [class.details-open]="activeDomain" [class.details-minimized]="!detailsExpanded">
+    <h1 class="pt-3 px-3 m-0">Domain</h1>
     <div class="p-3">
         <input type="text" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
     </div>
@@ -8,13 +8,16 @@
          [class.active]="domain === activeDomain"
          [class.attached]="highlightDomains(domain.referencedComponentId)">
         <span [class.subdomain]="domain.additionalFields.parentDomain">
-            {{domain.referencedComponent.fsn?.term}}
+            {{domain.referencedComponent?.fsn.term}}
         </span>
     </div>
-    <div *ngIf="activeDomain" class="details">
-        <button type="button" class="close float-right px-2" (click)="makeActiveDomain(activeDomain)">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div *ngIf="activeDomain" class="details" [class.minimized]="!detailsExpanded">
+        <h2 class="detail-title p-2">{{activeDomain?.referencedComponent.fsn.term}}
+            <span class="float-right" (click)="detailsExpanded = !detailsExpanded">
+                <i *ngIf="detailsExpanded" class="fas fa-level-down-alt"></i>
+                <i *ngIf="!detailsExpanded" class="fas fa-level-up-alt"></i>
+            </span>
+        </h2>
         <ng-container *ngIf="activeDomain.additionalFields.domainConstraint">
             <h3 class="label m-2">Domain Constraint</h3>
             <div class="detail m-2 mb-3 px-2 rounded">{{activeDomain.additionalFields.domainConstraint}}</div>

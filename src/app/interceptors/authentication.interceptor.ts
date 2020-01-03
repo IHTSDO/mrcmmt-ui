@@ -3,13 +3,10 @@ import {
     HttpHandler,
     HttpInterceptor,
     HttpRequest,
-    HttpResponse,
-    HttpErrorResponse
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { UIConfiguration } from '../models/uiConfiguration';
 import { AuthoringService } from '../services/authoring.service';
 
 

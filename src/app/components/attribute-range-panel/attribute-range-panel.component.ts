@@ -21,11 +21,17 @@ export class AttributeRangePanelComponent implements OnChanges {
     // results
     results: any[];
 
+    // visibility flags
+    rangeConstraint: boolean;
+    attributeRule: boolean;
+
     constructor(private terminologyService: TerminologyServerService) {
     }
 
     ngOnChanges() {
         this.results = [];
+        this.rangeConstraint = true;
+        this.attributeRule = true;
 
         console.log('R1: ', this.results);
 
