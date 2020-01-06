@@ -32,7 +32,7 @@ export class TerminologyServerService {
 
     getDomains(): Observable<RefSet[]> {
         return this.http.get<RefSet[]>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
-            'MAIN/members?referenceSet=723560006').pipe(map(data => {
+            'MAIN/members?referenceSet=723560006&active=true&limit=1000').pipe(map(data => {
                 const response = [];
 
                 data['items'].forEach((item) => {
@@ -45,7 +45,7 @@ export class TerminologyServerService {
 
     getAttributes(): Observable<RefSet[]> {
         return this.http.get<RefSet[]>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
-            'MAIN/members?referenceSet=723561005').pipe(map(data => {
+            'MAIN/members?referenceSet=723561005&active=true&limit=1000').pipe(map(data => {
                 const response = [];
 
                 data['items'].forEach((item) => {
@@ -58,7 +58,8 @@ export class TerminologyServerService {
 
     getRanges(componentReferenceId): Observable<RefSet[]> {
         return this.http.get<RefSet[]>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
-            'MAIN/members?referenceSet=723562003&referencedComponentId=' + componentReferenceId).pipe(map(data => {
+            'MAIN/members?referenceSet=723562003&referencedComponentId=' +
+            componentReferenceId + '&active=true&limit=1000').pipe(map(data => {
                 const response = [];
 
                 data['items'].forEach((item) => {
