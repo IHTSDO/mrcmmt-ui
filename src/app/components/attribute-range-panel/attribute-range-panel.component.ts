@@ -20,6 +20,7 @@ export class AttributeRangePanelComponent implements OnChanges {
 
     // results
     results: any[];
+    total: any;
 
     // visibility flags
     rangeConstraint: boolean;
@@ -30,12 +31,16 @@ export class AttributeRangePanelComponent implements OnChanges {
 
     ngOnChanges() {
         this.results = [];
+        this.total = '';
         this.rangeConstraint = true;
         this.attributeRule = true;
 
+        console.log('R1: ', this.results);
+
         if (this.activeRange) {
             this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
-                this.results = data;
+                this.total = data.total;
+                this.results = data.items;
             });
         } else {
             this.results = [];
@@ -51,7 +56,8 @@ export class AttributeRangePanelComponent implements OnChanges {
             this.setActives(this.activeDomain, this.activeAttribute, range);
 
             this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
-                this.results = data;
+                this.total = data.total;
+                this.results = data.items;
             });
         }
     }
