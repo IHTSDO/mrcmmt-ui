@@ -33,11 +33,8 @@ export class AttributeRangePanelComponent implements OnChanges {
         this.rangeConstraint = true;
         this.attributeRule = true;
 
-        console.log('R1: ', this.results);
-
         if (this.activeRange) {
             this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
-                console.log('R2: ', this.results);
                 this.results = data;
             });
         } else {

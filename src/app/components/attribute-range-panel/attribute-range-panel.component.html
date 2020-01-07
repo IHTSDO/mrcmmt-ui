@@ -1,4 +1,4 @@
-<div id="attribute-range-panel" [class.flex-display]="results?.length">
+<div id="attribute-range-panel" [class.flex-display]="results?.total">
     <h1 class="pt-3 px-3">Attribute Range</h1>
     <div class="px-3 py-2 range" *ngFor="let range of ranges | alphabetical"
         (click)="makeActiveRange(range)"
@@ -21,7 +21,12 @@
             <div class="detail m-2 mb-3 px-2 rounded">{{determineContentTypeField(activeRange.additionalFields.contentTypeId)}}</div>
         </ng-container>
     </div>
-    <div *ngIf="activeRange" class="results">
-        <div class="py-2 px-4 result" *ngFor="let result of results; let odd = odd" [class.odd]="odd">{{result?.fsn.term}}</div>
+    <div *ngIf="activeRange && results && results.items.length > 0">
+        <div>
+            <h2 class="pt-3 px-3">{{results.total}} Results Matching Attribute Range</h2>
+        </div>
+        <div class="results">
+            <div class="py-2 px-4 result" *ngFor="let result of results.items; let odd = odd" [class.odd]="odd">{{result?.fsn.term}}</div>
+        </div>
     </div>
 </div>

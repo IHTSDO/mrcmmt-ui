@@ -20,10 +20,12 @@ export class TerminologyServerService {
 
         return this.http.post(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
             'MAIN/concepts/search', params).pipe(map(data => {
-                const response = [];
+                const response = {};
+                response.items = [];
+                response.total = data.total;
 
                 data['items'].forEach((item) => {
-                    response.push(item);
+                    response.items.push(item);
                 });
 
                 return response;
