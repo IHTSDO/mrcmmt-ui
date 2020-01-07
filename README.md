@@ -1,6 +1,6 @@
-# Angular Template
+# MRCMMT-UI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.3.
+This Angular project contains a UI for navigating and editing SNOMED CT MRCM refsets contained within a terminology server. Intended primarily for use with Snowstorm.
 
 ## Development server
 
