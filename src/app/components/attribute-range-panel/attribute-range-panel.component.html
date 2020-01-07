@@ -23,7 +23,7 @@
     </div>
     <div *ngIf="activeRange">
         <div>
-            <h3 *ngIf="total" class="pt-3 px-3">{{total}} Results Matching Attribute Range</h3>
+            <h3 *ngIf="total" class="pt-3 px-3">{{total}} Results Matching Range Contstraint</h3>
         </div>
         <div class="results">
             <div class="py-2 px-4 result" *ngFor="let result of results; let odd = odd" [class.odd]="odd">{{result?.fsn.term}}</div>
