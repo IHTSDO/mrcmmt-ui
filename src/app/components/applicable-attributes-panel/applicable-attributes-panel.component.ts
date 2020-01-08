@@ -64,7 +64,7 @@ export class ApplicableAttributesPanelComponent implements OnInit {
 
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
                 console.log('RANGES: ', ranges);
-                ranges = this.customOrder.transform(ranges, ['723596005', '723594008', '723593002', '723595009']);
+                ranges = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
                 this.setActives(this.activeDomain, attribute, ranges[0], this.attributeMatchedDomains);
                 this.rangesEmitter.emit(ranges);
             });

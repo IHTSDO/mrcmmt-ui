@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { RefSet } from '../../models/refset';
-import { ConceptList } from '../../models/conceptList';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 
 @Component({

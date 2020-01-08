@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthoringService } from './authoring.service';
-import { map } from 'rxjs/operators';
-import { RefSet } from '../models/refset';
-import { ConceptList } from '../models/conceptList';
+import { SnomedResponseObject } from '../models/snomedResponseObject';
 
 @Injectable({
     providedIn: 'root'
@@ -14,62 +12,27 @@ export class TerminologyServerService {
     constructor(private http: HttpClient, private authoringService: AuthoringService) {
     }
 
-    getRangeConstraints(rangeConstraint): Observable<ConceptList> {
+    getRangeConstraints(rangeConstraint): Observable<SnomedResponseObject> {
         const params = {
             eclFilter: rangeConstraint
         };
 
-        return this.http.post(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
-            'MAIN/concepts/search', params).pipe(map(data => {
-                const response = new ConceptList;
-                response.items = [];
-                response.total = data['total'];
-
-                data['items'].forEach((item) => {
-                    response.items.push(item);
-                });
-
-                return response;
-            }));
+        return this.http.post<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
+            'MAIN/concepts/search', params);
     }
 
-    getDomains(): Observable<RefSet[]> {
-        return this.http.get<RefSet[]>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
-            'MAIN/members?referenceSet=723560006&active=true&limit=1000').pipe(map(data => {
-                const response = [];
-
-                data['items'].forEach((item) => {
-                    response.push(item);
-                });
-
-                return response;
-            }));
+    getDomains(): Observable<SnomedResponseObject> {
+        return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
+            'MAIN/members?referenceSet=723560006&active=true&limit=1000');
     }
 
-    getAttributes(): Observable<RefSet[]> {
-        return this.http.get<RefSet[]>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
-            'MAIN/members?referenceSet=723561005&active=true&limit=1000').pipe(map(data => {
-                const response = [];
-
-                data['items'].forEach((item) => {
-                    response.push(item);
-                });
-
-                return response;
-            }));
+    getAttributes(): Observable<SnomedResponseObject> {
+        return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
+            'MAIN/members?referenceSet=723561005&active=true&limit=1000');
     }
 
-    getRanges(componentReferenceId): Observable<RefSet[]> {
-        return this.http.get<RefSet[]>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
-            'MAIN/members?referenceSet=723562003&referencedComponentId=' +
-            componentReferenceId + '&active=true&limit=1000').pipe(map(data => {
-                const response = [];
-
-                data['items'].forEach((item) => {
-                    response.push(item);
-                });
-
-                return response;
-            }));
+    getRanges(componentReferenceId): Observable<SnomedResponseObject> {
+        return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
+            'MAIN/members?referenceSet=723562003&referencedComponentId=' + componentReferenceId + '&active=true&limit=1000');
     }
 }

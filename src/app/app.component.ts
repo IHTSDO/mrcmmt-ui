@@ -3,7 +3,6 @@ import { AuthoringService } from './services/authoring.service';
 import { Versions } from './models/versions';
 import {Title} from '@angular/platform-browser';
 import { TerminologyServerService } from './services/terminologyServer.service';
-import { SnomedUtilityService } from './services/snomedUtility.service';
 import { RefSet } from './models/refset';
 
 @Component({
@@ -47,12 +46,12 @@ export class AppComponent implements OnInit {
 
             this.terminologyService.getDomains().subscribe(domains => {
                 console.log('DOMAINS: ', domains);
-                this.domains = domains;
+                this.domains = domains.items;
             });
 
             this.terminologyService.getAttributes().subscribe(attributes => {
                 console.log('ATTRIBUTES: ', attributes);
-                this.attributes = attributes;
+                this.attributes = attributes.items;
             });
         });
     }
