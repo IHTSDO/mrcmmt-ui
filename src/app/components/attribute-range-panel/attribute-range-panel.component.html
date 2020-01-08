@@ -1,5 +1,5 @@
 <div id="attribute-range-panel" [class.flex-display]="results?.length">
-    <h2 class="pt-3 px-3">Attribute Range</h2>
+    <h3 class="pt-3 px-3">Attribute Range</h3>
     <div class="px-3 py-2 range" *ngFor="let range of ranges | alphabetical"
         (click)="makeActiveRange(range)"
         [class.active]="range === activeRange">{{determineContentTypeField(range.additionalFields.contentTypeId)}}</div>

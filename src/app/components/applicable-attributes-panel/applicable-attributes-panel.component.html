@@ -1,5 +1,5 @@
 <div id="applicable-attributes-panel" [class.details-open]="activeAttribute" [class.details-minimized]="!detailsExpanded">
-    <h2 class="pt-3 px-3 m-0">Applicable Attributes</h2>
+    <h3 class="pt-3 px-3 m-0">Applicable Attributes</h3>
     <div class="p-3">
         <input type="search" class="form-control" [(ngModel)]="attributeFilter" placeholder="Filter Attributes...">
     </div>
@@ -7,12 +7,12 @@
          (click)="makeActiveAttribute(attribute)"
          [class.active]="attribute === activeAttribute">{{attribute.referencedComponent.fsn?.term}}</div>
     <div *ngIf="activeAttribute" class="details" [class.minimized]="!detailsExpanded">
-        <h3 class="detail-title p-2">{{activeDomain?.referencedComponent.fsn.term}}
+        <h4 class="detail-title p-2">{{activeDomain?.referencedComponent.fsn.term}}
             <span class="float-right" (click)="detailsExpanded = !detailsExpanded">
                 <i *ngIf="detailsExpanded" class="fas fa-caret-down"></i>
                 <i *ngIf="!detailsExpanded" class="fas fa-caret-up"></i>
             </span>
-        </h3>
+        </h4>
         <ng-container *ngIf="activeAttribute.additionalFields.grouped">
             <h4 class="label m-2">Grouped</h4>
             <div class="detail m-2 mb-3 px-2 rounded">{{activeAttribute.additionalFields.grouped}}</div>

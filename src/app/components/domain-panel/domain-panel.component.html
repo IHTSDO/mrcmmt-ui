@@ -1,5 +1,5 @@
 <div id="domain-panel" [class.details-open]="activeDomain" [class.details-minimized]="!detailsExpanded">
-    <h2 class="pt-3 px-3 m-0">Domain</h2>
+    <h3 class="pt-3 px-3 m-0">Domain</h3>
     <div class="p-3">
         <input type="search" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
     </div>
@@ -12,12 +12,12 @@
         </span>
     </div>
     <div *ngIf="activeDomain" class="details" [class.minimized]="!detailsExpanded">
-        <h3 class="detail-title p-2">{{activeDomain?.referencedComponent.fsn.term}}
+        <h4 class="detail-title p-2">{{activeDomain?.referencedComponent.fsn.term}}
             <span class="float-right" (click)="detailsExpanded = !detailsExpanded">
                 <i *ngIf="detailsExpanded" class="fas fa-caret-down"></i>
                 <i *ngIf="!detailsExpanded" class="fas fa-caret-up"></i>
             </span>
-        </h3>
+        </h4>
         <ng-container *ngIf="activeDomain.additionalFields.domainConstraint">
             <h4 class="label m-2">Domain Constraint</h4>
             <div class="detail m-2 mb-3 px-2 rounded">{{activeDomain.additionalFields.domainConstraint}}</div>
