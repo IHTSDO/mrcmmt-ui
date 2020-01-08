@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthoringService } from './authoring.service';
 import { map } from 'rxjs/operators';
 import { RefSet } from '../models/refset';
+import { ConceptList } from '../models/conceptList';
 
 @Injectable({
     providedIn: 'root'
@@ -13,16 +14,16 @@ export class TerminologyServerService {
     constructor(private http: HttpClient, private authoringService: AuthoringService) {
     }
 
-    getRangeConstraints(rangeConstraint): Observable<any[]> {
+    getRangeConstraints(rangeConstraint): Observable<ConceptList> {
         const params = {
             eclFilter: rangeConstraint
         };
 
         return this.http.post(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
             'MAIN/concepts/search', params).pipe(map(data => {
-                const response = {};
+                const response = new ConceptList;
                 response.items = [];
-                response.total = data.total;
+                response.total = data['total'];
 
                 data['items'].forEach((item) => {
                     response.items.push(item);

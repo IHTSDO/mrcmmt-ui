@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { RefSet } from '../../models/refset';
+import { ConceptList } from '../../models/conceptList';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 
 @Component({
@@ -35,8 +36,6 @@ export class AttributeRangePanelComponent implements OnChanges {
         this.rangeConstraint = true;
         this.attributeRule = true;
 
-        console.log('R1: ', this.results);
-
         if (this.activeRange) {
             this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
                 this.total = data.total;
@@ -51,6 +50,7 @@ export class AttributeRangePanelComponent implements OnChanges {
         if (this.activeRange === range) {
             this.setActives(this.activeDomain, this.activeAttribute, null);
             this.results = [];
+            this.total = '';
         } else {
             this.activeRange = range;
             this.setActives(this.activeDomain, this.activeAttribute, range);
