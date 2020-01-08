@@ -1,7 +1,7 @@
 <div id="domain-panel" [class.details-open]="activeDomain" [class.details-minimized]="!detailsExpanded">
-    <h1 class="pt-3 px-3 m-0">Domain</h1>
+    <h2 class="pt-3 px-3 m-0">Domain</h2>
     <div class="p-3">
-        <input type="text" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
+        <input type="search" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
     </div>
     <div class="domain px-3 py-2" *ngFor="let domain of domains | alphabetical | textMatch:domainFilter | topLevelDomain"
          (click)="makeActiveDomain(domain)"
@@ -12,34 +12,34 @@
         </span>
     </div>
     <div *ngIf="activeDomain" class="details" [class.minimized]="!detailsExpanded">
-        <h2 class="detail-title p-2">{{activeDomain?.referencedComponent.fsn.term}}
+        <h3 class="detail-title p-2">{{activeDomain?.referencedComponent.fsn.term}}
             <span class="float-right" (click)="detailsExpanded = !detailsExpanded">
                 <i *ngIf="detailsExpanded" class="fas fa-caret-down"></i>
                 <i *ngIf="!detailsExpanded" class="fas fa-caret-up"></i>
             </span>
-        </h2>
+        </h3>
         <ng-container *ngIf="activeDomain.additionalFields.domainConstraint">
-            <h3 class="label m-2">Domain Constraint</h3>
+            <h4 class="label m-2">Domain Constraint</h4>
             <div class="detail m-2 mb-3 px-2 rounded">{{activeDomain.additionalFields.domainConstraint}}</div>
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.parentDomain">
-            <h3 class="label m-2">Parent Domain</h3>
+            <h4 class="label m-2">Parent Domain</h4>
             <div class="detail m-2 mb-3 px-2 rounded">{{activeDomain.additionalFields.parentDomain}}</div>
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.proximalPrimitiveConstraint">
-            <h3 class="label m-2">Proximal Primitive Constraint</h3>
+            <h4 class="label m-2">Proximal Primitive Constraint</h4>
             <div class="detail m-2 mb-3 px-2 rounded">{{activeDomain.additionalFields.proximalPrimitiveConstraint}}</div>
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.proximalPrimitiveRefinement">
-            <h3 class="label m-2">Proximal Primitive Refinement</h3>
+            <h4 class="label m-2">Proximal Primitive Refinement</h4>
             <div class="detail m-2 mb-3 px-2 rounded">{{activeDomain.additionalFields.proximalPrimitiveRefinement}}</div>
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPrecoordination">
-            <h3 class="label m-2">Precoordination Domain Template</h3>
+            <h4 class="label m-2">Precoordination Domain Template</h4>
             <div class="detail m-2 mb-3 px-2 rounded" [class.short]="preCoordination" (click)="preCoordination = !preCoordination">{{activeDomain.additionalFields.domainTemplateForPrecoordination}}</div>
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPostcoordination">
-            <h3 class="label m-2">Postcoordination Domain Template</h3>
+            <h4 class="label m-2">Postcoordination Domain Template</h4>
             <div class="detail m-2 mb-3 px-2 rounded" [class.short]="postCoordination" (click)="postCoordination = !postCoordination">{{activeDomain.additionalFields.domainTemplateForPostcoordination}}</div>
         </ng-container>
     </div>
