@@ -35,6 +35,10 @@ div#domain-panel {
         span.subdomain:before {
             content: "-";
         }
+        
+        span.tertiary {
+            margin-left:2rem;
+        }
 
         &.attached {
             background-color: $ghost-grey;

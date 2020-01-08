@@ -7,7 +7,7 @@
          (click)="makeActiveDomain(domain)"
          [class.active]="domain === activeDomain"
          [class.attached]="highlightDomains(domain.referencedComponentId)">
-        <span [class.subdomain]="domain.additionalFields.parentDomain">
+        <span [class.subdomain]="domain.additionalFields.parentDomain" [class.tertiary]="domain.tertiary">
             {{domain.referencedComponent?.fsn.term}}
         </span>
     </div>
