@@ -14,8 +14,8 @@
     <div *ngIf="activeDomain" class="details" [class.minimized]="!detailsExpanded">
         <h2 class="detail-title p-2">{{activeDomain?.referencedComponent.fsn.term}}
             <span class="float-right" (click)="detailsExpanded = !detailsExpanded">
-                <i *ngIf="detailsExpanded" class="fas fa-level-down-alt"></i>
-                <i *ngIf="!detailsExpanded" class="fas fa-level-up-alt"></i>
+                <i *ngIf="detailsExpanded" class="fas fa-caret-down"></i>
+                <i *ngIf="!detailsExpanded" class="fas fa-caret-up"></i>
             </span>
         </h2>
         <ng-container *ngIf="activeDomain.additionalFields.domainConstraint">
