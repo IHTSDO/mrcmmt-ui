@@ -23,15 +23,16 @@ export class TopLevelDomainPipe implements PipeTransform {
     for (let i = 0; i < items.length; i++) {
         if (items[i].additionalFields.parentDomain) {
             const parent = SnomedUtilityService.getIdFromShortConcept(items[i].additionalFields.parentDomain);
-            Object.values(itemsBySemtag).forEach((item: any[]) => {
-                item.forEach((object) => {
-                    if (parent === object.referencedComponentId) {
-                        if (parent !== item[0].referencedComponentId) {
+            Object.values(itemsBySemtag).forEach((semtagItems: any[]) => {
+                for (let j = 0; j < semtagItems.length; j++) {
+                    if (parent === semtagItems[j].referencedComponentId) {
+                        if (parent !== semtagItems[0].referencedComponentId) {
                             items[i].tertiary = true;
                         }
-                        itemsBySemtag[SnomedUtilityService.getSemanticTagFromFsn(object.referencedComponent.fsn.term)].push(items[i]);
+                        itemsBySemtag[SnomedUtilityService.getSemanticTagFromFsn(semtagItems[j].referencedComponent.fsn.term)]
+                            .splice(j + 1, 0, items[i]);
                     }
-                });
+                }
             });
         }
     }
