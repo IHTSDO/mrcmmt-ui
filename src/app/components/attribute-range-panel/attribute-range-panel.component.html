@@ -2,7 +2,7 @@
     <h3 class="pt-3 px-3">Attribute Range</h3>
     <div class="px-3 py-2 range" *ngFor="let range of ranges | alphabetical"
         (click)="makeActiveRange(range)"
-        [class.active]="range === activeRange">{{determineContentTypeField(range.additionalFields.contentTypeId)}}</div>
+        [class.active]="range === activeRange">{{determineContentTypeField(range.additionalFields.contentTypeId)}} - {{determineMandatoryField(activeRange.additionalFields.ruleStrengthId)}}</div>
     <div *ngIf="activeAttribute && activeRange" class="details">
         <ng-container *ngIf="activeRange.additionalFields.rangeConstraint">
             <h4 class="label m-2">Range Constraint</h4>

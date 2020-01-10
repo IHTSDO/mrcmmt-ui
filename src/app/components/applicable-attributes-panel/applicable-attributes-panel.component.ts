@@ -97,10 +97,10 @@ export class ApplicableAttributesPanelComponent implements OnInit {
     determineMandatoryField(id) {
         switch (id) {
             case '723597001': {
-                return 'Mandatory concept model rule (foundation metadata concept)';
+                return 'Mandatory concept model rule';
             }
             case '723598006': {
-                return 'Optional concept model rule (foundation metadata concept)';
+                return 'Optional concept model rule';
             }
         }
     }
@@ -108,16 +108,16 @@ export class ApplicableAttributesPanelComponent implements OnInit {
     determineContentTypeField(id) {
         switch (id) {
             case '723596005': {
-                return 'All SNOMED CT content (foundation metadata concept)';
+                return 'All SNOMED CT content';
             }
             case '723593002': {
-                return 'All new precoordinated SNOMED CT content (foundation metadata concept)';
+                return 'All new precoordinated SNOMED CT content';
             }
             case '723594008': {
-                return 'All precoordinated SNOMED CT content (foundation metadata concept)';
+                return 'All precoordinated SNOMED CT content';
             }
             case '723595009': {
-                return 'All postcoordinated SNOMED CT content (foundation metadata concept)';
+                return 'All postcoordinated SNOMED CT content';
             }
         }
     }
