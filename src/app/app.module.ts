@@ -34,6 +34,7 @@ import { TopLevelDomainPipe } from './pipes/top-level-domain.pipe';
 
 // Interceptor Imports
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
+import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
 
 @NgModule({
     declarations: [
@@ -49,7 +50,8 @@ import { AuthenticationInterceptor } from './interceptors/authentication.interce
         BreadcrumbBarComponent,
         AlphabeticalPipe,
         CustomOrderPipe,
-        TopLevelDomainPipe
+        TopLevelDomainPipe,
+        InheritedDomainMatchPipe
     ],
     imports: [
         BrowserModule,

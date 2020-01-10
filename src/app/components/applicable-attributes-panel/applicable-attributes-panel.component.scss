@@ -30,6 +30,12 @@ div#applicable-attributes-panel {
     div.attribute {
         cursor: pointer;
 
+        &.attached {
+            color: $emperor-grey;
+            background-color: $blinding-white;
+            cursor: default;
+        }
+
         &.active {
             background-color: $tropical-blue;
         }

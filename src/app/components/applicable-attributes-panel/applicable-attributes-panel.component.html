@@ -3,6 +3,11 @@
     <div class="p-3">
         <input type="search" class="form-control" [(ngModel)]="attributeFilter" placeholder="Filter Attributes...">
     </div>
+    <ng-container *ngIf="activeDomain?.additionalFields.parentDomain">
+        <div class="px-3 py-2 attribute attached" *ngFor="let attribute of attributes | alphabetical | inheritedDomainMatch:activeDomain:domains | duplicateFilter:activeDomain?.referencedComponentId">
+            {{attribute.referencedComponent.fsn?.term}}
+        </div>
+    </ng-container>
     <div class="px-3 py-2 attribute" *ngFor="let attribute of attributes | alphabetical | textMatch:attributeFilter | domainMatch:activeDomain | duplicateFilter:activeDomain?.referencedComponentId"
          (click)="makeActiveAttribute(attribute)"
          [class.active]="attribute === activeAttribute">{{attribute.referencedComponent.fsn?.term}}</div>

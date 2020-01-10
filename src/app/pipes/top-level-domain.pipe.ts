@@ -36,7 +36,6 @@ export class TopLevelDomainPipe implements PipeTransform {
             });
         }
     }
-    console.log(itemsBySemtag);
 
     Object.values(itemsBySemtag).forEach((item: any[] ) => {
         item.forEach((object) => {
