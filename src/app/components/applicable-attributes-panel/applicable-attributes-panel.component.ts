@@ -48,6 +48,7 @@ export class ApplicableAttributesPanelComponent implements OnInit {
             this.setActives(this.activeDomain, null, null, null);
             this.rangesEmitter.emit([]);
         } else {
+            this.attributeMatchedDomains = [];
             this.activeAttribute = attribute;
             attributeMatchedDomains.push(attribute);
             this.attributes.forEach((item) => {

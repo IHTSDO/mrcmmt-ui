@@ -37,6 +37,7 @@ export class DomainPanelComponent implements OnInit {
     }
 
     makeActiveDomain(domain) {
+        this.attributeMatchedDomains = [];
         if (this.activeDomain === domain) {
             this.detailsExpanded = true;
             this.setActives(null, this.activeAttribute, this.activeRange);
