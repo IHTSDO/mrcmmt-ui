@@ -10,6 +10,7 @@ import { ApplicableAttributesPanelComponent } from './components/applicable-attr
 import { AttributeRangePanelComponent } from './components/attribute-range-panel/attribute-range-panel.component';
 import { DuplicateFilterPipe } from './pipes/duplicate-filter.pipe';
 import { DomainMatchPipe } from './pipes/domain-match.pipe';
+import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
 import { TextMatchPipe } from './pipes/text-match.pipe';
 import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
 import { TopLevelDomainPipe } from './pipes/top-level-domain.pipe';
@@ -32,6 +33,7 @@ describe('AppComponent', () => {
                 AttributeRangePanelComponent,
                 DuplicateFilterPipe,
                 DomainMatchPipe,
+                InheritedDomainMatchPipe,
                 TextMatchPipe,
                 AlphabeticalPipe,
                 TopLevelDomainPipe
