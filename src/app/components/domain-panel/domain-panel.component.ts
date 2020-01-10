@@ -37,7 +37,7 @@ export class DomainPanelComponent implements OnInit {
     }
 
     makeActiveDomain(domain) {
-        this.attributeMatchedDomains = [];
+        let domainFound = false;
         if (this.activeDomain === domain) {
             this.detailsExpanded = true;
             this.setActives(null, this.activeAttribute, this.activeRange);
@@ -47,8 +47,12 @@ export class DomainPanelComponent implements OnInit {
                 this.attributeMatchedDomains.forEach((item) => {
                     if (domain.referencedComponentId === item.additionalFields.domainId) {
                         this.activeAttribute = item;
+                        domainFound = true;
                     }
                 });
+            }
+            if (!domainFound) {
+                this.attributeMatchedDomains = [];
             }
             this.setActives(domain, this.activeAttribute, this.activeRange);
 
