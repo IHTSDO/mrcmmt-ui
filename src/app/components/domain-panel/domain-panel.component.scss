@@ -35,7 +35,7 @@ div#domain-panel {
         span.subdomain:before {
             content: "-";
         }
-        
+
         span.tertiary {
             margin-left:2rem;
         }
@@ -67,7 +67,6 @@ div#domain-panel {
 
         h3.detail-title {
             font-weight: 300;
-            color: $black;
             background-color: $regent-grey;
 
             span:hover {

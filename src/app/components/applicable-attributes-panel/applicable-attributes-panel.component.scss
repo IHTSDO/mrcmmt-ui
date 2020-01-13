@@ -31,9 +31,8 @@ div#applicable-attributes-panel {
         cursor: pointer;
 
         &.attached {
-            color: $emperor-grey;
-            background-color: $blinding-white;
-            cursor: default;
+            color: $dove-grey;
+            cursor: not-allowed;
         }
 
         &.active {
@@ -58,7 +57,6 @@ div#applicable-attributes-panel {
 
         h3.detail-title {
             font-weight: 300;
-            color: $black;
             background-color: $regent-grey;
 
             span:hover {
