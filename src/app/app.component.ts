@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthoringService } from './services/authoring.service';
 import { Versions } from './models/versions';
-import {Title} from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
+import 'jquery';
 import { TerminologyServerService } from './services/terminologyServer.service';
 import { RefSet } from './models/refset';
 
@@ -26,7 +27,7 @@ export class AppComponent implements OnInit {
     activeRange: RefSet;
 
     constructor(private authoringService: AuthoringService,
-                private terminologyService: TerminologyServerService, private titleService: Title ) {
+                private terminologyService: TerminologyServerService, private titleService: Title) {
     }
 
     ngOnInit() {
@@ -54,6 +55,8 @@ export class AppComponent implements OnInit {
                 this.attributes = attributes.items;
             });
         });
+
+        this.assignFavicon();
     }
 
     resetTool() {
@@ -62,5 +65,27 @@ export class AppComponent implements OnInit {
         this.attributeMatchedDomains = null;
         this.activeRange = null;
         this.ranges = [];
+    }
+
+    assignFavicon() {
+        const favicon = $('#favicon');
+
+        switch (this.environment) {
+            case 'local':
+                favicon.attr('href', 'favicon_grey.ico');
+                break;
+            case 'dev':
+                favicon.attr('href', 'favicon_red.ico');
+                break;
+            case 'uat':
+                favicon.attr('href', 'favicon_green.ico');
+                break;
+            case 'training':
+                favicon.attr('href', 'favicon_yellow.ico');
+                break;
+            default:
+                favicon.attr('href', 'favicon.ico');
+                break;
+        }
     }
 }

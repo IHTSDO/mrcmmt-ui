@@ -24,6 +24,10 @@
                         "tsConfig": "src/tsconfig.app.json",
                         "assets": [
                             "src/favicon.ico",
+                            "src/favicon_grey.ico",
+                            "src/favicon_red.ico",
+                            "src/favicon_green.ico",
+                            "src/favicon_yellow.ico",
                             "src/assets"
                         ],
                         "styles": [
