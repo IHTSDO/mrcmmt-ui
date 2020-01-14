@@ -6,7 +6,7 @@ div#domain-panel {
     height: calc(100vh - 12rem);
     border-right: 1px solid $regent-grey;
     background-color: $alto-white;
-    overflow: scroll;
+    overflow-x: hidden;
 
     &.details-open {
         height: calc(100vh - 12rem - 33vh);
@@ -58,7 +58,6 @@ div#domain-panel {
         border-right: 1px solid $regent-grey;
         height: 33vh;
         margin-bottom: 4rem;
-        overflow: scroll;
 
         &.minimized {
             height: 3.4rem;

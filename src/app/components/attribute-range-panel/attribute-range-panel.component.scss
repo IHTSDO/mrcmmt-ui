@@ -8,6 +8,7 @@ div#attribute-range-panel {
     border-left: 1px solid $regent-grey;
     background-color: $alto-white;
     flex-direction: column;
+    overflow-x: hidden;
 
     &.flex-display {
         display: flex;
@@ -47,7 +48,7 @@ div#attribute-range-panel {
     }
 
     div.results {
-        overflow: scroll;
+        overflow-x: hidden;
 
         div.result {
             &.odd {

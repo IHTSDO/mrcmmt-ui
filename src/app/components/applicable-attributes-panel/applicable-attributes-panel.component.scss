@@ -7,7 +7,7 @@ div#applicable-attributes-panel {
     width: 34vw;
     height: calc(100vh - 12rem);
     background-color: $gallery-white;
-    overflow: scroll;
+    overflow-x: hidden;
 
     &.details-open {
         height: calc(100vh - 12rem - 33vh);
@@ -48,7 +48,6 @@ div#applicable-attributes-panel {
         border-top: 1px solid $regent-grey;
         height: 33vh;
         margin-bottom: 4rem;
-        overflow: scroll;
 
         &.minimized {
             height: 3.4rem;
