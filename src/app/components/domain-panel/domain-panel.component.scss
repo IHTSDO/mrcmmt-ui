@@ -79,7 +79,18 @@ div#domain-panel {
         }
 
         div.detail {
+            position: relative;
             background-color: $white;
+
+            span {
+                position: absolute;
+                top: 0;
+                right: 0.5rem;
+            }
+
+            &.expandable {
+                cursor: pointer;
+            }
 
             &.short {
                 white-space: nowrap;

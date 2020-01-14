@@ -41,11 +41,21 @@
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPrecoordination">
             <h4 class="label m-2">Precoordination Domain Template</h4>
-            <div class="detail m-2 mb-3 px-2 rounded" [class.short]="preCoordination" (click)="preCoordination = !preCoordination">{{activeDomain.additionalFields.domainTemplateForPrecoordination}}</div>
+            <div class="detail expandable m-2 mb-3 pl-2 pr-4 rounded" [class.short]="preCoordination" (click)="preCoordination = !preCoordination">{{activeDomain.additionalFields.domainTemplateForPrecoordination}}
+                <span>
+                    <i *ngIf="preCoordination" class="fas fa-caret-down"></i>
+                    <i *ngIf="!preCoordination" class="fas fa-caret-up"></i>
+                </span>
+            </div>
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPostcoordination">
             <h4 class="label m-2">Postcoordination Domain Template</h4>
-            <div class="detail m-2 mb-3 px-2 rounded" [class.short]="postCoordination" (click)="postCoordination = !postCoordination">{{activeDomain.additionalFields.domainTemplateForPostcoordination}}</div>
+            <div class="detail expandable m-2 mb-3 pl-2 pr-4 rounded" [class.short]="postCoordination" (click)="postCoordination = !postCoordination">{{activeDomain.additionalFields.domainTemplateForPostcoordination}}
+                <span>
+                    <i *ngIf="postCoordination" class="fas fa-caret-down"></i>
+                    <i *ngIf="!postCoordination" class="fas fa-caret-up"></i>
+                </span>
+            </div>
         </ng-container>
     </div>
 </div>
