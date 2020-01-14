@@ -1,14 +1,9 @@
 <div id="applicable-attributes-panel" [class.details-open]="activeAttribute" [class.details-minimized]="!detailsExpanded">
     <h3 class="pt-3 px-3 m-0">Applicable Attributes</h3>
-    <div class="input-group p-3">
-        <input class="form-control py-2 border-right-0 border" [(ngModel)]="attributeFilter" placeholder="Filter Attributes...">
-        <span class="input-group-append">
-            <button class="input-group-text white py-2 search-clear" (click)="attributeFilter = ''">
-                <i class="fa fa-times-circle"></i>
-            </button>
-        </span>
+    <div class="p-3">
+        <input type="search" class="form-control" [(ngModel)]="attributeFilter" placeholder="Filter Attributes...">
     </div>
-    
+
     <div class="px-3 py-2 attribute" *ngFor="let attribute of attributes | alphabetical | textMatch:attributeFilter | domainMatch:activeDomain | duplicateFilter:activeDomain?.referencedComponentId"
          (click)="makeActiveAttribute(attribute)"
          [class.active]="attribute === activeAttribute">{{attribute.referencedComponent.fsn?.term}}
@@ -19,7 +14,7 @@
         </div>
     </ng-container>
     <div *ngIf="activeAttribute" class="details" [class.minimized]="!detailsExpanded">
-        <h4 class="detail-title p-2">{{activeDomain?.referencedComponent.fsn.term}}
+        <h4 class="detail-title p-2">
             <span class="float-right" (click)="detailsExpanded = !detailsExpanded">
                 <i *ngIf="detailsExpanded" class="fas fa-caret-down"></i>
                 <i *ngIf="!detailsExpanded" class="fas fa-caret-up"></i>
