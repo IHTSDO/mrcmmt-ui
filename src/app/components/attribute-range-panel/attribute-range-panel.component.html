@@ -25,7 +25,7 @@
     </div>
     <div class="results" *ngIf="activeRange">
         <div>
-            <h4 *ngIf="total" class="pt-3 px-3">{{total | number:'1.'}} Results Matching Range Constraint</h4>
+            <h4 *ngIf="total" class="pt-3 px-3">{{total | number:'1.'}} Results Matching Range</h4>
         </div>
         <div class="results">
             <div class="py-2 px-4 result" *ngFor="let result of results; let odd = odd" [class.odd]="odd">{{result?.fsn.term}}</div>
