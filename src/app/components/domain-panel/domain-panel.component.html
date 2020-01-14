@@ -1,12 +1,7 @@
 <div id="domain-panel" [class.details-open]="activeDomain" [class.details-minimized]="!detailsExpanded">
     <h3 class="pt-3 px-3 m-0">Domain</h3>
-    <div class="input-group p-3">
-        <input class="form-control py-2 border-right-0 border" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
-        <span class="input-group-append">
-            <button class="input-group-text white py-2 search-clear" (click)="domainFilter = ''">
-                <i class="fa fa-times-circle"></i>
-            </button>
-        </span>
+    <div class="p-3">
+        <input type="search" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
     </div>
     <div class="domain px-3 py-2" *ngFor="let domain of domains | alphabetical | topLevelDomain | textMatch:domainFilter"
          (click)="makeActiveDomain(domain)"
