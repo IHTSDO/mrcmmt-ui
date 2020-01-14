@@ -14,7 +14,7 @@
         </div>
     </ng-container>
     <div *ngIf="activeAttribute" class="details" [class.minimized]="!detailsExpanded">
-        <h4 class="detail-title p-2">{{activeDomain?.referencedComponent.fsn.term}}
+        <h4 class="detail-title p-2">
             <span class="float-right" (click)="detailsExpanded = !detailsExpanded">
                 <i *ngIf="detailsExpanded" class="fas fa-caret-down"></i>
                 <i *ngIf="!detailsExpanded" class="fas fa-caret-up"></i>
