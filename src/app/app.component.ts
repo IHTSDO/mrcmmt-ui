@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log('New repo test commit');
         this.titleService.setTitle('SNOMED CT MRCM Maintenance Tool');
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
 
