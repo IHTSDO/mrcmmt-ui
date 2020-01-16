@@ -12,6 +12,7 @@ import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
 export class ApplicableAttributesPanelComponent implements OnInit {
 
     // bindings
+    @Input() attributeFilter: string;
     @Input() attributes: RefSet[];
     @Input() domains: RefSet[];
     @Input() activeDomain: RefSet;
@@ -23,9 +24,6 @@ export class ApplicableAttributesPanelComponent implements OnInit {
     @Output() attributeMatchedDomainsEmitter = new EventEmitter();
     @Output() activeRangeEmitter = new EventEmitter();
     @Output() rangesEmitter = new EventEmitter();
-
-    // filter
-    attributeFilter: string;
 
     // visibility flags
     detailsExpanded: boolean;

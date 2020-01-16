@@ -10,6 +10,7 @@ export class DomainPanelComponent implements OnInit {
 
     // bindings
     @Input() domains: RefSet[];
+    @Input() domainFilter: string;
     @Input() activeDomain: RefSet;
     @Input() activeAttribute: RefSet;
     @Input() attributeMatchedDomains: RefSet[];
@@ -17,9 +18,6 @@ export class DomainPanelComponent implements OnInit {
     @Output() activeDomainEmitter = new EventEmitter();
     @Output() activeAttributeEmitter = new EventEmitter();
     @Output() activeRangeEmitter = new EventEmitter();
-
-    // filter
-    domainFilter: string;
 
     // visibility flags
     preCoordination: boolean;

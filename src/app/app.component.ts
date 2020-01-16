@@ -26,6 +26,9 @@ export class AppComponent implements OnInit {
     ranges: RefSet[];
     activeRange: RefSet;
 
+    domainFilter: string;
+    attributeFilter: string;
+
     constructor(private authoringService: AuthoringService,
                 private terminologyService: TerminologyServerService, private titleService: Title) {
     }
@@ -65,6 +68,8 @@ export class AppComponent implements OnInit {
         this.attributeMatchedDomains = null;
         this.activeRange = null;
         this.ranges = [];
+        this.domainFilter = null;
+        this.attributeFilter = null;
     }
 
     assignFavicon() {

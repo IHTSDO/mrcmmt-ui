@@ -8,6 +8,7 @@
 </app-breadcrumb-bar>
 <app-domain-panel
     [domains]="domains"
+    [domainFilter]="domainFilter"
     [activeDomain]="activeDomain"
     [activeAttribute]="activeAttribute"
     [attributeMatchedDomains]="attributeMatchedDomains"
@@ -30,6 +31,7 @@
 </app-attribute-range-panel>
 
 <app-applicable-attributes-panel
+    [attributeFilter]="attributeFilter"
     [attributes]="attributes"
     [domains]="domains"
     [activeDomain]="activeDomain"
