@@ -7,7 +7,6 @@
     (resetEmitter)="resetTool()">
 </app-breadcrumb-bar>
 <app-domain-panel
-    [domains]="domains"
     [domainFilter]="domainFilter"
     [activeDomain]="activeDomain"
     [activeAttribute]="activeAttribute"
@@ -20,7 +19,6 @@
 </app-domain-panel>
 
 <app-attribute-range-panel
-    [ranges]="ranges"
     [activeDomain]="activeDomain"
     [activeAttribute]="activeAttribute"
     [activeRange]="activeRange"
@@ -32,8 +30,6 @@
 
 <app-applicable-attributes-panel
     [attributeFilter]="attributeFilter"
-    [attributes]="attributes"
-    [domains]="domains"
     [activeDomain]="activeDomain"
     [activeAttribute]="activeAttribute"
     [attributeMatchedDomains]="attributeMatchedDomains"
@@ -42,8 +38,7 @@
     (activeDomainEmitter)="activeDomain = $event"
     (activeAttributeEmitter)="activeAttribute = $event"
     (attributeMatchedDomainsEmitter)="attributeMatchedDomains = $event"
-    (activeRangeEmitter)="activeRange = $event"
-    (rangesEmitter)="ranges = $event">
+    (activeRangeEmitter)="activeRange = $event">
 </app-applicable-attributes-panel>
 
 <app-snomed-footer></app-snomed-footer>

@@ -35,6 +35,9 @@ import { TopLevelDomainPipe } from './pipes/top-level-domain.pipe';
 // Interceptor Imports
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
 import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
+import { DomainService } from './services/domain.service';
+import { AttributeService } from './services/attribute.service';
+import { RangeService } from './services/range.service';
 
 @NgModule({
     declarations: [
@@ -65,6 +68,10 @@ import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
     providers: [
         TerminologyServerService,
         AuthoringService,
+        SnomedUtilityService,
+        DomainService,
+        AttributeService,
+        RangeService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthenticationInterceptor,

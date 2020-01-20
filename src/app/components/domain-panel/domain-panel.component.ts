@@ -1,15 +1,16 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { RefSet } from '../../models/refset';
+import { Subscription } from 'rxjs';
+import { DomainService } from '../../services/domain.service';
 
 @Component({
     selector: 'app-domain-panel',
     templateUrl: './domain-panel.component.html',
     styleUrls: ['./domain-panel.component.scss']
 })
-export class DomainPanelComponent implements OnInit {
+export class DomainPanelComponent implements OnInit, OnDestroy {
 
     // bindings
-    @Input() domains: RefSet[];
     @Input() domainFilter: string;
     @Input() activeDomain: RefSet;
     @Input() activeAttribute: RefSet;
@@ -24,14 +25,25 @@ export class DomainPanelComponent implements OnInit {
     postCoordination: boolean;
     detailsExpanded: boolean;
 
-    constructor() {
+    domains: object;
+    domainSubscription: Subscription;
+
+    constructor(private domainService: DomainService) {
+        // subscribe to home component messages
+        this.domainSubscription = this.domainService.collectDomains().subscribe(data => {
+            this.domains = data;
+        });
     }
 
     ngOnInit() {
-        this.domains = [];
         this.preCoordination = true;
         this.postCoordination = true;
         this.detailsExpanded = true;
+    }
+
+    ngOnDestroy() {
+        // unsubscribe to ensure no memory leaks
+        this.domainSubscription.unsubscribe();
     }
 
     makeActiveDomain(domain) {

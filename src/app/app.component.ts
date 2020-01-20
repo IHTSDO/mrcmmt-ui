@@ -5,6 +5,8 @@ import { Title } from '@angular/platform-browser';
 import 'jquery';
 import { TerminologyServerService } from './services/terminologyServer.service';
 import { RefSet } from './models/refset';
+import { DomainService } from './services/domain.service';
+import { AttributeService } from './services/attribute.service';
 
 @Component({
     selector: 'app-root',
@@ -16,10 +18,8 @@ export class AppComponent implements OnInit {
     environment: string;
     versions: Versions;
 
-    domains: RefSet[];
     activeDomain: RefSet;
 
-    attributes: RefSet[];
     activeAttribute: RefSet;
     attributeMatchedDomains: RefSet[];
 
@@ -29,8 +29,8 @@ export class AppComponent implements OnInit {
     domainFilter: string;
     attributeFilter: string;
 
-    constructor(private authoringService: AuthoringService,
-                private terminologyService: TerminologyServerService, private titleService: Title) {
+    constructor(private authoringService: AuthoringService, private terminologyService: TerminologyServerService,
+                private titleService: Title, private domainService: DomainService, private attributeService: AttributeService) {
     }
 
     ngOnInit() {
@@ -49,13 +49,11 @@ export class AppComponent implements OnInit {
             this.authoringService.uiConfiguration = data;
 
             this.terminologyService.getDomains().subscribe(domains => {
-                console.log('DOMAINS: ', domains);
-                this.domains = domains.items;
+                this.domainService.setDomains(domains);
             });
 
             this.terminologyService.getAttributes().subscribe(attributes => {
-                console.log('ATTRIBUTES: ', attributes);
-                this.attributes = attributes.items;
+                this.attributeService.setAttributes(attributes);
             });
         });
 

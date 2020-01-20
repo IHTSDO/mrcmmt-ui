@@ -1,7 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { RefSet } from '../../models/refset';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
+import { Subscription } from 'rxjs';
+import { DomainService } from '../../services/domain.service';
+import { AttributeService } from '../../services/attribute.service';
+import { RangeService } from '../../services/range.service';
 
 @Component({
     selector: 'app-applicable-attributes-panel',
@@ -9,12 +13,10 @@ import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
     styleUrls: ['./applicable-attributes-panel.component.scss'],
     providers: [ CustomOrderPipe ]
 })
-export class ApplicableAttributesPanelComponent implements OnInit {
+export class ApplicableAttributesPanelComponent implements OnInit, OnDestroy {
 
     // bindings
     @Input() attributeFilter: string;
-    @Input() attributes: RefSet[];
-    @Input() domains: RefSet[];
     @Input() activeDomain: RefSet;
     @Input() activeAttribute: RefSet;
     @Input() attributeMatchedDomains: RefSet[];
@@ -23,18 +25,36 @@ export class ApplicableAttributesPanelComponent implements OnInit {
     @Output() activeAttributeEmitter = new EventEmitter();
     @Output() attributeMatchedDomainsEmitter = new EventEmitter();
     @Output() activeRangeEmitter = new EventEmitter();
-    @Output() rangesEmitter = new EventEmitter();
 
     // visibility flags
     detailsExpanded: boolean;
 
-    constructor(private terminologyService: TerminologyServerService, private customOrder: CustomOrderPipe) {
+    domains: object;
+    domainSubscription: Subscription;
+
+    attributes: object;
+    attributeSubscription: Subscription;
+
+    constructor(private terminologyService: TerminologyServerService, private customOrder: CustomOrderPipe,
+                private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService) {
+        this.domainSubscription = this.domainService.collectDomains().subscribe(data => {
+            this.domains = data;
+        });
+
+        this.attributeSubscription = this.attributeService.collectAttributes().subscribe(data => {
+            this.attributes = data;
+        });
     }
 
     ngOnInit() {
-        this.attributes = [];
         this.attributeMatchedDomains = [];
         this.detailsExpanded = true;
+    }
+
+    ngOnDestroy() {
+        // unsubscribe to ensure no memory leaks
+        this.domainSubscription.unsubscribe();
+        this.attributeSubscription.unsubscribe();
     }
 
     makeActiveAttribute(attribute) {
@@ -44,12 +64,13 @@ export class ApplicableAttributesPanelComponent implements OnInit {
         if (this.activeAttribute === attribute) {
             this.detailsExpanded = true;
             this.setActives(this.activeDomain, null, null, null);
-            this.rangesEmitter.emit([]);
+            // this.rangesEmitter.emit([]);
+            this.rangeService.setRanges(null);
         } else {
             this.attributeMatchedDomains = [];
             this.activeAttribute = attribute;
             attributeMatchedDomains.push(attribute);
-            this.attributes.forEach((item) => {
+            this.attributes['items'].forEach((item) => {
                 if (this.activeAttribute.memberId !== item.memberId &&
                     this.activeAttribute.referencedComponentId === item.referencedComponentId) {
                     attributeMatchedDomains.push(item);
@@ -63,9 +84,10 @@ export class ApplicableAttributesPanelComponent implements OnInit {
 
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
                 console.log('RANGES: ', ranges);
-                ranges = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
-                this.setActives(this.activeDomain, attribute, ranges[0], this.attributeMatchedDomains);
-                this.rangesEmitter.emit(ranges);
+                ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
+                this.setActives(this.activeDomain, attribute, ranges.items[0], this.attributeMatchedDomains);
+                this.rangeService.setRanges(ranges);
+                // this.rangesEmitter.emit(ranges);
             });
         }
     }
@@ -81,10 +103,10 @@ export class ApplicableAttributesPanelComponent implements OnInit {
         if (!this.activeDomain) {
             const activeDomainList = [];
 
-            for (let i = 0; i < this.domains.length; i++) {
+            for (let i = 0; i < this.domains['items'].length; i++) {
                 for (let j = 0; j < this.attributeMatchedDomains.length; j++) {
-                    if (this.domains[i].referencedComponentId === this.attributeMatchedDomains[j].additionalFields.domainId) {
-                        activeDomainList.push(this.domains[i]);
+                    if (this.domains['items'][i].referencedComponentId === this.attributeMatchedDomains[j].additionalFields.domainId) {
+                        activeDomainList.push(this.domains['items'][i]);
                     }
                 }
             }

@@ -1,16 +1,17 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
 import { RefSet } from '../../models/refset';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
+import { Subscription } from 'rxjs';
+import { RangeService } from '../../services/range.service';
 
 @Component({
     selector: 'app-attribute-range-panel',
     templateUrl: './attribute-range-panel.component.html',
     styleUrls: ['./attribute-range-panel.component.scss']
 })
-export class AttributeRangePanelComponent implements OnChanges {
+export class AttributeRangePanelComponent implements OnChanges, OnDestroy {
 
     // bindings
-    @Input() ranges: RefSet[];
     @Input() activeDomain: RefSet;
     @Input() activeAttribute: RefSet;
     @Input() activeRange: RefSet;
@@ -26,7 +27,13 @@ export class AttributeRangePanelComponent implements OnChanges {
     rangeConstraint: boolean;
     attributeRule: boolean;
 
-    constructor(private terminologyService: TerminologyServerService) {
+    ranges: object;
+    rangeSubscription: Subscription;
+
+    constructor(private terminologyService: TerminologyServerService, private rangeService: RangeService) {
+        this.rangeSubscription = this.rangeService.collectRanges().subscribe(data => {
+            this.ranges = data;
+        });
     }
 
     ngOnChanges() {
@@ -43,6 +50,11 @@ export class AttributeRangePanelComponent implements OnChanges {
         } else {
             this.results = [];
         }
+    }
+
+    ngOnDestroy() {
+        // unsubscribe to ensure no memory leaks
+        this.rangeSubscription.unsubscribe();
     }
 
     makeActiveRange(range) {
