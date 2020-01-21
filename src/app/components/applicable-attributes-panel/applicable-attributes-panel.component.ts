@@ -95,8 +95,7 @@ export class ApplicableAttributesPanelComponent implements OnInit, OnDestroy {
 
             this.attributeMatchedDomains = attributeMatchedDomains;
 
-            this.automaticDomainSelect();
-            this.setActives(this.activeDomain, attribute, null);
+            this.automaticDomainSelect(attribute);
             this.attributeService.setAttributeMatchedDomains(this.attributeMatchedDomains);
 
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
@@ -114,7 +113,7 @@ export class ApplicableAttributesPanelComponent implements OnInit, OnDestroy {
         this.rangeService.setActiveRange(range);
     }
 
-    automaticDomainSelect() {
+    automaticDomainSelect(attribute) {
         if (!this.activeDomain) {
             const activeDomainList = [];
 
@@ -125,8 +124,7 @@ export class ApplicableAttributesPanelComponent implements OnInit, OnDestroy {
                     }
                 }
             }
-
-            this.activeDomain = activeDomainList[0];
+            this.setActives(this.activeDomainList[0], attribute);
         }
     }
 
