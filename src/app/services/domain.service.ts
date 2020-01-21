@@ -29,7 +29,6 @@ export class DomainService {
 
     // Setters & Getters: Active Domains
     setActiveDomain(domain) {
-        // console.log('ACTIVE DOMAIN: ', domain);
         this.activeDomain.next(domain);
     }
 

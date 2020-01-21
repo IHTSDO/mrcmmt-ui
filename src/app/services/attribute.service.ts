@@ -11,7 +11,7 @@ export class AttributeService {
 
     private attributes = new Subject<any>();
     private activeAttribute = new Subject<any>();
-    private attributeMatchedDomains = new Subject<any>();
+    private matchedDomains = new Subject<any>();
     private attributeFilter = new Subject<any>();
 
     // Setters & Getters: Attributes
@@ -30,7 +30,6 @@ export class AttributeService {
 
     // Setters & Getters: Active Attribute
     setActiveAttribute(attribute) {
-        // console.log('ACTIVE ATTRIBUTE: ', attribute);
         this.activeAttribute.next(attribute);
     }
 
@@ -43,16 +42,16 @@ export class AttributeService {
     }
 
     // Setters & Getters: Attribute Matched Domains
-    setAttributeMatchedDomains(attributes) {
-        this.attributeMatchedDomains.next(attributes);
+    setMatchedDomains(attributes) {
+        this.matchedDomains.next(attributes);
     }
 
-    clearAttributeMatchedDomains() {
-        this.attributeMatchedDomains.next();
+    clearMatchedDomains() {
+        this.matchedDomains.next();
     }
 
-    getAttributeMatchedDomains() {
-        return this.attributeMatchedDomains.asObservable();
+    getMatchedDomains() {
+        return this.matchedDomains.asObservable();
     }
 
     // Setters & Getters: Attribute Filter

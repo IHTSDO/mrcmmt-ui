@@ -28,7 +28,6 @@ export class RangeService {
 
     // Setters & Getters: Active Range
     setActiveRange(range) {
-        // console.log('ACTIVE RANGE: ', range);
         this.activeRange.next(range);
     }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { RefSet } from '../../models/refset';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { Subscription } from 'rxjs';
@@ -16,9 +16,8 @@ export class Results {
     templateUrl: './attribute-range-panel.component.html',
     styleUrls: ['./attribute-range-panel.component.scss']
 })
-export class AttributeRangePanelComponent implements OnInit, OnDestroy {
+export class AttributeRangePanelComponent implements OnDestroy {
 
-    // visibility flags
     rangeConstraint: boolean;
     attributeRule: boolean;
 
@@ -46,9 +45,6 @@ export class AttributeRangePanelComponent implements OnInit, OnDestroy {
             this.activeRange = data;
             this.getResults();
         });
-    }
-
-    ngOnInit() {
     }
 
     ngOnDestroy() {
