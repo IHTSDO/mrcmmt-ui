@@ -7,7 +7,7 @@
         <span *ngIf="activeRange" class="concept">{{determineContentTypeField(activeRange.additionalFields.contentTypeId)}}</span>
     </div>
     <div class="float-right">
-        <button type="button" class="btn-purple m-0 py-0 px-3" (click)="resetEmitter.emit()">RESET</button>
+        <button type="button" class="btn-purple m-0 py-0 px-3" (click)="reset()">RESET</button>
         <!--<button type="button" class="btn-green m-0 py-0 px-3 float-right">CREATE</button>-->
     </div>
 </nav>

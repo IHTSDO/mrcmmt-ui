@@ -1,27 +1,22 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RefSet } from '../../models/refset';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { Subscription } from 'rxjs';
 import { RangeService } from '../../services/range.service';
+import { DomainService } from '../../services/domain.service';
+import { AttributeService } from '../../services/attribute.service';
+
+export class Results {
+    items: object[];
+    total: string;
+}
 
 @Component({
     selector: 'app-attribute-range-panel',
     templateUrl: './attribute-range-panel.component.html',
     styleUrls: ['./attribute-range-panel.component.scss']
 })
-export class AttributeRangePanelComponent implements OnChanges, OnDestroy {
-
-    // bindings
-    @Input() activeDomain: RefSet;
-    @Input() activeAttribute: RefSet;
-    @Input() activeRange: RefSet;
-    @Output() activeDomainEmitter = new EventEmitter();
-    @Output() activeAttributeEmitter = new EventEmitter();
-    @Output() activeRangeEmitter = new EventEmitter();
-
-    // results
-    results: any[];
-    total: any;
+export class AttributeRangePanelComponent implements OnInit, OnDestroy {
 
     // visibility flags
     rangeConstraint: boolean;
@@ -30,53 +25,66 @@ export class AttributeRangePanelComponent implements OnChanges, OnDestroy {
     ranges: object;
     rangeSubscription: Subscription;
 
-    constructor(private terminologyService: TerminologyServerService, private rangeService: RangeService) {
-        this.rangeSubscription = this.rangeService.collectRanges().subscribe(data => {
-            this.ranges = data;
+    results: Results;
+
+    activeDomain: RefSet;
+    activeDomainSubscription: Subscription;
+    activeAttribute: RefSet;
+    activeAttributeSubscription: Subscription;
+    activeRange: RefSet;
+    activeRangeSubscription: Subscription;
+
+    constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
+                private terminologyService: TerminologyServerService) {
+        this.rangeSubscription = this.rangeService.getRanges().subscribe(data => this.ranges = data);
+        this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
+        this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
+            this.activeAttribute = data;
+            this.clearResults();
+        });
+        this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => {
+            this.activeRange = data;
+            this.getResults();
         });
     }
 
-    ngOnChanges() {
-        this.results = [];
-        this.total = '';
-        this.rangeConstraint = true;
-        this.attributeRule = true;
-
-        if (this.activeRange) {
-            this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
-                this.total = data.total;
-                this.results = data.items;
-            });
-        } else {
-            this.results = [];
-        }
+    ngOnInit() {
     }
 
     ngOnDestroy() {
-        // unsubscribe to ensure no memory leaks
         this.rangeSubscription.unsubscribe();
+        this.activeDomainSubscription.unsubscribe();
+        this.activeAttributeSubscription.unsubscribe();
+        this.activeRangeSubscription.unsubscribe();
     }
 
     makeActiveRange(range) {
         if (this.activeRange === range) {
             this.setActives(this.activeDomain, this.activeAttribute, null);
-            this.results = [];
-            this.total = '';
+            this.clearResults();
         } else {
             this.activeRange = range;
-            this.setActives(this.activeDomain, this.activeAttribute, range);
+            this.setActives(this.activeDomain, this.activeAttribute, this.activeRange);
+            this.getResults();
+        }
+    }
 
+    getResults() {
+        if (this.activeRange) {
             this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
-                this.total = data.total;
-                this.results = data.items;
+                this.results = data;
             });
         }
     }
 
+    clearResults() {
+        this.results = { items: [], total: '' };
+    }
+
     setActives(domain, attribute, range) {
-        this.activeDomainEmitter.emit(domain);
-        this.activeAttributeEmitter.emit(attribute);
-        this.activeRangeEmitter.emit(range);
+        this.domainService.setActiveDomain(domain);
+        this.attributeService.setActiveAttribute(attribute);
+        this.rangeService.setActiveRange(range);
     }
 
     determineMandatoryField(id) {

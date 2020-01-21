@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RefSet } from '../../models/refset';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
@@ -15,34 +15,46 @@ import { RangeService } from '../../services/range.service';
 })
 export class ApplicableAttributesPanelComponent implements OnInit, OnDestroy {
 
-    // bindings
-    @Input() attributeFilter: string;
-    @Input() activeDomain: RefSet;
-    @Input() activeAttribute: RefSet;
-    @Input() attributeMatchedDomains: RefSet[];
-    @Input() activeRange: RefSet;
-    @Output() activeDomainEmitter = new EventEmitter();
-    @Output() activeAttributeEmitter = new EventEmitter();
-    @Output() attributeMatchedDomainsEmitter = new EventEmitter();
-    @Output() activeRangeEmitter = new EventEmitter();
-
     // visibility flags
     detailsExpanded: boolean;
 
     domains: object;
     domainSubscription: Subscription;
-
     attributes: object;
     attributeSubscription: Subscription;
+    attributeFilter: string;
+    attributeFilterSubscription: Subscription;
+    activeDomain: RefSet;
+    activeDomainSubscription: Subscription;
+    activeAttribute: RefSet;
+    activeAttributeSubscription: Subscription;
+    activeRange: RefSet;
+    activeRangeSubscription: Subscription;
+    attributeMatchedDomains: RefSet[];
+    attributeMatchedDomainsSubscription: Subscription;
 
-    constructor(private terminologyService: TerminologyServerService, private customOrder: CustomOrderPipe,
-                private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService) {
-        this.domainSubscription = this.domainService.collectDomains().subscribe(data => {
+    constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
+                private terminologyService: TerminologyServerService, private customOrder: CustomOrderPipe) {
+        this.domainSubscription = this.domainService.getDomains().subscribe(data => {
             this.domains = data;
         });
-
-        this.attributeSubscription = this.attributeService.collectAttributes().subscribe(data => {
+        this.attributeSubscription = this.attributeService.getAttributes().subscribe(data => {
             this.attributes = data;
+        });
+        this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => {
+            this.activeDomain = data;
+        });
+        this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
+            this.activeAttribute = data;
+        });
+        this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => {
+            this.activeRange = data;
+        });
+        this.attributeMatchedDomainsSubscription = this.attributeService.getAttributeMatchedDomains().subscribe(data => {
+            this.attributeMatchedDomains = data;
+        });
+        this.attributeFilterSubscription = this.attributeService.getAttributeFilter().subscribe(data => {
+            this.attributeFilter = data;
         });
     }
 
@@ -52,20 +64,24 @@ export class ApplicableAttributesPanelComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        // unsubscribe to ensure no memory leaks
         this.domainSubscription.unsubscribe();
         this.attributeSubscription.unsubscribe();
+        this.activeDomainSubscription.unsubscribe();
+        this.activeAttributeSubscription.unsubscribe();
+        this.activeRangeSubscription.unsubscribe();
+        this.attributeMatchedDomainsSubscription.unsubscribe();
     }
 
     makeActiveAttribute(attribute) {
         const attributeMatchedDomains = [];
-        this.activeRangeEmitter.emit(null);
+        this.attributeService.clearAttributeMatchedDomains();
+        this.rangeService.clearRanges();
 
         if (this.activeAttribute === attribute) {
             this.detailsExpanded = true;
-            this.setActives(this.activeDomain, null, null, null);
-            // this.rangesEmitter.emit([]);
-            this.rangeService.setRanges(null);
+            this.setActives(this.activeDomain, null, null);
+            this.attributeService.clearAttributeMatchedDomains();
+            this.rangeService.clearRanges();
         } else {
             this.attributeMatchedDomains = [];
             this.activeAttribute = attribute;
@@ -80,23 +96,22 @@ export class ApplicableAttributesPanelComponent implements OnInit, OnDestroy {
             this.attributeMatchedDomains = attributeMatchedDomains;
 
             this.automaticDomainSelect();
-            this.setActives(this.activeDomain, attribute, null, this.attributeMatchedDomains);
+            this.setActives(this.activeDomain, attribute, null);
+            this.attributeService.setAttributeMatchedDomains(this.attributeMatchedDomains);
 
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
-                console.log('RANGES: ', ranges);
                 ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
-                this.setActives(this.activeDomain, attribute, ranges.items[0], this.attributeMatchedDomains);
+                this.setActives(this.activeDomain, attribute, ranges.items[0]);
+                this.attributeService.setAttributeMatchedDomains(attributeMatchedDomains);
                 this.rangeService.setRanges(ranges);
-                // this.rangesEmitter.emit(ranges);
             });
         }
     }
 
-    setActives(domain, attribute, range, attributes) {
-        this.activeDomainEmitter.emit(domain);
-        this.activeAttributeEmitter.emit(attribute);
-        this.activeRangeEmitter.emit(range);
-        this.attributeMatchedDomainsEmitter.emit(attributes);
+    setActives(domain, attribute, range) {
+        this.domainService.setActiveDomain(domain);
+        this.attributeService.setActiveAttribute(attribute);
+        this.rangeService.setActiveRange(range);
     }
 
     automaticDomainSelect() {

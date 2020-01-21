@@ -1,7 +1,9 @@
-import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RefSet } from '../../models/refset';
 import { Subscription } from 'rxjs';
 import { DomainService } from '../../services/domain.service';
+import { AttributeService } from '../../services/attribute.service';
+import { RangeService } from '../../services/range.service';
 
 @Component({
     selector: 'app-domain-panel',
@@ -10,29 +12,31 @@ import { DomainService } from '../../services/domain.service';
 })
 export class DomainPanelComponent implements OnInit, OnDestroy {
 
-    // bindings
-    @Input() domainFilter: string;
-    @Input() activeDomain: RefSet;
-    @Input() activeAttribute: RefSet;
-    @Input() attributeMatchedDomains: RefSet[];
-    @Input() activeRange: RefSet;
-    @Output() activeDomainEmitter = new EventEmitter();
-    @Output() activeAttributeEmitter = new EventEmitter();
-    @Output() activeRangeEmitter = new EventEmitter();
-
     // visibility flags
     preCoordination: boolean;
     postCoordination: boolean;
     detailsExpanded: boolean;
 
+    attributeMatchedDomains: RefSet[];
+
     domains: object;
     domainSubscription: Subscription;
+    domainFilter: string;
+    domainFilterSubscription: Subscription;
+    activeDomain: RefSet;
+    activeDomainSubscription: Subscription;
+    activeAttribute: RefSet;
+    activeAttributeSubscription: Subscription;
+    activeRange: RefSet;
+    activeRangeSubscription: Subscription;
 
-    constructor(private domainService: DomainService) {
-        // subscribe to home component messages
-        this.domainSubscription = this.domainService.collectDomains().subscribe(data => {
-            this.domains = data;
-        });
+
+    constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService) {
+        this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
+        this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
+        this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => this.activeAttribute = data);
+        this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
+        this.domainFilterSubscription = this.domainService.getDomainFilter().subscribe(data => this.domainFilter = data);
     }
 
     ngOnInit() {
@@ -42,8 +46,11 @@ export class DomainPanelComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        // unsubscribe to ensure no memory leaks
         this.domainSubscription.unsubscribe();
+        this.activeDomainSubscription.unsubscribe();
+        this.activeAttributeSubscription.unsubscribe();
+        this.activeRangeSubscription.unsubscribe();
+        this.domainFilterSubscription.unsubscribe();
     }
 
     makeActiveDomain(domain) {
@@ -73,9 +80,9 @@ export class DomainPanelComponent implements OnInit, OnDestroy {
     }
 
     setActives(domain, attribute, range) {
-        this.activeDomainEmitter.emit(domain);
-        this.activeAttributeEmitter.emit(attribute);
-        this.activeRangeEmitter.emit(range);
+        this.domainService.setActiveDomain(domain);
+        this.attributeService.setActiveAttribute(attribute);
+        this.rangeService.setActiveRange(range);
     }
 
     highlightDomains(referencedComponentId) {

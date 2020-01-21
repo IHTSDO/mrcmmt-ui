@@ -4,7 +4,6 @@ import { Versions } from './models/versions';
 import { Title } from '@angular/platform-browser';
 import 'jquery';
 import { TerminologyServerService } from './services/terminologyServer.service';
-import { RefSet } from './models/refset';
 import { DomainService } from './services/domain.service';
 import { AttributeService } from './services/attribute.service';
 
@@ -18,19 +17,9 @@ export class AppComponent implements OnInit {
     environment: string;
     versions: Versions;
 
-    activeDomain: RefSet;
-
-    activeAttribute: RefSet;
-    attributeMatchedDomains: RefSet[];
-
-    ranges: RefSet[];
-    activeRange: RefSet;
-
-    domainFilter: string;
-    attributeFilter: string;
-
-    constructor(private authoringService: AuthoringService, private terminologyService: TerminologyServerService,
-                private titleService: Title, private domainService: DomainService, private attributeService: AttributeService) {
+    constructor(private domainService: DomainService, private attributeService: AttributeService,
+                private authoringService: AuthoringService, private terminologyService: TerminologyServerService,
+                private titleService: Title) {
     }
 
     ngOnInit() {
@@ -58,16 +47,6 @@ export class AppComponent implements OnInit {
         });
 
         this.assignFavicon();
-    }
-
-    resetTool() {
-        this.activeDomain = null;
-        this.activeAttribute = null;
-        this.attributeMatchedDomains = null;
-        this.activeRange = null;
-        this.ranges = [];
-        this.domainFilter = null;
-        this.attributeFilter = null;
     }
 
     assignFavicon() {
