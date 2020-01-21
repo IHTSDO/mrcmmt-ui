@@ -29,6 +29,7 @@ export class DomainPanelComponent implements OnInit, OnDestroy {
     activeAttributeSubscription: Subscription;
     activeRange: RefSet;
     activeRangeSubscription: Subscription;
+    attributeMatchedDomainsSubscription: Subscription;
 
 
     constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService) {
@@ -37,6 +38,7 @@ export class DomainPanelComponent implements OnInit, OnDestroy {
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => this.activeAttribute = data);
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
         this.domainFilterSubscription = this.domainService.getDomainFilter().subscribe(data => this.domainFilter = data);
+        this.attributeMatchedDomainsSubscription = this.attributeService.getAttributeMatchedDomains().subscribe(data => {this.attributeMatchedDomains = data;});
     }
 
     ngOnInit() {
@@ -51,6 +53,7 @@ export class DomainPanelComponent implements OnInit, OnDestroy {
         this.activeAttributeSubscription.unsubscribe();
         this.activeRangeSubscription.unsubscribe();
         this.domainFilterSubscription.unsubscribe();
+        this.attributeMatchedDomainsSubscription.unsubscribe();
     }
 
     makeActiveDomain(domain) {

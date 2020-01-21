@@ -83,7 +83,6 @@ export class ApplicableAttributesPanelComponent implements OnInit, OnDestroy {
             this.attributeService.clearAttributeMatchedDomains();
             this.rangeService.clearRanges();
         } else {
-            this.attributeMatchedDomains = [];
             this.activeAttribute = attribute;
             attributeMatchedDomains.push(attribute);
             this.attributes['items'].forEach((item) => {
@@ -93,15 +92,12 @@ export class ApplicableAttributesPanelComponent implements OnInit, OnDestroy {
                 }
             });
 
-            this.attributeMatchedDomains = attributeMatchedDomains;
-
-            this.automaticDomainSelect(attribute);
-            this.attributeService.setAttributeMatchedDomains(this.attributeMatchedDomains);
+            this.attributeService.setAttributeMatchedDomains(attributeMatchedDomains);
+            this.automaticDomainSelect(attribute, attributeMatchedDomains);
 
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
                 ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
                 this.setActives(this.activeDomain, attribute, ranges.items[0]);
-                this.attributeService.setAttributeMatchedDomains(attributeMatchedDomains);
                 this.rangeService.setRanges(ranges);
             });
         }
@@ -113,18 +109,18 @@ export class ApplicableAttributesPanelComponent implements OnInit, OnDestroy {
         this.rangeService.setActiveRange(range);
     }
 
-    automaticDomainSelect(attribute) {
+    automaticDomainSelect(attribute, attributeMatchedDomains) {
         if (!this.activeDomain) {
             const activeDomainList = [];
 
             for (let i = 0; i < this.domains['items'].length; i++) {
-                for (let j = 0; j < this.attributeMatchedDomains.length; j++) {
-                    if (this.domains['items'][i].referencedComponentId === this.attributeMatchedDomains[j].additionalFields.domainId) {
+                for (let j = 0; j < attributeMatchedDomains.length; j++) {
+                    if (this.domains['items'][i].referencedComponentId === attributeMatchedDomains[j].additionalFields.domainId) {
                         activeDomainList.push(this.domains['items'][i]);
                     }
                 }
             }
-            this.setActives(this.activeDomainList[0], attribute);
+            this.setActives(activeDomainList[0], attribute, null);
         }
     }
 
