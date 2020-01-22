@@ -22,11 +22,12 @@ export class BreadcrumbBarComponent implements OnDestroy {
     editable: Boolean;
     editSubscription: Subscription;
 
-    constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService, private editService: EditService) {
-        this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
-        this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => this.activeAttribute = data);
-        this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
-        this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
+    constructor(private domainService: DomainService, private attributeService: AttributeService,
+        private rangeService: RangeService, private editService: EditService) {
+            this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
+            this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => this.activeAttribute = data);
+            this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
+            this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
     }
 
     reset() {
@@ -38,8 +39,8 @@ export class BreadcrumbBarComponent implements OnDestroy {
         this.domainService.clearDomainFilter();
         this.attributeService.clearAttributeFilter();
     }
-    
-    toggleEditable(){
+
+    toggleEditable() {
         this.editService.setEditable(!this.editable);
     }
 

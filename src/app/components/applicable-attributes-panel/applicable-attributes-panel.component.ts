@@ -39,8 +39,8 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     unsavedChangesSubscription: Subscription;
     changeLog: ChangeLog[];
     changeLogSubscription: Subscription;
-    
-    ruleStrengthFields = 
+
+    ruleStrengthFields =
             [
                 {
                     id: '723597001',
@@ -51,8 +51,8 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                     term: 'Optional concept model rule'
                 }
             ];
-    
-    contentTypeFields = 
+
+    contentTypeFields =
         [
             {
                 id: '723596005',
@@ -71,10 +71,11 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                 term: 'All postcoordinated SNOMED CT content'
             }
         ];
-    
+
 
     constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
-                private terminologyService: TerminologyServerService, private customOrder: CustomOrderPipe, private editService: EditService) {
+                private terminologyService: TerminologyServerService,
+                private customOrder: CustomOrderPipe, private editService: EditService) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
         this.attributeSubscription = this.attributeService.getAttributes().subscribe(data => this.attributes = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
@@ -134,35 +135,34 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.attributeService.setActiveAttribute(attribute);
         this.rangeService.setActiveRange(range);
     }
-    
-    updateAttribute(){
+
+    updateAttribute() {
         this.activeAttribute.changed = true;
-        
-        if(!this.unsavedChanges){
+
+        if (!this.unsavedChanges) {
             this.editService.setUnsavedChanges(true);
         }
-        
+
         let found = false;
-        if(this.changeLog){
+        if (this.changeLog) {
             this.changeLog.forEach((item) => {
                 if (item.memberId === this.activeAttribute.memberId) {
                     found = true;
                 }
             });
-        }
-        else{
+        } else {
             this.changeLog = [];
         }
-        
-        if(!found){
-            let change = new ChangeLog;
+
+        if (!found) {
+            const change = new ChangeLog;
             change.memberId = this.activeAttribute.memberId;
             change.update = true;
             this.changeLog.push(change);
             this.editService.setChangeLog(this.changeLog);
             console.log(this.changeLog);
         }
-        
+
     }
 
     automaticDomainSelect(attribute, attributeMatchedDomains) {
