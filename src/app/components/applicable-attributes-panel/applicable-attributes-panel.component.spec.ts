@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 import { DuplicateFilterPipe } from '../../pipes/duplicate-filter.pipe';
 import { DomainMatchPipe } from '../../pipes/domain-match.pipe';
@@ -16,7 +15,7 @@ describe('ApplicableAttributesPanelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ FormsModule, HttpClientTestingModule, RouterTestingModule ],
+      imports: [ FormsModule, HttpClientTestingModule ],
       declarations: [
           ApplicableAttributesPanelComponent,
           DuplicateFilterPipe,
