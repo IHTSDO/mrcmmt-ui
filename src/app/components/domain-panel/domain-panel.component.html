@@ -8,7 +8,7 @@
          [class.active]="domain === activeDomain"
          [class.attached]="highlightDomains(domain.referencedComponentId)">
         <span [class.subdomain]="domain.additionalFields.parentDomain" [class.tertiary]="domain.tertiary">
-            {{domain.referencedComponent?.fsn.term}} - {{domain.referencedComponentId}}
+            {{domain.referencedComponent?.fsn.term}}
         </span>
     </div>
     <div *ngIf="activeDomain" class="details" [class.minimized]="!detailsExpanded">

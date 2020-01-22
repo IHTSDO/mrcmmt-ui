@@ -38,52 +38,57 @@ export class AppComponent implements OnInit {
         this.authoringService.getVersion().subscribe(
             data => {
                 this.versions = data;
-
                 console.log('Snowstorm Version:', data.versions['snowstorm']);
             }
         );
 
         this.authoringService.getUIConfiguration().subscribe(data => {
             this.authoringService.uiConfiguration = data;
-
-            this.terminologyService.getDomains().subscribe(domains => {
-                this.domainService.setDomains(domains);
-
-                if (this.route.snapshot.queryParamMap.get('domain')) {
-                    this.activeDomain = domains.items.find(result => {
-                        return result.referencedComponentId === this.route.snapshot.queryParamMap.get('domain');
-                    });
-                    this.domainService.setActiveDomain(this.activeDomain);
-                }
-
-            });
-
-            this.terminologyService.getAttributes().subscribe(attributes => {
-                this.attributeService.setAttributes(attributes);
-
-                if (this.route.snapshot.queryParamMap.get('attribute')) {
-                    this.activeAttribute = attributes.items.find(result => {
-                        return result.referencedComponentId === this.route.snapshot.queryParamMap.get('attribute');
-                    });
-                    this.attributeService.setActiveAttribute(this.activeAttribute);
-
-                    if (this.route.snapshot.queryParamMap.get('range')) {
-                        this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
-                            ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
-                            this.rangeService.setRanges(ranges);
-
-                            this.activeRange = ranges.items.find(result => {
-                                return result.additionalFields.contentTypeId === this.route.snapshot.queryParamMap.get('range');
-                            });
-                            this.rangeService.setActiveRange(this.activeRange);
-                        });
-                    }
-
-                }
-            });
+            this.setupDomains();
         });
-
         this.assignFavicon();
+    }
+
+    setupDomains() {
+        this.terminologyService.getDomains().subscribe(domains => {
+            this.domainService.setDomains(domains);
+
+            if (this.route.snapshot.queryParamMap.get('domain')) {
+                this.activeDomain = domains.items.find(result => {
+                    return result.referencedComponentId === this.route.snapshot.queryParamMap.get('domain');
+                });
+                this.domainService.setActiveDomain(this.activeDomain);
+            }
+        });
+        this.setupAttributes();
+    }
+
+    setupAttributes() {
+        this.terminologyService.getAttributes().subscribe(attributes => {
+            this.attributeService.setAttributes(attributes);
+
+            if (this.route.snapshot.queryParamMap.get('attribute')) {
+                this.activeAttribute = attributes.items.find(result => {
+                    return result.referencedComponentId === this.route.snapshot.queryParamMap.get('attribute');
+                });
+                this.attributeService.setActiveAttribute(this.activeAttribute);
+                this.setupRanges();
+            }
+        });
+    }
+
+    setupRanges() {
+        if (this.route.snapshot.queryParamMap.get('range')) {
+            this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
+                ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
+                this.rangeService.setRanges(ranges);
+
+                this.activeRange = ranges.items.find(result => {
+                    return result.additionalFields.contentTypeId === this.route.snapshot.queryParamMap.get('range');
+                });
+                this.rangeService.setActiveRange(this.activeRange);
+            });
+        }
     }
 
     assignFavicon() {

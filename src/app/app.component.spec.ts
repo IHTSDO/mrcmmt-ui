@@ -14,6 +14,8 @@ import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
 import { TextMatchPipe } from './pipes/text-match.pipe';
 import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
 import { TopLevelDomainPipe } from './pipes/top-level-domain.pipe';
+import { RouterTestingModule } from '@angular/router/testing';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
 
 describe('AppComponent', () => {
@@ -21,7 +23,9 @@ describe('AppComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 FormsModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                RouterTestingModule,
+                BrowserDynamicTestingModule
             ],
             declarations: [
                 AppComponent,
@@ -37,7 +41,7 @@ describe('AppComponent', () => {
                 TextMatchPipe,
                 AlphabeticalPipe,
                 TopLevelDomainPipe
-            ],
+            ]
         }).compileComponents();
     }));
     it('should create the app', async(() => {

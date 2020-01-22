@@ -1,25 +1,33 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BreadcrumbBarComponent } from './breadcrumb-bar.component';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('BreadcrumbBarComponent', () => {
-  let component: BreadcrumbBarComponent;
-  let fixture: ComponentFixture<BreadcrumbBarComponent>;
+    let component: BreadcrumbBarComponent;
+    let fixture: ComponentFixture<BreadcrumbBarComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ BreadcrumbBarComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                BrowserDynamicTestingModule,
+                RouterTestingModule
+            ],
+            declarations: [
+                BreadcrumbBarComponent
+            ]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BreadcrumbBarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(BreadcrumbBarComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
