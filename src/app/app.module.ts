@@ -35,6 +35,7 @@ import { TopLevelDomainPipe } from './pipes/top-level-domain.pipe';
 import { DomainService } from './services/domain.service';
 import { AttributeService } from './services/attribute.service';
 import { RangeService } from './services/range.service';
+import { EditService } from './services/edit.service';
 
 // Interceptor Imports
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
@@ -74,6 +75,7 @@ import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
         DomainService,
         AttributeService,
         RangeService,
+        EditService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthenticationInterceptor,

@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
+import { EditService } from '../../services/edit.service';
 
 @Component({
     selector: 'app-applicable-attributes-panel',
@@ -31,9 +32,44 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     activeRangeSubscription: Subscription;
     matchedDomains: RefSet[];
     matchedDomainsSubscription: Subscription;
+    editable: Boolean;
+    editSubscription: Subscription;
+    
+    ruleStrengthFields = 
+            [
+                {
+                    id: '723597001',
+                    term: 'Mandatory concept model rule'
+                },
+                {
+                    id: '723598006',
+                    term: 'Optional concept model rule'
+                }
+            ];
+    
+    contentTypeFields = 
+        [
+            {
+                id: '723596005',
+                term: 'All SNOMED CT content'
+            },
+            {
+                id: '723593002',
+                term: 'All new precoordinated SNOMED CT content'
+            },
+            {
+                id: '723594008',
+                term: 'All precoordinated SNOMED CT content'
+            },
+            {
+                id: '723595009',
+                term: 'All postcoordinated SNOMED CT content'
+            }
+        ];
+    
 
     constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
-                private terminologyService: TerminologyServerService, private customOrder: CustomOrderPipe) {
+                private terminologyService: TerminologyServerService, private customOrder: CustomOrderPipe, private editService: EditService) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
         this.attributeSubscription = this.attributeService.getAttributes().subscribe(data => this.attributes = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
@@ -41,6 +77,9 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
         this.matchedDomainsSubscription = this.attributeService.getMatchedDomains().subscribe(data => this.matchedDomains = data);
         this.attributeFilterSubscription = this.attributeService.getAttributeFilter().subscribe(data => this.attributeFilter = data);
+        this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
+        
+        
     }
 
     ngOnDestroy() {
@@ -50,6 +89,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.activeAttributeSubscription.unsubscribe();
         this.activeRangeSubscription.unsubscribe();
         this.matchedDomainsSubscription.unsubscribe();
+        this.editSubscription.unsubscribe();
     }
 
     makeActiveAttribute(attribute) {
@@ -101,34 +141,6 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                 }
             }
             this.setActives(activeDomainList[0], attribute, null);
-        }
-    }
-
-    determineMandatoryField(id) {
-        switch (id) {
-            case '723597001': {
-                return 'Mandatory concept model rule';
-            }
-            case '723598006': {
-                return 'Optional concept model rule';
-            }
-        }
-    }
-
-    determineContentTypeField(id) {
-        switch (id) {
-            case '723596005': {
-                return 'All SNOMED CT content';
-            }
-            case '723593002': {
-                return 'All new precoordinated SNOMED CT content';
-            }
-            case '723594008': {
-                return 'All precoordinated SNOMED CT content';
-            }
-            case '723595009': {
-                return 'All postcoordinated SNOMED CT content';
-            }
         }
     }
 }
