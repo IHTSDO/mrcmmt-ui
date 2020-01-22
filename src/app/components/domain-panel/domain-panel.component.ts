@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-domain-panel',
@@ -30,9 +31,13 @@ export class DomainPanelComponent implements OnDestroy {
     matchedDomainsSubscription: Subscription;
 
 
-    constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService) {
+    constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
+                private router: Router, private route: ActivatedRoute) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
-        this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
+        this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => {
+            this.activeDomain = data;
+            this.queryStringParameterBuilder(data);
+        });
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => this.activeAttribute = data);
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
         this.domainFilterSubscription = this.domainService.getDomainFilter().subscribe(data => this.domainFilter = data);
@@ -46,6 +51,26 @@ export class DomainPanelComponent implements OnDestroy {
         this.activeRangeSubscription.unsubscribe();
         this.domainFilterSubscription.unsubscribe();
         this.matchedDomainsSubscription.unsubscribe();
+    }
+
+    queryStringParameterBuilder(data) {
+        const params = {};
+        if (this.activeDomain) {
+            params['domain'] = data.referencedComponentId;
+        }
+        if (this.activeAttribute) {
+            params['attribute'] = this.activeAttribute.referencedComponentId;
+        }
+        if (this.activeRange) {
+            params['range'] = this.activeRange.additionalFields.contentTypeId;
+        }
+        this.router.navigate(
+            [],
+            {
+                relativeTo: this.route,
+                queryParams: params,
+                queryParamsHandling: 'merge'
+            });
     }
 
     makeActiveDomain(domain) {

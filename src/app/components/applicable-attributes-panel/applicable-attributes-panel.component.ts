@@ -8,6 +8,7 @@ import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
 import { EditService } from '../../services/edit.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-applicable-attributes-panel',
@@ -74,12 +75,15 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
 
 
     constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
-                private terminologyService: TerminologyServerService,
-                private customOrder: CustomOrderPipe, private editService: EditService) {
+                private terminologyService: TerminologyServerService, private customOrder: CustomOrderPipe,
+                private editService: EditService, private router: Router, private route: ActivatedRoute) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
         this.attributeSubscription = this.attributeService.getAttributes().subscribe(data => this.attributes = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
-        this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => this.activeAttribute = data);
+        this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
+            this.activeAttribute = data;
+            this.queryStringParameterBuilder(data);
+        });
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
         this.matchedDomainsSubscription = this.attributeService.getMatchedDomains().subscribe(data => this.matchedDomains = data);
         this.attributeFilterSubscription = this.attributeService.getAttributeFilter().subscribe(data => this.attributeFilter = data);
@@ -97,6 +101,26 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.matchedDomainsSubscription.unsubscribe();
         this.editSubscription.unsubscribe();
         this.unsavedChangesSubscription.unsubscribe();
+    }
+
+    queryStringParameterBuilder(data) {
+        const params = {};
+        if (this.activeDomain) {
+            params['domain'] = this.activeDomain.referencedComponentId;
+        }
+        if (this.activeAttribute) {
+            params['attribute'] = data.referencedComponentId;
+        }
+        if (this.activeRange) {
+            params['range'] = this.activeRange.additionalFields.contentTypeId;
+        }
+        this.router.navigate(
+            [],
+            {
+                relativeTo: this.route,
+                queryParams: params,
+                queryParamsHandling: 'merge'
+            });
     }
 
     makeActiveAttribute(attribute) {

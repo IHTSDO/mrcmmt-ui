@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { RangeService } from '../../services/range.service';
 import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export class Results {
     items: object[];
@@ -34,7 +35,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
     activeRangeSubscription: Subscription;
 
     constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
-                private terminologyService: TerminologyServerService) {
+                private terminologyService: TerminologyServerService, private router: Router, private route: ActivatedRoute) {
         this.rangeSubscription = this.rangeService.getRanges().subscribe(data => this.ranges = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
@@ -43,6 +44,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
         });
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => {
             this.activeRange = data;
+            this.queryStringParameterBuilder(data);
             this.getResults();
         });
     }
@@ -52,6 +54,26 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.activeDomainSubscription.unsubscribe();
         this.activeAttributeSubscription.unsubscribe();
         this.activeRangeSubscription.unsubscribe();
+    }
+
+    queryStringParameterBuilder(data) {
+        const params = {};
+        if (this.activeDomain) {
+            params['domain'] = this.activeDomain.referencedComponentId;
+        }
+        if (this.activeAttribute) {
+            params['attribute'] = this.activeAttribute.referencedComponentId;
+        }
+        if (this.activeRange) {
+            params['range'] = data.additionalFields.contentTypeId;
+        }
+        this.router.navigate(
+            [],
+            {
+                relativeTo: this.route,
+                queryParams: params,
+                queryParamsHandling: 'merge'
+            });
     }
 
     makeActiveRange(range) {

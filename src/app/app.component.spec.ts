@@ -16,6 +16,7 @@ import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
 import { TopLevelDomainPipe } from './pipes/top-level-domain.pipe';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { AppRoutingModule } from './app-routing.module';
 
 
 describe('AppComponent', () => {
@@ -25,7 +26,8 @@ describe('AppComponent', () => {
                 FormsModule,
                 HttpClientTestingModule,
                 RouterTestingModule,
-                BrowserDynamicTestingModule
+                BrowserDynamicTestingModule,
+                AppRoutingModule
             ],
             declarations: [
                 AppComponent,
