@@ -10,6 +10,7 @@ import { HeaderInterceptor } from './interceptors/header.interceptor';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { AppRoutingModule } from './app-routing.module';
 
 // COMPONENT IMPORTS
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
@@ -31,13 +32,13 @@ import { BreadcrumbBarComponent } from './components/breadcrumb-bar/breadcrumb-b
 import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
 import { CustomOrderPipe } from './pipes/custom-order.pipe';
 import { TopLevelDomainPipe } from './pipes/top-level-domain.pipe';
+import { DomainService } from './services/domain.service';
+import { AttributeService } from './services/attribute.service';
+import { RangeService } from './services/range.service';
 
 // Interceptor Imports
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
 import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
-import { DomainService } from './services/domain.service';
-import { AttributeService } from './services/attribute.service';
-import { RangeService } from './services/range.service';
 
 @NgModule({
     declarations: [
@@ -63,7 +64,8 @@ import { RangeService } from './services/range.service';
         BrowserAnimationsModule,
         NgbTypeaheadModule,
         StoreModule.forRoot({}),
-        EffectsModule.forRoot([])
+        EffectsModule.forRoot([]),
+        AppRoutingModule
     ],
     providers: [
         TerminologyServerService,

@@ -4,6 +4,7 @@
         <input type="search" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
     </div>
     <div class="domain px-3 py-2" *ngFor="let domain of domains?.items | alphabetical | topLevelDomain | textMatch:domainFilter"
+         [routerLink]="domain.referencedComponentId"
          (click)="makeActiveDomain(domain)"
          [class.active]="domain === activeDomain"
          [class.attached]="highlightDomains(domain.referencedComponentId)">
