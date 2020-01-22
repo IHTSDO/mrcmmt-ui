@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { ChangeLog } from '../models/changeLog';
 
 @Injectable({
     providedIn: 'root'
@@ -11,8 +12,9 @@ export class EditService {
 
     private editable = new Subject<Boolean>();
     private unsavedChanges = new Subject<Boolean>();
+    private changeLog = new Subject<[ChangeLog]>();
 
-    // Setters & Getters: Attributes
+    // Setters & Getters: Edit
     
     public setEditable(value) {
         this.editable.next(value);
@@ -28,5 +30,13 @@ export class EditService {
     
     getUnsavedChanges(): Observable<Boolean> {
         return this.unsavedChanges.asObservable();
+    }
+    
+    public setChangeLog(value) {
+        this.changeLog.next(value);
+    }
+    
+    getChangeLog(): Observable<[ChangeLog]> {
+        return this.changeLog.asObservable();
     }
 }

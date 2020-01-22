@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { RefSet } from '../../models/refset';
+import { ChangeLog } from '../../models/changeLog';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
 import { Subscription } from 'rxjs';
@@ -36,6 +37,8 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     editSubscription: Subscription;
     unsavedChanges: Boolean;
     unsavedChangesSubscription: Subscription;
+    changeLog: ChangeLog[];
+    changeLogSubscription: Subscription;
     
     ruleStrengthFields = 
             [
@@ -81,8 +84,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.attributeFilterSubscription = this.attributeService.getAttributeFilter().subscribe(data => this.attributeFilter = data);
         this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
         this.unsavedChangesSubscription = this.editService.getUnsavedChanges().subscribe(data => this.unsavedChanges = data);
-        
-        
+        this.changeLogSubscription = this.editService.getChangeLog().subscribe(data => this.changeLog = data);
     }
 
     ngOnDestroy() {
@@ -135,9 +137,32 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     
     updateAttribute(){
         this.activeAttribute.changed = true;
+        
         if(!this.unsavedChanges){
             this.editService.setUnsavedChanges(true);
         }
+        
+        let found = false;
+        if(this.changeLog){
+            this.changeLog.forEach((item) => {
+                if (item.memberId === this.activeAttribute.memberId) {
+                    found = true;
+                }
+            });
+        }
+        else{
+            this.changeLog = [];
+        }
+        
+        if(!found){
+            let change = new ChangeLog;
+            change.memberId = this.activeAttribute.memberId;
+            change.update = true;
+            this.changeLog.push(change);
+            this.editService.setChangeLog(this.changeLog);
+            console.log(this.changeLog);
+        }
+        
     }
 
     automaticDomainSelect(attribute, attributeMatchedDomains) {
