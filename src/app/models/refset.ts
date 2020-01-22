@@ -23,4 +23,5 @@ export class RefSet {
         }
     };
     memberId: string;
+    changed: Boolean
 }

@@ -10,6 +10,7 @@ export class EditService {
     }
 
     private editable = new Subject<Boolean>();
+    private unsavedChanges = new Subject<Boolean>();
 
     // Setters & Getters: Attributes
     
@@ -19,5 +20,13 @@ export class EditService {
     
     getEditable(): Observable<Boolean> {
         return this.editable.asObservable();
+    }
+    
+    public setUnsavedChanges(value) {
+        this.unsavedChanges.next(value);
+    }
+    
+    getUnsavedChanges(): Observable<Boolean> {
+        return this.unsavedChanges.asObservable();
     }
 }

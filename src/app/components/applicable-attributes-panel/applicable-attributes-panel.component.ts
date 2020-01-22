@@ -34,6 +34,8 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     matchedDomainsSubscription: Subscription;
     editable: Boolean;
     editSubscription: Subscription;
+    unsavedChanges: Boolean;
+    unsavedChangesSubscription: Subscription;
     
     ruleStrengthFields = 
             [
@@ -78,6 +80,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.matchedDomainsSubscription = this.attributeService.getMatchedDomains().subscribe(data => this.matchedDomains = data);
         this.attributeFilterSubscription = this.attributeService.getAttributeFilter().subscribe(data => this.attributeFilter = data);
         this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
+        this.unsavedChangesSubscription = this.editService.getUnsavedChanges().subscribe(data => this.unsavedChanges = data);
         
         
     }
@@ -90,6 +93,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.activeRangeSubscription.unsubscribe();
         this.matchedDomainsSubscription.unsubscribe();
         this.editSubscription.unsubscribe();
+        this.unsavedChangesSubscription.unsubscribe();
     }
 
     makeActiveAttribute(attribute) {
@@ -127,6 +131,13 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.domainService.setActiveDomain(domain);
         this.attributeService.setActiveAttribute(attribute);
         this.rangeService.setActiveRange(range);
+    }
+    
+    updateAttribute(){
+        this.activeAttribute.changed = true;
+        if(!this.unsavedChanges){
+            this.editService.setUnsavedChanges(true);
+        }
     }
 
     automaticDomainSelect(attribute, attributeMatchedDomains) {

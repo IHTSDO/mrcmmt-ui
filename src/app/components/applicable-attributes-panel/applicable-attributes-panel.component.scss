@@ -70,5 +70,15 @@ div#applicable-attributes-panel {
         div.detail {
             background-color: $white;
         }
+        input.detail{
+            background-color: $white;
+            width:98%;
+            font-size: 1.2rem;
+        }
+        select.detail{
+            background-color: $white;
+            width:98%;
+            font-size: 1.2rem;
+        }
     }
 }
