@@ -1,5 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
@@ -21,7 +22,8 @@ describe('AppComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 FormsModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                RouterTestingModule
             ],
             declarations: [
                 AppComponent,

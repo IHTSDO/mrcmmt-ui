@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 import { TopLevelDomainPipe } from '../../pipes/top-level-domain.pipe';
 import { TextMatchPipe } from '../../pipes/text-match.pipe';
@@ -13,7 +14,7 @@ describe('DomainPanelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
+      imports: [ FormsModule, RouterTestingModule ],
       declarations: [ DomainPanelComponent, TopLevelDomainPipe, TextMatchPipe, AlphabeticalPipe ]
     })
     .compileComponents();
