@@ -5,7 +5,6 @@
     </div>
 
     <div class="px-3 py-2 attribute" *ngFor="let attribute of attributes?.items | alphabetical | textMatch:attributeFilter | domainMatch:activeDomain | duplicateFilter:activeDomain?.referencedComponentId"
-         [routerLink]="activeDomain?.referencedComponentId + '/' + attribute.referencedComponentId"
          (click)="makeActiveAttribute(attribute)"
          [class.active]="attribute === activeAttribute">{{attribute.referencedComponent.fsn?.term}}
     </div>

@@ -10,7 +10,6 @@ import { HeaderInterceptor } from './interceptors/header.interceptor';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { AppRoutingModule } from './app-routing.module';
 
 // COMPONENT IMPORTS
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
@@ -65,8 +64,7 @@ import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
         BrowserAnimationsModule,
         NgbTypeaheadModule,
         StoreModule.forRoot({}),
-        EffectsModule.forRoot([]),
-        AppRoutingModule
+        EffectsModule.forRoot([])
     ],
     providers: [
         TerminologyServerService,
