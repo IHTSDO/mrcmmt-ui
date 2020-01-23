@@ -54,11 +54,11 @@ div#applicable-attributes-panel {
             overflow: hidden;
         }
 
-        h4.detail-title {
-            font-weight: 300;
-            background-color: $regent-grey;
+        span {
+            font-size: 1.5rem;
+            line-height: 1.8rem;
 
-            span:hover {
+            &:hover {
                 cursor: pointer;
             }
         }
@@ -70,15 +70,17 @@ div#applicable-attributes-panel {
         div.detail {
             background-color: $white;
         }
+
         input.detail{
             background-color: $white;
-            width:98%;
             font-size: 1.2rem;
+            width: -webkit-fill-available;
         }
+
         select.detail{
             background-color: $white;
-            width:98%;
             font-size: 1.2rem;
+            width: -webkit-fill-available;
         }
     }
 }

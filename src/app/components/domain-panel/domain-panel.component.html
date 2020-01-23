@@ -12,12 +12,10 @@
         </span>
     </div>
     <div *ngIf="activeDomain" class="details" [class.minimized]="!detailsExpanded">
-        <h4 class="detail-title p-2">
-            <span class="float-right" (click)="detailsExpanded = !detailsExpanded">
+            <span class="float-right my-1 mx-3" (click)="detailsExpanded = !detailsExpanded">
                 <i *ngIf="detailsExpanded" class="fas fa-caret-down"></i>
                 <i *ngIf="!detailsExpanded" class="fas fa-caret-up"></i>
             </span>
-        </h4>
         <ng-container *ngIf="activeDomain.additionalFields.domainConstraint">
             <h5 class="label m-2">Domain Constraint</h5>
             <div class="detail m-2 mb-3 px-2 rounded">{{activeDomain.additionalFields.domainConstraint}}</div>

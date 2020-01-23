@@ -64,11 +64,11 @@ div#domain-panel {
             overflow: hidden;
         }
 
-        h3.detail-title {
-            font-weight: 300;
-            background-color: $regent-grey;
+        span {
+            font-size: 1.5rem;
+            line-height: 1.8rem;
 
-            span:hover {
+            &:hover {
                 cursor: pointer;
             }
         }
