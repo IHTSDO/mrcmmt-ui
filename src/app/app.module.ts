@@ -36,6 +36,7 @@ import { DomainService } from './services/domain.service';
 import { AttributeService } from './services/attribute.service';
 import { RangeService } from './services/range.service';
 import { EditService } from './services/edit.service';
+import { MrcmmtService } from './services/mrcmmt.service';
 
 // Interceptor Imports
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
@@ -76,6 +77,7 @@ import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
         AttributeService,
         RangeService,
         EditService,
+        MrcmmtService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthenticationInterceptor,

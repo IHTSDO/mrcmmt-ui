@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { RangeService } from '../../services/range.service';
 import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MrcmmtService } from '../../services/mrcmmt.service';
 
 export class Results {
     items: object[];
@@ -21,12 +21,10 @@ export class AttributeRangePanelComponent implements OnDestroy {
 
     rangeConstraint: boolean;
     attributeRule: boolean;
+    results: Results;
 
     ranges: object;
     rangeSubscription: Subscription;
-
-    results: Results;
-
     activeDomain: RefSet;
     activeDomainSubscription: Subscription;
     activeAttribute: RefSet;
@@ -35,7 +33,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
     activeRangeSubscription: Subscription;
 
     constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
-                private terminologyService: TerminologyServerService, private router: Router, private route: ActivatedRoute) {
+                private terminologyService: TerminologyServerService, private mrcmmtService: MrcmmtService) {
         this.rangeSubscription = this.rangeService.getRanges().subscribe(data => this.ranges = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
@@ -44,7 +42,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
         });
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => {
             this.activeRange = data;
-            this.queryStringParameterBuilder(data);
+            this.mrcmmtService.queryStringParameterSetter(this.activeDomain, this.activeAttribute, data);
             this.getResults();
         });
     }
@@ -54,26 +52,6 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.activeDomainSubscription.unsubscribe();
         this.activeAttributeSubscription.unsubscribe();
         this.activeRangeSubscription.unsubscribe();
-    }
-
-    queryStringParameterBuilder(data) {
-        const params = {};
-        if (this.activeDomain) {
-            params['domain'] = this.activeDomain.referencedComponentId;
-        }
-        if (this.activeAttribute) {
-            params['attribute'] = this.activeAttribute.referencedComponentId;
-        }
-        if (this.activeRange) {
-            params['range'] = data.additionalFields.contentTypeId;
-        }
-        this.router.navigate(
-            [],
-            {
-                relativeTo: this.route,
-                queryParams: params,
-                queryParamsHandling: 'merge'
-            });
     }
 
     makeActiveRange(range) {
@@ -103,33 +81,5 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.domainService.setActiveDomain(domain);
         this.attributeService.setActiveAttribute(attribute);
         this.rangeService.setActiveRange(range);
-    }
-
-    determineMandatoryField(id) {
-        switch (id) {
-            case '723597001': {
-                return 'Mandatory concept model rule';
-            }
-            case '723598006': {
-                return 'Optional concept model rule';
-            }
-        }
-    }
-
-    determineContentTypeField(id) {
-        switch (id) {
-            case '723596005': {
-                return 'All SNOMED CT content';
-            }
-            case '723593002': {
-                return 'All new precoordinated SNOMED CT content';
-            }
-            case '723594008': {
-                return 'All precoordinated SNOMED CT content';
-            }
-            case '723595009': {
-                return 'All postcoordinated SNOMED CT content';
-            }
-        }
     }
 }

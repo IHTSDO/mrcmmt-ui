@@ -8,7 +8,7 @@ import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
 import { EditService } from '../../services/edit.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MrcmmtService } from '../../services/mrcmmt.service';
 
 @Component({
     selector: 'app-applicable-attributes-panel',
@@ -41,48 +41,15 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     changeLog: ChangeLog[];
     changeLogSubscription: Subscription;
 
-    ruleStrengthFields =
-            [
-                {
-                    id: '723597001',
-                    term: 'Mandatory concept model rule'
-                },
-                {
-                    id: '723598006',
-                    term: 'Optional concept model rule'
-                }
-            ];
-
-    contentTypeFields =
-        [
-            {
-                id: '723596005',
-                term: 'All SNOMED CT content'
-            },
-            {
-                id: '723593002',
-                term: 'All new precoordinated SNOMED CT content'
-            },
-            {
-                id: '723594008',
-                term: 'All precoordinated SNOMED CT content'
-            },
-            {
-                id: '723595009',
-                term: 'All postcoordinated SNOMED CT content'
-            }
-        ];
-
-
     constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
                 private terminologyService: TerminologyServerService, private customOrder: CustomOrderPipe,
-                private editService: EditService, private router: Router, private route: ActivatedRoute) {
+                private editService: EditService, private mrcmmtService: MrcmmtService) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
         this.attributeSubscription = this.attributeService.getAttributes().subscribe(data => this.attributes = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
             this.activeAttribute = data;
-            this.queryStringParameterBuilder(data);
+            this.mrcmmtService.queryStringParameterSetter(this.domainService, data, this.activeRange);
         });
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
         this.matchedDomainsSubscription = this.attributeService.getMatchedDomains().subscribe(data => this.matchedDomains = data);
@@ -101,26 +68,6 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.matchedDomainsSubscription.unsubscribe();
         this.editSubscription.unsubscribe();
         this.unsavedChangesSubscription.unsubscribe();
-    }
-
-    queryStringParameterBuilder(data) {
-        const params = {};
-        if (this.activeDomain) {
-            params['domain'] = this.activeDomain.referencedComponentId;
-        }
-        if (this.activeAttribute) {
-            params['attribute'] = data.referencedComponentId;
-        }
-        if (this.activeRange) {
-            params['range'] = this.activeRange.additionalFields.contentTypeId;
-        }
-        this.router.navigate(
-            [],
-            {
-                relativeTo: this.route,
-                queryParams: params,
-                queryParamsHandling: 'merge'
-            });
     }
 
     makeActiveAttribute(attribute) {
