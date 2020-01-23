@@ -34,9 +34,9 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     activeRangeSubscription: Subscription;
     matchedDomains: RefSet[];
     matchedDomainsSubscription: Subscription;
-    editable: Boolean;
+    editable: boolean;
     editSubscription: Subscription;
-    unsavedChanges: Boolean;
+    unsavedChanges: boolean;
     unsavedChangesSubscription: Subscription;
     changeLog: ChangeLog[];
     changeLogSubscription: Subscription;

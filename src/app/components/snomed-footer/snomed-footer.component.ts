@@ -9,8 +9,8 @@ import { EditService } from '../../services/edit.service';
 })
 export class SnomedFooterComponent implements OnDestroy {
 
-    editable: Boolean;
-    unsavedChanges: Boolean;
+    editable: boolean;
+    unsavedChanges: boolean;
     editSubscription: Subscription;
     changesSubscription: Subscription;
 

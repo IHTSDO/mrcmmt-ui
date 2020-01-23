@@ -19,7 +19,7 @@ export class BreadcrumbBarComponent implements OnDestroy {
     activeAttributeSubscription: Subscription;
     activeRange: RefSet;
     activeRangeSubscription: Subscription;
-    editable: Boolean;
+    editable: boolean;
     editSubscription: Subscription;
 
     constructor(private domainService: DomainService, private attributeService: AttributeService,

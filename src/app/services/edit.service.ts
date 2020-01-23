@@ -10,8 +10,8 @@ export class EditService {
     constructor() {
     }
 
-    private editable = new Subject<Boolean>();
-    private unsavedChanges = new Subject<Boolean>();
+    private editable = new Subject<boolean>();
+    private unsavedChanges = new Subject<boolean>();
     private changeLog = new Subject<[ChangeLog]>();
 
     // Setters & Getters: Edit
@@ -20,7 +20,7 @@ export class EditService {
         this.editable.next(value);
     }
 
-    getEditable(): Observable<Boolean> {
+    getEditable(): Observable<boolean> {
         return this.editable.asObservable();
     }
 
@@ -28,7 +28,7 @@ export class EditService {
         this.unsavedChanges.next(value);
     }
 
-    getUnsavedChanges(): Observable<Boolean> {
+    getUnsavedChanges(): Observable<boolean> {
         return this.unsavedChanges.asObservable();
     }
 
