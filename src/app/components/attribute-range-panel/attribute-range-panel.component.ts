@@ -40,7 +40,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
     changeLogSubscription: Subscription;
 
     constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
-                private terminologyService: TerminologyServerService, private mrcmmtService: MrcmmtService, 
+                private terminologyService: TerminologyServerService, private mrcmmtService: MrcmmtService,
                 private editService: EditService) {
         this.rangeSubscription = this.rangeService.getRanges().subscribe(data => this.ranges = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
