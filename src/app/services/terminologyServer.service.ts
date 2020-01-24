@@ -35,4 +35,14 @@ export class TerminologyServerService {
         return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
             'MAIN/members?referenceSet=723562003&referencedComponentId=' + componentReferenceId + '&active=true&limit=1000');
     }
+
+    putRefsetMember(member): Observable<SnomedResponseObject> {
+        return this.http.put<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
+            'MAIN/MRCMMAINT1/members/' + member.memberId, member);
+    }
+
+    postRefsetMember(member): Observable<SnomedResponseObject> {
+        return this.http.post<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
+            'MAIN/MRCMMAINT1/members', member);
+    }
 }

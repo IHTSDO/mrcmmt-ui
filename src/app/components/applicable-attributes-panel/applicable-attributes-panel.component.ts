@@ -38,7 +38,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     editSubscription: Subscription;
     unsavedChanges: boolean;
     unsavedChangesSubscription: Subscription;
-    changeLog: ChangeLog[];
+    changeLog: RefSet[];
     changeLogSubscription: Subscription;
 
     constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
@@ -126,10 +126,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         }
 
         if (!found) {
-            const change = new ChangeLog;
-            change.memberId = this.activeAttribute.memberId;
-            change.update = true;
-            this.changeLog.push(change);
+            this.changeLog.push(this.activeAttribute);
             this.editService.setChangeLog(this.changeLog);
             console.log(this.changeLog);
         }
