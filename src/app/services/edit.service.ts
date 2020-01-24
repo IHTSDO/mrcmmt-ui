@@ -51,7 +51,7 @@ export class EditService {
                 });
             } else {
                 this.terminologyService.putRefsetMember(item).subscribe(response => {
-                });;
+            });
             }
         });
         this.setUnsavedChanges(false);

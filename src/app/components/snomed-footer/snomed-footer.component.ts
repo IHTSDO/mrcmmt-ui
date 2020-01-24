@@ -20,7 +20,7 @@ export class SnomedFooterComponent implements OnDestroy {
         this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
         this.changesSubscription = this.editService.getUnsavedChanges().subscribe(data => this.unsavedChanges = data);
     }
-    
+
     saveChanges() {
         this.editService.saveChangeLog();
     }
