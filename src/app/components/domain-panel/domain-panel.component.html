@@ -18,19 +18,19 @@
             </span>
         <ng-container *ngIf="activeDomain.additionalFields.domainConstraint">
             <h5 class="label m-2">Domain Constraint</h5>
-            <div class="detail m-2 mb-3 px-2 rounded">{{activeDomain.additionalFields.domainConstraint}}</div>
+            <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.domainConstraint" [disabled]="!editable" (change)="updateDomain()">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.parentDomain">
             <h5 class="label m-2">Parent Domain</h5>
-            <div class="detail m-2 mb-3 px-2 rounded">{{activeDomain.additionalFields.parentDomain}}</div>
+            <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.parentDomain" [disabled]="!editable" (change)="updateDomain()">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.proximalPrimitiveConstraint">
             <h5 class="label m-2">Proximal Primitive Constraint</h5>
-            <div class="detail m-2 mb-3 px-2 rounded">{{activeDomain.additionalFields.proximalPrimitiveConstraint}}</div>
+            <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.proximalPrimitiveConstraint" [disabled]="!editable" (change)="updateDomain()">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.proximalPrimitiveRefinement">
             <h5 class="label m-2">Proximal Primitive Refinement</h5>
-            <div class="detail m-2 mb-3 px-2 rounded">{{activeDomain.additionalFields.proximalPrimitiveRefinement}}</div>
+            <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.proximalPrimitiveRefinement" [disabled]="!editable" (change)="updateDomain()">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPrecoordination">
             <h5 class="label m-2">Precoordination Domain Template</h5>

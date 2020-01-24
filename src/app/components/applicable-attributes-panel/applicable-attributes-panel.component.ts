@@ -67,6 +67,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.matchedDomainsSubscription.unsubscribe();
         this.editSubscription.unsubscribe();
         this.unsavedChangesSubscription.unsubscribe();
+        this.changeLogSubscription.unsubscribe();
     }
 
     makeActiveAttribute(attribute) {
