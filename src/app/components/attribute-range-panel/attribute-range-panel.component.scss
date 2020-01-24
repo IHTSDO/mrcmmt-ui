@@ -45,6 +45,18 @@ div#attribute-range-panel {
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        input.detail{
+            background-color: $white;
+            font-size: 1.2rem;
+            width: -webkit-fill-available;
+        }
+
+        select.detail{
+            background-color: $white;
+            font-size: 1.2rem;
+            width: -webkit-fill-available;
+        }
     }
 
     div.results {

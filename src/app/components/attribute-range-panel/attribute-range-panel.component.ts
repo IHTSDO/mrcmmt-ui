@@ -6,6 +6,7 @@ import { RangeService } from '../../services/range.service';
 import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';
 import { MrcmmtService } from '../../services/mrcmmt.service';
+import { EditService } from '../../services/edit.service';
 
 export class Results {
     items: object[];
@@ -31,9 +32,15 @@ export class AttributeRangePanelComponent implements OnDestroy {
     activeAttributeSubscription: Subscription;
     activeRange: RefSet;
     activeRangeSubscription: Subscription;
+    editable: boolean;
+    editSubscription: Subscription;
+    unsavedChanges: boolean;
+    unsavedChangesSubscription: Subscription;
+    changeLog: RefSet[];
+    changeLogSubscription: Subscription;
 
     constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
-                private terminologyService: TerminologyServerService, private mrcmmtService: MrcmmtService) {
+                private terminologyService: TerminologyServerService, private mrcmmtService: MrcmmtService, private editService: EditService) {
         this.rangeSubscription = this.rangeService.getRanges().subscribe(data => this.ranges = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
@@ -45,6 +52,9 @@ export class AttributeRangePanelComponent implements OnDestroy {
             this.mrcmmtService.queryStringParameterSetter(this.activeDomain, this.activeAttribute, data);
             this.getResults();
         });
+        this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
+        this.unsavedChangesSubscription = this.editService.getUnsavedChanges().subscribe(data => this.unsavedChanges = data);
+        this.changeLogSubscription = this.editService.getChangeLog().subscribe(data => this.changeLog = data);
     }
 
     ngOnDestroy() {
@@ -52,6 +62,9 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.activeDomainSubscription.unsubscribe();
         this.activeAttributeSubscription.unsubscribe();
         this.activeRangeSubscription.unsubscribe();
+        this.editSubscription.unsubscribe();
+        this.unsavedChangesSubscription.unsubscribe();
+        this.changeLogSubscription.unsubscribe();
     }
 
     makeActiveRange(range) {
@@ -62,6 +75,30 @@ export class AttributeRangePanelComponent implements OnDestroy {
             this.activeRange = range;
             this.setActives(this.activeDomain, this.activeAttribute, this.activeRange);
             this.getResults();
+        }
+    }
+    
+    updateRange() {
+        this.activeRange.changed = true;
+
+        if (!this.unsavedChanges) {
+            this.editService.setUnsavedChanges(true);
+        }
+
+        let found = false;
+        if (this.changeLog) {
+            this.changeLog.forEach((item) => {
+                if (item.memberId === this.activeRange.memberId) {
+                    found = true;
+                }
+            });
+        } else {
+            this.changeLog = [];
+        }
+
+        if (!found) {
+            this.changeLog.push(this.activeRange);
+            this.editService.setChangeLog(this.changeLog);
         }
     }
 
