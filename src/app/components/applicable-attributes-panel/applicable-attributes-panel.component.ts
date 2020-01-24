@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { RefSet } from '../../models/refset';
-import { ChangeLog } from '../../models/changeLog';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
 import { Subscription } from 'rxjs';
