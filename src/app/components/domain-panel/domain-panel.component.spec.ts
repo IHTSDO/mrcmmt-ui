@@ -7,6 +7,7 @@ import { AlphabeticalPipe } from '../../pipes/alphabetical.pipe';
 import { DomainPanelComponent } from './domain-panel.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 describe('DomainPanelComponent', () => {
     let component: DomainPanelComponent;
@@ -17,7 +18,8 @@ describe('DomainPanelComponent', () => {
             imports: [
                 FormsModule,
                 BrowserDynamicTestingModule,
-                RouterTestingModule
+                RouterTestingModule,
+                HttpClientTestingModule
             ],
             declarations: [
                 DomainPanelComponent,
