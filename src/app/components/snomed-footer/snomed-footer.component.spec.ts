@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SnomedFooterComponent } from './snomed-footer.component';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 describe('SnomedFooterComponent', () => {
   let component: SnomedFooterComponent;
@@ -8,6 +9,7 @@ describe('SnomedFooterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [ SnomedFooterComponent ]
     })
     .compileComponents();

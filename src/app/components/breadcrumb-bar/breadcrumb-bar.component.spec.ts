@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BreadcrumbBarComponent } from './breadcrumb-bar.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 describe('BreadcrumbBarComponent', () => {
     let component: BreadcrumbBarComponent;
@@ -12,7 +13,8 @@ describe('BreadcrumbBarComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 BrowserDynamicTestingModule,
-                RouterTestingModule
+                RouterTestingModule,
+                HttpClientTestingModule
             ],
             declarations: [
                 BreadcrumbBarComponent
