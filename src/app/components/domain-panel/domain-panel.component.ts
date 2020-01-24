@@ -97,7 +97,7 @@ export class DomainPanelComponent implements OnDestroy {
         this.attributeService.setActiveAttribute(attribute);
         this.rangeService.setActiveRange(range);
     }
-    
+
     updateDomain() {
         this.activeDomain.changed = true;
 
