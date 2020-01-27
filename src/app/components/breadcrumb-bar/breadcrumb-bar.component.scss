@@ -3,6 +3,7 @@
 nav.navbar {
     height: 3rem;
     background-color: $slate-grey;
+    z-index: auto;
 
     div.active-list {
         span {

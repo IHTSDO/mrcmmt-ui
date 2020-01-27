@@ -1,8 +1,18 @@
 <nav class="navbar sticky-top navbar-dark bg-dark p-2 pr-2">
-    <a routerLink="/">
+    <a class="logo" routerLink="/">
         <img class="logo mr-2 p-0" src="/mrcm/assets/small_logo.png">
         <span class="title">SNOMED CT MRCM Maintenance Tool</span>
     </a>
+    <ul class="dropdown-nav mr-auto my-2">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle px-3 rounded" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{branchPath}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a *ngFor="let version of versions?.items | branchPath" class="dropdown-item pl-3" (click)="setPath(version.branchPath)">{{version.branchPath}}</a>
+            </div>
+        </li>
+    </ul>
     <ng-container [ngSwitch]="environment">
         <div *ngSwitchCase="'local'" class="banner local"></div>
         <div *ngSwitchCase="'dev'" class="banner dev"></div>

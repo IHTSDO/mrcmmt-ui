@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomainService } from './domain.service';
+import { AttributeService } from './attribute.service';
+import { RangeService } from './range.service';
+import { TerminologyServerService } from './terminologyServer.service';
+import { CustomOrderPipe } from '../pipes/custom-order.pipe';
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +41,9 @@ export class MrcmmtService {
         }
     ];
 
-    constructor(private router: Router, private route: ActivatedRoute) {
+    constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
+                private terminologyService: TerminologyServerService, private router: Router, private route: ActivatedRoute,
+                private customOrder: CustomOrderPipe) {
     }
 
     queryStringParameterSetter(domain, attribute, range) {
@@ -61,6 +68,48 @@ export class MrcmmtService {
                 queryParams: params,
                 queryParamsHandling: 'merge'
             });
+    }
+
+    setupDomains() {
+        this.terminologyService.getDomains().subscribe(domains => {
+            this.domainService.setDomains(domains);
+
+            if (this.route.snapshot.queryParamMap.get('domain')) {
+                const activeDomain = domains.items.find(result => {
+                    return result.referencedComponentId === this.route.snapshot.queryParamMap.get('domain');
+                });
+                this.domainService.setActiveDomain(activeDomain);
+            }
+        });
+        this.setupAttributes();
+    }
+
+    setupAttributes() {
+        this.terminologyService.getAttributes().subscribe(attributes => {
+            this.attributeService.setAttributes(attributes);
+
+            if (this.route.snapshot.queryParamMap.get('attribute')) {
+                const activeAttribute = attributes.items.find(result => {
+                    return result.referencedComponentId === this.route.snapshot.queryParamMap.get('attribute');
+                });
+                this.attributeService.setActiveAttribute(activeAttribute);
+                this.setupRanges(activeAttribute);
+            }
+        });
+    }
+
+    setupRanges(activeAttribute) {
+        if (this.route.snapshot.queryParamMap.get('range')) {
+            this.terminologyService.getRanges(activeAttribute.referencedComponentId).subscribe(ranges => {
+                ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
+                this.rangeService.setRanges(ranges);
+
+                const activeRange = ranges.items.find(result => {
+                    return result.additionalFields.contentTypeId === this.route.snapshot.queryParamMap.get('range');
+                });
+                this.rangeService.setActiveRange(activeRange);
+            });
+        }
     }
 
     determineMandatoryField(id) {

@@ -41,6 +41,8 @@ import { MrcmmtService } from './services/mrcmmt.service';
 // Interceptor Imports
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
 import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
+import { BranchingService } from './services/branching.service';
+import { BranchPathPipe } from './pipes/branch-path.pipe';
 
 @NgModule({
     declarations: [
@@ -55,9 +57,9 @@ import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
         DomainMatchPipe,
         BreadcrumbBarComponent,
         AlphabeticalPipe,
-        CustomOrderPipe,
         TopLevelDomainPipe,
-        InheritedDomainMatchPipe
+        InheritedDomainMatchPipe,
+        BranchPathPipe
     ],
     imports: [
         BrowserModule,
@@ -78,6 +80,8 @@ import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
         RangeService,
         EditService,
         MrcmmtService,
+        BranchingService,
+        CustomOrderPipe,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthenticationInterceptor,

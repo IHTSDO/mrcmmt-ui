@@ -1,7 +1,7 @@
 @import '~src/variables.scss';
 
 nav {
-    a {
+    a.logo {
         height: 4rem;
         font-size: 1.6rem;
 
@@ -61,19 +61,32 @@ nav {
         border: 1px solid $yellow;
     }
 
-    button {
-        border: none;
-    }
-}
+    ul.dropdown-nav {
+        list-style-type: none;
 
-div#navbarToggleExternalContent {
-    a {
-        color: $alto-white;
-        font-weight: 300;
+        li {
+            a {
+                font-size: 1.4rem;
+                height: 3rem;
+                color: $white;
+                background-color: $dark;
+                line-height: 2rem;
+            }
 
-        &:hover {
-            color: $pacific-blue;
-            text-decoration: none;
+            div.dropdown-menu {
+                background-color: $dark;
+                z-index: 10003;
+
+                a.dropdown-item {
+                    font-weight: 300;
+                    z-index: 10003;
+
+                    &:hover {
+                        background-color: $darkish;
+                        cursor: pointer;
+                    }
+                }
+            }
         }
     }
 }

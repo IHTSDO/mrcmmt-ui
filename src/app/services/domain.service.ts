@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DomainService {
 
-    constructor(private route: ActivatedRoute) {
+    constructor() {
     }
 
     private domains = new Subject<any>();
@@ -30,7 +29,6 @@ export class DomainService {
 
     // Setters & Getters: Active Domains
     setActiveDomain(domain) {
-        // console.log('XYZ: ', this.route.snapshot.queryParamMap.get('domain'));
         this.activeDomain.next(domain);
     }
 
