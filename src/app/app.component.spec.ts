@@ -17,6 +17,8 @@ import { TopLevelDomainPipe } from './pipes/top-level-domain.pipe';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { AppRoutingModule } from './app-routing.module';
+import { BranchPathPipe } from './pipes/branch-path.pipe';
+import { CustomOrderPipe } from './pipes/custom-order.pipe';
 
 
 describe('AppComponent', () => {
@@ -28,6 +30,9 @@ describe('AppComponent', () => {
                 RouterTestingModule,
                 BrowserDynamicTestingModule,
                 AppRoutingModule
+            ],
+            providers: [
+                CustomOrderPipe
             ],
             declarations: [
                 AppComponent,
@@ -42,7 +47,8 @@ describe('AppComponent', () => {
                 InheritedDomainMatchPipe,
                 TextMatchPipe,
                 AlphabeticalPipe,
-                TopLevelDomainPipe
+                TopLevelDomainPipe,
+                BranchPathPipe
             ]
         }).compileComponents();
     }));

@@ -8,6 +8,7 @@ import { DomainPanelComponent } from './domain-panel.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
 
 describe('DomainPanelComponent', () => {
     let component: DomainPanelComponent;
@@ -20,6 +21,9 @@ describe('DomainPanelComponent', () => {
                 BrowserDynamicTestingModule,
                 RouterTestingModule,
                 HttpClientTestingModule
+            ],
+            providers: [
+                CustomOrderPipe
             ],
             declarations: [
                 DomainPanelComponent,

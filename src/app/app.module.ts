@@ -82,6 +82,7 @@ import { BranchPathPipe } from './pipes/branch-path.pipe';
         MrcmmtService,
         BranchingService,
         CustomOrderPipe,
+        BranchPathPipe,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthenticationInterceptor,

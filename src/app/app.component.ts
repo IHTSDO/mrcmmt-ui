@@ -6,27 +6,19 @@ import 'jquery';
 import { TerminologyServerService } from './services/terminologyServer.service';
 import { DomainService } from './services/domain.service';
 import { AttributeService } from './services/attribute.service';
-import { ActivatedRoute } from '@angular/router';
-import { RefSet } from './models/refset';
 import { RangeService } from './services/range.service';
-import { CustomOrderPipe } from './pipes/custom-order.pipe';
 import { BranchingService } from './services/branching.service';
 import { MrcmmtService } from './services/mrcmmt.service';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    providers: [ CustomOrderPipe ]
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 
     environment: string;
     versions: Versions;
-
-    // activeDomain: RefSet;
-    // activeAttribute: RefSet;
-    // activeRange: RefSet;
 
     constructor(private domainService: DomainService,
                 private attributeService: AttributeService,
@@ -34,8 +26,6 @@ export class AppComponent implements OnInit {
                 private authoringService: AuthoringService,
                 private terminologyService: TerminologyServerService,
                 private titleService: Title,
-                private route: ActivatedRoute,
-                private customOrder: CustomOrderPipe,
                 private branchingService: BranchingService,
                 private mrcmmtService: MrcmmtService) {
     }
@@ -59,52 +49,9 @@ export class AppComponent implements OnInit {
                 this.branchingService.setVersions(versions);
             });
             this.mrcmmtService.setupDomains();
-            // this.setupDomains();
         });
         this.assignFavicon();
     }
-
-    // setupDomains() {
-    //     this.terminologyService.getDomains().subscribe(domains => {
-    //         this.domainService.setDomains(domains);
-    //
-    //         if (this.route.snapshot.queryParamMap.get('domain')) {
-    //             this.activeDomain = domains.items.find(result => {
-    //                 return result.referencedComponentId === this.route.snapshot.queryParamMap.get('domain');
-    //             });
-    //             this.domainService.setActiveDomain(this.activeDomain);
-    //         }
-    //     });
-    //     this.setupAttributes();
-    // }
-    //
-    // setupAttributes() {
-    //     this.terminologyService.getAttributes().subscribe(attributes => {
-    //         this.attributeService.setAttributes(attributes);
-    //
-    //         if (this.route.snapshot.queryParamMap.get('attribute')) {
-    //             this.activeAttribute = attributes.items.find(result => {
-    //                 return result.referencedComponentId === this.route.snapshot.queryParamMap.get('attribute');
-    //             });
-    //             this.attributeService.setActiveAttribute(this.activeAttribute);
-    //             this.setupRanges();
-    //         }
-    //     });
-    // }
-    //
-    // setupRanges() {
-    //     if (this.route.snapshot.queryParamMap.get('range')) {
-    //         this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
-    //             ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
-    //             this.rangeService.setRanges(ranges);
-    //
-    //             this.activeRange = ranges.items.find(result => {
-    //                 return result.additionalFields.contentTypeId === this.route.snapshot.queryParamMap.get('range');
-    //             });
-    //             this.rangeService.setActiveRange(this.activeRange);
-    //         });
-    //     }
-    // }
 
     assignFavicon() {
         const favicon = $('#favicon');

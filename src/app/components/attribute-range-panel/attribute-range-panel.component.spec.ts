@@ -6,6 +6,7 @@ import { AlphabeticalPipe } from '../../pipes/alphabetical.pipe';
 import { AttributeRangePanelComponent } from './attribute-range-panel.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
 
 describe('AttributeRangePanelComponent', () => {
     let component: AttributeRangePanelComponent;
@@ -18,6 +19,9 @@ describe('AttributeRangePanelComponent', () => {
                 HttpClientTestingModule,
                 BrowserDynamicTestingModule,
                 RouterTestingModule
+            ],
+            providers: [
+                CustomOrderPipe
             ],
             declarations: [
                 AttributeRangePanelComponent,

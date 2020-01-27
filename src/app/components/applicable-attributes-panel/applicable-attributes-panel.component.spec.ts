@@ -9,6 +9,7 @@ import { ApplicableAttributesPanelComponent } from './applicable-attributes-pane
 import { InheritedDomainMatchPipe } from '../../pipes/inherited-domain-match.pipe';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
 
 describe('ApplicableAttributesPanelComponent', () => {
     let component: ApplicableAttributesPanelComponent;
@@ -22,13 +23,17 @@ describe('ApplicableAttributesPanelComponent', () => {
                 RouterTestingModule,
                 BrowserDynamicTestingModule
             ],
+            providers: [
+                CustomOrderPipe
+            ],
             declarations: [
                 ApplicableAttributesPanelComponent,
                 DuplicateFilterPipe,
                 DomainMatchPipe,
                 InheritedDomainMatchPipe,
                 TextMatchPipe,
-                AlphabeticalPipe
+                AlphabeticalPipe,
+                CustomOrderPipe
             ]
         }).compileComponents();
     }));
