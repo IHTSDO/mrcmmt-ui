@@ -9,6 +9,7 @@ import { AttributeService } from './services/attribute.service';
 import { RangeService } from './services/range.service';
 import { BranchingService } from './services/branching.service';
 import { MrcmmtService } from './services/mrcmmt.service';
+import { AuthenticationService } from './services/authentication.service';
 
 @Component({
     selector: 'app-root',
@@ -27,7 +28,8 @@ export class AppComponent implements OnInit {
                 private terminologyService: TerminologyServerService,
                 private titleService: Title,
                 private branchingService: BranchingService,
-                private mrcmmtService: MrcmmtService) {
+                private mrcmmtService: MrcmmtService,
+                private authenticationService: AuthenticationService) {
     }
 
     ngOnInit() {
@@ -45,10 +47,14 @@ export class AppComponent implements OnInit {
             this.authoringService.uiConfiguration = data;
 
             this.terminologyService.getVersions().subscribe(versions => {
-                versions.items.push({branchPath: 'MAIN'});
-                this.branchingService.setVersions(versions);
+                this.authenticationService.getLoggedInUser().subscribe(user => {
+                    if (user.roles.includes('ROLE_int-sca-author')) {
+                        versions.items.push({branchPath: 'MAIN'});
+                    }
+                    this.branchingService.setBranchPath(versions.items.reverse()[0].branchPath);
+                    this.branchingService.setVersions(versions);
+                });
             });
-            this.mrcmmtService.setupDomains();
         });
         this.assignFavicon();
     }

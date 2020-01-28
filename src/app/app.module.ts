@@ -21,6 +21,7 @@ import { AttributeRangePanelComponent } from './components/attribute-range-panel
 
 // PIPE IMPORTS
 import { TextMatchPipe } from './pipes/text-match.pipe';
+import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
 
 // SERVICE IMPORTS
 import { TerminologyServerService } from './services/terminologyServer.service';
@@ -37,12 +38,11 @@ import { AttributeService } from './services/attribute.service';
 import { RangeService } from './services/range.service';
 import { EditService } from './services/edit.service';
 import { MrcmmtService } from './services/mrcmmt.service';
+import { BranchingService } from './services/branching.service';
+import { AuthenticationService } from './services/authentication.service';
 
 // Interceptor Imports
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
-import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
-import { BranchingService } from './services/branching.service';
-import { BranchPathPipe } from './pipes/branch-path.pipe';
 
 @NgModule({
     declarations: [
@@ -58,8 +58,7 @@ import { BranchPathPipe } from './pipes/branch-path.pipe';
         BreadcrumbBarComponent,
         AlphabeticalPipe,
         TopLevelDomainPipe,
-        InheritedDomainMatchPipe,
-        BranchPathPipe
+        InheritedDomainMatchPipe
     ],
     imports: [
         BrowserModule,
@@ -81,8 +80,8 @@ import { BranchPathPipe } from './pipes/branch-path.pipe';
         EditService,
         MrcmmtService,
         BranchingService,
+        AuthenticationService,
         CustomOrderPipe,
-        BranchPathPipe,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthenticationInterceptor,

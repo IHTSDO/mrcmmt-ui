@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { SnomedResponseObject } from '../models/snomedResponseObject';
 
 @Injectable({
@@ -10,8 +10,7 @@ export class BranchingService {
     constructor() {
     }
 
-
-    private branchPath = new BehaviorSubject<string>('MAIN');
+    private branchPath = new Subject<string>();
     private versions = new Subject<SnomedResponseObject>();
 
     // Setters & Getters: BranchPath

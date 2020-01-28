@@ -19,7 +19,10 @@ export class SnomedNavbarComponent implements OnInit {
 
     constructor(private branchingService: BranchingService, private mrcmmtService: MrcmmtService) {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
-        this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => this.branchPath = data);
+        this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => {
+            this.branchPath = data;
+            this.mrcmmtService.setupDomains();
+        });
         this.versionsSubscription = this.branchingService.getVersions().subscribe(data => this.versions = data);
     }
 
@@ -28,6 +31,5 @@ export class SnomedNavbarComponent implements OnInit {
 
     setPath(path) {
         this.branchingService.setBranchPath(path);
-        this.mrcmmtService.setupDomains();
     }
 }
