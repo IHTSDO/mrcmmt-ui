@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { RefSet } from '../models/refset';
 import { TerminologyServerService } from './terminologyServer.service';
+import { MrcmmtService } from './mrcmmt.service';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +11,7 @@ export class EditService {
     localChanges: RefSet[];
     changeLogSubscription: Subscription;
 
-    constructor(private terminologyService: TerminologyServerService) {
+    constructor(private terminologyService: TerminologyServerService, private mrcmmtService: MrcmmtService) {
         this.changeLogSubscription = this.getChangeLog().subscribe(data => this.localChanges = data);
     }
 
@@ -48,10 +49,12 @@ export class EditService {
         this.localChanges.forEach((item) => {
             if (!item.memberId) {
                 this.terminologyService.postRefsetMember(item).subscribe(response => {
+                    this.mrcmmtService.setupDomains();
                 });
             } else {
                 this.terminologyService.putRefsetMember(item).subscribe(response => {
-            });
+                    this.mrcmmtService.setupDomains();
+                });
             }
         });
         this.setUnsavedChanges(false);

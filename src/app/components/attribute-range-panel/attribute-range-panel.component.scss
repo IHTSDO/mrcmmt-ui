@@ -23,6 +23,14 @@ div#attribute-range-panel {
 
         &.active {
             background-color: $tropical-blue;
+
+            &.changed {
+                background-color: $spring-rain-green;
+            }
+        }
+
+        &.changed {
+            background-color: $pixie-green;
         }
     }
 

@@ -5,7 +5,7 @@
     </div>
     <div class="domain px-3 py-2" *ngFor="let domain of domains?.items | alphabetical | topLevelDomain | textMatch:domainFilter"
          (click)="makeActiveDomain(domain)"
-         [class.active]="domain === activeDomain"
+         [class.active]="domain === activeDomain" [class.changed]="domain.changed"
          [class.attached]="highlightDomains(domain.referencedComponentId)">
         <span [class.subdomain]="domain.additionalFields.parentDomain" [class.tertiary]="domain.tertiary">
             {{domain.referencedComponent?.fsn.term}}
