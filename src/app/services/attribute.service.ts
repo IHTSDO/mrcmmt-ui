@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { RefSet } from '../models/refset';
 
 @Injectable({
     providedIn: 'root'
@@ -65,5 +66,36 @@ export class AttributeService {
 
     getAttributeFilter(): Observable<any> {
         return this.attributeFilter.asObservable();
+    }
+    
+    getNewAttribute(activeDomain): RefSet{
+        let newAttribute = new RefSet;
+        newAttribute.additionalFields = {
+            domainId: activeDomain.referencedComponentId,
+            domainConstraint: '',
+            parentDomain: '',
+            proximalPrimitiveConstraint: '',
+            proximalPrimitiveRefinement: '',
+            domainTemplateForPrecoordination: '',
+            domainTemplateForPostcoordination: '',
+            grouped: '',
+            attributeCardinality: '',
+            attributeInGroupCardinality: '',
+            contentTypeId: '',
+            ruleStrengthId: '',
+            rangeConstraint: '',
+            attributeRule: ''
+        };
+        newAttribute.referencedComponent = {
+            id: null,
+            fsn: {
+                term: "New Attribute"
+            }
+        };
+        newAttribute.refsetId = '723561005';
+        newAttribute.moduleId = '900000000000012004';
+        newAttribute.changed = true;
+        newAttribute.active = true;
+        return newAttribute;
     }
 }

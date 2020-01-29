@@ -53,12 +53,12 @@ export class TerminologyServerService {
     putRefsetMember(member): Observable<SnomedResponseObject> {
         return this.http.put<SnomedResponseObject>(
             this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +
-            '/MRCMMAINT1/members/' + member.memberId, member);
+            '/members/' + member.memberId, member);
     }
 
     postRefsetMember(member): Observable<SnomedResponseObject> {
         return this.http.post<SnomedResponseObject>(
             this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +
-            '/MRCMMAINT1/members', member);
+            '/members', member);
     }
 }

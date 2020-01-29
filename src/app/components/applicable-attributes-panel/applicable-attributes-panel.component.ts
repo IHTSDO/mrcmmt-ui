@@ -128,9 +128,18 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         if (!found) {
             this.changeLog.push(this.activeAttribute);
             this.editService.setChangeLog(this.changeLog);
-            console.log(this.changeLog);
         }
 
+    }
+    
+    addNewAttribute(){
+        let newAttribute = this.attributeService.getNewAttribute(this.activeDomain);
+        this.attributes['items'].push(newAttribute);
+        this.attributeService.setAttributes(this.attributes);
+        this.attributeService.clearMatchedDomains();
+        this.rangeService.clearRanges();
+        this.activeAttribute = newAttribute;
+        this.setActives(this.activeDomain, this.activeAttribute, null);
     }
 
     automaticDomainSelect(attribute, attributeMatchedDomains) {
