@@ -4,6 +4,7 @@ import { BreadcrumbBarComponent } from './breadcrumb-bar.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
 
 describe('BreadcrumbBarComponent', () => {
     let component: BreadcrumbBarComponent;
@@ -18,6 +19,9 @@ describe('BreadcrumbBarComponent', () => {
             ],
             declarations: [
                 BreadcrumbBarComponent
+            ],
+            providers: [
+                CustomOrderPipe
             ]
         })
             .compileComponents();

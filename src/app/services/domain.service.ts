@@ -53,9 +53,9 @@ export class DomainService {
     getDomainFilter(): Observable<any> {
         return this.domainFilter.asObservable();
     }
-    
-    getNewDomain(): RefSet{
-        let newDomain = new RefSet;
+
+    getNewDomain(): RefSet {
+        const newDomain = new RefSet;
         newDomain.additionalFields = {
             domainId: '',
             domainConstraint: '',
@@ -75,7 +75,7 @@ export class DomainService {
         newDomain.referencedComponent = {
             id: null,
             fsn: {
-                term: "New Domain"
+                term: 'New Domain'
             }
         };
         newDomain.refsetId = '723560006';

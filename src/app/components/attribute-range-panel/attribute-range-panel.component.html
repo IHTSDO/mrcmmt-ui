@@ -2,7 +2,7 @@
     <h3 class="pt-3 px-3">Attribute Range</h3><button type="button" *ngIf="editable" class="btn-default fas fa-plus float-right add" (click)="addNewRange()"></button>
     <div *ngFor="let range of ranges?.items | alphabetical">
         <div class="px-3 py-2 range" *ngIf="range" (click)="makeActiveRange(range)"
-            [class.active]="range === activeRange" [class.changed]="range.changed" [class.unpublished]="!range.effectiveTime">
+            [class.active]="range === activeRange" [class.changed]="range.changed" [class.unpublished]="!range.effectiveTime && !range.changed">
             {{mrcmmtService.determineContentTypeField(range.additionalFields.contentTypeId)}} - {{mrcmmtService.determineMandatoryField(range.additionalFields.ruleStrengthId)}}</div>
     </div>
     <div *ngIf="activeAttribute && activeRange" class="details">

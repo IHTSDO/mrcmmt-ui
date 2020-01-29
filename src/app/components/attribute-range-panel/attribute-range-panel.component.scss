@@ -39,6 +39,9 @@ div#attribute-range-panel {
         &.changed {
             background-color: $pixie-green;
         }
+        &.unpublished {
+            background-color: antiquewhite;
+        }
     }
 
     div.details {

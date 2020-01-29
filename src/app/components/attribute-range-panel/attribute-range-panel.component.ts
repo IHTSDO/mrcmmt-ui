@@ -102,9 +102,9 @@ export class AttributeRangePanelComponent implements OnDestroy {
             this.editService.setChangeLog(this.changeLog);
         }
     }
-    
-    addNewRange(){
-        let newRange = this.rangeService.getNewRange(this.activeAttribute);
+
+    addNewRange() {
+        const newRange = this.rangeService.getNewRange(this.activeAttribute);
         this.ranges['items'].push(newRange);
         this.rangeService.setRanges(this.ranges);
         this.makeActiveRange(newRange);

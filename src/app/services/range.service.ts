@@ -39,9 +39,9 @@ export class RangeService {
     getActiveRange(): Observable<any> {
         return this.activeRange.asObservable();
     }
-    
-    getNewRange(activeAttribute): RefSet{
-        let newRange = new RefSet;
+
+    getNewRange(activeAttribute): RefSet {
+        const newRange = new RefSet;
         newRange.additionalFields = {
             domainId: '',
             domainConstraint: '',

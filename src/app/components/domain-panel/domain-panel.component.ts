@@ -121,9 +121,9 @@ export class DomainPanelComponent implements OnDestroy {
             this.editService.setChangeLog(this.changeLog);
         }
     }
-    
-    addNewDomain(){
-        let newDomain = this.domainService.getNewDomain();
+
+    addNewDomain() {
+        const newDomain = this.domainService.getNewDomain();
         this.domains['items'].push(newDomain);
         this.domainService.setDomains(this.domains);
         this.setActives(newDomain, null, null);

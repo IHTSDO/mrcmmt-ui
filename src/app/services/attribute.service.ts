@@ -67,9 +67,9 @@ export class AttributeService {
     getAttributeFilter(): Observable<any> {
         return this.attributeFilter.asObservable();
     }
-    
-    getNewAttribute(activeDomain): RefSet{
-        let newAttribute = new RefSet;
+
+    getNewAttribute(activeDomain): RefSet {
+        const newAttribute = new RefSet;
         newAttribute.additionalFields = {
             domainId: activeDomain.referencedComponentId,
             domainConstraint: '',
@@ -89,7 +89,7 @@ export class AttributeService {
         newAttribute.referencedComponent = {
             id: null,
             fsn: {
-                term: "New Attribute"
+                term: 'New Attribute'
             }
         };
         newAttribute.refsetId = '723561005';
