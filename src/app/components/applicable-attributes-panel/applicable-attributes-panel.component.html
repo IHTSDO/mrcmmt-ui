@@ -1,12 +1,12 @@
 <div id="applicable-attributes-panel" [class.details-open]="activeAttribute" [class.details-minimized]="!detailsExpanded">
-    <h3 class="pt-3 px-3 m-0">Applicable Attributes</h3><button type="button" class="btn-default fas fa-plus float-right add" (click)="addNewAttribute()"></button>
+    <h3 class="pt-3 px-3 m-0">Applicable Attributes</h3><button type="button" *ngIf="editable" class="btn-default fas fa-plus float-right add" (click)="addNewAttribute()"></button>
     <div class="p-3">
         <input type="search" class="form-control" [(ngModel)]="attributeFilter" placeholder="Filter Attributes...">
     </div>
 
     <div class="px-3 py-2 attribute" *ngFor="let attribute of attributes?.items | alphabetical | textMatch:attributeFilter | domainMatch:activeDomain | duplicateFilter:activeDomain?.referencedComponentId"
          (click)="makeActiveAttribute(attribute)"
-         [class.active]="attribute === activeAttribute" [class.changed]="attribute.changed">{{attribute.referencedComponent.fsn?.term}}
+         [class.active]="attribute === activeAttribute" [class.changed]="attribute.changed"  [class.unpublished]="!attribute.effectiveTime">{{attribute.referencedComponent.fsn?.term}}
     </div>
     <ng-container *ngIf="activeDomain?.additionalFields.parentDomain">
         <div class="px-3 py-2 attribute attached" *ngFor="let attribute of attributes?.items | alphabetical | inheritedDomainMatch:activeDomain:domains.items | duplicateFilter:activeDomain?.referencedComponentId">

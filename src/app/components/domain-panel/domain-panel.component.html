@@ -1,11 +1,11 @@
 <div id="domain-panel" [class.details-open]="activeDomain" [class.details-minimized]="!detailsExpanded">
-    <h3 class="pt-3 px-3 m-0">Domain</h3>
+    <h3 class="pt-3 px-3 m-0">Domain</h3><button type="button" *ngIf="editable" class="btn-default fas fa-plus float-right add" (click)="addNewDomain()"></button>
     <div class="p-3">
         <input type="search" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
     </div>
     <div class="domain px-3 py-2" *ngFor="let domain of domains?.items | alphabetical | topLevelDomain | textMatch:domainFilter"
          (click)="makeActiveDomain(domain)"
-         [class.active]="domain === activeDomain" [class.changed]="domain.changed"
+         [class.active]="domain === activeDomain" [class.changed]="domain.changed" [class.unpublished]="!domain.effectiveTime"
          [class.attached]="highlightDomains(domain.referencedComponentId)">
         <span [class.subdomain]="domain.additionalFields.parentDomain" [class.tertiary]="domain.tertiary">
             {{domain.referencedComponent?.fsn.term}}
@@ -16,6 +16,10 @@
                 <i *ngIf="detailsExpanded" class="fas fa-caret-down"></i>
                 <i *ngIf="!detailsExpanded" class="fas fa-caret-up"></i>
             </span>
+        <ng-container *ngIf="editable">
+            <h5 class="label m-2">Domain Id</h5>
+            <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeDomain.referencedComponentId" [disabled]="!editable" (change)="updateDomain()">
+        </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainConstraint || editable">
             <h5 class="label m-2">Domain Constraint</h5>
             <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.domainConstraint" [disabled]="!editable" (change)="updateDomain()">

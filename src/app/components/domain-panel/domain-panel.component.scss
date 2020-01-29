@@ -19,6 +19,13 @@ div#domain-panel {
     h1 {
         font-weight: 300;
     }
+    
+    button.add {
+        position: absolute;
+        right: 0px;
+        top: 12px;
+        background: transparent;
+    }
 
     input {
         font-weight: 300;
@@ -54,6 +61,10 @@ div#domain-panel {
 
         &.changed {
             background-color: $pixie-green;
+        }
+        
+        &.unpublished {
+            background-color: antiquewhite;
         }
     }
 

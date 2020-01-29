@@ -46,6 +46,10 @@ div#applicable-attributes-panel {
         &.changed {
             background-color: $pixie-green;
         }
+        
+        &.unpublished {
+            background-color: antiquewhite;
+        }
     }
     
     button.add {
