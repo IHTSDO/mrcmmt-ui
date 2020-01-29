@@ -17,6 +17,13 @@ div#attribute-range-panel {
     h1 {
         font-weight: 300;
     }
+    
+    button.add {
+        position: absolute;
+        right: 0px;
+        top: 12px;
+        background: transparent;
+    }
 
     div.range {
         cursor: pointer;

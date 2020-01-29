@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { RefSet } from '../models/refset';
 
 @Injectable({
     providedIn: 'root'
@@ -37,5 +38,37 @@ export class RangeService {
 
     getActiveRange(): Observable<any> {
         return this.activeRange.asObservable();
+    }
+    
+    getNewRange(activeAttribute): RefSet{
+        let newRange = new RefSet;
+        newRange.additionalFields = {
+            domainId: '',
+            domainConstraint: '',
+            parentDomain: '',
+            proximalPrimitiveConstraint: '',
+            proximalPrimitiveRefinement: '',
+            domainTemplateForPrecoordination: '',
+            domainTemplateForPostcoordination: '',
+            grouped: '',
+            attributeCardinality: '',
+            attributeInGroupCardinality: '',
+            contentTypeId: '',
+            ruleStrengthId: '',
+            rangeConstraint: '',
+            attributeRule: ''
+        };
+        newRange.referencedComponentId = activeAttribute.referencedComponentId;
+        newRange.referencedComponent = {
+            id: activeAttribute.referencedComponentId,
+            fsn: {
+                term: activeAttribute.referencedComponent.fsn
+            }
+        };
+        newRange.refsetId = '723562003';
+        newRange.moduleId = '900000000000012004';
+        newRange.changed = true;
+        newRange.active = true;
+        return newRange;
     }
 }

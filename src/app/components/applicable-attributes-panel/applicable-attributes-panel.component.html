@@ -1,5 +1,5 @@
 <div id="applicable-attributes-panel" [class.details-open]="activeAttribute" [class.details-minimized]="!detailsExpanded">
-    <h3 class="pt-3 px-3 m-0">Applicable Attributes</h3><button type="button" class="btn-default fas fa-plus float-right" (click)="addNewAttribute()"></button>
+    <h3 class="pt-3 px-3 m-0">Applicable Attributes</h3><button type="button" class="btn-default fas fa-plus float-right add" (click)="addNewAttribute()"></button>
     <div class="p-3">
         <input type="search" class="form-control" [(ngModel)]="attributeFilter" placeholder="Filter Attributes...">
     </div>

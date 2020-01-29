@@ -1,11 +1,11 @@
 <div id="attribute-range-panel" [class.flex-display]="results?.items.length">
-    <h3 class="pt-3 px-3">Attribute Range</h3>
+    <h3 class="pt-3 px-3">Attribute Range</h3><button type="button" *ngIf="editable" class="btn-default fas fa-plus float-right add" (click)="addNewRange()"></button>
     <div *ngFor="let range of ranges?.items | alphabetical">
         <div class="px-3 py-2 range" *ngIf="range" (click)="makeActiveRange(range)"
             [class.active]="range === activeRange" [class.changed]="range.changed">
             {{mrcmmtService.determineContentTypeField(range.additionalFields.contentTypeId)}} - {{mrcmmtService.determineMandatoryField(range.additionalFields.ruleStrengthId)}}</div>
     </div>
-    <div *ngIf="activeAttribute && activeRange" class="details">
+    <div *ngIf="activeAttribute && activeRange || editable" class="details">
         <ng-container *ngIf="activeRange.additionalFields.rangeConstraint || editable">
             <h4 class="label m-2">Range Constraint</h4>
             <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeRange.additionalFields.rangeConstraint" [class.short]="rangeConstraint" [disabled]="!editable" (change)="updateRange()">

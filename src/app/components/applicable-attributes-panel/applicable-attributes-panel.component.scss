@@ -47,6 +47,13 @@ div#applicable-attributes-panel {
             background-color: $pixie-green;
         }
     }
+    
+    button.add {
+        position: absolute;
+        right: 0px;
+        top: 12px;
+        background: transparent;
+    }
 
     div.details {
         position: fixed;
