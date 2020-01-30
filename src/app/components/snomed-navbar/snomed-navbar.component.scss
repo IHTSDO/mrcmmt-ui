@@ -71,6 +71,13 @@ nav {
                 color: $white;
                 background-color: $dark;
                 line-height: 2rem;
+                font-weight: 300;
+                letter-spacing: 0.2rem;
+
+                &:disabled {
+                    cursor: not-allowed;
+                }
+
             }
 
             div.dropdown-menu {

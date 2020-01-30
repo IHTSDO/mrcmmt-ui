@@ -21,7 +21,18 @@ footer.footer {
 
     button {
         font-weight: 300;
-        letter-spacing: inherit;
-        height: 30px;
+        letter-spacing: 0.2rem;
+        height: 3rem;
+        font-size: 1.4rem;
+        color: $white;
+        border: none;
+
+        &:disabled {
+            cursor: not-allowed;
+        }
+
+        &.btn-green {
+            background-color: $forest-green;
+        }
     }
 }

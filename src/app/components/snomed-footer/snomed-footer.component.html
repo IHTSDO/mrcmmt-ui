@@ -2,7 +2,7 @@
     <a class="px-3" href="http://www.snomed.org/" target="_blank">Copyright © {{year}} SNOMED International</a>
     <a class="px-3" href="https://confluence.ihtsdotools.org/display/AP6UG/MRCM+Maintenance+Tool" target="_blank">User Guide</a>
     <a class="px-3" href="http://www.snomed.org/contact-us/" target="_blank">Contact Us</a>
-    <div class="float-right">
-        <button *ngIf="editable" [disabled]="!unsavedChanges" type="button" class="btn-green m-0 py-0 px-3 float-right" (click)="saveChanges()">SAVE</button>
+    <div class="float-right m-2">
+        <button *ngIf="editable" [disabled]="!unsavedChanges" type="button" class="btn btn-green rounded m-0 px-4 float-right" (click)="saveChanges()">SAVE</button>
     </div>
 </footer>
