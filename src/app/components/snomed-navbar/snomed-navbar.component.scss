@@ -96,4 +96,21 @@ nav {
             }
         }
     }
+
+    div.user {
+        height: 3rem;
+
+        span {
+            font-size: 1.4rem;
+            line-height: 3rem;
+            color: $white;
+            font-weight: 300;
+            letter-spacing: 0.2rem;
+        }
+
+        img {
+            height: 3rem;
+            width: 3rem;
+        }
+    }
 }
