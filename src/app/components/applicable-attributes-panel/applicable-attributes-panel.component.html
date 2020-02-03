@@ -4,10 +4,15 @@
         <input type="search" class="form-control" [(ngModel)]="attributeFilter" placeholder="Filter Attributes...">
     </div>
 
-    <div class="px-3 py-2 attribute" *ngFor="let attribute of attributes?.items | alphabetical | textMatch:attributeFilter | domainMatch:activeDomain | duplicateFilter:activeDomain?.referencedComponentId"
-         (click)="makeActiveAttribute(attribute)"
-         [class.active]="attribute === activeAttribute" [class.changed]="attribute.changed && attribute !== activeAttribute"  [class.unpublished]="!attribute.effectiveTime && !attribute.changed && attribute !== activeAttribute">{{attribute.referencedComponent.fsn?.term}}
-    </div>
+    <ng-container *ngIf="(attributes?.items | alphabetical | textMatch:attributeFilter | domainMatch:activeDomain | duplicateFilter:activeDomain?.referencedComponentId) as result">
+        <div class="px-3 py-2 attribute" *ngFor="let attribute of result"
+             (click)="makeActiveAttribute(attribute)"
+             [class.active]="attribute === activeAttribute" [class.changed]="attribute.changed && attribute !== activeAttribute"  [class.unpublished]="!attribute.effectiveTime && !attribute.changed && attribute !== activeAttribute">
+            {{attribute.referencedComponent.fsn?.term}}
+            <span *ngIf="duplicateAttributes(attribute, result)" class="content-type">{{mrcmmtService.determineContentTypeField(attribute.additionalFields.contentTypeId)}}</span>
+        </div>
+    </ng-container>
+
     <ng-container *ngIf="activeDomain?.additionalFields.parentDomain">
         <div class="px-3 py-2 attribute attached" *ngFor="let attribute of attributes?.items | alphabetical | inheritedDomainMatch:activeDomain:domains.items | duplicateFilter:activeDomain?.referencedComponentId">
             {{attribute.referencedComponent.fsn?.term}}

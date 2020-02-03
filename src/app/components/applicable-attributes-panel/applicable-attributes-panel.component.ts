@@ -129,7 +129,11 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
             this.changeLog.push(this.activeAttribute);
             this.editService.setChangeLog(this.changeLog);
         }
+    }
 
+    duplicateAttributes(attribute, results) {
+        const temp = results.filter(item => attribute.referencedComponentId === item.referencedComponentId);
+        return temp.length > 1;
     }
 
     addNewAttribute() {
