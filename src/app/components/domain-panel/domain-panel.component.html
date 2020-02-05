@@ -36,6 +36,10 @@
             <h5 class="label m-2">Proximal Primitive Refinement</h5>
             <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.proximalPrimitiveRefinement" [disabled]="!editable" (change)="updateDomain()">
         </ng-container>
+        <ng-container *ngIf="activeDomain.additionalFields.guideURL || editable">
+            <h5 class="label m-2">Guide URL</h5>
+            <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.guideURL" [disabled]="!editable" (change)="updateDomain()">
+        </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPrecoordination">
             <h5 class="label m-2">Precoordination Domain Template</h5>
             <div class="detail expandable m-2 mb-3 pl-2 pr-4 rounded" [class.short]="preCoordination" (click)="preCoordination = !preCoordination">{{activeDomain.additionalFields.domainTemplateForPrecoordination}}
