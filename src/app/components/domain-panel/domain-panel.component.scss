@@ -22,9 +22,13 @@ div#domain-panel {
     
     button.add {
         position: absolute;
-        right: 0px;
-        top: 12px;
+        right: 0rem;
+        top: 1.2rem;
         background: transparent;
+    }
+    
+    button.delete {
+        color: $indianred;
     }
 
     input {
@@ -64,7 +68,11 @@ div#domain-panel {
         }
         
         &.unpublished {
-            background-color: antiquewhite;
+            background-color: $antiquewhite;
+        }
+        
+        &.deleted {
+            background-color: $indianred;
         }
     }
 

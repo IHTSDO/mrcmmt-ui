@@ -1,5 +1,6 @@
 <div id="applicable-attributes-panel" [class.details-open]="activeAttribute" [class.details-minimized]="!detailsExpanded">
-    <h3 class="pt-3 px-3 m-0">Applicable Attributes</h3><button type="button" *ngIf="editable" class="btn-default fas fa-plus float-right add" (click)="addNewAttribute()"></button>
+    <h3 class="pt-3 px-3 m-0">Applicable Attributes</h3><button type="button" *ngIf="editable && !activeAttribute && activeDomain || editable && activeAttribute.released && activeDomain" class="btn-default fas fa-plus float-right add" (click)="addNewAttribute()"></button>
+    <button type="button" *ngIf="activeAttribute && editable && !activeAttribute.released" class="btn-default fas fa-minus float-right add delete" (click)="deleteAttribute()"></button>
     <div class="p-3">
         <input type="search" class="form-control" [(ngModel)]="attributeFilter" placeholder="Filter Attributes...">
     </div>
@@ -7,7 +8,7 @@
     <ng-container *ngIf="(attributes?.items | alphabetical | textMatch:attributeFilter | domainMatch:activeDomain | duplicateFilter:activeDomain?.referencedComponentId) as result">
         <div class="px-3 py-2 attribute" *ngFor="let attribute of result"
              (click)="makeActiveAttribute(attribute)"
-             [class.active]="attribute === activeAttribute" [class.changed]="attribute.changed && attribute !== activeAttribute"  [class.unpublished]="!attribute.effectiveTime && !attribute.changed && attribute !== activeAttribute">
+             [class.active]="attribute === activeAttribute" [class.changed]="attribute.changed && attribute !== activeAttribute"  [class.unpublished]="!attribute.deleted && !attribute.effectiveTime && !attribute.changed && attribute !== activeAttribute" [class.deleted]="attribute.deleted && attribute !== activeAttribute">
             {{attribute.referencedComponent.fsn?.term}}
             <span *ngIf="duplicateAttributes(attribute, result)" class="content-type">{{mrcmmtService.determineContentTypeField(attribute.additionalFields.contentTypeId)}}</span>
         </div>

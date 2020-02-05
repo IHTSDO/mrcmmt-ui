@@ -27,4 +27,5 @@ export class RefSet {
     moduleId: string;
     active: boolean;
     changed: boolean;
+    deleted: boolean;
 }

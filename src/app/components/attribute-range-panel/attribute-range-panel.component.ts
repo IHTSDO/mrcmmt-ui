@@ -103,6 +103,33 @@ export class AttributeRangePanelComponent implements OnDestroy {
         }
     }
 
+    deleteRange() {
+        this.activeRange.deleted = true;
+
+        if (!this.unsavedChanges) {
+            this.editService.setUnsavedChanges(true);
+        }
+
+        let found = false;
+        if (this.changeLog) {
+            this.changeLog.forEach((item) => {
+                if (item.memberId === this.activeRange.memberId) {
+                    item.deleted = true;
+                    found = true;
+                }
+            });
+        } else {
+            this.changeLog = [];
+        }
+
+        if (!found) {
+            this.changeLog.push(this.activeRange);
+            this.editService.setChangeLog(this.changeLog);
+        }
+        this.setActives(this.activeDomain, this.activeAttribute, null);
+        this.clearResults();
+    }
+
     addNewRange() {
         const newRange = this.rangeService.getNewRange(this.activeAttribute);
         this.ranges['items'].push(newRange);

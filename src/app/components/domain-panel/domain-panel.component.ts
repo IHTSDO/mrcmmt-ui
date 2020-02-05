@@ -122,6 +122,32 @@ export class DomainPanelComponent implements OnDestroy {
         }
     }
 
+    deleteDomain() {
+        this.activeDomain.deleted = true;
+
+        if (!this.unsavedChanges) {
+            this.editService.setUnsavedChanges(true);
+        }
+
+        let found = false;
+        if (this.changeLog) {
+            this.changeLog.forEach((item) => {
+                if (item.memberId === this.activeDomain.memberId) {
+                    item.deleted = true;
+                    found = true;
+                }
+            });
+        } else {
+            this.changeLog = [];
+        }
+
+        if (!found) {
+            this.changeLog.push(this.activeDomain);
+            this.editService.setChangeLog(this.changeLog);
+        }
+        this.setActives(null, this.activeAttribute, this.activeRange);
+    }
+
     addNewDomain() {
         const newDomain = this.domainService.getNewDomain();
         this.domains['items'].push(newDomain);
