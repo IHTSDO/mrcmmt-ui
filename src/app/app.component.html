@@ -6,3 +6,13 @@
 <app-applicable-attributes-panel></app-applicable-attributes-panel>
 
 <app-snomed-footer></app-snomed-footer>
+
+<!-- SAVE MODAL -->
+<app-modal id="save-modal" class="modal">
+    <h3 header class="mb-0">Save Edits?</h3>
+    <div body class="text-center p-5">You are about to save all edits to the MRCM project in the authoring platform</div>
+    <div footer>
+        <button type="button" class="btn btn" (click)="modalService.close('save-modal')">CANCEL</button>
+        <button type="button" class="btn btn-primary" (click)="editService.saveChangeLog(); modalService.close('save-modal')">SAVE</button>
+    </div>
+</app-modal>

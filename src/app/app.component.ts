@@ -10,6 +10,8 @@ import { RangeService } from './services/range.service';
 import { BranchingService } from './services/branching.service';
 import { MrcmmtService } from './services/mrcmmt.service';
 import { AuthenticationService } from './services/authentication.service';
+import { ModalService } from './services/modal.service';
+import { EditService } from './services/edit.service';
 
 @Component({
     selector: 'app-root',
@@ -29,7 +31,9 @@ export class AppComponent implements OnInit {
                 private titleService: Title,
                 private branchingService: BranchingService,
                 private mrcmmtService: MrcmmtService,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthenticationService,
+                private modalService: ModalService,
+                private editService: EditService) {
     }
 
     ngOnInit() {

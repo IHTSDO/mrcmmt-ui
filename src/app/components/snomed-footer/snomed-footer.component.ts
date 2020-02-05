@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { EditService } from '../../services/edit.service';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
     selector: 'app-snomed-footer',
@@ -16,7 +17,7 @@ export class SnomedFooterComponent implements OnDestroy {
 
     year: number = new Date().getFullYear();
 
-    constructor(private editService: EditService) {
+    constructor(private editService: EditService, private modalService: ModalService) {
         this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
         this.changesSubscription = this.editService.getUnsavedChanges().subscribe(data => this.unsavedChanges = data);
     }
