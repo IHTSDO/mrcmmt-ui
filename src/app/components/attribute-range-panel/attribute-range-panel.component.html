@@ -1,5 +1,5 @@
 <div id="attribute-range-panel" [class.flex-display]="results?.items.length">
-    <h3 class="pt-3 px-3">Attribute Range</h3><button type="button" *ngIf="editable && !activeRange || editable && activeRange.released" class="btn-default fas fa-plus float-right add" (click)="addNewRange()"></button>
+    <h3 class="pt-3 px-3">Attribute Range</h3><button type="button" *ngIf="editable && !activeRange && activeAttribute || editable && activeRange.released && activeAttribute" class="btn-default fas fa-plus float-right add" (click)="addNewRange()"></button>
     <button type="button" *ngIf="activeRange && editable && !activeRange.released" class="btn-default fas fa-minus float-right add delete" (click)="deleteRange()"></button>
     <div *ngFor="let range of ranges?.items | alphabetical">
         <div class="px-3 py-2 range" *ngIf="range" (click)="makeActiveRange(range)"
