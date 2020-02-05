@@ -18,6 +18,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { AppRoutingModule } from './app-routing.module';
 import { CustomOrderPipe } from './pipes/custom-order.pipe';
+import { ModalComponent } from './components/modal/modal.component';
 
 
 describe('AppComponent', () => {
@@ -41,6 +42,7 @@ describe('AppComponent', () => {
                 DomainPanelComponent,
                 ApplicableAttributesPanelComponent,
                 AttributeRangePanelComponent,
+                ModalComponent,
                 DuplicateFilterPipe,
                 DomainMatchPipe,
                 InheritedDomainMatchPipe,
