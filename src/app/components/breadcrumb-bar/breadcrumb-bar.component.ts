@@ -27,7 +27,7 @@ export class BreadcrumbBarComponent implements OnDestroy {
     branchPathSubscription: Subscription;
 
     constructor(private domainService: DomainService, private attributeService: AttributeService,
-        private rangeService: RangeService, private editService: EditService, 
+        private rangeService: RangeService, private editService: EditService,
         private branchingService: BranchingService, private mrcmmtService: MrcmmtService) {
             this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
             this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => this.activeAttribute = data);
