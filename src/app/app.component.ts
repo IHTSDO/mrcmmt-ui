@@ -51,6 +51,11 @@ export class AppComponent implements OnInit {
             this.authoringService.uiConfiguration = data;
 
             this.terminologyService.getVersions().subscribe(versions => {
+
+                versions.items = versions.items.filter(item => {
+                    return item.effectiveDate >= 20170731;
+                });
+
                 this.authenticationService.getLoggedInUser().subscribe(user => {
                     if (user.roles.includes('ROLE_int-sca-author')) {
                         versions.items.push({branchPath: 'MAIN'});
