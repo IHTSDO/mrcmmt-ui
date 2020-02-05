@@ -20,9 +20,13 @@ div#attribute-range-panel {
     
     button.add {
         position: absolute;
-        right: 0px;
-        top: 12px;
+        right: 0rem;
+        top: 1.2rem;
         background: transparent;
+    }
+    
+    button.delete {
+        color: $indianred;
     }
 
     div.range {
@@ -39,8 +43,13 @@ div#attribute-range-panel {
         &.changed {
             background-color: $pixie-green;
         }
+        
         &.unpublished {
-            background-color: antiquewhite;
+            background-color: $antiquewhite;
+        }
+        
+        &.deleted {
+            background-color: $indianred;
         }
     }
 

@@ -48,7 +48,11 @@ div#applicable-attributes-panel {
         }
 
         &.unpublished {
-            background-color: antiquewhite;
+            background-color: $antiquewhite;
+        }
+        
+        &.deleted {
+            background-color: $indianred;
         }
 
         span.content-type {
@@ -58,9 +62,13 @@ div#applicable-attributes-panel {
 
     button.add {
         position: absolute;
-        right: 0px;
-        top: 12px;
+        right: 0rem;
+        top: 1.2rem;
         background: transparent;
+    }
+    
+    button.delete {
+        color: $indianred;
     }
 
     div.details {

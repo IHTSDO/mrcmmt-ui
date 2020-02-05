@@ -130,6 +130,34 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
             this.editService.setChangeLog(this.changeLog);
         }
     }
+    
+    deleteAttribute() {
+        this.activeAttribute.deleted = true;
+        
+        if (!this.unsavedChanges) {
+            this.editService.setUnsavedChanges(true);
+        }
+        
+        let found = false;
+        if (this.changeLog) {
+            this.changeLog.forEach((item) => {
+                if (item.memberId === this.activeAttribute.memberId) {
+                    item.deleted = true;
+                    found = true;
+                }
+            });
+        } else {
+            this.changeLog = [];
+        }
+
+        if (!found) {
+            this.changeLog.push(this.activeAttribute);
+            this.editService.setChangeLog(this.changeLog);
+        }
+        this.setActives(this.activeDomain, null, null);
+        this.attributeService.clearMatchedDomains();
+        this.rangeService.clearRanges();
+    }
 
     duplicateAttributes(attribute, results) {
         const temp = results.filter(item => attribute.referencedComponentId === item.referencedComponentId);

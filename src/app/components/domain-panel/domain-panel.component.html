@@ -1,12 +1,13 @@
 <div id="domain-panel" [class.details-open]="activeDomain" [class.details-minimized]="!detailsExpanded">
-    <h3 class="pt-3 px-3 m-0">Domain</h3><button type="button" *ngIf="editable" class="btn-default fas fa-plus float-right add" (click)="addNewDomain()"></button>
+    <h3 class="pt-3 px-3 m-0">Domain</h3><button type="button" *ngIf="editable && !activeDomain || editable && activeDomain.released" class="btn-default fas fa-plus float-right add" (click)="addNewDomain()"></button>
+    <button type="button" *ngIf="activeDomain && editable && !activeDomain.released" class="btn-default fas fa-minus float-right add delete" (click)="deleteDomain()"></button>
     <div class="p-3">
         <input type="search" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
     </div>
     <div class="domain px-3 py-2" *ngFor="let domain of domains?.items | alphabetical | topLevelDomain | textMatch:domainFilter"
          (click)="makeActiveDomain(domain)"
-         [class.active]="domain === activeDomain" [class.changed]="domain.changed && domain !== activeDomain" [class.unpublished]="!domain.effectiveTime && !domain.changed && domain !== activeDomain"
-         [class.attached]="highlightDomains(domain.referencedComponentId)">
+         [class.active]="domain === activeDomain" [class.changed]="domain.changed && domain !== activeDomain" [class.unpublished]="!domain.deleted && !domain.effectiveTime && !domain.changed && domain !== activeDomain"
+         [class.attached]="highlightDomains(domain.referencedComponentId)" [class.deleted]="domain.deleted && domain !== activeDomain">
         <span [class.subdomain]="domain.additionalFields.parentDomain" [class.tertiary]="domain.tertiary">
             {{domain.referencedComponent?.fsn.term}}
         </span>
