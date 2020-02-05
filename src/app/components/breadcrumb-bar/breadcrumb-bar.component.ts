@@ -6,6 +6,7 @@ import { RangeService } from '../../services/range.service';
 import { Subscription } from 'rxjs';
 import { EditService } from '../../services/edit.service';
 import { BranchingService } from '../../services/branching.service';
+import { MrcmmtService } from '../../services/mrcmmt.service';
 
 @Component({
     selector: 'app-breadcrumb-bar',
@@ -26,7 +27,8 @@ export class BreadcrumbBarComponent implements OnDestroy {
     branchPathSubscription: Subscription;
 
     constructor(private domainService: DomainService, private attributeService: AttributeService,
-        private rangeService: RangeService, private editService: EditService, private branchingService: BranchingService) {
+        private rangeService: RangeService, private editService: EditService, 
+        private branchingService: BranchingService, private mrcmmtService: MrcmmtService) {
             this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
             this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => this.activeAttribute = data);
             this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
@@ -44,6 +46,9 @@ export class BreadcrumbBarComponent implements OnDestroy {
         this.attributeService.clearMatchedDomains();
         this.domainService.clearDomainFilter();
         this.attributeService.clearAttributeFilter();
+        this.mrcmmtService.setupDomains();
+        this.editService.setChangeLog([]);
+        this.editService.setUnsavedChanges(false);
     }
 
     toggleEditable() {
