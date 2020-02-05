@@ -61,7 +61,7 @@ export class TerminologyServerService {
             this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +
             '/members', member);
     }
-    
+
     deleteRefsetMember(member): Observable<any> {
         return this.http.delete<any>(
             this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +

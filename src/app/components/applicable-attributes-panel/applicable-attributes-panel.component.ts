@@ -130,14 +130,14 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
             this.editService.setChangeLog(this.changeLog);
         }
     }
-    
+
     deleteAttribute() {
         this.activeAttribute.deleted = true;
-        
+
         if (!this.unsavedChanges) {
             this.editService.setUnsavedChanges(true);
         }
-        
+
         let found = false;
         if (this.changeLog) {
             this.changeLog.forEach((item) => {

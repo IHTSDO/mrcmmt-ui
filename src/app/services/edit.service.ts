@@ -51,8 +51,7 @@ export class EditService {
                 this.terminologyService.postRefsetMember(item).subscribe(response => {
                     this.mrcmmtService.setupDomains();
                 });
-            } 
-            else if(item.deleted) {
+            } else if (item.deleted) {
                 this.terminologyService.deleteRefsetMember(item).subscribe(response => {
                     this.mrcmmtService.setupDomains();
                 });

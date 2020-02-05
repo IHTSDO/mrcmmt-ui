@@ -102,14 +102,14 @@ export class AttributeRangePanelComponent implements OnDestroy {
             this.editService.setChangeLog(this.changeLog);
         }
     }
-    
+
     deleteRange() {
         this.activeRange.deleted = true;
-        
+
         if (!this.unsavedChanges) {
             this.editService.setUnsavedChanges(true);
         }
-        
+
         let found = false;
         if (this.changeLog) {
             this.changeLog.forEach((item) => {
