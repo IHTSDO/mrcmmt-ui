@@ -12,6 +12,7 @@ import { MrcmmtService } from './services/mrcmmt.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ModalService } from './services/modal.service';
 import { EditService } from './services/edit.service';
+import { UrlParamsService } from './services/url-params.service';
 
 @Component({
     selector: 'app-root',
@@ -33,7 +34,8 @@ export class AppComponent implements OnInit {
                 private mrcmmtService: MrcmmtService,
                 private authenticationService: AuthenticationService,
                 private modalService: ModalService,
-                private editService: EditService) {
+                private editService: EditService,
+                private urlParamsService: UrlParamsService) {
     }
 
     ngOnInit() {
@@ -60,7 +62,15 @@ export class AppComponent implements OnInit {
                     if (user.roles.includes('ROLE_int-sca-author')) {
                         versions.items.push({branchPath: 'MAIN'});
                     }
-                    this.branchingService.setBranchPath(versions.items.reverse()[0].branchPath);
+
+                    versions.items.reverse();
+
+                    if (this.urlParamsService.getBranchParam()) {
+                        this.branchingService.setBranchPath(this.urlParamsService.getBranchParam());
+                    } else {
+                        this.branchingService.setBranchPath(versions.items[0].branchPath);
+                    }
+
                     this.branchingService.setVersions(versions);
                 });
             });

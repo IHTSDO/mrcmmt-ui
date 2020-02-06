@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { SnomedResponseObject } from '../models/snomedResponseObject';
+import { UrlParamsService } from './url-params.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BranchingService {
 
-    constructor() {
+    constructor(private urlParamsService: UrlParamsService) {
     }
 
     private branchPath = new Subject<string>();
@@ -15,6 +16,7 @@ export class BranchingService {
 
     // Setters & Getters: BranchPath
     setBranchPath(path) {
+        this.urlParamsService.updateBranchParam(path);
         this.branchPath.next(path);
     }
 

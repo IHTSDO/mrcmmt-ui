@@ -8,6 +8,7 @@ import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
 import { EditService } from '../../services/edit.service';
 import { MrcmmtService } from '../../services/mrcmmt.service';
+import { UrlParamsService } from '../../services/url-params.service';
 
 @Component({
     selector: 'app-applicable-attributes-panel',
@@ -42,13 +43,13 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
 
     constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
                 private terminologyService: TerminologyServerService, private customOrder: CustomOrderPipe,
-                private editService: EditService, private mrcmmtService: MrcmmtService) {
+                private editService: EditService, private mrcmmtService: MrcmmtService, private urlParamsService: UrlParamsService) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
         this.attributeSubscription = this.attributeService.getAttributes().subscribe(data => this.attributes = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
             this.activeAttribute = data;
-            this.mrcmmtService.queryStringParameterSetter(this.domainService, data, this.activeRange);
+            this.urlParamsService.updateActiveRefsetParams(this.domainService, data, this.activeRange);
         });
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
         this.matchedDomainsSubscription = this.attributeService.getMatchedDomains().subscribe(data => this.matchedDomains = data);

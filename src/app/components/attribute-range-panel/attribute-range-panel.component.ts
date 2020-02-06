@@ -7,6 +7,7 @@ import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';
 import { MrcmmtService } from '../../services/mrcmmt.service';
 import { EditService } from '../../services/edit.service';
+import { UrlParamsService } from '../../services/url-params.service';
 
 export class Results {
     items: object[];
@@ -41,7 +42,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
 
     constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
                 private terminologyService: TerminologyServerService, private mrcmmtService: MrcmmtService,
-                private editService: EditService) {
+                private editService: EditService, private urlParamsService: UrlParamsService) {
         this.rangeSubscription = this.rangeService.getRanges().subscribe(data => this.ranges = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
@@ -50,7 +51,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
         });
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => {
             this.activeRange = data;
-            this.mrcmmtService.queryStringParameterSetter(this.activeDomain, this.activeAttribute, data);
+            this.urlParamsService.updateActiveRefsetParams(this.activeDomain, this.activeAttribute, data);
             this.getResults();
         });
         this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);

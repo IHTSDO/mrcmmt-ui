@@ -6,6 +6,7 @@ import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
 import { MrcmmtService } from '../../services/mrcmmt.service';
 import { EditService } from '../../services/edit.service';
+import { UrlParamsService } from '../../services/url-params.service';
 
 @Component({
     selector: 'app-domain-panel',
@@ -39,11 +40,11 @@ export class DomainPanelComponent implements OnDestroy {
 
 
     constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
-                private mrcmmtService: MrcmmtService, private editService: EditService) {
+                private mrcmmtService: MrcmmtService, private editService: EditService, private urlParamsService: UrlParamsService) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => {
             this.activeDomain = data;
-            this.mrcmmtService.queryStringParameterSetter(data, this.activeAttribute, this.activeRange);
+            this.urlParamsService.updateActiveRefsetParams(data, this.activeAttribute, this.activeRange);
         });
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => this.activeAttribute = data);
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);

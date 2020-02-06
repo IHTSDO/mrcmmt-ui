@@ -1,11 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-
-import { BranchingService } from './branching.service';
+import { UrlParamsService } from './url-params.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('BranchingService', () => {
+describe('UrlParamsService', () => {
     beforeEach(() => TestBed.configureTestingModule({
         imports: [
             HttpClientTestingModule,
@@ -17,7 +16,7 @@ describe('BranchingService', () => {
     }));
 
     it('should be created', () => {
-        const service: BranchingService = TestBed.get(BranchingService);
+        const service: UrlParamsService = TestBed.get(UrlParamsService);
         expect(service).toBeTruthy();
     });
 });

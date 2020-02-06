@@ -17,6 +17,7 @@ import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.
 import { ApplicableAttributesPanelComponent } from './components/applicable-attributes-panel/applicable-attributes-panel.component';
 import { DomainPanelComponent } from './components/domain-panel/domain-panel.component';
 import { AttributeRangePanelComponent } from './components/attribute-range-panel/attribute-range-panel.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 // PIPE IMPORTS
 import { TextMatchPipe } from './pipes/text-match.pipe';
@@ -40,11 +41,11 @@ import { MrcmmtService } from './services/mrcmmt.service';
 import { BranchingService } from './services/branching.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ModalService } from './services/modal.service';
+import { UrlParamsService } from './services/url-params.service';
 
 // Interceptor Imports
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
 import { HeaderInterceptor } from './interceptors/header.interceptor';
-import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
     declarations: [
@@ -86,6 +87,7 @@ import { ModalComponent } from './components/modal/modal.component';
         AuthenticationService,
         CustomOrderPipe,
         ModalService,
+        UrlParamsService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthenticationInterceptor,
