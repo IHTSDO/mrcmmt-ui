@@ -59,16 +59,19 @@ export class AppComponent implements OnInit {
                 });
 
                 this.authenticationService.getLoggedInUser().subscribe(user => {
-                    if (user.roles.includes('ROLE_int-sca-author')) {
-                        versions.items.push({branchPath: 'MAIN'});
-                    }
+
+                    versions.items.push({branchPath: 'MAIN'});
 
                     versions.items.reverse();
 
                     if (this.urlParamsService.getBranchParam()) {
                         this.branchingService.setBranchPath(this.urlParamsService.getBranchParam());
                     } else {
-                        this.branchingService.setBranchPath(versions.items[0].branchPath);
+                        if (user.roles.includes('ROLE_int-sca-author')) {
+                            this.branchingService.setBranchPath(versions.items[0].branchPath);
+                        } else {
+                            this.branchingService.setBranchPath(versions.items[1].branchPath);
+                        }
                     }
 
                     this.branchingService.setVersions(versions);
