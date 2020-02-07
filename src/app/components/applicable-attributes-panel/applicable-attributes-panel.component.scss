@@ -50,7 +50,7 @@ div#applicable-attributes-panel {
         &.unpublished {
             background-color: $antiquewhite;
         }
-        
+
         &.deleted {
             background-color: $indianred;
         }
@@ -62,11 +62,11 @@ div#applicable-attributes-panel {
 
     button.add {
         position: absolute;
-        right: 0rem;
+        right: 0;
         top: 1.2rem;
         background: transparent;
     }
-    
+
     button.delete {
         color: $indianred;
     }
@@ -79,6 +79,7 @@ div#applicable-attributes-panel {
         border-top: 1px solid $regent-grey;
         height: 33vh;
         margin-bottom: 4rem;
+        overflow: scroll;
 
         &.minimized {
             height: 3.4rem;

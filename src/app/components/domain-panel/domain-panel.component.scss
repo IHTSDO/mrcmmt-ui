@@ -19,14 +19,14 @@ div#domain-panel {
     h1 {
         font-weight: 300;
     }
-    
+
     button.add {
         position: absolute;
         right: 0rem;
         top: 1.2rem;
         background: transparent;
     }
-    
+
     button.delete {
         color: $indianred;
     }
@@ -66,11 +66,11 @@ div#domain-panel {
         &.changed {
             background-color: $pixie-green;
         }
-        
+
         &.unpublished {
             background-color: $antiquewhite;
         }
-        
+
         &.deleted {
             background-color: $indianred;
         }
@@ -85,6 +85,7 @@ div#domain-panel {
         border-right: 1px solid $regent-grey;
         height: 33vh;
         margin-bottom: 4rem;
+        overflow: scroll;
 
         &.minimized {
             height: 3.4rem;
