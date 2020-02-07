@@ -91,31 +91,11 @@ export class MrcmmtService {
         }
     }
 
-    determineMandatoryField(id) {
-        switch (id) {
-            case '723597001': {
-                return 'Mandatory concept model rule';
-            }
-            case '723598006': {
-                return 'Optional concept model rule';
-            }
-        }
+    getRuleStrength(id) {
+        return this.ruleStrengthFields.find(item => item.id = id).term;
     }
 
-    determineContentTypeField(id) {
-        switch (id) {
-            case '723596005': {
-                return 'All SNOMED CT content';
-            }
-            case '723593002': {
-                return 'All new precoordinated SNOMED CT content';
-            }
-            case '723594008': {
-                return 'All precoordinated SNOMED CT content';
-            }
-            case '723595009': {
-                return 'All postcoordinated SNOMED CT content';
-            }
-        }
+    getContentType(id) {
+        return this.contentTypeFields.find(item => item.id = id).term;
     }
 }

@@ -19,31 +19,31 @@
             </span>
         <ng-container *ngIf="editable">
             <h5 class="label m-2">Domain Id</h5>
-            <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeDomain.referencedComponentId" [disabled]="!editable" (change)="updateDomain()">
+            <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded" [(ngModel)]="activeDomain.referencedComponentId" [disabled]="!editable" (change)="updateDomain()">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainConstraint || editable">
             <h5 class="label m-2">Domain Constraint</h5>
-            <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.domainConstraint" [disabled]="!editable" (change)="updateDomain()">
+            <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.domainConstraint" [disabled]="!editable" (change)="updateDomain()">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.parentDomain || editable">
             <h5 class="label m-2">Parent Domain</h5>
-            <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.parentDomain" [disabled]="!editable" (change)="updateDomain()">
+            <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.parentDomain" [disabled]="!editable" (change)="updateDomain()">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.proximalPrimitiveConstraint || editable">
             <h5 class="label m-2">Proximal Primitive Constraint</h5>
-            <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.proximalPrimitiveConstraint" [disabled]="!editable" (change)="updateDomain()">
+            <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.proximalPrimitiveConstraint" [disabled]="!editable" (change)="updateDomain()">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.proximalPrimitiveRefinement || editable">
             <h5 class="label m-2">Proximal Primitive Refinement</h5>
-            <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.proximalPrimitiveRefinement" [disabled]="!editable" (change)="updateDomain()">
+            <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.proximalPrimitiveRefinement" [disabled]="!editable" (change)="updateDomain()">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.guideURL || editable">
             <h5 class="label m-2">Guide URL</h5>
-            <input type="text" class="detail m-2 mb-3 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.guideURL" [disabled]="!editable" (change)="updateDomain()">
+            <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded" [(ngModel)]="activeDomain.additionalFields.guideURL" [disabled]="!editable" (change)="updateDomain()">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPrecoordination">
-            <h5 class="label m-2">Precoordination Domain Template</h5>
-            <div class="detail expandable m-2 mb-3 pl-2 pr-4 rounded" [class.short]="preCoordination" (click)="preCoordination = !preCoordination">{{activeDomain.additionalFields.domainTemplateForPrecoordination}}
+            <h5 class="label m-2 mb-3">Precoordination Domain Template</h5>
+            <div class="detail expandable m-2 mb-4 pl-2 pr-4 rounded" [class.short]="preCoordination" (click)="preCoordination = !preCoordination">{{activeDomain.additionalFields.domainTemplateForPrecoordination}}
                 <span>
                     <i *ngIf="preCoordination" class="fas fa-caret-down"></i>
                     <i *ngIf="!preCoordination" class="fas fa-caret-up"></i>
@@ -51,8 +51,8 @@
             </div>
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPostcoordination">
-            <h5 class="label m-2">Postcoordination Domain Template</h5>
-            <div class="detail expandable m-2 mb-3 pl-2 pr-4 rounded" [class.short]="postCoordination" (click)="postCoordination = !postCoordination">{{activeDomain.additionalFields.domainTemplateForPostcoordination}}
+            <h5 class="label m-2 mb-3">Postcoordination Domain Template</h5>
+            <div class="detail expandable m-2 mb-4 pl-2 pr-4 rounded" [class.short]="postCoordination" (click)="postCoordination = !postCoordination">{{activeDomain.additionalFields.domainTemplateForPostcoordination}}
                 <span>
                     <i *ngIf="postCoordination" class="fas fa-caret-down"></i>
                     <i *ngIf="!postCoordination" class="fas fa-caret-up"></i>

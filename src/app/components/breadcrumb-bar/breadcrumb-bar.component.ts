@@ -66,21 +66,4 @@ export class BreadcrumbBarComponent implements OnDestroy {
         this.activeRangeSubscription.unsubscribe();
         this.editSubscription.unsubscribe();
     }
-
-    determineContentTypeField(id) {
-        switch (id) {
-            case '723596005': {
-                return 'All SNOMED CT content (foundation metadata concept)';
-            }
-            case '723593002': {
-                return 'All new precoordinated SNOMED CT content (foundation metadata concept)';
-            }
-            case '723594008': {
-                return 'All precoordinated SNOMED CT content (foundation metadata concept)';
-            }
-            case '723595009': {
-                return 'All postcoordinated SNOMED CT content (foundation metadata concept)';
-            }
-        }
-    }
 }

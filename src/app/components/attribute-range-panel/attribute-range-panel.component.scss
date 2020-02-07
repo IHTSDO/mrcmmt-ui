@@ -17,14 +17,14 @@ div#attribute-range-panel {
     h1 {
         font-weight: 300;
     }
-    
+
     button.add {
         position: absolute;
-        right: 0rem;
+        right: 0;
         top: 1.2rem;
         background: transparent;
     }
-    
+
     button.delete {
         color: $indianred;
     }
@@ -43,11 +43,11 @@ div#attribute-range-panel {
         &.changed {
             background-color: $pixie-green;
         }
-        
+
         &.unpublished {
             background-color: $antiquewhite;
         }
-        
+
         &.deleted {
             background-color: $indianred;
         }
@@ -59,12 +59,14 @@ div#attribute-range-panel {
         border-top: 1px solid $regent-grey;
         border-bottom: 1px solid $regent-grey;
 
-        h4.label {
+        h5.label {
             font-weight: 300;
         }
 
         div.detail {
             background-color: $white;
+            font-size: 1.2rem;
+            line-height: 2rem;
         }
 
         &.short {
@@ -74,14 +76,28 @@ div#attribute-range-panel {
         }
 
         input.detail{
+            color: $black;
             background-color: $white;
             font-size: 1.2rem;
+            line-height: 2rem;
+            width: -webkit-fill-available;
+        }
+
+        textarea.detail {
+            resize: none;
+            color: $black;
+            background-color: $white;
+            font-size: 1.2rem;
+            height: 8rem;
             width: -webkit-fill-available;
         }
 
         select.detail{
+            color: $black;
+            font-weight: 300;
             background-color: $white;
             font-size: 1.2rem;
+            height: 2rem;
             width: -webkit-fill-available;
         }
     }

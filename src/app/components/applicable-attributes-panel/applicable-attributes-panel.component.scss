@@ -82,7 +82,7 @@ div#applicable-attributes-panel {
         overflow: scroll;
 
         &.minimized {
-            height: 3.4rem;
+            height: 3rem;
             overflow: hidden;
         }
 
@@ -101,17 +101,24 @@ div#applicable-attributes-panel {
 
         div.detail {
             background-color: $white;
+            font-size: 1.2rem;
+            line-height: 2rem;
         }
 
-        input.detail{
+        input.detail {
+            color: $black;
             background-color: $white;
             font-size: 1.2rem;
+            line-height: 2rem;
             width: -webkit-fill-available;
         }
 
-        select.detail{
+        select.detail {
+            color: $black;
+            font-weight: 300;
             background-color: $white;
             font-size: 1.2rem;
+            height: 2rem;
             width: -webkit-fill-available;
         }
     }
