@@ -16,3 +16,13 @@
         <button type="button" class="btn btn-primary" (click)="editService.saveChangeLog(); modalService.close('save-modal')">SAVE</button>
     </div>
 </app-modal>
+
+<!-- SAVE MODAL -->
+<app-modal id="discard-modal" class="modal">
+    <h3 header class="mb-0">Discard Edits?</h3>
+    <div body class="text-center p-5">You are about to discard all edits you have made so far</div>
+    <div footer>
+        <button type="button" class="btn btn" (click)="modalService.close('discard-modal')">CANCEL</button>
+        <button type="button" class="btn btn-primary" (click)="reset(); modalService.close('discard-modal')">DISCARD</button>
+    </div>
+</app-modal>

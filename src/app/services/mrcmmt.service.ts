@@ -5,6 +5,7 @@ import { RangeService } from './range.service';
 import { TerminologyServerService } from './terminologyServer.service';
 import { CustomOrderPipe } from '../pipes/custom-order.pipe';
 import { UrlParamsService } from './url-params.service';
+import { EditService } from './edit.service';
 
 @Injectable({
     providedIn: 'root'
@@ -97,5 +98,16 @@ export class MrcmmtService {
 
     getContentType(id) {
         return this.contentTypeFields.find(item => item.id = id).term;
+    }
+
+    resetTool() {
+        this.attributeService.clearActiveAttribute();
+        this.domainService.clearActiveDomain();
+        this.rangeService.clearActiveRange();
+        this.rangeService.clearRanges();
+        this.attributeService.clearMatchedDomains();
+        this.domainService.clearDomainFilter();
+        this.attributeService.clearAttributeFilter();
+        this.setupDomains();
     }
 }
