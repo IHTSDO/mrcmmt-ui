@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { RefSet } from '../models/refset';
 
 @Pipe({
-    name: 'domainMatch'
+    name: 'domainMatch',
+    pure: false
 })
 export class DomainMatchPipe implements PipeTransform {
 
