@@ -5,16 +5,17 @@
     </a>
     <ul class="dropdown-nav mr-auto my-2">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle px-3 rounded" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle px-3 rounded" [class.editable]="editable" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{branchPath}}
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div *ngIf="!editable" class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <ng-container *ngFor="let version of versions?.items">
                     <a *ngIf="version.branchPath" class="dropdown-item pl-3" (click)="setPath(version.branchPath)">{{version.branchPath}}</a>
                 </ng-container>
             </div>
         </li>
     </ul>
+
     <ng-container [ngSwitch]="environment">
         <div *ngSwitchCase="'local'" class="banner local"></div>
         <div *ngSwitchCase="'dev'" class="banner dev"></div>
