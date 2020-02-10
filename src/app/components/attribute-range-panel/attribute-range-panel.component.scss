@@ -68,6 +68,11 @@ div#attribute-range-panel {
             font-size: 1.2rem;
             line-height: 2rem;
         }
+        
+        span.mandatory{
+            color: $indianred;
+            cursor: none;
+        }
 
         &.short {
             white-space: nowrap;

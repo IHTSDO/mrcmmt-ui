@@ -91,6 +91,11 @@ div#domain-panel {
             height: 3rem;
             overflow: hidden;
         }
+        
+        span.mandatory{
+            color: $indianred;
+            cursor: none;
+        }
 
         span {
             font-size: 1.5rem;

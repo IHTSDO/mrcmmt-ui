@@ -94,6 +94,11 @@ div#applicable-attributes-panel {
                 cursor: pointer;
             }
         }
+        
+        span.mandatory{
+            color: $indianred;
+            cursor: none;
+        }
 
         h5.label {
             font-weight: 300;
