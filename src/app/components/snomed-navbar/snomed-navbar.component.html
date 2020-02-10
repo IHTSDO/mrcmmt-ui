@@ -5,7 +5,7 @@
     </a>
     <ul class="dropdown-nav mr-auto my-2">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle px-3 rounded" [class.editable]="editable" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link px-3 rounded" [class.editable]="editable" [class.dropdown-toggle]="!editable" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{branchPath}}
             </a>
             <div *ngIf="!editable" class="dropdown-menu" aria-labelledby="navbarDropdown">
