@@ -23,6 +23,8 @@ export class BreadcrumbBarComponent implements OnDestroy {
     activeRange: RefSet;
     activeRangeSubscription: Subscription;
     editable: boolean;
+    editor: boolean;
+    editorSubscription: Subscription;
     editableSubscription: Subscription;
     changes: boolean;
     changesSubscription: Subscription;
@@ -40,6 +42,7 @@ export class BreadcrumbBarComponent implements OnDestroy {
             this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => this.activeAttribute = data);
             this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
             this.editableSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
+            this.editorSubscription = this.editService.getEditor().subscribe(data => this.editor = data);
             this.changesSubscription = this.editService.getUnsavedChanges().subscribe(data => this.changes = data);
             this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => {
                 this.branchPath = data;

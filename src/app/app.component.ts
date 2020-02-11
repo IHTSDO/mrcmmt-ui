@@ -74,6 +74,12 @@ export class AppComponent implements OnInit {
                         }
                     }
 
+                    if (user.roles.includes('ROLE_mrcm-author')) {
+                            this.editService.setEditor(true);
+                        } else {
+                            this.editService.setEditor(false);
+                        }
+
                     this.branchingService.setVersions(versions);
                 });
             });

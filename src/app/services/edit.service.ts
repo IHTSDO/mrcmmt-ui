@@ -16,6 +16,7 @@ export class EditService {
     }
 
     private editable = new Subject<boolean>();
+    private editor = new Subject<boolean>();
     private unsavedChanges = new Subject<boolean>();
     private changeLog = new Subject<RefSet[]>();
 
@@ -27,6 +28,14 @@ export class EditService {
 
     getEditable(): Observable<boolean> {
         return this.editable.asObservable();
+    }
+
+    public setEditor(value) {
+        this.editor.next(value);
+    }
+
+    getEditor(): Observable<boolean> {
+        return this.editor.asObservable();
     }
 
     public setUnsavedChanges(value) {
