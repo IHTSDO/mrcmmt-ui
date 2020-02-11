@@ -44,8 +44,7 @@ export class UrlParamsService {
             [],
             {
                 relativeTo: this.route,
-                queryParams: params,
-                queryParamsHandling: 'merge'
+                queryParams: params
             });
     }
 
@@ -54,8 +53,7 @@ export class UrlParamsService {
             [],
             {
                 relativeTo: this.route,
-                queryParams: {branch: branch},
-                queryParamsHandling: 'merge'
+                queryParams: {branch: branch}
             });
     }
 }
