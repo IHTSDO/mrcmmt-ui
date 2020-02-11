@@ -93,11 +93,19 @@ export class MrcmmtService {
     }
 
     getRuleStrength(id) {
-        return this.ruleStrengthFields.find(item => item.id = id).term;
+        if (id !== '') {
+            return this.ruleStrengthFields.find(item => item.id = id).term;
+        } else {
+            return '';
+        }
     }
 
     getContentType(id) {
-        return this.contentTypeFields.find(item => item.id = id).term;
+        if (id !== '') {
+            return this.contentTypeFields.find(item => item.id = id).term;
+        } else {
+            return '';
+        }
     }
 
     resetTool() {

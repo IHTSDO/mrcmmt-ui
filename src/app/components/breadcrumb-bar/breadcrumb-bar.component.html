@@ -1,10 +1,10 @@
 <nav class="navbar sticky-top p-0">
     <div class="px-3 active-list">
-        <span *ngIf="activeDomain" class="concept">{{activeDomain.referencedComponent.fsn.term}}</span>
+        <span *ngIf="activeDomain" class="concept">{{activeDomain?.referencedComponent.fsn.term}}</span>
         <span *ngIf="activeDomain && activeAttribute" class="px-2 slash">/</span>
-        <span *ngIf="activeAttribute" class="concept">{{activeAttribute.referencedComponent.fsn.term}}</span>
+        <span *ngIf="activeAttribute" class="concept">{{activeAttribute?.referencedComponent.fsn.term}}</span>
         <span *ngIf="activeAttribute && activeRange" class="px-2 slash">/</span>
-        <span *ngIf="activeRange" class="concept">{{mrcmmtService.getContentType(activeRange.additionalFields.contentTypeId)}}</span>
+        <span *ngIf="activeRange && activeRange.additionalFields.contentTypeId" class="concept">{{mrcmmtService.getContentType(activeRange.additionalFields.contentTypeId)}}</span>
     </div>
     <div class="float-right">
         <button type="button" class="btn-purple m-0 py-0 px-3" (click)="reset()">RESET</button>
