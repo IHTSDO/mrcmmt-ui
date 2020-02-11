@@ -130,6 +130,20 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
             this.changeLog.push(this.activeAttribute);
             this.editService.setChangeLog(this.changeLog);
         }
+
+        if (this.activeAttribute.referencedComponentId !== '') {
+            this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
+                if (ranges.items.length === 0) {
+                    const newRange = this.rangeService.getNewRange(this.activeAttribute);
+                    ranges.items.push(newRange);
+                    this.rangeService.setRanges(ranges);
+                } else {
+                    ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
+                    this.rangeService.setRanges(ranges);
+                }
+                this.setActives(this.activeDomain, this.activeAttribute, ranges.items[0]);
+            });
+        }
     }
 
     deleteAttribute() {
