@@ -14,7 +14,11 @@
                 </ng-container>
             </div>
         </li>
+        <li *ngIf="editable" class="nav-item m-0 px-3">
+            <a class="nav-link editing-mode">- EDITING MODE -</a>
+        </li>
     </ul>
+
 
     <ng-container [ngSwitch]="environment">
         <div *ngSwitchCase="'local'" class="banner local"></div>

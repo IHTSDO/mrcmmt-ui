@@ -63,8 +63,12 @@ nav {
 
     ul.dropdown-nav {
         list-style-type: none;
+        max-height: 3rem;
+
 
         li {
+            display: inline-block;
+
             a {
                 font-size: 1.4rem;
                 height: 3rem;
@@ -79,7 +83,17 @@ nav {
                     cursor: not-allowed;
                 }
 
+                &.editing-mode {
+                    max-height: 3rem;
+                    font-size: 1.6rem;
+                    color: $apple-green;
+                    background-color: transparent;
+                    font-weight: 300;
+                    letter-spacing: 0.2rem;
+                }
             }
+
+
 
             div.dropdown-menu {
                 background-color: $dark;
@@ -95,8 +109,14 @@ nav {
                     }
                 }
             }
+
+            &.editing-mode {
+
+            }
         }
     }
+
+
 
     div.user {
         height: 3rem;

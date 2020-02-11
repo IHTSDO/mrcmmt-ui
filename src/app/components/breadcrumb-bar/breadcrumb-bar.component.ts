@@ -49,9 +49,9 @@ export class BreadcrumbBarComponent implements OnDestroy {
             });
     }
 
-    reset() {
+    openModal(modalName) {
         if (this.changes) {
-            this.modalService.open('discard-modal');
+            this.modalService.open(modalName);
         } else {
             this.mrcmmtService.resetTool();
             this.editService.setChangeLog([]);

@@ -7,8 +7,8 @@
         <span *ngIf="activeRange" class="concept">{{mrcmmtService.getContentType(activeRange.additionalFields.contentTypeId)}}</span>
     </div>
     <div class="float-right">
-        <button type="button" class="btn-purple m-0 py-0 px-3" (click)="reset()">RESET</button>
-        <button *ngIf="editable" type="button" class="btn-green m-0 py-0 px-3 float-right" (click)="reset(); toggleEditable()">BROWSE</button>
+        <button type="button" class="btn-purple m-0 py-0 px-3" (click)="openModal('reset-modal')">RESET</button>
+        <button *ngIf="editable" type="button" class="btn-green m-0 py-0 px-3 float-right" (click)="openModal('switch-modal'); toggleEditable()">BROWSE</button>
         <button *ngIf="!editable && editor" class="btn-green m-0 py-0 px-3 float-right" (click)="toggleEditable()">EDIT</button>
     </div>
 </nav>

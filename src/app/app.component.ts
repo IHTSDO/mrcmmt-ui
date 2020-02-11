@@ -113,6 +113,10 @@ export class AppComponent implements OnInit {
         this.mrcmmtService.resetTool();
         this.editService.setChangeLog([]);
         this.editService.setUnsavedChanges(false);
+    }
+
+    switch() {
+        this.reset();
         this.branchingService.setBranchPath('MAIN');
         this.editService.setEditable(false);
     }
