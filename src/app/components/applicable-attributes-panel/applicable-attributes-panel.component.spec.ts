@@ -10,6 +10,7 @@ import { InheritedDomainMatchPipe } from '../../pipes/inherited-domain-match.pip
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 describe('ApplicableAttributesPanelComponent', () => {
     let component: ApplicableAttributesPanelComponent;
@@ -21,7 +22,8 @@ describe('ApplicableAttributesPanelComponent', () => {
                 FormsModule,
                 HttpClientTestingModule,
                 RouterTestingModule,
-                BrowserDynamicTestingModule
+                BrowserDynamicTestingModule,
+                NgbTypeaheadModule
             ],
             providers: [
                 CustomOrderPipe

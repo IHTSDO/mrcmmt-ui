@@ -19,6 +19,7 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { AppRoutingModule } from './app-routing.module';
 import { CustomOrderPipe } from './pipes/custom-order.pipe';
 import { ModalComponent } from './components/modal/modal.component';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 describe('AppComponent', () => {
@@ -29,7 +30,8 @@ describe('AppComponent', () => {
                 HttpClientTestingModule,
                 RouterTestingModule,
                 BrowserDynamicTestingModule,
-                AppRoutingModule
+                AppRoutingModule,
+                NgbTypeaheadModule
             ],
             providers: [
                 CustomOrderPipe

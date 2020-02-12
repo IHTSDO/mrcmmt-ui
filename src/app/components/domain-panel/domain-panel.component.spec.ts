@@ -9,6 +9,7 @@ import { DomainPanelComponent } from './domain-panel.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 describe('DomainPanelComponent', () => {
     let component: DomainPanelComponent;
@@ -20,7 +21,8 @@ describe('DomainPanelComponent', () => {
                 FormsModule,
                 BrowserDynamicTestingModule,
                 RouterTestingModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                NgbTypeaheadModule
             ],
             providers: [
                 CustomOrderPipe
