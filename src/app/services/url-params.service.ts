@@ -28,6 +28,8 @@ export class UrlParamsService {
     updateActiveRefsetParams(domain, attribute, range) {
         const params = {};
 
+        params['branch'] = this.getBranchParam();
+
         if (domain) {
             params['domain'] = domain.referencedComponentId;
         }
