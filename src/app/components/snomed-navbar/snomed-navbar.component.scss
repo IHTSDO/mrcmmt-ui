@@ -116,13 +116,12 @@ nav {
         }
     }
 
-
-
     div.user {
+        cursor: pointer;
         height: 3rem;
 
         span {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             line-height: 3rem;
             color: $white;
             font-weight: 300;
@@ -132,6 +131,22 @@ nav {
         img {
             height: 3rem;
             width: 3rem;
+        }
+    }
+}
+
+div#navbarToggleExternalContent {
+    a {
+        font-size: 1.4rem;
+        line-height: 3rem;
+        color: $white;
+        font-weight: 300;
+        letter-spacing: 0.2rem;
+
+        &:hover {
+            cursor: pointer;
+            color: $pacific-blue;
+            text-decoration: none;
         }
     }
 }

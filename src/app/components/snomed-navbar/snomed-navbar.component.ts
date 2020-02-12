@@ -42,6 +42,10 @@ export class SnomedNavbarComponent implements OnInit {
     ngOnInit() {
     }
 
+    logout() {
+        this.authenticationService.logout();
+    }
+
     setPath(path) {
         this.branchingService.setBranchPath(path);
     }
