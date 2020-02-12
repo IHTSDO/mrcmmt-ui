@@ -20,7 +20,7 @@
             </span>
         <ng-container *ngIf="editable">
             <h5 class="label m-2">Domain<span *ngIf="editable" class="mandatory"> *</span></h5>
-            <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded" [(ngModel)]="shortFormConcept" [ngbTypeahead]="search" (ngModelChange)="setActiveConceptId(); updateDomain()" [disabled]="!editable"/>
+            <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded" [(ngModel)]="shortFormConcept" [ngbTypeahead]="search" placement="bottom" (ngModelChange)="setActiveConceptId(); updateDomain()" [disabled]="!editable"/>
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainConstraint || editable">
             <h5 class="label m-2">Domain Constraint<span *ngIf="editable" class="mandatory"> *</span></h5>
