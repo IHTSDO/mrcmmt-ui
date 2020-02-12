@@ -28,6 +28,7 @@ div#applicable-attributes-panel {
     }
 
     div.attribute {
+        position: relative;
         cursor: pointer;
 
         &.attached {
@@ -58,6 +59,19 @@ div#applicable-attributes-panel {
         span.content-type {
             color: $steel-blue;
         }
+
+        button.delete {
+            z-index: auto;
+            position: absolute;
+            top: 0.5rem;
+            right: 0;
+            background-color: transparent;
+            color: $crimson-red;
+
+            &:hover {
+                color: $pomegranate-red;
+            }
+        }
     }
 
     button.add {
@@ -65,10 +79,6 @@ div#applicable-attributes-panel {
         right: 0;
         top: 1.2rem;
         background: transparent;
-    }
-
-    button.delete {
-        color: $indianred;
     }
 
     div.details {
@@ -94,7 +104,7 @@ div#applicable-attributes-panel {
                 cursor: pointer;
             }
         }
-        
+
         span.mandatory{
             color: $indianred;
             cursor: none;

@@ -67,30 +67,6 @@ button.btn {
     max-width: 30rem !important;
 }
 
-div.typeahead-box {
-    background-color: $gallery-white;
-    //border: 1px solid $alto-white;
-    max-height: 20rem;
-    position: absolute;
-    top: 4.5rem;
-    left: 0;
-    overflow-y: scroll;
-    z-index: 10002;
-
-    div.typeahead {
-        font-size: 1.4rem;
-        cursor: pointer;
-
-        &:hover {
-            background-color: $alto-white;
-        }
-    }
-}
-
-div.typeahead-textarea {
-    top: 10rem;
-}
-
 ngb-typeahead-window.dropdown-menu {
     font-size: 1.4rem;
 

@@ -1,12 +1,15 @@
 import { Component, OnDestroy } from '@angular/core';
 import { RefSet } from '../../models/refset';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
 import { MrcmmtService } from '../../services/mrcmmt.service';
 import { EditService } from '../../services/edit.service';
 import { UrlParamsService } from '../../services/url-params.service';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { TerminologyServerService } from '../../services/terminologyServer.service';
+import { SnomedUtilityService } from '../../services/snomedUtility.service';
 
 @Component({
     selector: 'app-domain-panel',
@@ -38,9 +41,27 @@ export class DomainPanelComponent implements OnDestroy {
     changeLog: RefSet[];
     changeLogSubscription: Subscription;
 
+    // typeahead
+    shortFormConcept: string;
+    search = (text$: Observable<string>) => text$.pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap(term => {
+            if (term.length < 3) {
+                return [];
+            } else {
+                return this.terminologyService.getTypeahead(term);
+            }
+        })
+    )
 
-    constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
-                private mrcmmtService: MrcmmtService, private editService: EditService, private urlParamsService: UrlParamsService) {
+    constructor(private domainService: DomainService,
+                private attributeService: AttributeService,
+                private rangeService: RangeService,
+                private mrcmmtService: MrcmmtService,
+                private editService: EditService,
+                private urlParamsService: UrlParamsService,
+                private terminologyService: TerminologyServerService) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => {
             this.activeDomain = data;
@@ -74,6 +95,12 @@ export class DomainPanelComponent implements OnDestroy {
             this.setActives(null, this.activeAttribute, this.activeRange);
         } else {
             this.activeDomain = domain;
+            this.shortFormConcept = null;
+
+            this.terminologyService.getConcept(this.activeDomain.referencedComponent.id).subscribe(data => {
+                this.shortFormConcept = SnomedUtilityService.convertShortConceptToString(data);
+            });
+
             if (this.matchedDomains && this.matchedDomains.length > 1) {
                 this.matchedDomains.forEach((item) => {
                     if (domain.referencedComponentId === item.additionalFields.domainId) {
@@ -97,6 +124,10 @@ export class DomainPanelComponent implements OnDestroy {
         this.domainService.setActiveDomain(domain);
         this.attributeService.setActiveAttribute(attribute);
         this.rangeService.setActiveRange(range);
+    }
+
+    setActiveConceptId() {
+        this.activeDomain.referencedComponentId = SnomedUtilityService.getIdFromShortConcept(this.shortFormConcept);
     }
 
     updateDomain() {

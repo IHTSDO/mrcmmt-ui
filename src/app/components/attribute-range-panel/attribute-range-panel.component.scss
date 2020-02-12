@@ -25,11 +25,8 @@ div#attribute-range-panel {
         background: transparent;
     }
 
-    button.delete {
-        color: $indianred;
-    }
-
     div.range {
+        position: relative;
         cursor: pointer;
 
         &.active {
@@ -51,6 +48,19 @@ div#attribute-range-panel {
         &.deleted {
             background-color: $indianred;
         }
+
+        button.delete {
+            z-index: auto;
+            position: absolute;
+            top: 0.5rem;
+            right: 0;
+            background-color: transparent;
+            color: $crimson-red;
+
+            &:hover {
+                color: $pomegranate-red;
+            }
+        }
     }
 
     div.details {
@@ -68,7 +78,7 @@ div#attribute-range-panel {
             font-size: 1.2rem;
             line-height: 2rem;
         }
-        
+
         span.mandatory{
             color: $indianred;
             cursor: none;

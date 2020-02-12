@@ -4,6 +4,8 @@ import { Observable, Subscription } from 'rxjs';
 import { AuthoringService } from './authoring.service';
 import { SnomedResponseObject } from '../models/snomedResponseObject';
 import { BranchingService } from './branching.service';
+import { map } from 'rxjs/operators';
+import { SnomedUtilityService } from './snomedUtility.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,8 +15,35 @@ export class TerminologyServerService {
     private branchPath: string;
     private branchPathSubscription: Subscription;
 
-    constructor(private http: HttpClient, private authoringService: AuthoringService, private branchingService: BranchingService) {
+    constructor(private http: HttpClient,
+                private authoringService: AuthoringService,
+                private branchingService: BranchingService) {
         this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => this.branchPath = data);
+    }
+
+    getTypeahead(term) {
+        const params = {
+            termFilter: term,
+            limit: 20,
+            expand: 'fsn()',
+            activeFilter: true,
+            termActive: true
+        };
+        return this.http
+            .post(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + 'MAIN/concepts/search', params)
+            .pipe(map(responseData => {
+                const typeaheads = [];
+
+                responseData['items'].forEach((item) => {
+                    typeaheads.push(SnomedUtilityService.convertShortConceptToString(item));
+                });
+
+                return typeaheads;
+            }));
+    }
+
+    getConcept(id): Observable<object> {
+        return this.http.get<object>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + 'MAIN/concepts/' + id);
     }
 
     getVersions(): Observable<SnomedResponseObject> {

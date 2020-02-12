@@ -2,13 +2,15 @@ import { Component, OnDestroy } from '@angular/core';
 import { RefSet } from '../../models/refset';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
 import { EditService } from '../../services/edit.service';
 import { MrcmmtService } from '../../services/mrcmmt.service';
 import { UrlParamsService } from '../../services/url-params.service';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { SnomedUtilityService } from '../../services/snomedUtility.service';
 
 @Component({
     selector: 'app-applicable-attributes-panel',
@@ -41,9 +43,28 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     changeLog: RefSet[];
     changeLogSubscription: Subscription;
 
-    constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
-                private terminologyService: TerminologyServerService, private customOrder: CustomOrderPipe,
-                private editService: EditService, private mrcmmtService: MrcmmtService, private urlParamsService: UrlParamsService) {
+    // typeahead
+    shortFormConcept: string;
+    search = (text$: Observable<string>) => text$.pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap(term => {
+            if (term.length < 3) {
+                return [];
+            } else {
+                return this.terminologyService.getTypeahead(term);
+            }
+        })
+    )
+
+    constructor(private domainService: DomainService,
+                private attributeService: AttributeService,
+                private rangeService: RangeService,
+                private terminologyService: TerminologyServerService,
+                private customOrder: CustomOrderPipe,
+                private editService: EditService,
+                private mrcmmtService: MrcmmtService,
+                private urlParamsService: UrlParamsService) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
         this.attributeSubscription = this.attributeService.getAttributes().subscribe(data => this.attributes = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
@@ -83,6 +104,13 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
             this.rangeService.clearRanges();
         } else {
             this.activeAttribute = attribute;
+
+            this.shortFormConcept = null;
+
+            this.terminologyService.getConcept(this.activeAttribute.referencedComponent.id).subscribe(data => {
+                this.shortFormConcept = SnomedUtilityService.convertShortConceptToString(data);
+            });
+
             attributeMatchedDomains.push(attribute);
             this.attributes['items'].forEach((item) => {
                 if (this.activeAttribute.memberId !== item.memberId &&
@@ -106,6 +134,10 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.domainService.setActiveDomain(domain);
         this.attributeService.setActiveAttribute(attribute);
         this.rangeService.setActiveRange(range);
+    }
+
+    setActiveAttributeId() {
+        this.activeAttribute.referencedComponentId = SnomedUtilityService.getIdFromShortConcept(this.shortFormConcept);
     }
 
     updateAttributeId() {
@@ -149,8 +181,9 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         }
     }
 
-    deleteAttribute() {
-        this.activeAttribute.deleted = true;
+    deleteAttribute(event, attribute) {
+        event.stopPropagation();
+        attribute.deleted = true;
 
         if (!this.unsavedChanges) {
             this.editService.setUnsavedChanges(true);
@@ -159,7 +192,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         let found = false;
         if (this.changeLog) {
             this.changeLog.forEach((item) => {
-                if (item.memberId === this.activeAttribute.memberId) {
+                if (item.memberId === attribute.memberId) {
                     item.deleted = true;
                     found = true;
                 }
@@ -169,10 +202,9 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         }
 
         if (!found) {
-            this.changeLog.push(this.activeAttribute);
+            this.changeLog.push(attribute);
             this.editService.setChangeLog(this.changeLog);
         }
-        this.setActives(this.activeDomain, null, null);
         this.attributeService.clearMatchedDomains();
         this.rangeService.clearRanges();
     }

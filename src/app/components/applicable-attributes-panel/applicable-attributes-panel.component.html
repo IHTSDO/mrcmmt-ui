@@ -1,6 +1,6 @@
 <div id="applicable-attributes-panel" [class.details-open]="activeAttribute" [class.details-minimized]="!detailsExpanded">
-    <h3 class="pt-3 px-3 m-0">Applicable Attributes</h3><button type="button" *ngIf="editable && !activeAttribute && activeDomain || editable && activeAttribute?.released && activeDomain" class="btn-default fas fa-plus float-right add" (click)="addNewAttribute()"></button>
-    <button type="button" *ngIf="activeAttribute && editable && !activeAttribute.released" class="btn-default fas fa-minus float-right add delete" (click)="deleteAttribute()"></button>
+    <h3 class="pt-3 px-3 m-0">Applicable Attributes</h3>
+    <button type="button" *ngIf="editable && activeDomain" class="btn-default fas fa-plus float-right add" (click)="addNewAttribute()"></button>
     <div class="p-3">
         <input type="search" class="form-control" [(ngModel)]="attributeFilter" placeholder="Filter Attributes...">
     </div>
@@ -11,6 +11,7 @@
              [class.active]="attribute === activeAttribute" [class.changed]="attribute.changed && attribute !== activeAttribute"  [class.unpublished]="!attribute.deleted && !attribute.effectiveTime && !attribute.changed && attribute !== activeAttribute" [class.deleted]="attribute.deleted && attribute !== activeAttribute">
             {{attribute.referencedComponent.fsn?.term}}
             <span *ngIf="duplicateAttributes(attribute, result)" class="content-type">{{mrcmmtService.getContentType(attribute.additionalFields.contentTypeId)}}</span>
+            <button *ngIf="editable && !attribute.released" class="delete" (click)="deleteAttribute($event, attribute)"><i class="fas fa-minus"></i></button>
         </div>
     </ng-container>
 
@@ -25,8 +26,8 @@
             <i *ngIf="!detailsExpanded" class="fas fa-caret-up"></i>
         </span>
         <ng-container *ngIf="editable">
-            <h5 class="label m-2">Referenced Component Id<span *ngIf="editable" class="mandatory"> *</span></h5>
-            <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded" [(ngModel)]="activeAttribute.referencedComponentId" (change)="updateAttributeId()">
+            <h5 class="label m-2">Referenced Component<span *ngIf="editable" class="mandatory"> *</span></h5>
+            <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded" [(ngModel)]="shortFormConcept" [ngbTypeahead]="search" (ngModelChange)="setActiveAttributeId(); updateAttributeId()" [disabled]="!editable"/>
         </ng-container>
         <ng-container *ngIf="activeAttribute.additionalFields.grouped || editable">
             <h5 class="label m-2">Grouped<span *ngIf="editable" class="mandatory"> *</span></h5>
