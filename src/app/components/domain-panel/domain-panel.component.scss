@@ -27,9 +27,7 @@ div#domain-panel {
         background: transparent;
     }
 
-    button.delete {
-        color: $indianred;
-    }
+
 
     input {
         font-weight: 300;
@@ -38,6 +36,7 @@ div#domain-panel {
     }
 
     div.domain {
+        position: relative;
         cursor: pointer;
 
         span.subdomain {
@@ -74,6 +73,19 @@ div#domain-panel {
         &.deleted {
             background-color: $indianred;
         }
+
+        button.delete {
+            z-index: auto;
+            position: absolute;
+            top: 0.5rem;
+            right: 0;
+            background-color: transparent;
+            color: $crimson-red;
+
+            &:hover {
+                color: $pomegranate-red;
+            }
+        }
     }
 
     div.details {
@@ -91,7 +103,7 @@ div#domain-panel {
             height: 3rem;
             overflow: hidden;
         }
-        
+
         span.mandatory{
             color: $indianred;
             cursor: none;

@@ -1,6 +1,6 @@
 <div id="domain-panel" [class.details-open]="activeDomain" [class.details-minimized]="!detailsExpanded">
-    <h3 class="pt-3 px-3 m-0">Domain</h3><button type="button" *ngIf="editable && !activeDomain || editable && activeDomain?.released" class="btn-default fas fa-plus float-right add" (click)="addNewDomain()"></button>
-    <button type="button" *ngIf="activeDomain && editable && !activeDomain.released" class="btn-default fas fa-minus float-right add delete" (click)="deleteDomain()"></button>
+    <h3 class="pt-3 px-3 m-0">Domain</h3>
+    <button type="button" *ngIf="editable && !activeDomain || editable && activeDomain?.released" class="btn-default fas fa-plus float-right add" (click)="addNewDomain()"></button>
     <div class="p-3">
         <input type="search" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
     </div>
@@ -11,6 +11,7 @@
         <span [class.subdomain]="domain.additionalFields.parentDomain" [class.tertiary]="domain.tertiary">
             {{domain.referencedComponent?.fsn.term}}
         </span>
+        <button *ngIf="editable && !domain.released" class="delete" (click)="deleteDomain($event, domain)"><i class="fas fa-minus"></i></button>
     </div>
     <div *ngIf="activeDomain" class="details" [class.minimized]="!detailsExpanded">
             <span class="float-right my-1 mx-3" (click)="detailsExpanded = !detailsExpanded">

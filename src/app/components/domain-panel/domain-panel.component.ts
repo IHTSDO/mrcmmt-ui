@@ -123,8 +123,9 @@ export class DomainPanelComponent implements OnDestroy {
         }
     }
 
-    deleteDomain() {
-        this.activeDomain.deleted = true;
+    deleteDomain(event, domain) {
+        event.stopPropagation();
+        domain.deleted = true;
 
         if (!this.unsavedChanges) {
             this.editService.setUnsavedChanges(true);
@@ -133,7 +134,7 @@ export class DomainPanelComponent implements OnDestroy {
         let found = false;
         if (this.changeLog) {
             this.changeLog.forEach((item) => {
-                if (item.memberId === this.activeDomain.memberId) {
+                if (item.memberId === domain.memberId) {
                     item.deleted = true;
                     found = true;
                 }
@@ -143,10 +144,9 @@ export class DomainPanelComponent implements OnDestroy {
         }
 
         if (!found) {
-            this.changeLog.push(this.activeDomain);
+            this.changeLog.push(domain);
             this.editService.setChangeLog(this.changeLog);
         }
-        this.setActives(null, this.activeAttribute, this.activeRange);
     }
 
     addNewDomain() {
