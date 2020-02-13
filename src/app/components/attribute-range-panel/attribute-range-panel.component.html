@@ -1,13 +1,12 @@
 <div id="attribute-range-panel" [class.flex-display]="results?.items.length">
     <h3 class="pt-3 px-3">Attribute Range</h3>
     <button type="button" *ngIf="editable && activeAttribute" class="btn-default fas fa-plus float-right add" (click)="addNewRange()"></button>
-    <div *ngFor="let range of ranges?.items | alphabetical">
-        <div class="px-3 py-2 range" *ngIf="range" (click)="makeActiveRange(range)"
-            [class.active]="range === activeRange" [class.changed]="range.changed && range !== activeRange" [class.unpublished]="!range.deleted && !range.effectiveTime && !range.changed && range !== activeRange"
-             [class.deleted]="range.deleted && range !== activeRange">
-            {{mrcmmtService.getContentType(range.additionalFields.contentTypeId)}} - {{mrcmmtService.getRuleStrength(range.additionalFields.ruleStrengthId)}}
-            <button *ngIf="editable && !range.released" class="delete" (click)="deleteRange($event, range)"><i class="fas fa-minus"></i></button>
-        </div>
+    <div *ngFor="let range of ranges?.items | alphabetical; let odd = odd" class="px-3 py-2 range" (click)="makeActiveRange(range)" [class.odd]="odd" [class.active]="range === activeRange">
+        {{mrcmmtService.getContentType(range.additionalFields.contentTypeId)}} - {{mrcmmtService.getRuleStrength(range.additionalFields.ruleStrengthId)}}
+        <span *ngIf="range.changed && !range.deleted" class="marker new d-inline-block px-2 m-1">NEW / EDITED</span>
+        <span *ngIf="!range.effectiveTime && !range.changed && !range.deleted" class="marker edited d-inline-block px-2 m-1">UNPUBLISHED</span>
+        <span *ngIf="range.deleted" class="marker deleted d-inline-block px-2 m-1">TO BE DELETED</span>
+        <button *ngIf="editable && !range.released" class="delete float-right p-0" (click)="deleteRange($event, range)"><i class="fas fa-minus"></i></button>
     </div>
     <div *ngIf="activeAttribute && activeRange" class="details">
         <ng-container *ngIf="activeRange.additionalFields.rangeConstraint || editable">

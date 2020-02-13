@@ -29,31 +29,36 @@ div#attribute-range-panel {
         position: relative;
         cursor: pointer;
 
-        &.active {
-            background-color: $tropical-blue;
+        &.odd {
+            background-color: #D9D9D9;
+        }
 
-            &.changed {
-                background-color: $spring-rain-green;
+        span.marker {
+            font-size: 1rem;
+            border-radius: 1rem;
+            position: relative;
+            cursor: default;
+
+            &.new {
+                background-color: $norway-green;
+            }
+
+            &.deleted {
+                background-color: $new-york-red;
+            }
+
+            &.edited {
+                background-color: $mango-orange;
             }
         }
 
-        &.changed {
-            background-color: $pixie-green;
-        }
-
-        &.unpublished {
-            background-color: $antiquewhite;
-        }
-
-        &.deleted {
-            background-color: $indianred;
+        &.active {
+            background-color: $tropical-blue;
         }
 
         button.delete {
             z-index: auto;
-            position: absolute;
-            top: 0.5rem;
-            right: 0;
+            position: relative;
             background-color: transparent;
             color: $crimson-red;
 

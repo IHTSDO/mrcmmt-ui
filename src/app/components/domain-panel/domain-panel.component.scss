@@ -39,6 +39,10 @@ div#domain-panel {
         position: relative;
         cursor: pointer;
 
+        &.odd {
+            background-color: #D9D9D9;
+        }
+
         span.subdomain {
             margin-left:1rem;
         }
@@ -50,35 +54,36 @@ div#domain-panel {
             margin-left:2rem;
         }
 
+        span.marker {
+            font-size: 1rem;
+            border-radius: 1rem;
+            position: relative;
+            cursor: default;
+
+            &.new {
+                background-color: $norway-green;
+            }
+
+            &.deleted {
+                background-color: $new-york-red;
+            }
+
+            &.edited {
+                background-color: $mango-orange;
+            }
+        }
+
         &.attached {
-            background-color: $ghost-grey;
+            background-color: $lighter-blue;
         }
 
         &.active {
             background-color: $tropical-blue;
-
-            &.changed {
-                background-color: $spring-rain-green;
-            }
-        }
-
-        &.changed {
-            background-color: $pixie-green;
-        }
-
-        &.unpublished {
-            background-color: $antiquewhite;
-        }
-
-        &.deleted {
-            background-color: $indianred;
         }
 
         button.delete {
             z-index: auto;
-            position: absolute;
-            top: 0.5rem;
-            right: 0;
+            position: relative;
             background-color: transparent;
             color: $crimson-red;
 

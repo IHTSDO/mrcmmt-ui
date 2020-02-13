@@ -4,14 +4,18 @@
     <div class="p-3">
         <input type="search" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
     </div>
-    <div class="domain px-3 py-2" *ngFor="let domain of domains?.items | alphabetical | topLevelDomain | textMatch:domainFilter"
+    <div class="domain px-3 py-2" *ngFor="let domain of domains?.items | alphabetical | topLevelDomain | textMatch:domainFilter; let odd = odd"
          (click)="makeActiveDomain(domain)"
-         [class.active]="domain === activeDomain" [class.changed]="domain.changed && domain !== activeDomain" [class.unpublished]="!domain.deleted && !domain.effectiveTime && !domain.changed && domain !== activeDomain"
-         [class.attached]="highlightDomains(domain.referencedComponentId)" [class.deleted]="domain.deleted && domain !== activeDomain">
+         [class.odd]="odd"
+         [class.active]="domain === activeDomain"
+         [class.attached]="highlightDomains(domain.referencedComponentId)">
         <span [class.subdomain]="domain.additionalFields.parentDomain" [class.tertiary]="domain.tertiary">
             {{domain.referencedComponent?.fsn.term}}
         </span>
-        <button *ngIf="editable && !domain.released" class="delete" (click)="deleteDomain($event, domain)"><i class="fas fa-minus"></i></button>
+        <span *ngIf="domain.changed && !domain.deleted" class="marker new d-inline-block px-2 m-1">NEW / EDITED</span>
+        <span *ngIf="!domain.effectiveTime && !domain.changed && !domain.deleted" class="marker edited d-inline-block px-2 m-1">UNPUBLISHED</span>
+        <span *ngIf="domain.deleted" class="marker deleted d-inline-block px-2 m-1">TO BE DELETED</span>
+        <button *ngIf="editable && !domain.released" class="delete float-right p-0" (click)="deleteDomain($event, domain)"><i class="fas fa-minus"></i></button>
     </div>
     <div *ngIf="activeDomain" class="details" [class.minimized]="!detailsExpanded">
             <span class="float-right my-1 mx-3" (click)="detailsExpanded = !detailsExpanded">
