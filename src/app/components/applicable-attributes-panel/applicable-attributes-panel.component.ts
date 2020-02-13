@@ -215,6 +215,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     }
 
     addNewAttribute() {
+        this.shortFormConcept = null;
         const newAttribute = this.attributeService.getNewAttribute(this.activeDomain);
         this.attributes['items'].push(newAttribute);
         this.attributeService.setAttributes(this.attributes);

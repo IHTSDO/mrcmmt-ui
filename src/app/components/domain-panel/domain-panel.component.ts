@@ -201,6 +201,7 @@ export class DomainPanelComponent implements OnDestroy {
     }
 
     addNewDomain() {
+        this.shortFormConcept = null;
         const newDomain = this.domainService.getNewDomain();
         this.domains['items'].push(newDomain);
         this.domainService.setDomains(this.domains);
