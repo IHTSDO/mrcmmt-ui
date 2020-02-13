@@ -99,7 +99,7 @@ export class DomainPanelComponent implements OnDestroy {
             this.activeDomain = domain;
             this.shortFormConcept = null;
 
-            this.terminologyService.getConcept(this.activeDomain.referencedComponent.id).subscribe(data => {
+            this.terminologyService.getConcept(this.activeDomain.referencedComponentId).subscribe(data => {
                 this.shortFormConcept = SnomedUtilityService.convertShortConceptToString(data);
             });
 
