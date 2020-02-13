@@ -79,6 +79,10 @@ div#attribute-range-panel {
             line-height: 2rem;
         }
 
+        div.warning {
+            background-color: lightyellow;
+        }
+
         span.mandatory{
             color: $indianred;
             cursor: none;

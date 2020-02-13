@@ -6,9 +6,9 @@ import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
 import { MrcmmtService } from '../../services/mrcmmt.service';
 import { EditService } from '../../services/edit.service';
+import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { UrlParamsService } from '../../services/url-params.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { SnomedUtilityService } from '../../services/snomedUtility.service';
 
 @Component({
@@ -21,6 +21,8 @@ export class DomainPanelComponent implements OnDestroy {
     preCoordination = true;
     postCoordination = true;
     detailsExpanded = true;
+    domainConstraintInvalid: boolean;
+    proxPrimInvalid: boolean;
 
     domains: object;
     domainSubscription: Subscription;
@@ -118,6 +120,24 @@ export class DomainPanelComponent implements OnDestroy {
                 this.setActives(this.activeDomain, null, null);
             }
         }
+    }
+
+    validateEcl(field, value) {
+        if (field === 'domainConstraint') {
+            this.domainConstraintInvalid = false;
+        } else if (field === 'proxPrim') {
+            this.proxPrimInvalid = false;
+        }
+        this.terminologyService.getRangeConstraints(value).subscribe(data => {
+                if (data.items.length === 0) {
+                    if (field === 'domainConstraint') {
+                        this.domainConstraintInvalid = true;
+                    } else if (field === 'proxPrim') {
+                        this.proxPrimInvalid = true;
+                    }
+                }
+            });
+        this.updateDomain();
     }
 
     setActives(domain, attribute, range) {

@@ -24,6 +24,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
     rangeConstraint: boolean;
     attributeRule: boolean;
     results: Results;
+    attributeRuleInvalid: boolean;
 
     ranges: object;
     rangeSubscription: Subscription;
@@ -78,6 +79,16 @@ export class AttributeRangePanelComponent implements OnDestroy {
             this.setActives(this.activeDomain, this.activeAttribute, this.activeRange);
             this.getResults();
         }
+    }
+
+    validateEcl() {
+        this.attributeRuleInvalid = false;
+        this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
+            if (data.items.length === 0) {
+                    this.attributeRuleInvalid = true;
+                }
+            });
+        this.updateRange();
     }
 
     updateRange() {
