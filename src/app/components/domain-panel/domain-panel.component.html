@@ -12,7 +12,7 @@
         <span [class.subdomain]="domain.additionalFields.parentDomain" [class.tertiary]="domain.tertiary">
             {{domain.referencedComponent?.fsn.term}}
         </span>
-        <span *ngIf="domain.changed && !domain.deleted" class="marker new d-inline-block px-2 m-1">NEW / EDITED</span>
+        <span *ngIf="domain.changed && !domain.deleted" class="marker new d-inline-block px-2 m-1">UNSAVED</span>
         <span *ngIf="!domain.effectiveTime && !domain.changed && !domain.deleted" class="marker edited d-inline-block px-2 m-1">UNPUBLISHED</span>
         <span *ngIf="domain.deleted" class="marker deleted d-inline-block px-2 m-1">TO BE DELETED</span>
         <button *ngIf="editable && !domain.released" class="delete float-right p-0" (click)="deleteDomain($event, domain)"><i class="fas fa-minus"></i></button>

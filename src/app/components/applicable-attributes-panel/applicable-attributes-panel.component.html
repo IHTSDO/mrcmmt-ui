@@ -10,7 +10,7 @@
              [class.active]="attribute === activeAttribute">
             {{attribute.referencedComponent.fsn?.term}}
             <span *ngIf="duplicateAttributes(attribute, result)" class="content-type">{{mrcmmtService.getContentType(attribute.additionalFields.contentTypeId)}}</span>
-            <span *ngIf="attribute.changed && !attribute.deleted" class="marker new d-inline-block px-2 m-1">NEW / EDITED</span>
+            <span *ngIf="attribute.changed && !attribute.deleted" class="marker new d-inline-block px-2 m-1">UNSAVED</span>
             <span *ngIf="!attribute.effectiveTime && !attribute.changed && !attribute.deleted" class="marker edited d-inline-block px-2 m-1">UNPUBLISHED</span>
             <span *ngIf="attribute.deleted" class="marker deleted d-inline-block px-2 m-1">TO BE DELETED</span>
             <button *ngIf="editable && !attribute.released" class="delete float-right p-0" (click)="deleteAttribute($event, attribute)"><i class="fas fa-minus"></i></button>
