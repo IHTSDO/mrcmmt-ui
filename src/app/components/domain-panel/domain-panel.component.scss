@@ -139,6 +139,10 @@ div#domain-panel {
                 right: 0.5rem;
             }
 
+            &.warning {
+                background-color: lightyellow;
+            }
+
             &.expandable {
                 cursor: pointer;
             }

@@ -61,6 +61,8 @@ export class BreadcrumbBarComponent implements OnDestroy {
 
     toggleEditable() {
         if (!this.changes) {
+            this.mrcmmtService.resetTool();
+
             if (this.editable) {
                 this.branchingService.setBranchPath('MAIN');
             } else {
