@@ -167,10 +167,11 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     }
 
     setActiveAttributeId() {
-        this.activeAttribute.referencedComponentId = SnomedUtilityService.getIdFromShortConcept(this.shortFormConcept);
+        
     }
 
     updateAttributeId() {
+        this.activeAttribute.referencedComponentId = SnomedUtilityService.getIdFromShortConcept(this.shortFormConcept);
         if (this.activeAttribute.referencedComponentId !== '') {
                 this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
                     if (ranges.items.length === 0) {
