@@ -93,7 +93,6 @@ export class AttributeRangePanelComponent implements OnDestroy {
 
     updateRange() {
         this.activeRange.changed = true;
-        console.log(this.activeRange);
 
         if (!this.unsavedChanges) {
             this.editService.setUnsavedChanges(true);
