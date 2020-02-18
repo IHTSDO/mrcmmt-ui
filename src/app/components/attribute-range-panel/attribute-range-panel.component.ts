@@ -21,36 +21,6 @@ export class Results {
 })
 export class AttributeRangePanelComponent implements OnDestroy {
 
-    ruleStrengthFields = [
-        {
-            id: '723597001',
-            term: 'Mandatory concept model rule'
-        },
-        {
-            id: '723598006',
-            term: 'Optional concept model rule'
-        }
-    ];
-
-    contentTypeFields = [
-        {
-            id: '723596005',
-            term: 'All SNOMED CT content'
-        },
-        {
-            id: '723593002',
-            term: 'All new precoordinated SNOMED CT content'
-        },
-        {
-            id: '723594008',
-            term: 'All precoordinated SNOMED CT content'
-        },
-        {
-            id: '723595009',
-            term: 'All postcoordinated SNOMED CT content'
-        }
-    ];
-
     rangeConstraint: boolean;
     attributeRule: boolean;
     results: Results;

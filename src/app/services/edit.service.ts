@@ -55,22 +55,37 @@ export class EditService {
     }
 
     public saveChangeLog() {
-        this.localChanges.forEach((item) => {
-            if (!item.memberId) {
-                this.terminologyService.postRefsetMember(item).subscribe(response => {
-                    this.mrcmmtService.setupDomains();
+        if (this.localChanges) {
+            this.saveIterable(this.localChanges[0], 0);
+        }
+    }
+
+    saveIterable(item, index) {
+        if (!item.memberId) {
+            this.terminologyService.postRefsetMember(item).subscribe(
+                () => {
+                    this.nextIterable(index);
                 });
-            } else if (item.deleted) {
-                this.terminologyService.deleteRefsetMember(item).subscribe(response => {
-                    this.mrcmmtService.setupDomains();
+        } else if (item.deleted) {
+            this.terminologyService.deleteRefsetMember(item).subscribe(
+                () => {
+                    this.nextIterable(index);
                 });
-            } else {
-                this.terminologyService.putRefsetMember(item).subscribe(response => {
-                    this.mrcmmtService.setupDomains();
+        } else {
+            this.terminologyService.putRefsetMember(item).subscribe(
+                () => {
+                    this.nextIterable(index);
                 });
-            }
-        });
-        this.setUnsavedChanges(false);
-        this.setChangeLog([]);
+        }
+    }
+
+    nextIterable(index) {
+        if (this.localChanges[index + 1]) {
+            this.saveIterable(this.localChanges[index + 1], index + 1);
+        } else {
+            this.mrcmmtService.setupDomains();
+            this.setUnsavedChanges(false);
+            this.setChangeLog([]);
+        }
     }
 }

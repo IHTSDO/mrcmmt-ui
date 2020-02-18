@@ -22,10 +22,6 @@ export class SnomedFooterComponent implements OnDestroy {
         this.changesSubscription = this.editService.getUnsavedChanges().subscribe(data => this.unsavedChanges = data);
     }
 
-    saveChanges() {
-        this.editService.saveChangeLog();
-    }
-
     ngOnDestroy() {
         this.editSubscription.unsubscribe();
         this.changesSubscription.unsubscribe();

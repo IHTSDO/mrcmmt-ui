@@ -69,9 +69,7 @@ div#applicable-attributes-panel {
 
         button.delete {
             z-index: auto;
-            position: absolute;
-            top: 0.5rem;
-            right: 0;
+            position: relative;
             background-color: transparent;
             color: $crimson-red;
 

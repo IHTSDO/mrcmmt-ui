@@ -5,7 +5,6 @@ import { RangeService } from './range.service';
 import { TerminologyServerService } from './terminologyServer.service';
 import { CustomOrderPipe } from '../pipes/custom-order.pipe';
 import { UrlParamsService } from './url-params.service';
-import { EditService } from './edit.service';
 
 @Injectable({
     providedIn: 'root'
@@ -94,7 +93,7 @@ export class MrcmmtService {
 
     getRuleStrength(id) {
         if (id !== '') {
-            return this.ruleStrengthFields.find(item => item.id = id).term;
+            return this.ruleStrengthFields.find(item => item.id === id).term;
         } else {
             return '';
         }
@@ -102,7 +101,7 @@ export class MrcmmtService {
 
     getContentType(id) {
         if (id !== '') {
-            return this.contentTypeFields.find(item => item.id = id).term;
+            return this.contentTypeFields.find(item => item.id === id).term;
         } else {
             return '';
         }

@@ -23,14 +23,14 @@
         <ng-container *ngIf="activeRange.additionalFields.ruleStrengthId || editable">
             <h5 class="label m-2 mb-3">Mandatory<span *ngIf="editable" class="mandatory"> *</span></h5>
             <select class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable" [(ngModel)]="activeRange.additionalFields.ruleStrengthId" (change)="updateRange()">
-                <option *ngFor="let ruleStrength of ruleStrengthFields" [value]="ruleStrength.id" >{{ruleStrength.term}}</option>
+                <option *ngFor="let ruleStrength of mrcmmtService.ruleStrengthFields" [value]="ruleStrength.id" >{{ruleStrength.term}}</option>
             </select>
             <div *ngIf="!editable" class="detail m-2 mb-4 pl-2 rounded">{{mrcmmtService.getRuleStrength(activeRange.additionalFields.ruleStrengthId)}}</div>
         </ng-container>
         <ng-container *ngIf="activeRange.additionalFields.contentTypeId || editable">
             <h5 class="label m-2 mb-3">Content Type<span *ngIf="editable" class="mandatory"> *</span></h5>
             <select class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable" [(ngModel)]="activeRange.additionalFields.contentTypeId" (change)="updateRange()">
-                <option *ngFor="let contentType of contentTypeFields" [value]="contentType.id">{{contentType.term}}</option>
+                <option *ngFor="let contentType of mrcmmtService.contentTypeFields" [value]="contentType.id">{{contentType.term}}</option>
             </select>
             <div *ngIf="!editable" class="detail m-2 mb-4 pl-2 rounded">{{mrcmmtService.getContentType(activeRange.additionalFields.contentTypeId)}}</div>
         </ng-container>
