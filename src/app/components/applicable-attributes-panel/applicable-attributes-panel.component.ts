@@ -166,16 +166,15 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.rangeService.setActiveRange(range);
     }
 
-    setActiveAttributeId() {
-        
-    }
-
     updateAttributeId() {
         this.activeAttribute.referencedComponentId = SnomedUtilityService.getIdFromShortConcept(this.shortFormConcept);
         if (this.activeAttribute.referencedComponentId !== '') {
                 this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
                     if (ranges.items.length === 0) {
                         const newRange = this.rangeService.getNewRange(this.activeAttribute);
+                        newRange.changed = true;
+                        this.changeLog.push(newRange);
+                        this.editService.setChangeLog(this.changeLog);
                         ranges.items.push(newRange);
                         this.rangeService.setRanges(ranges);
                     } else {
