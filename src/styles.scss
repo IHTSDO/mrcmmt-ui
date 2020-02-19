@@ -68,7 +68,9 @@ button.btn {
 }
 
 ngb-typeahead-window.dropdown-menu {
+    max-width: 30vw;
     font-size: 1.4rem;
+    overflow-y: hidden;
 
     button.dropdown-item {
         font-weight: 300;
