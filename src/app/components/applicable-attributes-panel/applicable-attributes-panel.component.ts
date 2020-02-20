@@ -103,7 +103,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
 
             this.shortFormConcept = null;
 
-            this.terminologyService.getConcept(this.activeAttribute.referencedComponent.id).subscribe(data => {
+            this.terminologyService.getConcept(this.activeAttribute.referencedComponentId).subscribe(data => {
                 this.shortFormConcept = SnomedUtilityService.convertShortConceptToString(data);
             });
 
