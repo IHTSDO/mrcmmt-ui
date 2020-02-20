@@ -56,32 +56,34 @@ export class EditService {
 
     public saveChangeLog() {
         if (this.localChanges) {
-            this.saveIterable(this.localChanges[0], 0);
+            this.saveIterable(this.localChanges[0]);
         }
     }
 
-    saveIterable(item, index) {
+    saveIterable(item) {
         if (!item.memberId) {
             this.terminologyService.postRefsetMember(item).subscribe(
                 () => {
-                    this.nextIterable(index);
+                    this.nextIterable();
                 });
         } else if (item.deleted) {
             this.terminologyService.deleteRefsetMember(item).subscribe(
                 () => {
-                    this.nextIterable(index);
+                    this.nextIterable();
                 });
         } else {
             this.terminologyService.putRefsetMember(item).subscribe(
                 () => {
-                    this.nextIterable(index);
+                    this.nextIterable();
                 });
         }
     }
 
-    nextIterable(index) {
-        if (this.localChanges[index + 1]) {
-            this.saveIterable(this.localChanges[index + 1], index + 1);
+    nextIterable() {
+        this.localChanges.shift();
+
+        if (this.localChanges.length) {
+            this.saveIterable(this.localChanges[0]);
         } else {
             this.mrcmmtService.setupDomains();
             this.setUnsavedChanges(false);
