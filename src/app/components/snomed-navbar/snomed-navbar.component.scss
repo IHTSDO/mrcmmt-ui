@@ -97,11 +97,15 @@ nav {
 
             div.dropdown-menu {
                 background-color: $dark;
-                z-index: 10003;
+                z-index: auto;
+
+                &.show {
+                    display: block;
+                }
 
                 a.dropdown-item {
                     font-weight: 300;
-                    z-index: 10003;
+                    z-index: auto;
 
                     &:hover {
                         background-color: $darkish;
