@@ -38,8 +38,6 @@ export class DomainPanelComponent implements OnDestroy {
     matchedDomainsSubscription: Subscription;
     editable: boolean;
     editSubscription: Subscription;
-    unsavedChanges: boolean;
-    unsavedChangesSubscription: Subscription;
     changeLog: RefSet[];
     changeLogSubscription: Subscription;
 
@@ -74,7 +72,6 @@ export class DomainPanelComponent implements OnDestroy {
         this.domainFilterSubscription = this.domainService.getDomainFilter().subscribe(data => this.domainFilter = data);
         this.matchedDomainsSubscription = this.attributeService.getMatchedDomains().subscribe(data => this.matchedDomains = data);
         this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
-        this.unsavedChangesSubscription = this.editService.getUnsavedChanges().subscribe(data => this.unsavedChanges = data);
         this.changeLogSubscription = this.editService.getChangeLog().subscribe(data => this.changeLog = data);
     }
 
@@ -86,7 +83,6 @@ export class DomainPanelComponent implements OnDestroy {
         this.domainFilterSubscription.unsubscribe();
         this.matchedDomainsSubscription.unsubscribe();
         this.editSubscription.unsubscribe();
-        this.unsavedChangesSubscription.unsubscribe();
         this.changeLogSubscription.unsubscribe();
     }
 
@@ -153,10 +149,6 @@ export class DomainPanelComponent implements OnDestroy {
     updateDomain() {
         this.activeDomain.changed = true;
 
-        if (!this.unsavedChanges) {
-            this.editService.setUnsavedChanges(true);
-        }
-
         let found = false;
         if (this.changeLog) {
             this.changeLog.forEach((item) => {
@@ -177,10 +169,6 @@ export class DomainPanelComponent implements OnDestroy {
     deleteDomain(event, domain) {
         event.stopPropagation();
         domain.deleted = true;
-
-        if (!this.unsavedChanges) {
-            this.editService.setUnsavedChanges(true);
-        }
 
         let found = false;
         if (this.changeLog) {

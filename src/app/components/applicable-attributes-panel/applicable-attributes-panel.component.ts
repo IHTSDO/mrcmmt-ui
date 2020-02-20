@@ -38,8 +38,6 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     matchedDomainsSubscription: Subscription;
     editable: boolean;
     editSubscription: Subscription;
-    unsavedChanges: boolean;
-    unsavedChangesSubscription: Subscription;
     changeLog: RefSet[];
     changeLogSubscription: Subscription;
 
@@ -76,7 +74,6 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.matchedDomainsSubscription = this.attributeService.getMatchedDomains().subscribe(data => this.matchedDomains = data);
         this.attributeFilterSubscription = this.attributeService.getAttributeFilter().subscribe(data => this.attributeFilter = data);
         this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
-        this.unsavedChangesSubscription = this.editService.getUnsavedChanges().subscribe(data => this.unsavedChanges = data);
         this.changeLogSubscription = this.editService.getChangeLog().subscribe(data => this.changeLog = data);
     }
 
@@ -88,7 +85,6 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.activeRangeSubscription.unsubscribe();
         this.matchedDomainsSubscription.unsubscribe();
         this.editSubscription.unsubscribe();
-        this.unsavedChangesSubscription.unsubscribe();
         this.changeLogSubscription.unsubscribe();
     }
 
@@ -160,10 +156,6 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     updateAttribute() {
         this.activeAttribute.changed = true;
 
-        if (!this.unsavedChanges) {
-            this.editService.setUnsavedChanges(true);
-        }
-
         let found = false;
         if (this.changeLog) {
             this.changeLog.forEach((item) => {
@@ -184,10 +176,6 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     deleteAttribute(event, attribute) {
         event.stopPropagation();
         attribute.deleted = true;
-
-        if (!this.unsavedChanges) {
-            this.editService.setUnsavedChanges(true);
-        }
 
         let found = false;
         if (this.changeLog) {

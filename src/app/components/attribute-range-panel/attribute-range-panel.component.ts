@@ -36,8 +36,6 @@ export class AttributeRangePanelComponent implements OnDestroy {
     activeRangeSubscription: Subscription;
     editable: boolean;
     editSubscription: Subscription;
-    unsavedChanges: boolean;
-    unsavedChangesSubscription: Subscription;
     changeLog: RefSet[];
     changeLogSubscription: Subscription;
 
@@ -56,7 +54,6 @@ export class AttributeRangePanelComponent implements OnDestroy {
             this.getResults();
         });
         this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
-        this.unsavedChangesSubscription = this.editService.getUnsavedChanges().subscribe(data => this.unsavedChanges = data);
         this.changeLogSubscription = this.editService.getChangeLog().subscribe(data => this.changeLog = data);
     }
 
@@ -66,7 +63,6 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.activeAttributeSubscription.unsubscribe();
         this.activeRangeSubscription.unsubscribe();
         this.editSubscription.unsubscribe();
-        this.unsavedChangesSubscription.unsubscribe();
         this.changeLogSubscription.unsubscribe();
     }
 
@@ -94,10 +90,6 @@ export class AttributeRangePanelComponent implements OnDestroy {
     updateRange() {
         this.activeRange.changed = true;
 
-        if (!this.unsavedChanges) {
-            this.editService.setUnsavedChanges(true);
-        }
-
         let found = false;
         if (this.changeLog) {
             this.changeLog.forEach((item) => {
@@ -117,10 +109,6 @@ export class AttributeRangePanelComponent implements OnDestroy {
 
     deleteRange() {
         this.activeRange.deleted = true;
-
-        if (!this.unsavedChanges) {
-            this.editService.setUnsavedChanges(true);
-        }
 
         let found = false;
         if (this.changeLog) {

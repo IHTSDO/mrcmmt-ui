@@ -26,8 +26,8 @@ export class BreadcrumbBarComponent implements OnDestroy {
     editor: boolean;
     editorSubscription: Subscription;
     editableSubscription: Subscription;
-    changes: boolean;
-    changesSubscription: Subscription;
+    changeLog: RefSet[];
+    changeLogSubscription: Subscription;
     branchPath: string;
     branchPathSubscription: Subscription;
 
@@ -43,24 +43,23 @@ export class BreadcrumbBarComponent implements OnDestroy {
             this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
             this.editableSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
             this.editorSubscription = this.editService.getEditor().subscribe(data => this.editor = data);
-            this.changesSubscription = this.editService.getUnsavedChanges().subscribe(data => this.changes = data);
+            this.changeLogSubscription = this.editService.getChangeLog().subscribe(data => this.changeLog = data);
             this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => {
                 this.branchPath = data;
             });
     }
 
     openModal(modalName) {
-        if (this.changes) {
+        if (this.changeLog.length) {
             this.modalService.open(modalName);
         } else {
             this.mrcmmtService.resetTool();
             this.editService.setChangeLog([]);
-            this.editService.setUnsavedChanges(false);
         }
     }
 
     toggleEditable() {
-        if (!this.changes) {
+        if (!this.changeLog.length) {
             this.mrcmmtService.resetTool();
 
             if (this.editable) {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { RefSet } from '../models/refset';
 import { TerminologyServerService } from './terminologyServer.service';
 import { MrcmmtService } from './mrcmmt.service';
@@ -17,8 +17,7 @@ export class EditService {
 
     private editable = new Subject<boolean>();
     private editor = new Subject<boolean>();
-    private unsavedChanges = new Subject<boolean>();
-    private changeLog = new Subject<RefSet[]>();
+    private changeLog = new BehaviorSubject<RefSet[]>([]);
 
     // Setters & Getters: Edit
 
@@ -36,14 +35,6 @@ export class EditService {
 
     getEditor(): Observable<boolean> {
         return this.editor.asObservable();
-    }
-
-    public setUnsavedChanges(value) {
-        this.unsavedChanges.next(value);
-    }
-
-    getUnsavedChanges(): Observable<boolean> {
-        return this.unsavedChanges.asObservable();
     }
 
     public setChangeLog(value) {
@@ -86,7 +77,6 @@ export class EditService {
             this.saveIterable(this.localChanges[0]);
         } else {
             this.mrcmmtService.setupDomains();
-            this.setUnsavedChanges(false);
             this.setChangeLog([]);
         }
     }

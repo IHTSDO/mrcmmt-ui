@@ -112,7 +112,6 @@ export class AppComponent implements OnInit {
     reset() {
         this.mrcmmtService.resetTool();
         this.editService.setChangeLog([]);
-        this.editService.setUnsavedChanges(false);
     }
 
     switch() {
