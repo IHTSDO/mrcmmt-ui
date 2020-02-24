@@ -32,8 +32,9 @@
             <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded" [(ngModel)]="shortFormConcept" [ngbTypeahead]="search" placement="bottom" (ngModelChange)="updateAttributeId()" [disabled]="!editable"/>
         </ng-container>
         <ng-container *ngIf="activeAttribute.additionalFields.grouped || editable">
-            <h5 class="label m-2">Grouped<span *ngIf="editable" class="mandatory"> *</span></h5>
-            <input type="checkbox" class="detail m-2 mb-3 p-0 px-2 rounded" [(ngModel)]="activeAttribute.additionalFields.grouped" [disabled]="!editable" (change)="updateAttribute()">
+            <h5 class="label m-2">Grouped<span *ngIf="editable" class="mandatory"> *</span>
+                <input type="checkbox" class="detail m-2 mb-3 p-0 px-2 rounded" [(ngModel)]="activeAttribute.additionalFields.grouped" [disabled]="!editable" (change)="updateAttribute()">
+            </h5>
         </ng-container>
         <ng-container *ngIf="activeAttribute.additionalFields.attributeCardinality || editable">
             <h5 class="label m-2">Attribute Cardinality<span *ngIf="editable" class="mandatory"> *</span></h5>
