@@ -17,8 +17,7 @@
         </ng-container>
         <ng-container *ngIf="activeRange.additionalFields.attributeRule">
             <h5 class="label m-2 mb-3">Attribute Rule</h5>
-            <textarea type="text" class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable" [(ngModel)]="activeRange.additionalFields.attributeRule" (change)="updateRange()"></textarea>
-            <div *ngIf="!editable" class="detail m-2 mb-4 pl-2 rounded">{{activeRange.additionalFields.attributeRule}}</div>
+            <div class="detail m-2 mb-4 pl-2 rounded">{{activeRange.additionalFields.attributeRule}}</div>
         </ng-container>
         <ng-container *ngIf="activeRange.additionalFields.ruleStrengthId || editable">
             <h5 class="label m-2 mb-3">Mandatory<span *ngIf="editable" class="mandatory"> *</span></h5>
