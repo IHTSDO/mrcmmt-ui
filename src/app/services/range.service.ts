@@ -41,7 +41,6 @@ export class RangeService {
     }
 
     getNewRange(activeAttribute): RefSet {
-        console.log(activeAttribute);
         const newRange = new RefSet;
         newRange.additionalFields = {
             domainId: '',

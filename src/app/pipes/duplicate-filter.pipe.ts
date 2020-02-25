@@ -10,8 +10,6 @@ export class DuplicateFilterPipe implements PipeTransform {
             return [];
         }
 
-        // console.log('BEFORE: ', items);
-
         let response = [];
 
         if (!domainIdFilter) {
@@ -23,8 +21,6 @@ export class DuplicateFilterPipe implements PipeTransform {
         } else {
             response = items;
         }
-
-        // console.log('AFTER: ', response);
 
         return response;
     }

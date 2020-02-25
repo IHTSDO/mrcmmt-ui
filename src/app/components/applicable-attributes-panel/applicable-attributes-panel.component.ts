@@ -11,6 +11,7 @@ import { MrcmmtService } from '../../services/mrcmmt.service';
 import { UrlParamsService } from '../../services/url-params.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { SnomedUtilityService } from '../../services/snomedUtility.service';
+import { SnomedResponseObject } from '../../models/snomedResponseObject';
 
 @Component({
     selector: 'app-applicable-attributes-panel',
@@ -107,7 +108,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                 this.shortFormConcept = SnomedUtilityService.convertShortConceptToString(data);
             });
 
-            attributeMatchedDomains.push(attribute);
+            attributeMatchedDomains.push(this.activeAttribute);
             this.attributes['items'].forEach((item) => {
                 if (this.activeAttribute.memberId !== item.memberId &&
                     this.activeAttribute.referencedComponentId === item.referencedComponentId) {
@@ -116,13 +117,9 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
             });
 
             this.attributeService.setMatchedDomains(attributeMatchedDomains);
-            this.automaticDomainSelect(attribute, attributeMatchedDomains);
+            this.automaticDomainSelect(this.activeAttribute, attributeMatchedDomains);
 
-            this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
-                ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
-                this.setActives(this.activeDomain, attribute, ranges.items[0]);
-                this.rangeService.setRanges(ranges);
-            });
+            this.setRange();
         }
     }
 
@@ -132,24 +129,37 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.rangeService.setActiveRange(range);
     }
 
-    updateAttributeId() {
-        this.activeAttribute.referencedComponentId = SnomedUtilityService.getIdFromShortConcept(this.shortFormConcept);
-        if (this.activeAttribute.referencedComponentId !== '') {
-                this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(ranges => {
-                    if (ranges.items.length === 0) {
-                        const newRange = this.rangeService.getNewRange(this.activeAttribute);
-                        newRange.changed = true;
-                        this.changeLog.push(newRange);
-                        this.editService.setChangeLog(this.changeLog);
-                        ranges.items.push(newRange);
-                        this.rangeService.setRanges(ranges);
-                    } else {
-                        ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
-                        this.rangeService.setRanges(ranges);
-                    }
-                    this.setActives(this.activeDomain, this.activeAttribute, ranges.items[0]);
-                });
+    setRange() {
+        this.rangeService.setRanges([]);
+
+        this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(data => {
+            const ranges: SnomedResponseObject = { items: data.items, total: data.total };
+
+            ranges.items = ranges.items.concat(this.changeLog.filter(item => {
+                return this.activeAttribute.referencedComponentId === item.referencedComponentId;
+            }));
+
+            if (!ranges.items.length) {
+                const range = this.rangeService.getNewRange(this.activeAttribute);
+                this.changeLog.push(range);
+                this.editService.setChangeLog(this.changeLog);
+                ranges.items.push(range);
             }
+
+            ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
+            this.rangeService.setRanges(ranges);
+            this.setActives(this.activeDomain, this.activeAttribute, ranges.items[0]);
+        });
+
+    }
+
+    updateAttributeId() {
+        if (!this.activeAttribute.referencedComponentId) {
+            this.activeAttribute.referencedComponentId = SnomedUtilityService.getIdFromShortConcept(this.shortFormConcept);
+
+            this.setRange();
+        }
+
         this.updateAttribute();
     }
 
