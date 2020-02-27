@@ -60,7 +60,10 @@ export class AppComponent implements OnInit {
 
                 this.authenticationService.getLoggedInUser().subscribe(user => {
 
-                    versions.items.push({branchPath: 'MAIN/MRCMMAINT1'});
+                    if (user.roles.includes('ROLE_int-sca-author')) {
+                        versions.items.push({branchPath: 'MAIN/MRCMMAINT1'});
+                    }
+
                     versions.items.push({branchPath: 'MAIN'});
 
                     versions.items.reverse();
