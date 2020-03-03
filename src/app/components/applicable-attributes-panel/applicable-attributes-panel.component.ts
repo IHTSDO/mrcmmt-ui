@@ -133,7 +133,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.rangeService.setRanges([]);
 
         this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(data => {
-            const ranges: SnomedResponseObject = { items: data.items, total: data.total };
+            const ranges: SnomedResponseObject = { items: data.items, total: data.total, errorMessage: null};
 
             ranges.items = ranges.items.concat(this.changeLog.filter(item => {
                 return this.activeAttribute.referencedComponentId === item.referencedComponentId;

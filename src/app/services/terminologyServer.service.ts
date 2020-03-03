@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
 import { AuthoringService } from './authoring.service';
 import { SnomedResponseObject } from '../models/snomedResponseObject';
 import { BranchingService } from './branching.service';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { SnomedUtilityService } from './snomedUtility.service';
 
 @Injectable({
@@ -57,9 +57,15 @@ export class TerminologyServerService {
             eclFilter: rangeConstraint
         };
 
-        return this.http.post<SnomedResponseObject>(
-            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +
-            '/concepts/search', params);
+        return this.http
+            .post<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +
+            '/concepts/search', params)
+            .pipe(map(responseData => {
+                return responseData;
+            }),
+            catchError(err => {
+                return throwError(err);
+            }));
     }
 
     getDomains(): Observable<SnomedResponseObject> {

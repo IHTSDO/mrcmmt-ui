@@ -8,7 +8,7 @@ import { MrcmmtService } from '../../services/mrcmmt.service';
 import { EditService } from '../../services/edit.service';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { UrlParamsService } from '../../services/url-params.service';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, map, catchError } from 'rxjs/operators';
 import { SnomedUtilityService } from '../../services/snomedUtility.service';
 
 @Component({
@@ -22,7 +22,9 @@ export class DomainPanelComponent implements OnDestroy {
     postCoordination = true;
     detailsExpanded = true;
     domainConstraintInvalid: boolean;
+    domainErrorMessage = '';
     proxPrimInvalid: boolean;
+    proxPrimErrorMessage = '';
 
     domains: object;
     domainSubscription: Subscription;
@@ -132,7 +134,17 @@ export class DomainPanelComponent implements OnDestroy {
                         this.proxPrimInvalid = true;
                     }
                 }
-            });
+        },
+            catchError(err => {
+                if (field === 'domainConstraint') {
+                    this.domainConstraintInvalid = true;
+                    this.domainErrorMessage = err.error.message;
+                } else if (field === 'proxPrim') {
+                    this.proxPrimInvalid = true;
+                    this.proxPrimErrorMessage = err.error.message;
+                }
+                return err
+        }));
         this.updateDomain();
     }
 
