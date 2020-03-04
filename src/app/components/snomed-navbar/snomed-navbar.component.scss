@@ -13,7 +13,7 @@ nav {
             color: $alto-white;
             font-weight: 300;
             letter-spacing: 1.5px;
-            line-height: 40px;
+            line-height: 4rem;
             vertical-align: top;
         }
 
@@ -25,8 +25,8 @@ nav {
 
     div.banner {
         position: absolute;
-        top: 10px;
-        left: -30px;
+        top: 1rem;
+        left: -3rem;
         transform: rotate(-45deg);
         line-height: 1rem;
         opacity: 0.8;
@@ -113,23 +113,18 @@ nav {
                     }
                 }
             }
-
-            &.editing-mode {
-
-            }
         }
     }
 
     div.user {
-        cursor: pointer;
         height: 3rem;
 
         span {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             line-height: 3rem;
-            color: $white;
+            color: $alto-white;
             font-weight: 300;
-            letter-spacing: 0.2rem;
+            letter-spacing: 0.1rem;
         }
 
         img {
@@ -137,20 +132,21 @@ nav {
             width: 3rem;
         }
     }
-}
 
-div#navbarToggleExternalContent {
-    a {
-        font-size: 1.4rem;
-        line-height: 3rem;
-        color: $white;
-        font-weight: 300;
-        letter-spacing: 0.2rem;
+    div.logout {
+        cursor: pointer;
+        height: 3rem;
 
-        &:hover {
-            cursor: pointer;
-            color: $pacific-blue;
-            text-decoration: none;
+        span {
+            font-size: 1.2rem;
+            line-height: 3rem;
+            color: $white;
+            font-weight: 300;
+            letter-spacing: 0.1rem;
+
+            &:hover {
+                color: $snomed-blue;
+            }
         }
     }
 }
