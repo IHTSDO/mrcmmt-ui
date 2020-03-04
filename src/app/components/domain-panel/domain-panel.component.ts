@@ -143,7 +143,7 @@ export class DomainPanelComponent implements OnDestroy {
                     this.proxPrimInvalid = true;
                     this.proxPrimErrorMessage = err.error.message;
                 }
-                return err
+                return err;
         }));
         this.updateDomain();
     }
