@@ -19,7 +19,7 @@ nav {
 
         img.logo {
             vertical-align: initial;
-            height: 40px;
+            height: 4rem;
         }
     }
 
@@ -31,32 +31,33 @@ nav {
         line-height: 1rem;
         opacity: 0.8;
         color: $white;
+        font-size: 1.4rem;
     }
 
     div.local::before {
         content: 'LOC';
-        padding: 0 30px;
+        padding: 0 3rem;
         background-color: $emperor-grey;
         border: 1px solid $yellow;
     }
 
     div.dev::before {
         content: 'DEV';
-        padding: 0 30px;
+        padding: 0 3rem;
         background-color: $crimson-red;
         border: 1px solid $yellow;
     }
 
     div.uat::before {
         content: 'UAT';
-        padding: 0 30px;
+        padding: 0 3rem;
         background-color: $curious-blue;
         border: 1px solid $yellow;
     }
 
     div.training::before {
         content: 'TRN';
-        padding: 0 30px;
+        padding: 0 3rem;
         background-color: $forest-green;
         border: 1px solid $yellow;
     }
@@ -118,9 +119,9 @@ nav {
 
     div.user {
         height: 3rem;
+        font-size: 1.2rem;
 
         span {
-            font-size: 1.2rem;
             line-height: 3rem;
             color: $alto-white;
             font-weight: 300;
