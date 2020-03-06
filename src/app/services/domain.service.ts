@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { RefSet } from '../models/refset';
+import { AdditionalFields } from '../models/refset';
 
 @Injectable({
     providedIn: 'root'
@@ -55,34 +56,14 @@ export class DomainService {
     }
 
     getNewDomain(): RefSet {
-        const newDomain = new RefSet;
-        newDomain.additionalFields = {
-            domainId: '',
-            domainConstraint: '',
-            parentDomain: '',
-            proximalPrimitiveConstraint: '',
-            proximalPrimitiveRefinement: '',
-            domainTemplateForPrecoordination: '',
-            domainTemplateForPostcoordination: '',
-            grouped: '',
-            attributeCardinality: '',
-            attributeInGroupCardinality: '',
-            contentTypeId: '',
-            ruleStrengthId: '',
-            rangeConstraint: '',
-            attributeRule: ''
-        };
-        newDomain.referencedComponent = {
-            id: null,
-            fsn: {
-                term: 'New Domain'
-            }
-        };
-        newDomain.refsetId = '723560006';
-        newDomain.moduleId = '900000000000012004';
-        newDomain.changed = true;
-        newDomain.active = true;
-        return newDomain;
+        return new RefSet(
+            new AdditionalFields(null),
+            null,
+            { id: null, fsn: { term: 'New Domain' }},
+            '723560006',
+            true,
+            true
+        );
     }
 
 }
