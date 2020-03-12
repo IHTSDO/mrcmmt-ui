@@ -47,7 +47,8 @@ export class RangeService {
             { id: activeAttribute.referencedComponentId, fsn: { term: activeAttribute.referencedComponent.fsn }},
             '723562003',
             true,
-            true
+            true,
+            []
         );
     }
 }

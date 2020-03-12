@@ -8,15 +8,15 @@ export class RefSet {
     active: boolean;
     changed: boolean;
     deleted: boolean;
-    // errors: Error[];
+    errors: Error[];
 
     constructor(additonalFields: AdditionalFields,
                 referencedComponentId: string,
                 referencedComponent: ReferencedComponent,
                 refsetId: string,
                 changed: boolean,
-                active: boolean) {
-                // errors: Error[]) {
+                active: boolean,
+                errors: Error[]) {
         this.additionalFields = additonalFields;
         this.referencedComponentId = referencedComponentId;
         this.referencedComponent = referencedComponent;
@@ -24,7 +24,7 @@ export class RefSet {
         this.moduleId = '900000000000012004';
         this.changed = true;
         this.active = true;
-        // this.errors = errors;
+        this.errors = errors;
     }
 }
 
@@ -44,7 +44,7 @@ export class AdditionalFields {
     rangeConstraint: string;
     attributeRule: string;
 
-    constructor(domainId) {
+    constructor(domainId: string) {
         this.domainId = domainId;
     }
 }
@@ -57,6 +57,11 @@ export class ReferencedComponent {
 }
 
 export class Error {
-    text: string;
-    status: boolean;
+    message: string;
+    refsetId: string;
+
+    constructor(message: string, refsetId: string) {
+        this.message = message;
+        this.refsetId = refsetId;
+    }
 }
