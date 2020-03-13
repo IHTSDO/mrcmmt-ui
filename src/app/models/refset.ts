@@ -58,10 +58,10 @@ export class ReferencedComponent {
 
 export class Error {
     message: string;
-    refsetId: string;
+    fieldReference: string;
 
-    constructor(message: string, refsetId: string) {
+    constructor(message: string, fieldReference: string) {
         this.message = message;
-        this.refsetId = refsetId;
+        this.fieldReference = fieldReference;
     }
 }
