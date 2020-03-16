@@ -132,25 +132,26 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     setRange() {
         this.rangeService.setRanges([]);
 
-        this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(data => {
-            const ranges: SnomedResponseObject = { items: data.items, total: data.total, errorMessage: null};
+        if (this.activeAttribute.referencedComponentId) {
+            this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(data => {
+                const ranges: SnomedResponseObject = { items: data.items, total: data.total, errorMessage: null};
 
-            ranges.items = ranges.items.concat(this.changeLog.filter(item => {
-                return this.activeAttribute.referencedComponentId === item.referencedComponentId;
-            }));
+                ranges.items = ranges.items.concat(this.changeLog.filter(item => {
+                    return this.activeAttribute.referencedComponentId === item.referencedComponentId;
+                }));
 
-            if (!ranges.items.length) {
-                const range = this.rangeService.getNewRange(this.activeAttribute);
-                this.changeLog.push(range);
-                this.editService.setChangeLog(this.changeLog);
-                ranges.items.push(range);
-            }
+                if (!ranges.items.length) {
+                    const range = this.rangeService.getNewRange(this.activeAttribute);
+                    this.changeLog.push(range);
+                    this.editService.setChangeLog(this.changeLog);
+                    ranges.items.push(range);
+                }
 
-            ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
-            this.rangeService.setRanges(ranges);
-            this.setActives(this.activeDomain, this.activeAttribute, ranges.items[0]);
-        });
-
+                ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
+                this.rangeService.setRanges(ranges);
+                this.setActives(this.activeDomain, this.activeAttribute, ranges.items[0]);
+            });
+        }
     }
 
     updateAttributeId() {
