@@ -40,6 +40,7 @@ export class RangeService {
         return this.activeRange.asObservable();
     }
 
+    // New Range
     getNewRange(activeAttribute): RefSet {
         return new RefSet(
             new AdditionalFields(null),

@@ -14,6 +14,7 @@ export class AttributeService {
     private activeAttribute = new Subject<any>();
     private matchedDomains = new Subject<any>();
     private attributeFilter = new Subject<any>();
+    private latestReleaseDomains: RefSet[];
 
     // Setters & Getters: Attributes
     setAttributes(attributes) {
@@ -68,6 +69,16 @@ export class AttributeService {
         return this.attributeFilter.asObservable();
     }
 
+    // Setters & Getters: Latest Release
+    setLatestReleaseAttributes(attributes) {
+        this.latestReleaseDomains = attributes.items;
+    }
+
+    getLatestReleaseAttributes() {
+        return this.latestReleaseDomains;
+    }
+
+    // New Attribute
     getNewAttribute(activeDomain): RefSet {
         return new RefSet(
             new AdditionalFields(activeDomain.referencedComponentId),

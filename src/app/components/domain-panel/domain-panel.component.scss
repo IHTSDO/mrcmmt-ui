@@ -152,14 +152,22 @@ div#domain-panel {
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
+
+            &.changed {
+                border-left: 5px solid $mango-orange;
+            }
         }
 
-        input.detail{
+        input.detail {
             color: $black;
             background-color: $white;
             font-size: 1.2rem;
             line-height: 2rem;
             width: -webkit-fill-available;
+
+            &.changed {
+                border-left: 5px solid $mango-orange;
+            }
         }
     }
 }

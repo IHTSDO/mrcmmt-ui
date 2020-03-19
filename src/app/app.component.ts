@@ -53,6 +53,8 @@ export class AppComponent implements OnInit {
             this.authoringService.uiConfiguration = data;
 
             this.terminologyService.getVersions().subscribe(versions => {
+                this.setLatestReleaseDomains(versions);
+                this.setLatestReleaseAttributes(versions);
 
                 versions.items = versions.items.filter(item => {
                     return item.effectiveDate >= 20170731;
@@ -89,6 +91,18 @@ export class AppComponent implements OnInit {
             });
         });
         this.assignFavicon();
+    }
+
+    setLatestReleaseDomains(versions) {
+        this.terminologyService.getDomains(versions.items.reverse()[0].branchPath + '/').subscribe(data => {
+            this.domainService.setLatestReleaseDomains(data);
+        });
+    }
+
+    setLatestReleaseAttributes(versions) {
+        this.terminologyService.getAttributes(versions.items[0].branchPath + '/').subscribe(data => {
+            this.attributeService.setLatestReleaseAttributes(data);
+        });
     }
 
     assignFavicon() {

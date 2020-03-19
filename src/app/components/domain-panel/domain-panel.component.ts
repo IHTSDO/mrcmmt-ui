@@ -26,6 +26,8 @@ export class DomainPanelComponent implements OnDestroy {
     proxPrimInvalid: boolean;
     proxPrimErrorMessage = '';
 
+    latestReleaseDomain: RefSet;
+
     domains: object;
     domainSubscription: Subscription;
     domainFilter: string;
@@ -92,10 +94,15 @@ export class DomainPanelComponent implements OnDestroy {
         let domainFound = false;
         if (this.activeDomain === domain) {
             this.detailsExpanded = true;
+            this.latestReleaseDomain = null;
             this.setActives(null, this.activeAttribute, this.activeRange);
         } else {
             this.activeDomain = domain;
             this.shortFormConcept = null;
+
+            this.latestReleaseDomain = this.domainService.getLatestReleaseDomains().find(item => {
+                return item.referencedComponentId === this.activeDomain.referencedComponentId;
+            });
 
             this.terminologyService.getConcept(this.activeDomain.referencedComponentId).subscribe(data => {
                 this.shortFormConcept = SnomedUtilityService.convertShortConceptToString(data);

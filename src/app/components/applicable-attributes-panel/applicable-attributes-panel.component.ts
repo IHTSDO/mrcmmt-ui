@@ -23,6 +23,8 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
 
     detailsExpanded = true;
 
+    latestReleaseAttribute: RefSet;
+
     domains: object;
     domainSubscription: Subscription;
     attributes: object;
@@ -96,13 +98,17 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
 
         if (this.activeAttribute === attribute) {
             this.detailsExpanded = true;
+            this.latestReleaseAttribute = null;
             this.setActives(this.activeDomain, null, null);
             this.attributeService.clearMatchedDomains();
             this.rangeService.clearRanges();
         } else {
             this.activeAttribute = attribute;
-
             this.shortFormConcept = null;
+
+            this.latestReleaseAttribute = this.attributeService.getLatestReleaseAttributes().find(item => {
+                return item.referencedComponentId === this.activeAttribute.referencedComponentId;
+            });
 
             this.terminologyService.getConcept(this.activeAttribute.referencedComponentId).subscribe(data => {
                 this.shortFormConcept = SnomedUtilityService.convertShortConceptToString(data);

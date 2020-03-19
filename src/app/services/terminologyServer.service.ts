@@ -68,15 +68,15 @@ export class TerminologyServerService {
             }));
     }
 
-    getDomains(): Observable<SnomedResponseObject> {
+    getDomains(branchPath?: string): Observable<SnomedResponseObject> {
         return this.http.get<SnomedResponseObject>(
-            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +
+            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (branchPath ? branchPath : this.branchPath) +
             '/members?referenceSet=723560006&active=true&limit=1000');
     }
 
-    getAttributes(): Observable<SnomedResponseObject> {
+    getAttributes(branchPath?: string): Observable<SnomedResponseObject> {
         return this.http.get<SnomedResponseObject>(
-            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +
+            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (branchPath ? branchPath : this.branchPath) +
             '/members?referenceSet=723561005&active=true&limit=1000');
     }
 

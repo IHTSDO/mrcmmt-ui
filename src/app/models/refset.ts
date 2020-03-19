@@ -43,6 +43,7 @@ export class AdditionalFields {
     ruleStrengthId: string;
     rangeConstraint: string;
     attributeRule: string;
+    guideURL: string;
 
     constructor(domainId: string) {
         this.domainId = domainId;

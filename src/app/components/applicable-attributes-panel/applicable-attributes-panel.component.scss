@@ -123,6 +123,10 @@ div#applicable-attributes-panel {
             background-color: $white;
             font-size: 1.2rem;
             line-height: 2rem;
+
+            &.changed {
+                border-left: 5px solid $mango-orange;
+            }
         }
 
         input.detail {
@@ -131,6 +135,10 @@ div#applicable-attributes-panel {
             font-size: 1.2rem;
             line-height: 2rem;
             width: -webkit-fill-available;
+
+            &.changed {
+                border-left: 5px solid $mango-orange;
+            }
         }
 
         select.detail {
@@ -140,6 +148,10 @@ div#applicable-attributes-panel {
             font-size: 1.2rem;
             height: 2rem;
             width: -webkit-fill-available;
+
+            &.changed {
+                border-left: 5px solid $mango-orange;
+            }
         }
     }
 }

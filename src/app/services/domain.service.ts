@@ -14,6 +14,7 @@ export class DomainService {
     private domains = new Subject<any>();
     private activeDomain = new Subject<any>();
     private domainFilter = new Subject<any>();
+    private latestReleaseDomains: RefSet[];
 
     // Setters & Getters: Domains
     setDomains(domains) {
@@ -55,6 +56,16 @@ export class DomainService {
         return this.domainFilter.asObservable();
     }
 
+    // Setters & Getters: Latest Release
+    setLatestReleaseDomains(domains) {
+        this.latestReleaseDomains = domains.items;
+    }
+
+    getLatestReleaseDomains() {
+        return this.latestReleaseDomains;
+    }
+
+    // New Domain
     getNewDomain(): RefSet {
         return new RefSet(
             new AdditionalFields(null),
