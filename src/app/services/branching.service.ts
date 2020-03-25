@@ -13,6 +13,7 @@ export class BranchingService {
 
     private branchPath = new Subject<string>();
     private versions = new Subject<SnomedResponseObject>();
+    private latestReleaseBranchPath: string;
 
     // Setters & Getters: BranchPath
     setBranchPath(path) {
@@ -31,5 +32,14 @@ export class BranchingService {
 
     getVersions() {
         return this.versions.asObservable();
+    }
+
+    // Setters & Getters: Latest Release BranchPath
+    setLatestReleaseBranchPath(path) {
+        this.latestReleaseBranchPath = path;
+    }
+
+    getLatestReleaseBranchPath() {
+        return this.latestReleaseBranchPath;
     }
 }

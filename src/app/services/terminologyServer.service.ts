@@ -80,9 +80,9 @@ export class TerminologyServerService {
             '/members?referenceSet=723561005&active=true&limit=1000');
     }
 
-    getRanges(componentReferenceId): Observable<SnomedResponseObject> {
+    getRanges(componentReferenceId, branchPath?: string): Observable<SnomedResponseObject> {
         return this.http.get<SnomedResponseObject>(
-            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +
+            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (branchPath ? branchPath : this.branchPath) +
             '/members?referenceSet=723562003&referencedComponentId=' + componentReferenceId + '&active=true&limit=1000');
     }
 

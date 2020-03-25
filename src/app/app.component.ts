@@ -53,8 +53,12 @@ export class AppComponent implements OnInit {
             this.authoringService.uiConfiguration = data;
 
             this.terminologyService.getVersions().subscribe(versions => {
-                this.setLatestReleaseDomains(versions);
-                this.setLatestReleaseAttributes(versions);
+                this.branchingService.setLatestReleaseBranchPath(versions.items.reduce((a, b) => {
+                    return a.effectiveDate > b.effectiveDate ? a : b;
+                }).branchPath);
+
+                this.setLatestReleaseDomains();
+                this.setLatestReleaseAttributes();
 
                 versions.items = versions.items.filter(item => {
                     return item.effectiveDate >= 20170731;
@@ -93,14 +97,14 @@ export class AppComponent implements OnInit {
         this.assignFavicon();
     }
 
-    setLatestReleaseDomains(versions) {
-        this.terminologyService.getDomains(versions.items.reverse()[0].branchPath + '/').subscribe(data => {
+    setLatestReleaseDomains() {
+        this.terminologyService.getDomains(this.branchingService.getLatestReleaseBranchPath()).subscribe(data => {
             this.domainService.setLatestReleaseDomains(data);
         });
     }
 
-    setLatestReleaseAttributes(versions) {
-        this.terminologyService.getAttributes(versions.items[0].branchPath + '/').subscribe(data => {
+    setLatestReleaseAttributes() {
+        this.terminologyService.getAttributes(this.branchingService.getLatestReleaseBranchPath()).subscribe(data => {
             this.attributeService.setLatestReleaseAttributes(data);
         });
     }

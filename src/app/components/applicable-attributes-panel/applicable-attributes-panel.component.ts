@@ -12,6 +12,7 @@ import { UrlParamsService } from '../../services/url-params.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { SnomedUtilityService } from '../../services/snomedUtility.service';
 import { SnomedResponseObject } from '../../models/snomedResponseObject';
+import { BranchingService } from '../../services/branching.service';
 
 @Component({
     selector: 'app-applicable-attributes-panel',
@@ -25,6 +26,8 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
 
     latestReleaseAttribute: RefSet;
 
+    latestReleaseRange: RefSet;
+    latestReleaseRangeSubscription: Subscription;
     domains: object;
     domainSubscription: Subscription;
     attributes: object;
@@ -65,7 +68,8 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                 private customOrder: CustomOrderPipe,
                 private editService: EditService,
                 private mrcmmtService: MrcmmtService,
-                private urlParamsService: UrlParamsService) {
+                private urlParamsService: UrlParamsService,
+                private branchingService: BranchingService) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
         this.attributeSubscription = this.attributeService.getAttributes().subscribe(data => this.attributes = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
@@ -78,6 +82,9 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.attributeFilterSubscription = this.attributeService.getAttributeFilter().subscribe(data => this.attributeFilter = data);
         this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
         this.changeLogSubscription = this.editService.getChangeLog().subscribe(data => this.changeLog = data);
+        this.latestReleaseRangeSubscription = this.rangeService.getLatestReleaseActiveRange().subscribe(data => {
+            this.latestReleaseRange = data;
+        });
     }
 
     ngOnDestroy() {
@@ -99,6 +106,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         if (this.activeAttribute === attribute) {
             this.detailsExpanded = true;
             this.latestReleaseAttribute = null;
+            this.rangeService.clearLatestReleaseActiveRange();
             this.setActives(this.activeDomain, null, null);
             this.attributeService.clearMatchedDomains();
             this.rangeService.clearRanges();
@@ -155,7 +163,15 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
 
                 ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
                 this.rangeService.setRanges(ranges);
-                this.setActives(this.activeDomain, this.activeAttribute, ranges.items[0]);
+
+                this.terminologyService.getRanges(this.activeAttribute.referencedComponentId,
+                    this.branchingService.getLatestReleaseBranchPath()).subscribe(response => {
+                    this.rangeService.setLatestReleaseActiveRange(response.items.find(item => {
+                        return item.referencedComponentId === ranges.items[0].referencedComponentId;
+                    }));
+
+                    this.setActives(this.activeDomain, this.activeAttribute, ranges.items[0]);
+                });
             });
         }
     }

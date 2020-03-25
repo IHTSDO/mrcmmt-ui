@@ -82,6 +82,10 @@ div#attribute-range-panel {
             background-color: $white;
             font-size: 1.2rem;
             line-height: 2rem;
+
+            &.changed {
+                border-left: 5px solid $mango-orange;
+            }
         }
 
         div.warning {
@@ -105,6 +109,10 @@ div#attribute-range-panel {
             font-size: 1.2rem;
             line-height: 2rem;
             width: -webkit-fill-available;
+
+            &.changed {
+                border-left: 5px solid $mango-orange;
+            }
         }
 
         textarea.detail {
@@ -114,6 +122,10 @@ div#attribute-range-panel {
             font-size: 1.2rem;
             height: 8rem;
             width: -webkit-fill-available;
+
+            &.changed {
+                border-left: 5px solid $mango-orange;
+            }
         }
 
         select.detail{
@@ -123,6 +135,10 @@ div#attribute-range-panel {
             font-size: 1.2rem;
             height: 2rem;
             width: -webkit-fill-available;
+
+            &.changed {
+                border-left: 5px solid $mango-orange;
+            }
         }
     }
 

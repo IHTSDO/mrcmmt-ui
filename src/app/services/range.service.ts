@@ -12,6 +12,7 @@ export class RangeService {
 
     private ranges = new Subject<any>();
     private activeRange = new Subject<any>();
+    private latestReleaseActiveRange = new Subject<any>();
 
     // Setters & Getters: Ranges
     setRanges(ranges) {
@@ -38,6 +39,19 @@ export class RangeService {
 
     getActiveRange(): Observable<any> {
         return this.activeRange.asObservable();
+    }
+
+    // Setters & Getters: Latest Release Active Range
+    setLatestReleaseActiveRange(range) {
+        this.latestReleaseActiveRange.next(range);
+    }
+
+    clearLatestReleaseActiveRange() {
+        this.latestReleaseActiveRange.next();
+    }
+
+    getLatestReleaseActiveRange(): Observable<any> {
+        return this.latestReleaseActiveRange.asObservable();
     }
 
     // New Range

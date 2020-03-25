@@ -8,6 +8,7 @@ import { AttributeService } from '../../services/attribute.service';
 import { MrcmmtService } from '../../services/mrcmmt.service';
 import { EditService } from '../../services/edit.service';
 import { UrlParamsService } from '../../services/url-params.service';
+import { BranchingService } from '../../services/branching.service';
 
 export class Results {
     items: object[];
@@ -26,6 +27,8 @@ export class AttributeRangePanelComponent implements OnDestroy {
     results: Results;
     attributeRuleInvalid: boolean;
 
+    latestReleaseRange: RefSet;
+    latestReleaseRangeSubscription: Subscription;
     ranges: object;
     rangeSubscription: Subscription;
     activeDomain: RefSet;
@@ -39,9 +42,14 @@ export class AttributeRangePanelComponent implements OnDestroy {
     changeLog: RefSet[];
     changeLogSubscription: Subscription;
 
-    constructor(private domainService: DomainService, private attributeService: AttributeService, private rangeService: RangeService,
-                private terminologyService: TerminologyServerService, private mrcmmtService: MrcmmtService,
-                private editService: EditService, private urlParamsService: UrlParamsService) {
+    constructor(private domainService: DomainService,
+                private attributeService: AttributeService,
+                private rangeService: RangeService,
+                private terminologyService: TerminologyServerService,
+                private mrcmmtService: MrcmmtService,
+                private editService: EditService,
+                private urlParamsService: UrlParamsService,
+                private branchingService: BranchingService) {
         this.rangeSubscription = this.rangeService.getRanges().subscribe(data => this.ranges = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
@@ -55,6 +63,9 @@ export class AttributeRangePanelComponent implements OnDestroy {
         });
         this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
         this.changeLogSubscription = this.editService.getChangeLog().subscribe(data => this.changeLog = data);
+        this.latestReleaseRangeSubscription = this.rangeService.getLatestReleaseActiveRange().subscribe(data => {
+            this.latestReleaseRange = data;
+        });
     }
 
     ngOnDestroy() {
@@ -70,9 +81,19 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.clearResults();
 
         if (this.activeRange === range) {
+            this.rangeService.clearLatestReleaseActiveRange();
             this.setActives(this.activeDomain, this.activeAttribute, null);
         } else {
             this.activeRange = range;
+
+            this.terminologyService.getRanges(this.activeAttribute.referencedComponentId,
+                this.branchingService.getLatestReleaseBranchPath()).subscribe(ranges => {
+
+                this.rangeService.setLatestReleaseActiveRange(ranges.items.find(item => {
+                    return item.referencedComponentId === this.activeRange.referencedComponentId;
+                }));
+            });
+
             this.setActives(this.activeDomain, this.activeAttribute, this.activeRange);
             this.getResults();
         }
