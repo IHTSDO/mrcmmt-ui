@@ -136,7 +136,8 @@ div#domain-panel {
             span {
                 position: absolute;
                 top: 0;
-                right: 0.5rem;
+                right: 0;
+                color: $dark;
             }
 
             &.warning {
@@ -169,5 +170,11 @@ div#domain-panel {
                 border-left: 5px solid $mango-orange;
             }
         }
+    }
+}
+
+app-modal#domain-expression-modal {
+    div.expression-font {
+        font-family: "Courier New", serif;
     }
 }

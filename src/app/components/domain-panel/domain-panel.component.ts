@@ -10,6 +10,7 @@ import { TerminologyServerService } from '../../services/terminologyServer.servi
 import { UrlParamsService } from '../../services/url-params.service';
 import { debounceTime, distinctUntilChanged, switchMap, map, catchError } from 'rxjs/operators';
 import { SnomedUtilityService } from '../../services/snomedUtility.service';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
     selector: 'app-domain-panel',
@@ -18,13 +19,13 @@ import { SnomedUtilityService } from '../../services/snomedUtility.service';
 })
 export class DomainPanelComponent implements OnDestroy {
 
-    preCoordination = true;
-    postCoordination = true;
     detailsExpanded = true;
     domainConstraintInvalid: boolean;
     domainErrorMessage = '';
     proxPrimInvalid: boolean;
     proxPrimErrorMessage = '';
+
+    domainExpression: string;
 
     latestReleaseDomain: RefSet;
 
@@ -65,7 +66,8 @@ export class DomainPanelComponent implements OnDestroy {
                 private mrcmmtService: MrcmmtService,
                 private editService: EditService,
                 private urlParamsService: UrlParamsService,
-                private terminologyService: TerminologyServerService) {
+                private terminologyService: TerminologyServerService,
+                private modalService: ModalService) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => {
             this.activeDomain = data;

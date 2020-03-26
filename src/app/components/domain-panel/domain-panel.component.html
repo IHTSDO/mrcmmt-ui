@@ -75,29 +75,32 @@
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPrecoordination">
             <h5 class="label m-2 mb-3">Precoordination Domain Template</h5>
-            <div class="detail expandable m-2 mb-4 pl-2 pr-4 rounded"
-                 [class.short]="preCoordination"
-                 (click)="preCoordination = !preCoordination"
+            <div class="detail expandable m-2 mb-4 pl-2 pr-5 rounded short"
+                 (click)="modalService.open('domain-expression-modal'); domainExpression = activeDomain.additionalFields.domainTemplateForPrecoordination"
                  [class.changed]="latestReleaseDomain?.additionalFields.domainTemplateForPrecoordination !== activeDomain.additionalFields.domainTemplateForPrecoordination">
                 {{activeDomain.additionalFields.domainTemplateForPrecoordination}}
-                <span>
-                    <i *ngIf="preCoordination" class="fas fa-caret-down"></i>
-                    <i *ngIf="!preCoordination" class="fas fa-caret-up"></i>
-                </span>
+                <span class="p-1"><i class="fas fa-external-link-alt"></i></span>
             </div>
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPostcoordination">
             <h5 class="label m-2 mb-3">Postcoordination Domain Template</h5>
-            <div class="detail expandable m-2 mb-4 pl-2 pr-4 rounded"
-                 [class.short]="postCoordination"
-                 (click)="postCoordination = !postCoordination"
+            <div class="detail expandable m-2 mb-4 pl-2 pr-5 rounded short"
+                 (click)="modalService.open('domain-expression-modal'); domainExpression = activeDomain.additionalFields.domainTemplateForPostcoordination"
                  [class.changed]="latestReleaseDomain?.additionalFields.domainTemplateForPostcoordination !== activeDomain.additionalFields.domainTemplateForPostcoordination">
                 {{activeDomain.additionalFields.domainTemplateForPostcoordination}}
-                <span>
-                    <i *ngIf="postCoordination" class="fas fa-caret-down"></i>
-                    <i *ngIf="!postCoordination" class="fas fa-caret-up"></i>
-                </span>
+                <span class="p-1"><i class="fas fa-external-link-alt"></i></span>
             </div>
         </ng-container>
     </div>
 </div>
+
+<!-- DOMAIN EXPRESSION MODAL -->
+<app-modal id="domain-expression-modal" class="modal" [size]="'xl'">
+    <h3 header class="mb-0">Domain Expression</h3>
+    <div body class="expression-font p-5">
+        {{domainExpression}}
+    </div>
+    <div footer>
+        <button type="button" class="btn btn" (click)="modalService.close('domain-expression-modal')">CLOSE</button>
+    </div>
+</app-modal>
