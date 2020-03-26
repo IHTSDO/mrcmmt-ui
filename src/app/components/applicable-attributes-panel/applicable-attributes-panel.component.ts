@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { RefSet } from '../../models/refset';
+import { RefsetError } from '../../models/refset';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
 import { Observable, Subscription } from 'rxjs';
@@ -11,6 +12,7 @@ import { MrcmmtService } from '../../services/mrcmmt.service';
 import { UrlParamsService } from '../../services/url-params.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { SnomedUtilityService } from '../../services/snomedUtility.service';
+import { ValidationService } from '../../services/validation.service';
 import { SnomedResponseObject } from '../../models/snomedResponseObject';
 import { BranchingService } from '../../services/branching.service';
 
@@ -68,6 +70,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                 private customOrder: CustomOrderPipe,
                 private editService: EditService,
                 private mrcmmtService: MrcmmtService,
+                private validationService: ValidationService,
                 private urlParamsService: UrlParamsService,
                 private branchingService: BranchingService) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
@@ -183,6 +186,18 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
             this.setRange();
         }
 
+        this.updateAttribute();
+    }
+
+    updateCardinality(input) {
+        const error = this.validationService.validateCardinality(input);
+        if (error.length > 0) {
+            if (!this.activeAttribute.errors) {
+                this.activeAttribute.errors = [];
+            }
+            this.activeAttribute.errors.push(new RefsetError(error, ''));
+        }
+        console.log(this.activeAttribute.errors);
         this.updateAttribute();
     }
 

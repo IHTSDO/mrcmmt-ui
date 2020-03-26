@@ -31,6 +31,7 @@ import { DomainMatchPipe } from './pipes/domain-match.pipe';
 // SERVICE IMPORTS
 import { TerminologyServerService } from './services/terminologyServer.service';
 import { SnomedUtilityService } from './services/snomedUtility.service';
+import { ValidationService } from './services/validation.service';
 import { AuthoringService } from './services/authoring.service';
 import { BreadcrumbBarComponent } from './components/breadcrumb-bar/breadcrumb-bar.component';
 import { DomainService } from './services/domain.service';
@@ -78,6 +79,7 @@ import { HeaderInterceptor } from './interceptors/header.interceptor';
         TerminologyServerService,
         AuthoringService,
         SnomedUtilityService,
+        ValidationService,
         DomainService,
         AttributeService,
         RangeService,

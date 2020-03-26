@@ -8,7 +8,7 @@ export class RefSet {
     active: boolean;
     changed: boolean;
     deleted: boolean;
-    errors: Error[];
+    errors: RefsetError[];
 
     constructor(additonalFields: AdditionalFields,
                 referencedComponentId: string,
@@ -16,7 +16,7 @@ export class RefSet {
                 refsetId: string,
                 changed: boolean,
                 active: boolean,
-                errors: Error[]) {
+                errors: RefsetError[]) {
         this.additionalFields = additonalFields;
         this.referencedComponentId = referencedComponentId;
         this.referencedComponent = referencedComponent;
@@ -57,7 +57,7 @@ export class ReferencedComponent {
     };
 }
 
-export class Error {
+export class RefsetError {
     message: string;
     fieldReference: string;
 
