@@ -10,6 +10,7 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from '../../components/modal/modal.component';
 
 describe('DomainPanelComponent', () => {
     let component: DomainPanelComponent;
@@ -31,7 +32,8 @@ describe('DomainPanelComponent', () => {
                 DomainPanelComponent,
                 TopLevelDomainPipe,
                 TextMatchPipe,
-                AlphabeticalPipe
+                AlphabeticalPipe,
+                ModalComponent
             ]
         }).compileComponents();
     }));
