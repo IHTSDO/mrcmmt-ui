@@ -30,6 +30,9 @@ app-modal {
 
             div.modal-body {
                 font-size: 1.5rem;
+                padding: 0;
+                max-height: 80vh;
+                overflow: scroll;
             }
 
             div.modal-footer {

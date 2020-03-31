@@ -97,9 +97,25 @@
 <!-- DOMAIN EXPRESSION MODAL -->
 <app-modal id="domain-expression-modal" class="modal" [size]="'xl'">
     <h3 header class="mb-0">Domain Expression</h3>
-    <div body class="expression-font p-5">
-        {{domainExpression}}
-    </div>
+    <ng-container body>
+        <ul class="nav nav-tabs nav-fill" id="expressionTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pure-expression-tab" data-toggle="tab" href="#pure-expression"  role="tab" aria-controls="pure-expression" aria-selected="true">Expression</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="modified-expression-tab" data-toggle="tab" href="#modified-expression" role="tab" aria-controls="modified-expression" aria-selected="false">Modifications</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="expressionTabContent">
+            <div *ngIf="domainExpression" class="tab-pane fade expression py-5 show active" id="pure-expression" role="tabpanel" aria-labelledby="pure-expression-tab">
+                <p class="mb-0 px-5" *ngFor="let line of expressionBuilder(domainExpression); let odd = odd" [class.odd]="odd">{{line}}</p>
+            </div>
+            <div class="tab-pane fade expression py-5" id="modified-expression" role="tabpanel" aria-labelledby="modified-expression-tab">
+                <p class="mb-0 px-5" *ngFor="let line of expressionBuilder(domainExpression); let odd = odd" [class.odd]="odd">{{line}}</p>
+            </div>
+        </div>
+    </ng-container>
     <div footer>
         <button type="button" class="btn btn" (click)="modalService.close('domain-expression-modal')">CLOSE</button>
     </div>
