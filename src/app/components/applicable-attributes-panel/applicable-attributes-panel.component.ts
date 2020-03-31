@@ -197,12 +197,18 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
             }
             this.activeAttribute.errors.push(new RefsetError(error, ''));
         }
-        console.log(this.activeAttribute.errors);
-        this.updateAttribute();
     }
 
     updateAttribute() {
         this.activeAttribute.changed = true;
+
+        this.activeAttribute.errors = [];
+        if (this.activeAttribute.additionalFields.attributeCardinality) {
+            this.updateCardinality(this.activeAttribute.additionalFields.attributeCardinality);
+        }
+        if (this.activeAttribute.additionalFields.attributeInGroupCardinality) {
+            this.updateCardinality(this.activeAttribute.additionalFields.attributeInGroupCardinality);
+        }
 
         let found = false;
         if (this.changeLog) {
