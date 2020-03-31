@@ -109,10 +109,10 @@
 
         <div class="tab-content" id="expressionTabContent">
             <div *ngIf="domainExpression" class="tab-pane fade expression py-5 show active" id="pure-expression" role="tabpanel" aria-labelledby="pure-expression-tab">
-                <p class="mb-0 px-5" *ngFor="let line of expressionBuilder(domainExpression); let odd = odd" [class.odd]="odd">{{line}}</p>
+                <p class="mb-0 px-5" *ngFor="let line of ETLexpressionBuilder(domainExpression); let odd = odd" [class.odd]="odd">{{line}}</p>
             </div>
             <div class="tab-pane fade expression py-5" id="modified-expression" role="tabpanel" aria-labelledby="modified-expression-tab">
-                <p class="mb-0 px-5" *ngFor="let line of expressionBuilder(domainExpression); let odd = odd" [class.odd]="odd">{{line}}</p>
+                <p class="mb-0 px-5" *ngFor="let line of ETLexpressionBuilder(domainExpression); let odd = odd" [class.odd]="odd">{{line}}</p>
             </div>
         </div>
     </ng-container>

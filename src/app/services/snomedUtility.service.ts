@@ -48,4 +48,48 @@ export class SnomedUtilityService {
     static getIdFromShortConcept(input): string {
         return input.replace(/\D/g, '');
     }
+
+    // Takes a string ETL expression and returns an array of ETL expression lines, correctly indented.
+    static ETLexpressionBuilder(expression: string) {
+        const response = expression.match(/[^:,]+[,]?[:]?[\s]?/g);
+
+        let whitespaceCount = 0;
+
+        for (let i = 0; i < response.length; i++) {
+            if (i !== 0) {
+                if (response[i - 1].includes(':')) {
+                    whitespaceCount++;
+                }
+
+                if (response[i - 1].includes('{') && !response[i - 1].includes('}')) {
+                    whitespaceCount++;
+                }
+
+                if (!response[i - 1].includes('{') && response[i - 1].includes('}')) {
+                    whitespaceCount--;
+                }
+
+                if (response[i].includes('OR')) {
+                    const additionalLine = response[i].slice(response[i].indexOf('OR', 2));
+                    response[i] = response[i].slice(0, response[i].indexOf('OR', 2));
+
+                    if (additionalLine.trim()) {
+                        response.splice(i + 1, 0, additionalLine);
+                    }
+                }
+
+                if (!response[i - 1].includes('OR') && response[i].startsWith('OR')) {
+                    whitespaceCount++;
+                }
+
+                if (response[i - 1].includes('OR') && response[i - 1].trim().endsWith(',')) {
+                    whitespaceCount--;
+                }
+            }
+
+            response[i] =  '    '.repeat(whitespaceCount) + response[i].trim();
+        }
+
+        return response;
+    }
 }
