@@ -78,10 +78,27 @@ div#attribute-range-panel {
             font-weight: 300;
         }
 
+        span {
+            font-size: 1.5rem;
+            line-height: 1.8rem;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
         div.detail {
+            position: relative;
             background-color: $white;
             font-size: 1.2rem;
             line-height: 2rem;
+
+            span {
+                position: absolute;
+                top: 0;
+                right: 0;
+                color: $dark;
+            }
 
             &.changed {
                 border-left: 5px solid $mango-orange;
@@ -104,11 +121,19 @@ div#attribute-range-panel {
         }
 
         input.detail{
+            position: relative;
             color: $black;
             background-color: $white;
             font-size: 1.2rem;
             line-height: 2rem;
             width: -webkit-fill-available;
+
+            span {
+                position: absolute;
+                top: 0;
+                right: 0;
+                color: $dark;
+            }
 
             &.changed {
                 border-left: 5px solid $mango-orange;
@@ -116,12 +141,20 @@ div#attribute-range-panel {
         }
 
         textarea.detail {
+            position: relative;
             resize: none;
             color: $black;
             background-color: $white;
             font-size: 1.2rem;
             height: 8rem;
             width: -webkit-fill-available;
+
+            span {
+                position: absolute;
+                top: 0;
+                right: 0;
+                color: $dark;
+            }
 
             &.changed {
                 border-left: 5px solid $mango-orange;
@@ -148,6 +181,36 @@ div#attribute-range-panel {
         div.result {
             &.odd {
                 background-color: $almost-white;
+            }
+        }
+    }
+}
+
+
+app-modal#ecl-expression-modal {
+    div.expression {
+        font-family: "Courier New", serif;
+        font-size: 1.3rem;
+        letter-spacing: 0;
+
+        p {
+            white-space: pre;
+
+            &.odd {
+                background-color: $gallery-white;
+            }
+        }
+    }
+
+    ul {
+        li.nav-item {
+            margin-top: -1px;
+
+            a.nav-link {
+                &:not(.active) {
+                    color: inherit;
+                    background-color: $blinding-white;
+                }
             }
         }
     }

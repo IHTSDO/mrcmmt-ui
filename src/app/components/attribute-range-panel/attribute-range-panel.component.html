@@ -16,17 +16,20 @@
                       [(ngModel)]="activeRange.additionalFields.rangeConstraint"
                       [class.short]="rangeConstraint"
                       (change)="validateEcl()"
-                      [class.changed]="latestReleaseRange?.additionalFields.rangeConstraint !== activeRange.additionalFields.rangeConstraint"></textarea>
-            <div *ngIf="!editable" class="detail m-2 mb-4 pl-2 rounded"
+                      [class.changed]="latestReleaseRange?.additionalFields.rangeConstraint !== activeRange.additionalFields.rangeConstraint">
+            </textarea>
+            <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 pr-5 rounded"
                  [class.changed]="latestReleaseRange?.additionalFields.rangeConstraint !== activeRange.additionalFields.rangeConstraint">
                 {{activeRange.additionalFields.rangeConstraint}}
             </div>
         </ng-container>
         <ng-container *ngIf="activeRange.additionalFields.attributeRule">
             <h5 class="label m-2 mb-3">Attribute Rule</h5>
-            <div class="detail m-2 mb-4 pl-2 rounded"
+            <div class="detail m-2 mb-3 pl-2 pr-5 rounded"
+                 (click)="modalService.open('ecl-expression-modal'); rangeExpression = activeRange.additionalFields.attributeRule"
                  [class.changed]="latestReleaseRange?.additionalFields.attributeRule !== activeRange.additionalFields.attributeRule">
                 {{activeRange.additionalFields.attributeRule}}
+                <span class="p-1"><i class="fas fa-external-link-alt"></i></span>
             </div>
         </ng-container>
         <ng-container *ngIf="activeRange.additionalFields.ruleStrengthId || editable">
@@ -37,7 +40,7 @@
                     [class.changed]="latestReleaseRange?.additionalFields.ruleStrengthId !== activeRange.additionalFields.ruleStrengthId">
                 <option *ngFor="let ruleStrength of mrcmmtService.ruleStrengthFields" [value]="ruleStrength.id" >{{ruleStrength.term}}</option>
             </select>
-            <div *ngIf="!editable" class="detail m-2 mb-4 pl-2 rounded"
+            <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded"
                  [class.changed]="latestReleaseRange?.additionalFields.ruleStrengthId !== activeRange.additionalFields.ruleStrengthId">
                 {{mrcmmtService.getRuleStrength(activeRange.additionalFields.ruleStrengthId)}}
             </div>
@@ -50,7 +53,7 @@
                     [class.changed]="latestReleaseRange?.additionalFields.contentTypeId !== activeRange.additionalFields.contentTypeId">
                 <option *ngFor="let contentType of mrcmmtService.contentTypeFields" [value]="contentType.id">{{contentType.term}}</option>
             </select>
-            <div *ngIf="!editable" class="detail m-2 mb-4 pl-2 rounded"
+            <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded"
                  [class.changed]="latestReleaseRange?.additionalFields.contentTypeId !== activeRange.additionalFields.contentTypeId">
                 {{mrcmmtService.getContentType(activeRange.additionalFields.contentTypeId)}}
             </div>
@@ -65,3 +68,30 @@
         </div>
     </div>
 </div>
+
+<!-- RANGE ECL EXPRESSION MODAL -->
+<app-modal id="ecl-expression-modal" class="modal" [size]="'xl'">
+    <h3 header class="mb-0">ECL Expression</h3>
+    <ng-container body>
+        <ul class="nav nav-tabs nav-fill" id="expressionTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pure-expression-tab" data-toggle="tab" href="#pure-expression"  role="tab" aria-controls="pure-expression" aria-selected="true">Expression</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="modified-expression-tab" data-toggle="tab" href="#modified-expression" role="tab" aria-controls="modified-expression" aria-selected="false">Modifications</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="expressionTabContent">
+            <div *ngIf="rangeExpression" class="tab-pane fade expression py-5 show active" id="pure-expression" role="tabpanel" aria-labelledby="pure-expression-tab">
+                <p class="mb-0 px-5" *ngFor="let line of ECLexpressionBuilder(rangeExpression); let odd = odd" [class.odd]="odd">{{line}}</p>
+            </div>
+            <div class="tab-pane fade expression py-5" id="modified-expression" role="tabpanel" aria-labelledby="modified-expression-tab">
+                <p class="mb-0 px-5" *ngFor="let line of ECLexpressionBuilder(rangeExpression); let odd = odd" [class.odd]="odd">{{line}}</p>
+            </div>
+        </div>
+    </ng-container>
+    <div footer>
+        <button type="button" class="btn btn" (click)="modalService.close('ecl-expression-modal')">CLOSE</button>
+    </div>
+</app-modal>

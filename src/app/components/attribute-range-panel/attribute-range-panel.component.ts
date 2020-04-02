@@ -9,6 +9,8 @@ import { MrcmmtService } from '../../services/mrcmmt.service';
 import { EditService } from '../../services/edit.service';
 import { UrlParamsService } from '../../services/url-params.service';
 import { BranchingService } from '../../services/branching.service';
+import { ModalService } from '../../services/modal.service';
+import { SnomedUtilityService } from '../../services/snomedUtility.service';
 
 export class Results {
     items: object[];
@@ -26,6 +28,8 @@ export class AttributeRangePanelComponent implements OnDestroy {
     attributeRule: boolean;
     results: Results;
     attributeRuleInvalid: boolean;
+
+    rangeExpression: string;
 
     latestReleaseRange: RefSet;
     latestReleaseRangeSubscription: Subscription;
@@ -49,7 +53,8 @@ export class AttributeRangePanelComponent implements OnDestroy {
                 private mrcmmtService: MrcmmtService,
                 private editService: EditService,
                 private urlParamsService: UrlParamsService,
-                private branchingService: BranchingService) {
+                private branchingService: BranchingService,
+                private modalService: ModalService) {
         this.rangeSubscription = this.rangeService.getRanges().subscribe(data => this.ranges = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
@@ -175,5 +180,11 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.domainService.setActiveDomain(domain);
         this.attributeService.setActiveAttribute(attribute);
         this.rangeService.setActiveRange(range);
+    }
+
+    ECLexpressionBuilder(expression: any) {
+        if (expression) {
+            return SnomedUtilityService.ECLexpressionBuilder(expression);
+        }
     }
 }

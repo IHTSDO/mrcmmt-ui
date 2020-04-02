@@ -51,7 +51,7 @@ export class SnomedUtilityService {
 
     // Takes a string ETL expression and returns an array of ETL expression lines, correctly indented.
     static ETLexpressionBuilder(expression: string) {
-        const response = expression.match(/[^:,]+[,]?[:]?[\s]?/g);
+        const response = expression.match(/(?:[^:,](?!OR))+(?:[:,\s]| OR)*/g);
 
         let whitespaceCount = 0;
 
@@ -69,13 +69,35 @@ export class SnomedUtilityService {
                     whitespaceCount--;
                 }
 
-                if (response[i].includes('OR')) {
-                    const additionalLine = response[i].slice(response[i].indexOf('OR', 2));
-                    response[i] = response[i].slice(0, response[i].indexOf('OR', 2));
+                if (!response[i - 1].includes('OR') && response[i].startsWith('OR')) {
+                    whitespaceCount++;
+                }
 
-                    if (additionalLine.trim()) {
-                        response.splice(i + 1, 0, additionalLine);
-                    }
+                if (response[i - 1].includes('OR') && response[i - 1].trim().endsWith(',')) {
+                    whitespaceCount--;
+                }
+            }
+
+            response[i] =  '    '.repeat(whitespaceCount) + response[i].trim();
+        }
+
+        return response;
+    }
+
+    // Takes a string ECL expression and returns an array of ETL expression lines, correctly indented.
+    static ECLexpressionBuilder(expression: string) {
+        const response = expression.match(/(?:[^:,](?!OR)(?!\(<<))+(?:[:,\s]| OR)*/g);
+
+        let whitespaceCount = 0;
+
+        for (let i = 0; i < response.length; i++) {
+            if (i !== 0) {
+                if (response[i - 1].includes(':')) {
+                    whitespaceCount++;
+                }
+
+                if (response[i].startsWith('<<') && !response[i - 1].includes(':')) {
+                    whitespaceCount++;
                 }
 
                 if (!response[i - 1].includes('OR') && response[i].startsWith('OR')) {
@@ -84,6 +106,10 @@ export class SnomedUtilityService {
 
                 if (response[i - 1].includes('OR') && response[i - 1].trim().endsWith(',')) {
                     whitespaceCount--;
+                }
+
+                if (response[i].startsWith('R')) {
+                    whitespaceCount++;
                 }
             }
 
