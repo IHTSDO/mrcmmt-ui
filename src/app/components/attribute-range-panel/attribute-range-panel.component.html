@@ -84,11 +84,15 @@
         </ul>
 
         <div class="tab-content" id="rangeConstraintTabContent">
-            <div *ngIf="activeRange?.additionalFields.rangeConstraint" class="tab-pane fade expression py-5 show active" id="pure-range-constraint" role="tabpanel" aria-labelledby="pure-range-constraint-tab">
-                <p class="mb-0 px-5" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.rangeConstraint); let odd = odd" [class.odd]="odd">{{line}}</p>
+            <div *ngIf="activeRange?.additionalFields.rangeConstraint" class="tab-pane fade expression p-5 show active" id="pure-range-constraint" role="tabpanel" aria-labelledby="pure-range-constraint-tab">
+                <div class="expression-container p-5">
+                    <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.rangeConstraint); let odd = odd" [class.odd]="odd">{{line}}</p>
+                </div>
             </div>
-            <div class="tab-pane fade expression py-5" id="modified-range-constraint" role="tabpanel" aria-labelledby="modified-range-constraint-tab">
-                <p class="mb-0 px-5" *ngFor="let line of ECLexpressionBuilder(latestReleaseRange?.additionalFields.rangeConstraint); let odd = odd" [class.odd]="odd">{{line}}</p>
+            <div class="tab-pane fade expression p-5" id="modified-range-constraint" role="tabpanel" aria-labelledby="modified-range-constraint-tab">
+                <div class="expression-container p-5">
+                    <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(latestReleaseRange?.additionalFields.rangeConstraint); let odd = odd" [class.odd]="odd">{{line}}</p>
+                </div>
             </div>
         </div>
     </ng-container>
@@ -111,11 +115,15 @@
         </ul>
 
         <div class="tab-content" id="attributeRuleTabContent">
-            <div *ngIf="activeRange?.additionalFields.attributeRule" class="tab-pane fade expression py-5 show active" id="pure-attribute-rule" role="tabpanel" aria-labelledby="pure-attribute-rule-tab">
-                <p class="mb-0 px-5" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.attributeRule); let odd = odd" [class.odd]="odd">{{line}}</p>
+            <div *ngIf="activeRange?.additionalFields.attributeRule" class="tab-pane fade expression p-5 show active" id="pure-attribute-rule" role="tabpanel" aria-labelledby="pure-attribute-rule-tab">
+                <div class="expression-container p-5">
+                    <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.attributeRule); let odd = odd" [class.odd]="odd">{{line}}</p>
+                </div>
             </div>
-            <div class="tab-pane fade expression py-5" id="modified-attribute-rule" role="tabpanel" aria-labelledby="modified-attribute-rule-tab">
-                <p class="mb-0 px-5" *ngFor="let line of ECLexpressionBuilder(latestReleaseRange?.additionalFields.attributeRule); let odd = odd" [class.odd]="odd">{{line}}</p>
+            <div class="tab-pane fade expression p-5" id="modified-attribute-rule" role="tabpanel" aria-labelledby="modified-attribute-rule-tab">
+                <div class="expression-container p-5">
+                    <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(latestReleaseRange?.additionalFields.attributeRule); let odd = odd" [class.odd]="odd">{{line}}</p>
+                </div>
             </div>
         </div>
     </ng-container>

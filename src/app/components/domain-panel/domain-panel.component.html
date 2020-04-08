@@ -108,11 +108,15 @@
         </ul>
 
         <div class="tab-content" id="precoordinationTabContent">
-            <div *ngIf="activeDomain?.additionalFields.domainTemplateForPrecoordination" class="tab-pane fade expression py-5 show active" id="pure-precoordination" role="tabpanel" aria-labelledby="pure-precoordination-tab">
-                <p class="mb-0 px-5" *ngFor="let line of ETLexpressionBuilder(activeDomain?.additionalFields.domainTemplateForPrecoordination); let odd = odd" [class.odd]="odd">{{line}}</p>
+            <div *ngIf="activeDomain?.additionalFields.domainTemplateForPrecoordination" class="tab-pane fade expression p-5 show active" id="pure-precoordination" role="tabpanel" aria-labelledby="pure-precoordination-tab">
+                <div class="expression-container p-5">
+                    <p class="mb-0" *ngFor="let line of ETLexpressionBuilder(activeDomain?.additionalFields.domainTemplateForPrecoordination); let odd = odd" [class.odd]="odd">{{line}}</p>
+                </div>
             </div>
-            <div class="tab-pane fade expression py-5" id="modified-precoordination" role="tabpanel" aria-labelledby="modified-precoordination-tab">
-                <p class="mb-0 px-5" *ngFor="let line of ETLexpressionBuilder(latestReleaseDomain?.additionalFields.domainTemplateForPrecoordination); let odd = odd" [class.odd]="odd">{{line}}</p>
+            <div class="tab-pane fade expression p-5" id="modified-precoordination" role="tabpanel" aria-labelledby="modified-precoordination-tab">
+                <div class="expression-container p-5">
+                    <p class="mb-0" *ngFor="let line of ETLexpressionBuilder(latestReleaseDomain?.additionalFields.domainTemplateForPrecoordination); let odd = odd" [class.odd]="odd">{{line}}</p>
+                </div>
             </div>
         </div>
     </ng-container>
@@ -135,11 +139,15 @@
         </ul>
 
         <div class="tab-content" id="postcoordinationTabContent">
-            <div *ngIf="activeDomain?.additionalFields.domainTemplateForPrecoordination" class="tab-pane fade expression py-5 show active" id="pure-postcoordination" role="tabpanel" aria-labelledby="pure-postcoordination-tab">
-                <p class="mb-0 px-5" *ngFor="let line of ETLexpressionBuilder(activeDomain?.additionalFields.domainTemplateForPostcoordination); let odd = odd" [class.odd]="odd">{{line}}</p>
+            <div *ngIf="activeDomain?.additionalFields.domainTemplateForPrecoordination" class="tab-pane fade expression p-5 show active" id="pure-postcoordination" role="tabpanel" aria-labelledby="pure-postcoordination-tab">
+                <div class="expression-container p-5">
+                    <p class="mb-0" *ngFor="let line of ETLexpressionBuilder(activeDomain?.additionalFields.domainTemplateForPostcoordination); let odd = odd" [class.odd]="odd">{{line}}</p>
+                </div>
             </div>
-            <div *ngIf="activeDomain?.additionalFields.domainTemplateForPrecoordination" class="tab-pane fade expression py-5" id="modified-postcoordination" role="tabpanel" aria-labelledby="modified-postcoordination-tab">
-                <p class="mb-0 px-5" *ngFor="let line of ETLexpressionBuilder(latestReleaseDomain?.additionalFields.domainTemplateForPostcoordination); let odd = odd" [class.odd]="odd">{{line}}</p>
+            <div *ngIf="activeDomain?.additionalFields.domainTemplateForPrecoordination" class="tab-pane fade expression p-5" id="modified-postcoordination" role="tabpanel" aria-labelledby="modified-postcoordination-tab">
+                <div class="expression-container p-5">
+                    <p class="mb-0" *ngFor="let line of ETLexpressionBuilder(latestReleaseDomain?.additionalFields.domainTemplateForPostcoordination); let odd = odd" [class.odd]="odd">{{line}}</p>
+                </div>
             </div>
         </div>
     </ng-container>

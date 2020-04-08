@@ -193,11 +193,14 @@ app-modal.expression-modal {
         font-size: 1.3rem;
         letter-spacing: 0;
 
-        p {
-            white-space: pre;
+        div.expression-container {
+            border: 1px solid $regent-grey;
+            border-radius: 1rem;
+            background-color: $gallery-white;
+            overflow: scroll;
 
-            &.odd {
-                background-color: $gallery-white;
+            p {
+                white-space: pre;
             }
         }
     }
@@ -207,6 +210,8 @@ app-modal.expression-modal {
             margin-top: -1px;
 
             a.nav-link {
+                font-size: 1.4rem;
+
                 &:not(.active) {
                     color: inherit;
                     background-color: $blinding-white;
