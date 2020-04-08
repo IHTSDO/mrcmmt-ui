@@ -25,11 +25,8 @@ export class Results {
 export class AttributeRangePanelComponent implements OnDestroy {
 
     rangeConstraint: boolean;
-    attributeRule: boolean;
     results: Results;
     attributeRuleInvalid: boolean;
-
-    rangeExpression: string;
 
     latestReleaseRange: RefSet;
     latestReleaseRangeSubscription: Subscription;

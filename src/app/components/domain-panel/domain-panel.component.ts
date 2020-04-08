@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, NgModule, OnDestroy } from '@angular/core';
 import { RefSet } from '../../models/refset';
 import { Observable, Subscription } from 'rxjs';
 import { DomainService } from '../../services/domain.service';
@@ -24,8 +24,6 @@ export class DomainPanelComponent implements OnDestroy {
     domainErrorMessage = '';
     proxPrimInvalid: boolean;
     proxPrimErrorMessage = '';
-
-    domainExpression: string;
 
     latestReleaseDomain: RefSet;
 
@@ -238,3 +236,4 @@ export class DomainPanelComponent implements OnDestroy {
         }
     }
 }
+
