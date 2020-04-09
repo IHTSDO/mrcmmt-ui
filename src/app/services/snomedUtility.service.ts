@@ -135,7 +135,7 @@ export class SnomedUtilityService {
             }
             if (line.text === '') {
                 line.text = expression[i];
-                line.type = 'removed';
+                line.type = 'added';
                 combined.push(line);
             }
         }
@@ -152,7 +152,7 @@ export class SnomedUtilityService {
             }
             if (line.text === '') {
                 line.text = originalExpression[i];
-                line.type = 'added';
+                line.type = 'removed';
                 combined.push(line);
             }
         }
