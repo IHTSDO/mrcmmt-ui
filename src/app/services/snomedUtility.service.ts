@@ -131,6 +131,7 @@ export class SnomedUtilityService {
                     line.text = expression[i];
                     line.type = 'unchanged';
                     combined.push(line);
+                    break
                 }
             }
             if (line.text === '') {
