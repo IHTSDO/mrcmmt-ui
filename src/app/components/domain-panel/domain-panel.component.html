@@ -115,7 +115,7 @@
             </div>
             <div class="tab-pane fade expression p-5" id="modified-precoordination" role="tabpanel" aria-labelledby="modified-precoordination-tab">
                 <div class="expression-container p-5">
-                    <p class="mb-0" *ngFor="let line of ETLexpressionBuilder(latestReleaseDomain?.additionalFields.domainTemplateForPrecoordination); let odd = odd" [class.odd]="odd">{{line}}</p>
+                    <p class="mb-0" *ngFor="let line of ETLexpressionBuilder(activeDomain?.additionalFields.domainTemplateForPrecoordination, latestReleaseDomain?.additionalFields.domainTemplateForPrecoordination); let odd = odd" [class.added]="line.type === 'added'" [class.removed]="line.type === 'removed'">{{line.text}}</p>
                 </div>
             </div>
         </div>
@@ -146,7 +146,7 @@
             </div>
             <div *ngIf="activeDomain?.additionalFields.domainTemplateForPrecoordination" class="tab-pane fade expression p-5" id="modified-postcoordination" role="tabpanel" aria-labelledby="modified-postcoordination-tab">
                 <div class="expression-container p-5">
-                    <p class="mb-0" *ngFor="let line of ETLexpressionBuilder(latestReleaseDomain?.additionalFields.domainTemplateForPostcoordination); let odd = odd" [class.odd]="odd">{{line}}</p>
+                    <p class="mb-0" *ngFor="let line of ETLexpressionBuilder(activeDomain?.additionalFields.domainTemplateForPostcoordination, latestReleaseDomain?.additionalFields.domainTemplateForPostcoordination); let odd = odd" [class.added]="line.type === 'added'" [class.removed]="line.type === 'removed'">{{line.text}}</p>
                 </div>
             </div>
         </div>

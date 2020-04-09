@@ -230,9 +230,15 @@ export class DomainPanelComponent implements OnDestroy {
         }
     }
 
-    ETLexpressionBuilder(expression: any) {
-        if (expression) {
+    ETLexpressionBuilder(expression: any, originalExpression: any) {
+        if (expression && !originalExpression) {
             return SnomedUtilityService.ETLexpressionBuilder(expression);
+        }
+
+        if (expression && originalExpression) {
+            const current = SnomedUtilityService.ETLexpressionBuilder(expression);
+            const original = SnomedUtilityService.ETLexpressionBuilder(originalExpression);
+            return SnomedUtilityService.expressionComparator(current, original);
         }
     }
 }

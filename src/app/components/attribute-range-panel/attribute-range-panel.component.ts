@@ -179,9 +179,15 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.rangeService.setActiveRange(range);
     }
 
-    ECLexpressionBuilder(expression: any) {
-        if (expression) {
+    ECLexpressionBuilder(expression: any, originalExpression: any) {
+        if (expression && !originalExpression) {
             return SnomedUtilityService.ECLexpressionBuilder(expression);
+        }
+
+        if (expression && originalExpression) {
+            const current = SnomedUtilityService.ECLexpressionBuilder(expression);
+            const original = SnomedUtilityService.ECLexpressionBuilder(originalExpression);
+            return SnomedUtilityService.expressionComparator(current, original);
         }
     }
 }

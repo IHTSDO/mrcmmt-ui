@@ -188,6 +188,14 @@ app-modal.expression-modal {
             p {
                 white-space: pre;
             }
+            
+            .added {
+                background-color: $norway-green;
+            }
+            
+            .removed {
+                background-color: $new-york-red;
+            }
         }
     }
 

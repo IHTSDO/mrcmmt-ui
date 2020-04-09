@@ -118,4 +118,44 @@ export class SnomedUtilityService {
 
         return response;
     }
+
+    static expressionComparator(expression: string[], originalExpression: string[]) {
+        const combined = [{}];
+        for (let i = 0; i < expression.length; i++) {
+            const line = {
+                type: '',
+                text: ''
+            };
+            for (let j = 0; j < originalExpression.length; j++) {
+                if (expression[i] === originalExpression[j]) {
+                    line.text = expression[i];
+                    line.type = 'unchanged';
+                    combined.push(line);
+                }
+            }
+            if (line.text === '') {
+                line.text = expression[i];
+                line.type = 'removed';
+                combined.push(line);
+            }
+        }
+        for (let i = 0; i < originalExpression.length; i++) {
+            const line = {
+                type: '',
+                text: ''
+            };
+            for (let j = 0; j < expression.length; j++) {
+                if (originalExpression[i] === expression[j]) {
+                    line.text = originalExpression[i];
+                    line.type = 'unchanged';
+                }
+            }
+            if (line.text === '') {
+                line.text = originalExpression[i];
+                line.type = 'added';
+                combined.push(line);
+            }
+        }
+        return combined;
+    }
 }
