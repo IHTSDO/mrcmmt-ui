@@ -121,6 +121,7 @@ export class SnomedUtilityService {
 
     static expressionComparator(expression: string[], originalExpression: string[]) {
         const combined = [{}];
+        let count = 0;
         for (let i = 0; i < expression.length; i++) {
             const line = {
                 type: '',
@@ -131,13 +132,14 @@ export class SnomedUtilityService {
                     line.text = expression[i];
                     line.type = 'unchanged';
                     combined.push(line);
-                    break
+                    break;
                 }
             }
             if (line.text === '') {
                 line.text = expression[i];
                 line.type = 'added';
                 combined.push(line);
+                count++;
             }
         }
         for (let i = 0; i < originalExpression.length; i++) {
@@ -154,7 +156,7 @@ export class SnomedUtilityService {
             if (line.text === '') {
                 line.text = originalExpression[i];
                 line.type = 'removed';
-                combined.push(line);
+                combined.splice(i, 0, line);
             }
         }
         return combined;
