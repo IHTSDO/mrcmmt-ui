@@ -157,7 +157,6 @@ export class SnomedUtilityService {
                 let innerCount = 0;
                 line.text = originalExpression[i];
                 line.type = 'removed';
-                
                 for (let j = 0; j < count.length; j++) {
                     if (count[j] >= i) {
                         innerCount++;
