@@ -57,10 +57,8 @@ export class TerminologyServerService {
             eclFilter: rangeConstraint
         };
 
-        return this.http
-            .post<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +
-            '/concepts/search', params)
-            .pipe(map(responseData => {
+        return this.http.post<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint
+            + this.branchPath + '/concepts/search', params).pipe(map(responseData => {
                 return responseData;
             }),
             catchError(err => {
@@ -77,7 +75,21 @@ export class TerminologyServerService {
     getAttributes(branchPath?: string): Observable<SnomedResponseObject> {
         return this.http.get<SnomedResponseObject>(
             this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (branchPath ? branchPath : this.branchPath) +
-            '/members?referenceSet=723561005&active=true&limit=1000');
+            '/members?referenceSet=723561005&active=true&limit=1000').pipe(map(response => {
+                response.items.forEach(item => {
+                    if (item.additionalFields.grouped) {
+                        switch (item.additionalFields.grouped) {
+                            case '0':
+                                item.additionalFields.grouped = false;
+                                break;
+                            case '1':
+                                item.additionalFields.grouped = true;
+                                break;
+                        }
+                    }
+                });
+                return response;
+        }));
     }
 
     getRanges(componentReferenceId, branchPath?: string): Observable<SnomedResponseObject> {

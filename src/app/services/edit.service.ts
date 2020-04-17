@@ -52,6 +52,17 @@ export class EditService {
     }
 
     saveIterable(item) {
+        if (item.additionalFields.grouped) {
+            switch (item.additionalFields.grouped) {
+                case false:
+                    item.additionalFields.grouped = '0';
+                    break;
+                case true:
+                    item.additionalFields.grouped = '1';
+                    break;
+            }
+        }
+
         if (!item.memberId) {
             this.terminologyService.postRefsetMember(item).subscribe(
                 () => {
