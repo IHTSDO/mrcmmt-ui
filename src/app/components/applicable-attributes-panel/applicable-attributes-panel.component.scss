@@ -84,6 +84,11 @@ div#applicable-attributes-panel {
         right: 0;
         top: 1.2rem;
         background: transparent;
+        color: $forest-green;
+
+        &:hover {
+            color: $apple-green;
+        }
     }
 
     div.details {

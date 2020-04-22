@@ -92,7 +92,7 @@ export class MrcmmtService {
     }
 
     getRuleStrength(id) {
-        if (id !== '') {
+        if (id) {
             return this.ruleStrengthFields.find(item => item.id === id).term;
         } else {
             return '';
@@ -100,7 +100,7 @@ export class MrcmmtService {
     }
 
     getContentType(id) {
-        if (id !== '') {
+        if (id) {
             return this.contentTypeFields.find(item => item.id === id).term;
         } else {
             return '';

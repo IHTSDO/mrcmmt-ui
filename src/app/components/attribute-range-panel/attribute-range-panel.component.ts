@@ -84,6 +84,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
 
         if (this.activeRange === range) {
             this.rangeService.clearLatestReleaseActiveRange();
+            this.rangeService.clearRanges();
             this.setActives(this.activeDomain, this.activeAttribute, null);
         } else {
             this.activeRange = range;

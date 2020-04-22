@@ -14,6 +14,11 @@ div#attribute-range-panel {
         display: flex;
     }
 
+    p.info-message {
+        color: $scorpion-grey;
+
+    }
+
     h1 {
         font-weight: 300;
     }
@@ -23,6 +28,11 @@ div#attribute-range-panel {
         right: 0;
         top: 1.2rem;
         background: transparent;
+        color: $forest-green;
+
+        &:hover {
+            color: $apple-green;
+        }
     }
 
     div.range {
@@ -202,11 +212,11 @@ app-modal.expression-modal {
             p {
                 white-space: pre;
             }
-            
+
             .added {
                 background-color: $norway-green;
             }
-            
+
             .removed {
                 background-color: $new-york-red;
             }

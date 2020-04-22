@@ -25,9 +25,12 @@ div#domain-panel {
         right: 0;
         top: 1.2rem;
         background: transparent;
+        color: $forest-green;
+
+        &:hover {
+            color: $apple-green;
+        }
     }
-
-
 
     input {
         font-weight: 300;
@@ -188,11 +191,11 @@ app-modal.expression-modal {
             p {
                 white-space: pre;
             }
-            
+
             .added {
                 background-color: $norway-green;
             }
-            
+
             .removed {
                 background-color: $new-york-red;
             }
