@@ -47,11 +47,14 @@ export class EditService {
 
     public saveChangeLog() {
         if (this.localChanges) {
-            this.saveIterable(this.localChanges[0]);
+            this.saveIterable(this.localChanges);
+            this.setChangeLog([]);
         }
     }
 
-    saveIterable(item) {
+    saveIterable(changes) {
+        const item = changes[0];
+
         if (item.additionalFields.grouped) {
             switch (item.additionalFields.grouped) {
                 case false:
@@ -67,31 +70,30 @@ export class EditService {
             delete item.newRefset;
             this.terminologyService.deleteRefsetMember(item).subscribe(
                 () => {
-                    this.nextIterable();
+                    this.nextIterable(changes);
                 });
         } else if (item.newRefset) {
             this.terminologyService.postRefsetMember(item).subscribe(
                 () => {
-                    this.nextIterable();
+                    this.nextIterable(changes);
                 });
         } else if (item.memberId && !item.newRefset) {
             this.terminologyService.putRefsetMember(item).subscribe(
                 () => {
-                    this.nextIterable();
+                    this.nextIterable(changes);
                 });
         } else {
             console.error('Attempted to save Refset that was neither DELETED, POSTED, nor UPDATED');
         }
     }
 
-    nextIterable() {
-        this.localChanges.shift();
+    nextIterable(changes) {
+        changes.shift();
 
-        if (this.localChanges.length) {
-            this.saveIterable(this.localChanges[0]);
+        if (changes.length) {
+            this.saveIterable(changes);
         } else {
             this.mrcmmtService.setupDomains();
-            this.setChangeLog([]);
         }
     }
 }
