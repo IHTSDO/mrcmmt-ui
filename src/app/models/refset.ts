@@ -1,3 +1,5 @@
+import { Guid } from 'guid-typescript';
+
 export class RefSet {
     additionalFields: AdditionalFields;
     referencedComponentId: string;
@@ -6,6 +8,7 @@ export class RefSet {
     memberId: string;
     moduleId: string;
     active: boolean;
+    newRefset: boolean;
     changed: boolean;
     deleted: boolean;
     errors: RefsetError[];
@@ -21,9 +24,11 @@ export class RefSet {
         this.referencedComponentId = referencedComponentId;
         this.referencedComponent = referencedComponent;
         this.refsetId = refsetId;
+        this.memberId = Guid.create().toString();
         this.moduleId = '900000000000012004';
         this.changed = true;
         this.active = true;
+        this.newRefset = true;
         this.errors = errors;
     }
 }

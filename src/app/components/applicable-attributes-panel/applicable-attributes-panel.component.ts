@@ -121,9 +121,11 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                 return item.referencedComponentId === this.activeAttribute.referencedComponentId;
             });
 
-            this.terminologyService.getConcept(this.activeAttribute.referencedComponentId).subscribe(data => {
-                this.shortFormConcept = SnomedUtilityService.convertShortConceptToString(data);
-            });
+            if (this.activeAttribute.referencedComponentId) {
+                this.terminologyService.getConcept(this.activeAttribute.referencedComponentId).subscribe(data => {
+                    this.shortFormConcept = SnomedUtilityService.convertShortConceptToString(data);
+                });
+            }
 
             attributeMatchedDomains.push(this.activeAttribute);
             this.attributes['items'].forEach((item) => {

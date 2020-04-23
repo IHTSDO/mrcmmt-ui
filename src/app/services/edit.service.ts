@@ -63,21 +63,24 @@ export class EditService {
             }
         }
 
-        if (!item.memberId) {
-            this.terminologyService.postRefsetMember(item).subscribe(
-                () => {
-                    this.nextIterable();
-                });
-        } else if (item.deleted) {
+        if (item.deleted) {
+            delete item.newRefset;
             this.terminologyService.deleteRefsetMember(item).subscribe(
                 () => {
                     this.nextIterable();
                 });
-        } else {
+        } else if (item.newRefset) {
+            this.terminologyService.postRefsetMember(item).subscribe(
+                () => {
+                    this.nextIterable();
+                });
+        } else if (item.memberId && !item.newRefset) {
             this.terminologyService.putRefsetMember(item).subscribe(
                 () => {
                     this.nextIterable();
                 });
+        } else {
+            console.error('Attempted to save Refset that was neither DELETED, POSTED, nor UPDATED');
         }
     }
 
