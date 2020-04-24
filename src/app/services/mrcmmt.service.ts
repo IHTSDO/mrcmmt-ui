@@ -116,6 +116,11 @@ export class MrcmmtService {
         this.domainService.clearDomainFilter();
         this.attributeService.clearAttributeFilter();
         this.urlParamsService.updateActiveRefsetParams(null, null, null);
-        this.setupDomains();
+        this.terminologyService.getDomains().subscribe(domains => {
+            this.domainService.setDomains(domains);
+        });
+        this.terminologyService.getAttributes().subscribe(attributes => {
+            this.attributeService.setAttributes(attributes);
+        });
     }
 }

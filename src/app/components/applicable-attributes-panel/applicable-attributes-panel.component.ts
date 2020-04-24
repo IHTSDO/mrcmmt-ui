@@ -149,7 +149,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     }
 
     setRange() {
-        this.rangeService.setRanges([]);
+        this.rangeService.setRanges(new SnomedResponseObject());
 
         if (this.activeAttribute.referencedComponentId) {
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(data => {

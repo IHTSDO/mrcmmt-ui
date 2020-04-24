@@ -91,6 +91,7 @@ export class AppComponent implements OnInit {
                         }
 
                     this.branchingService.setVersions(versions);
+                    this.mrcmmtService.setupDomains();
                 });
             });
         });
