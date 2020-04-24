@@ -55,7 +55,7 @@ export class EditService {
     saveIterable(changes) {
         const item = changes[0];
 
-        if (item.additionalFields.grouped) {
+        if (item.additionalFields.hasOwnProperty('grouped')) {
             switch (item.additionalFields.grouped) {
                 case false:
                     item.additionalFields.grouped = '0';

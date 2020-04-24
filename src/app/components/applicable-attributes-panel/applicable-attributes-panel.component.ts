@@ -202,8 +202,6 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     }
 
     updateAttribute() {
-    console.log('updating attribute');
-    console.log(this.activeAttribute);
         this.activeAttribute.changed = true;
 
         this.activeAttribute.errors = [];
