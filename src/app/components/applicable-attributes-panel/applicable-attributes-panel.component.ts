@@ -159,12 +159,12 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                     return this.activeAttribute.referencedComponentId === item.referencedComponentId;
                 }));
 
-                if (!ranges.items.length) {
-                    const range = this.rangeService.getNewRange(this.activeAttribute);
-                    this.changeLog.push(range);
-                    this.editService.setChangeLog(this.changeLog);
-                    ranges.items.push(range);
-                }
+//                if (!ranges.items.length) {
+//                    const range = this.rangeService.getNewRange(this.activeAttribute);
+//                    this.changeLog.push(range);
+//                    this.editService.setChangeLog(this.changeLog);
+//                    ranges.items.push(range);
+//                }
 
                 ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
                 this.rangeService.setRanges(ranges);
@@ -202,6 +202,8 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     }
 
     updateAttribute() {
+    console.log('updating attribute');
+    console.log(this.activeAttribute);
         this.activeAttribute.changed = true;
 
         this.activeAttribute.errors = [];
