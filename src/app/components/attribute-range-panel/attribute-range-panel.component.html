@@ -17,7 +17,7 @@
                     <textarea type="text" class="detail m-2 mb-3 p-0 px-2 rounded" *ngIf="editable"
                               [(ngModel)]="activeRange.additionalFields.rangeConstraint"
                               [class.short]="rangeConstraint"
-                              (change)="validateEcl()"
+                              (ngModelChange)="validateEcl()"
                               [class.changed]="latestReleaseRange?.additionalFields.rangeConstraint !== activeRange.additionalFields.rangeConstraint"></textarea>
                     <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 pr-5 rounded"
                          (click)="modalService.open('range-constraint-modal')"
@@ -39,7 +39,7 @@
                     <h5 class="label m-2 mb-3">Rule Strength<span *ngIf="editable" class="mandatory"> *</span></h5>
                     <select class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
                             [(ngModel)]="activeRange.additionalFields.ruleStrengthId"
-                            (change)="updateRange()"
+                            (ngModelChange)="updateRange()"
                             [class.changed]="latestReleaseRange?.additionalFields.ruleStrengthId !== activeRange.additionalFields.ruleStrengthId">
                         <option *ngFor="let ruleStrength of mrcmmtService.ruleStrengthFields" [value]="ruleStrength.id" >{{ruleStrength.term}}</option>
                     </select>
@@ -52,7 +52,7 @@
                     <h5 class="label m-2 mb-3">Content Type<span *ngIf="editable" class="mandatory"> *</span></h5>
                     <select class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
                             [(ngModel)]="activeRange.additionalFields.contentTypeId"
-                            (change)="updateRange()"
+                            (ngModelChange)="updateRange()"
                             [class.changed]="latestReleaseRange?.additionalFields.contentTypeId !== activeRange.additionalFields.contentTypeId">
                         <option *ngFor="let contentType of mrcmmtService.contentTypeFields" [value]="contentType.id">{{contentType.term}}</option>
                     </select>

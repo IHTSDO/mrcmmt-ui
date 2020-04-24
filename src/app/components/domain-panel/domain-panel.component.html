@@ -37,7 +37,7 @@
             <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded"
                    [(ngModel)]="activeDomain.additionalFields.domainConstraint"
                    [disabled]="!editable"
-                   (change)="validateEcl('domainConstraint', activeDomain.additionalFields.domainConstraint)"
+                   (ngModelChange)="validateEcl('domainConstraint', activeDomain.additionalFields.domainConstraint)"
                    [class.changed]="latestReleaseDomain?.additionalFields.domainConstraint !== activeDomain.additionalFields.domainConstraint">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.parentDomain || editable">
@@ -45,7 +45,7 @@
             <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded"
                    [(ngModel)]="activeDomain.additionalFields.parentDomain"
                    [disabled]="!editable"
-                   (change)="updateDomain()"
+                   (ngModelChange)="updateDomain()"
                    [class.changed]="latestReleaseDomain?.additionalFields.parentDomain !== activeDomain.additionalFields.parentDomain">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.proximalPrimitiveConstraint || editable">
@@ -54,7 +54,7 @@
             <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded"
                    [(ngModel)]="activeDomain.additionalFields.proximalPrimitiveConstraint"
                    [disabled]="!editable"
-                   (change)="validateEcl('proxPrim', activeDomain.additionalFields.proximalPrimitiveConstraint)"
+                   (ngModelChange)="validateEcl('proxPrim', activeDomain.additionalFields.proximalPrimitiveConstraint)"
                    [class.changed]="latestReleaseDomain?.additionalFields.proximalPrimitiveConstraint !== activeDomain.additionalFields.proximalPrimitiveConstraint">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.proximalPrimitiveRefinement || editable">
@@ -62,7 +62,7 @@
             <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded"
                    [(ngModel)]="activeDomain.additionalFields.proximalPrimitiveRefinement"
                    [disabled]="!editable"
-                   (change)="updateDomain()"
+                   (ngModelChange)="updateDomain()"
                    [class.changed]="latestReleaseDomain?.additionalFields.proximalPrimitiveRefinement !== activeDomain.additionalFields.proximalPrimitiveRefinement">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.guideURL || editable">
@@ -70,7 +70,7 @@
             <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded"
                    [(ngModel)]="activeDomain.additionalFields.guideURL"
                    [disabled]="!editable"
-                   (change)="updateDomain()"
+                   (ngModelChange)="updateDomain()"
                    [class.changed]="latestReleaseDomain?.additionalFields.guideURL !== activeDomain.additionalFields.guideURL">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPrecoordination">
