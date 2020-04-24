@@ -59,7 +59,6 @@ export class BreadcrumbBarComponent implements OnDestroy {
         } else {
             // Skip opening modal as no edits found
             this.disableEditing();
-            this.mrcmmtService.resetTool();
         }
     }
 
