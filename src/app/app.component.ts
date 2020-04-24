@@ -130,15 +130,4 @@ export class AppComponent implements OnInit {
                 break;
         }
     }
-
-    reset() {
-        this.mrcmmtService.resetTool();
-        this.editService.setChangeLog([]);
-    }
-
-    switch() {
-        this.reset();
-        this.branchingService.setBranchPath('MAIN');
-        this.editService.setEditable(false);
-    }
 }
