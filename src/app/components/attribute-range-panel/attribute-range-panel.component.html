@@ -72,12 +72,17 @@
             </div>
         </ng-container>
         <ng-template #noRanges>
-            <p class="p-5 text-center info-message">- This attribute has no ranges -</p>
-            <button type="button" *ngIf="editable && activeAttribute" class="btn-default fas fa-plus float-right add" (click)="addNewRange()"></button>
+            <ng-container *ngIf="editable && activeAttribute">
+                <h2 class="p-5 text-center info-message">- This attribute has no ranges, please click the green plus icon to create one -</h2>
+                <button type="button" class="btn-default fas fa-plus float-right add" (click)="addNewRange()"></button>
+            </ng-container>
+            <ng-container *ngIf="!editable && activeAttribute">
+                <h2 class="p-5 text-center info-message">- This attribute has no ranges -</h2>
+            </ng-container>
         </ng-template>
     </ng-container>
     <ng-template #noAttribute>
-        <p class="p-5 text-center info-message">- Please select an attribute first -</p>
+        <h2 class="p-5 text-center info-message">- Please select an attribute first -</h2>
     </ng-template>
 </div>
 
