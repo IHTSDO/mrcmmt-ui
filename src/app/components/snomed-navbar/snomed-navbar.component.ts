@@ -31,9 +31,7 @@ export class SnomedNavbarComponent implements OnInit {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
         this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => {
             this.branchPath = data;
-            if (this.branchPath !== data) {
-                this.mrcmmtService.setupDomains();
-            }
+            this.mrcmmtService.setupDomains();
         });
         this.versionsSubscription = this.branchingService.getVersions().subscribe(data => this.versions = data);
         this.versionsSubscription = this.branchingService.getVersions().subscribe(data => this.versions = data);
