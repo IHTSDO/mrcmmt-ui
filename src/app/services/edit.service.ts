@@ -47,12 +47,15 @@ export class EditService {
 
     public saveChangeLog() {
         if (this.localChanges) {
-            this.saveIterable(this.localChanges[0]);
+            this.saveIterable(this.localChanges);
+            this.setChangeLog([]);
         }
     }
 
-    saveIterable(item) {
-        if (item.additionalFields.grouped) {
+    saveIterable(changes) {
+        const item = changes[0];
+
+        if (item.additionalFields.hasOwnProperty('grouped')) {
             switch (item.additionalFields.grouped) {
                 case false:
                     item.additionalFields.grouped = '0';
@@ -63,32 +66,34 @@ export class EditService {
             }
         }
 
-        if (!item.memberId) {
-            this.terminologyService.postRefsetMember(item).subscribe(
-                () => {
-                    this.nextIterable();
-                });
-        } else if (item.deleted) {
+        if (item.deleted) {
+            delete item.newRefset;
             this.terminologyService.deleteRefsetMember(item).subscribe(
                 () => {
-                    this.nextIterable();
+                    this.nextIterable(changes);
                 });
-        } else {
+        } else if (item.newRefset) {
+            this.terminologyService.postRefsetMember(item).subscribe(
+                () => {
+                    this.nextIterable(changes);
+                });
+        } else if (item.memberId && !item.newRefset) {
             this.terminologyService.putRefsetMember(item).subscribe(
                 () => {
-                    this.nextIterable();
+                    this.nextIterable(changes);
                 });
+        } else {
+            console.error('Attempted to save Refset that was neither DELETED, POSTED, nor UPDATED');
         }
     }
 
-    nextIterable() {
-        this.localChanges.shift();
+    nextIterable(changes) {
+        changes.shift();
 
-        if (this.localChanges.length) {
-            this.saveIterable(this.localChanges[0]);
+        if (changes.length) {
+            this.saveIterable(changes);
         } else {
             this.mrcmmtService.setupDomains();
-            this.setChangeLog([]);
         }
     }
 }

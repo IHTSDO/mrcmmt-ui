@@ -11,6 +11,7 @@ import { UrlParamsService } from '../../services/url-params.service';
 import { BranchingService } from '../../services/branching.service';
 import { ModalService } from '../../services/modal.service';
 import { SnomedUtilityService } from '../../services/snomedUtility.service';
+import { SnomedResponseObject } from '../../models/snomedResponseObject';
 
 export class Results {
     items: object[];
@@ -30,7 +31,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
 
     latestReleaseRange: RefSet;
     latestReleaseRangeSubscription: Subscription;
-    ranges: object;
+    ranges: SnomedResponseObject;
     rangeSubscription: Subscription;
     activeDomain: RefSet;
     activeDomainSubscription: Subscription;
@@ -157,7 +158,10 @@ export class AttributeRangePanelComponent implements OnDestroy {
 
     addNewRange() {
         const newRange = this.rangeService.getNewRange(this.activeAttribute);
-        this.ranges['items'].push(newRange);
+        if (!this.ranges) {
+            this.ranges = new SnomedResponseObject();
+        }
+        this.ranges.items.push(newRange);
         this.rangeService.setRanges(this.ranges);
         this.makeActiveRange(newRange);
     }

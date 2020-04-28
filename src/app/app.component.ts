@@ -91,6 +91,7 @@ export class AppComponent implements OnInit {
                         }
 
                     this.branchingService.setVersions(versions);
+                    this.mrcmmtService.setupDomains();
                 });
             });
         });
@@ -129,16 +130,5 @@ export class AppComponent implements OnInit {
                 favicon.attr('href', 'favicon.ico');
                 break;
         }
-    }
-
-    reset() {
-        this.mrcmmtService.resetTool();
-        this.editService.setChangeLog([]);
-    }
-
-    switch() {
-        this.reset();
-        this.branchingService.setBranchPath('MAIN');
-        this.editService.setEditable(false);
     }
 }

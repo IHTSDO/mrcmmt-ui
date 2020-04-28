@@ -5,6 +5,7 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
+import { ModalComponent } from '../modal/modal.component';
 
 describe('BreadcrumbBarComponent', () => {
     let component: BreadcrumbBarComponent;
@@ -18,7 +19,8 @@ describe('BreadcrumbBarComponent', () => {
                 HttpClientTestingModule
             ],
             declarations: [
-                BreadcrumbBarComponent
+                BreadcrumbBarComponent,
+                ModalComponent,
             ],
             providers: [
                 CustomOrderPipe

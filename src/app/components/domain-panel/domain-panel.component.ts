@@ -104,9 +104,11 @@ export class DomainPanelComponent implements OnDestroy {
                 return item.referencedComponentId === this.activeDomain.referencedComponentId;
             });
 
-            this.terminologyService.getConcept(this.activeDomain.referencedComponentId).subscribe(data => {
-                this.shortFormConcept = SnomedUtilityService.convertShortConceptToString(data);
-            });
+            if (this.activeDomain.referencedComponentId) {
+                this.terminologyService.getConcept(this.activeDomain.referencedComponentId).subscribe(data => {
+                    this.shortFormConcept = SnomedUtilityService.convertShortConceptToString(data);
+                });
+            }
 
             if (this.matchedDomains && this.matchedDomains.length > 1) {
                 this.matchedDomains.forEach((item) => {

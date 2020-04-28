@@ -121,9 +121,11 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                 return item.referencedComponentId === this.activeAttribute.referencedComponentId;
             });
 
-            this.terminologyService.getConcept(this.activeAttribute.referencedComponentId).subscribe(data => {
-                this.shortFormConcept = SnomedUtilityService.convertShortConceptToString(data);
-            });
+            if (this.activeAttribute.referencedComponentId) {
+                this.terminologyService.getConcept(this.activeAttribute.referencedComponentId).subscribe(data => {
+                    this.shortFormConcept = SnomedUtilityService.convertShortConceptToString(data);
+                });
+            }
 
             attributeMatchedDomains.push(this.activeAttribute);
             this.attributes['items'].forEach((item) => {
@@ -147,7 +149,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     }
 
     setRange() {
-        this.rangeService.setRanges([]);
+        this.rangeService.setRanges(new SnomedResponseObject());
 
         if (this.activeAttribute.referencedComponentId) {
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(data => {
@@ -157,12 +159,12 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                     return this.activeAttribute.referencedComponentId === item.referencedComponentId;
                 }));
 
-                if (!ranges.items.length) {
-                    const range = this.rangeService.getNewRange(this.activeAttribute);
-                    this.changeLog.push(range);
-                    this.editService.setChangeLog(this.changeLog);
-                    ranges.items.push(range);
-                }
+//                if (!ranges.items.length) {
+//                    const range = this.rangeService.getNewRange(this.activeAttribute);
+//                    this.changeLog.push(range);
+//                    this.editService.setChangeLog(this.changeLog);
+//                    ranges.items.push(range);
+//                }
 
                 ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
                 this.rangeService.setRanges(ranges);

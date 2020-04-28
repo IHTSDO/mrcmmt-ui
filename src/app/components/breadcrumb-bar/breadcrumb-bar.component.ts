@@ -49,25 +49,31 @@ export class BreadcrumbBarComponent implements OnDestroy {
             });
     }
 
-    openModal(modalName) {
+    openResetModal() {
+        this.modalService.open('reset-modal');
+    }
+
+    openSwitchModal() {
         if (this.changeLog.length) {
-            this.modalService.open(modalName);
+            this.modalService.open('switch-modal');
         } else {
-            this.mrcmmtService.resetTool();
-            this.editService.setChangeLog([]);
+            // Skip opening modal as no edits found
+            this.disableEditing();
         }
     }
 
-    toggleEditable() {
-        if (!this.changeLog.length) {
-            this.mrcmmtService.resetTool();
+    enableEditing() {
+        this.branchingService.setBranchPath('MAIN/MRCMMAINT1');
+        this.editService.setEditable(true);
+    }
 
-            if (!this.editable) {
-                this.branchingService.setBranchPath('MAIN/MRCMMAINT1');
-            }
+    disableEditing() {
+        this.editService.setEditable(false);
+        this.mrcmmtService.resetTool();
+    }
 
-            this.editService.setEditable(!this.editable);
-        }
+    resetTool() {
+        this.mrcmmtService.resetTool();
     }
 
     ngOnDestroy() {
