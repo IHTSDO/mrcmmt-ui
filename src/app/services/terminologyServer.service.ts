@@ -49,7 +49,7 @@ export class TerminologyServerService {
 
     getVersions(): Observable<SnomedResponseObject> {
         return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
-        'codesystems/SNOMEDCT/versions');
+        'codesystems/SNOMEDCT/versions?showFutureVersions=true');
     }
 
     getRangeConstraints(rangeConstraint): Observable<SnomedResponseObject> {
