@@ -280,7 +280,12 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                     }
                 }
             }
-            this.setActives(activeDomainList[0], attribute, null);
+
+            const activeDomain = activeDomainList.find(item => {
+                return item.referencedComponentId === this.activeAttribute.additionalFields.domainId;
+            });
+
+            this.setActives(activeDomain, attribute, null);
         }
     }
 }
