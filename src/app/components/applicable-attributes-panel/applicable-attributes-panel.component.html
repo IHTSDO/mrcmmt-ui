@@ -7,7 +7,7 @@
 
     <ng-container *ngIf="(attributes?.items | alphabetical | textMatch:attributeFilter | domainMatch:activeDomain | duplicateFilter:activeDomain?.referencedComponentId) as result">
         <div class="px-3 py-2 attribute" *ngFor="let attribute of result; let odd = odd" [class.odd]="odd" (click)="makeActiveAttribute(attribute)"
-             [class.active]="attribute.referencedComponentId === activeAttribute.referencedComponentId">
+             [class.active]="attribute?.referencedComponentId === activeAttribute?.referencedComponentId">
             {{attribute.referencedComponent.fsn?.term}}
             <span *ngIf="duplicateAttributes(attribute, result)" class="content-type">{{mrcmmtService.getContentType(attribute.additionalFields.contentTypeId)}}</span>
             <span *ngIf="attribute.changed && !attribute.deleted" class="marker new d-inline-block px-2 m-1">UNSAVED</span>
