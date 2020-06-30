@@ -7,7 +7,7 @@
     <div class="domain px-3 py-2" *ngFor="let domain of domains?.items | alphabetical | topLevelDomain | textMatch:domainFilter; let odd = odd"
          (click)="makeActiveDomain(domain)"
          [class.odd]="odd"
-         [class.active]="domain === activeDomain"
+         [class.active]="domain?.referencedComponentId === activeDomain?.referencedComponentId"
          [class.attached]="highlightDomains(domain.referencedComponentId)">
         <span [class.subdomain]="domain.additionalFields.parentDomain" [class.tertiary]="domain.tertiary">
             {{domain.referencedComponent?.fsn.term}}
