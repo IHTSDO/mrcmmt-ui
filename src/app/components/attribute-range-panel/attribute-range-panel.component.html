@@ -86,29 +86,57 @@
     </ng-template>
 </div>
 
+<!--&lt;!&ndash; RANGE CONSTRAINT EXPRESSION MODAL &ndash;&gt;-->
+<!--<app-modal id="range-constraint-modal" class="modal expression-modal" [size]="'xl'">-->
+    <!--<h3 header class="mb-0">Range Constraint Expression</h3>-->
+    <!--<ng-container body>-->
+        <!--<ul class="nav nav-tabs nav-fill" id="rangeConstraintTab" role="tablist">-->
+            <!--<li class="nav-item">-->
+                <!--<a class="nav-link active" id="range-constraint-tab" data-toggle="tab" href="#pure-range-constraint"  role="tab" aria-controls="pure-range-constraint" aria-selected="true">Expression</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item">-->
+                <!--<a class="nav-link" id="modified-range-constraint-tab" data-toggle="tab" href="#modified-range-constraint" role="tab" aria-controls="modified-range-constraint" aria-selected="false">Modifications</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <!---->
+        <!--<div class="tab-content" id="rangeConstraintTabContent">-->
+            <!--<div class="tab-pane fade expression p-5 show active" id="pure-range-constraint" role="tabpanel" aria-labelledby="pure-range-constraint-tab">-->
+                <!--<div class="expression-container p-5">-->
+                    <!--<p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.rangeConstraint); let odd = odd" [class.odd]="odd">{{line}}</p>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="tab-pane fade expression p-5" id="modified-range-constraint" role="tabpanel" aria-labelledby="modified-range-constraint-tab">-->
+                <!--<div class="expression-container p-5">-->
+                    <!--<p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.rangeConstraint, latestReleaseRange?.additionalFields.rangeConstraint); let odd = odd" [class.added]="line.type === 'added'" [class.removed]="line.type === 'removed'">{{line.text}}</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</ng-container>-->
+    <!--<div footer>-->
+        <!--<button type="button" class="btn btn" (click)="modalService.close('range-constraint-modal')">CLOSE</button>-->
+    <!--</div>-->
+<!--</app-modal>-->
+
 <!-- RANGE CONSTRAINT EXPRESSION MODAL -->
 <app-modal id="range-constraint-modal" class="modal expression-modal" [size]="'xl'">
-    <h3 header class="mb-0">Attribute Rule Expression</h3>
+    <h3 header class="mb-0">Range Constraint Expression</h3>
     <ng-container body>
-        <ul class="nav nav-tabs nav-fill" id="rangeConstraintTab" role="tablist">
+        <ul class="nav nav-tabs nav-fill">
             <li class="nav-item">
-                <a class="nav-link active" id="range-constraint-tab" data-toggle="tab" href="#pure-range-constraint"  role="tab" aria-controls="pure-range-constraint" aria-selected="true">Expression</a>
+                <a class="nav-link" [class.active]="rangeConstraintModal" (click)="rangeConstraintModal = true">Expression</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="modified-range-constraint-tab" data-toggle="tab" href="#modified-range-constraint" role="tab" aria-controls="modified-range-constraint" aria-selected="false">Modifications</a>
+                <a class="nav-link" [class.active]="!rangeConstraintModal" (click)="rangeConstraintModal = false">Modifications</a>
             </li>
         </ul>
 
-        <div class="tab-content" id="rangeConstraintTabContent">
-            <div *ngIf="activeRange?.additionalFields.rangeConstraint" class="tab-pane fade expression p-5 show active" id="pure-range-constraint" role="tabpanel" aria-labelledby="pure-range-constraint-tab">
-                <div class="expression-container p-5">
-                    <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.rangeConstraint); let odd = odd" [class.odd]="odd">{{line}}</p>
-                </div>
+        <div class="tab-pane fade expression p-5 show active">
+            <div *ngIf="rangeConstraintModal" class="expression-container p-5">
+                <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.rangeConstraint); let odd = odd" [class.odd]="odd">{{line}}</p>
             </div>
-            <div class="tab-pane fade expression p-5" id="modified-range-constraint" role="tabpanel" aria-labelledby="modified-range-constraint-tab">
-                <div class="expression-container p-5">
-                    <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.rangeConstraint, latestReleaseRange?.additionalFields.rangeConstraint); let odd = odd" [class.added]="line.type === 'added'" [class.removed]="line.type === 'removed'">{{line.text}}</p>
-                </div>
+
+            <div *ngIf="!rangeConstraintModal" class="expression-container p-5">
+                <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.rangeConstraint, latestReleaseRange?.additionalFields.rangeConstraint); let odd = odd" [class.added]="line.type === 'added'" [class.removed]="line.type === 'removed'">{{line.text}}</p>
             </div>
         </div>
     </ng-container>
@@ -117,29 +145,56 @@
     </div>
 </app-modal>
 
+<!--&lt;!&ndash; ATTRIBUTE RULE EXPRESSION MODAL &ndash;&gt;-->
+<!--<app-modal id="attribute-rule-modal" class="modal expression-modal" [size]="'xl'">-->
+    <!--<h3 header class="mb-0">Attribute Rule Expression</h3>-->
+    <!--<ng-container body>-->
+        <!--<ul class="nav nav-tabs nav-fill" id="attributeRuleTab" role="tablist">-->
+            <!--<li class="nav-item">-->
+                <!--<a class="nav-link active" id="attribute-rule-tab" data-toggle="tab" href="#pure-attribute-rule"  role="tab" aria-controls="pure-attribute-rule" aria-selected="true">Expression</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item">-->
+                <!--<a class="nav-link" id="modified-attribute-rule-tab" data-toggle="tab" href="#modified-attribute-rule" role="tab" aria-controls="modified-attribute-rule" aria-selected="false">Modifications</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+
+        <!--<div class="tab-content" id="attributeRuleTabContent">-->
+            <!--<div class="tab-pane fade expression p-5 show active" id="pure-attribute-rule" role="tabpanel" aria-labelledby="pure-attribute-rule-tab">-->
+                <!--<div class="expression-container p-5">-->
+                    <!--<p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.attributeRule); let odd = odd" [class.odd]="odd">{{line}}</p>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="tab-pane fade expression p-5" id="modified-attribute-rule" role="tabpanel" aria-labelledby="modified-attribute-rule-tab">-->
+                <!--<div class="expression-container p-5">-->
+                    <!--<p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.attributeRule, latestReleaseRange?.additionalFields.attributeRule); let odd = odd" [class.added]="line.type === 'added'" [class.removed]="line.type === 'removed'">{{line.text}}</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</ng-container>-->
+    <!--<div footer>-->
+        <!--<button type="button" class="btn btn" (click)="modalService.close('attribute-rule-modal')">CLOSE</button>-->
+    <!--</div>-->
+<!--</app-modal>-->
+
 <!-- ATTRIBUTE RULE EXPRESSION MODAL -->
 <app-modal id="attribute-rule-modal" class="modal expression-modal" [size]="'xl'">
     <h3 header class="mb-0">Attribute Rule Expression</h3>
     <ng-container body>
-        <ul class="nav nav-tabs nav-fill" id="attributeRuleTab" role="tablist">
+        <ul class="nav nav-tabs nav-fill">
             <li class="nav-item">
-                <a class="nav-link active" id="attribute-rule-tab" data-toggle="tab" href="#pure-attribute-rule"  role="tab" aria-controls="pure-attribute-rule" aria-selected="true">Expression</a>
+                <a class="nav-link" [class.active]="attributeRuleModal" (click)="attributeRuleModal = true">Expression</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="modified-attribute-rule-tab" data-toggle="tab" href="#modified-attribute-rule" role="tab" aria-controls="modified-attribute-rule" aria-selected="false">Modifications</a>
+                <a class="nav-link" [class.active]="!attributeRuleModal" (click)="attributeRuleModal = false">Modifications</a>
             </li>
         </ul>
 
-        <div class="tab-content" id="attributeRuleTabContent">
-            <div *ngIf="activeRange?.additionalFields.attributeRule" class="tab-pane fade expression p-5 show active" id="pure-attribute-rule" role="tabpanel" aria-labelledby="pure-attribute-rule-tab">
-                <div class="expression-container p-5">
-                    <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.attributeRule); let odd = odd" [class.odd]="odd">{{line}}</p>
-                </div>
+        <div class="tab-pane fade expression p-5 show active">
+            <div *ngIf="attributeRuleModal" class="expression-container p-5">
+                <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.attributeRule); let odd = odd" [class.odd]="odd">{{line}}</p>
             </div>
-            <div class="tab-pane fade expression p-5" id="modified-attribute-rule" role="tabpanel" aria-labelledby="modified-attribute-rule-tab">
-                <div class="expression-container p-5">
-                    <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.attributeRule, latestReleaseRange?.additionalFields.attributeRule); let odd = odd" [class.added]="line.type === 'added'" [class.removed]="line.type === 'removed'">{{line.text}}</p>
-                </div>
+            <div *ngIf="!attributeRuleModal" class="expression-container p-5">
+                <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.attributeRule, latestReleaseRange?.additionalFields.attributeRule); let odd = odd" [class.added]="line.type === 'added'" [class.removed]="line.type === 'removed'">{{line.text}}</p>
             </div>
         </div>
     </ng-container>
