@@ -22,6 +22,7 @@ import { UrlParamsService } from './services/url-params.service';
 export class AppComponent implements OnInit {
 
     environment: string;
+    public: boolean;
     versions: Versions;
 
     constructor(private domainService: DomainService,
@@ -41,6 +42,7 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.titleService.setTitle('SNOMED CT MRCM Maintenance Tool');
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
+        this.public = window.location.host.includes('browser');
 
         this.authoringService.getVersion().subscribe(
             data => {
@@ -66,11 +68,13 @@ export class AppComponent implements OnInit {
 
                 this.authenticationService.getLoggedInUser().subscribe(user => {
 
-                    if (user.roles.includes('ROLE_int-sca-author')) {
-                        versions.items.push({branchPath: 'MAIN/MRCMMAINT1'});
-                    }
+                    if (!this.public) {
+                        if (user.roles.includes('ROLE_int-sca-author')) {
+                            versions.items.push({branchPath: 'MAIN/MRCMMAINT1'});
+                        }
 
-                    versions.items.push({branchPath: 'MAIN'});
+                        versions.items.push({branchPath: 'MAIN'});
+                    }
 
                     versions.items.reverse();
 
