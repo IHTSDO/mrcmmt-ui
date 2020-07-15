@@ -27,7 +27,7 @@
         <div *ngSwitchDefault class="banner d-none"></div>
     </ng-container>
 
-    <div *ngIf="user" class="float-right mx-3">
+    <div *ngIf="user && !public" class="float-right mx-3">
         <div class="logout d-inline-block m-2" (click)="logout()">
             <span class="px-2">Logout</span>
         </div>

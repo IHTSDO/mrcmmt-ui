@@ -15,6 +15,7 @@ import { EditService } from '../../services/edit.service';
 export class SnomedNavbarComponent implements OnInit {
 
     private environment: string;
+    private public: boolean;
     private branchPath: string;
     private branchPathSubscription: Subscription;
     private versions: SnomedResponseObject;
@@ -29,17 +30,26 @@ export class SnomedNavbarComponent implements OnInit {
                 private authenticationService: AuthenticationService,
                 private editService: EditService) {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
+        this.public = window.location.host.includes('browser');
         this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => {
             this.branchPath = data;
             this.mrcmmtService.setupDomains();
         });
         this.versionsSubscription = this.branchingService.getVersions().subscribe(data => this.versions = data);
         this.versionsSubscription = this.branchingService.getVersions().subscribe(data => this.versions = data);
-        this.userSubscription = this.authenticationService.getLoggedInUser().subscribe(data => this.user = data);
+        this.userSubscription = this.getUser();
         this.editableSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
     }
 
     ngOnInit() {
+    }
+
+    getUser() {
+        if (!this.public) {
+            return this.authenticationService.getLoggedInUser().subscribe(data => this.user = data);
+        } else {
+            return null;
+        }
     }
 
     logout() {

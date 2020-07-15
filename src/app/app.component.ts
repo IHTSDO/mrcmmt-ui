@@ -66,37 +66,43 @@ export class AppComponent implements OnInit {
                     return item.effectiveDate >= 20170731;
                 });
 
-                this.authenticationService.getLoggedInUser().subscribe(user => {
+                if (!this.public) {
+                    this.authenticationService.getLoggedInUser().subscribe(user => {
 
-                    if (!this.public) {
                         if (user.roles.includes('ROLE_int-sca-author')) {
                             versions.items.push({branchPath: 'MAIN/MRCMMAINT1'});
                         }
 
                         versions.items.push({branchPath: 'MAIN'});
-                    }
 
-                    versions.items.reverse();
+                        versions.items.reverse();
 
-                    if (this.urlParamsService.getBranchParam()) {
-                        this.branchingService.setBranchPath(this.urlParamsService.getBranchParam());
-                    } else {
-                        if (user.roles.includes('ROLE_int-sca-author')) {
-                            this.branchingService.setBranchPath(versions.items[0].branchPath);
+                        if (this.urlParamsService.getBranchParam()) {
+                            this.branchingService.setBranchPath(this.urlParamsService.getBranchParam());
                         } else {
-                            this.branchingService.setBranchPath(versions.items[1].branchPath);
+                            if (user.roles.includes('ROLE_int-sca-author')) {
+                                this.branchingService.setBranchPath(versions.items[0].branchPath);
+                            } else {
+                                this.branchingService.setBranchPath(versions.items[1].branchPath);
+                            }
                         }
-                    }
 
-                    if (user.roles.includes('ROLE_mrcm-author')) {
+                        if (user.roles.includes('ROLE_mrcm-author')) {
                             this.editService.setEditor(true);
                         } else {
                             this.editService.setEditor(false);
                         }
 
+                        this.branchingService.setVersions(versions);
+                        this.mrcmmtService.setupDomains();
+                    });
+                } else {
+                    versions.items.reverse();
+                    this.branchingService.setBranchPath(versions.items[0].branchPath);
+                    this.editService.setEditor(false);
                     this.branchingService.setVersions(versions);
                     this.mrcmmtService.setupDomains();
-                });
+                }
             });
         });
         this.assignFavicon();
