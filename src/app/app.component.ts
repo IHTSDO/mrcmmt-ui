@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
         this.authoringService.getUIConfiguration().subscribe(data => {
             this.authoringService.uiConfiguration = data;
 
-            this.terminologyService.getVersions().subscribe(versions => {
+            this.terminologyService.getVersions(!this.public).subscribe(versions => {
                 this.branchingService.setLatestReleaseBranchPath(versions.items.reduce((a, b) => {
                     return a.effectiveDate > b.effectiveDate ? a : b;
                 }).branchPath);
