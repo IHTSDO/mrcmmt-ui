@@ -44,6 +44,37 @@ export class AppComponent implements OnInit {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
         this.public = window.location.host.includes('browser');
 
+        if (this.public) {
+            this.publicConfig();
+        } else {
+            this.privateConfig();
+        }
+
+        this.assignFavicon();
+    }
+
+    publicConfig() {
+        this.terminologyService.getVersions(!this.public).subscribe(versions => {
+            this.branchingService.setLatestReleaseBranchPath(versions.items.reduce((a, b) => {
+                return a.effectiveDate > b.effectiveDate ? a : b;
+            }).branchPath);
+
+            this.setLatestReleaseDomains();
+            this.setLatestReleaseAttributes();
+
+            versions.items = versions.items.filter(item => {
+                return item.effectiveDate >= 20170731;
+            });
+
+            versions.items.reverse();
+            this.branchingService.setBranchPath(versions.items[0].branchPath);
+            this.editService.setEditor(false);
+            this.branchingService.setVersions(versions);
+            this.mrcmmtService.setupDomains();
+        });
+    }
+
+    privateConfig() {
         this.authoringService.getVersion().subscribe(
             data => {
                 this.versions = data;
@@ -66,46 +97,37 @@ export class AppComponent implements OnInit {
                     return item.effectiveDate >= 20170731;
                 });
 
-                if (!this.public) {
-                    this.authenticationService.getLoggedInUser().subscribe(user => {
+                this.authenticationService.getLoggedInUser().subscribe(user => {
 
-                        if (user.roles.includes('ROLE_int-sca-author')) {
-                            versions.items.push({branchPath: 'MAIN/MRCMMAINT1'});
-                        }
+                    if (user.roles.includes('ROLE_int-sca-author')) {
+                        versions.items.push({branchPath: 'MAIN/MRCMMAINT1'});
+                    }
 
-                        versions.items.push({branchPath: 'MAIN'});
+                    versions.items.push({branchPath: 'MAIN'});
 
-                        versions.items.reverse();
-
-                        if (this.urlParamsService.getBranchParam()) {
-                            this.branchingService.setBranchPath(this.urlParamsService.getBranchParam());
-                        } else {
-                            if (user.roles.includes('ROLE_int-sca-author')) {
-                                this.branchingService.setBranchPath(versions.items[0].branchPath);
-                            } else {
-                                this.branchingService.setBranchPath(versions.items[1].branchPath);
-                            }
-                        }
-
-                        if (user.roles.includes('ROLE_mrcm-author')) {
-                            this.editService.setEditor(true);
-                        } else {
-                            this.editService.setEditor(false);
-                        }
-
-                        this.branchingService.setVersions(versions);
-                        this.mrcmmtService.setupDomains();
-                    });
-                } else {
                     versions.items.reverse();
-                    this.branchingService.setBranchPath(versions.items[0].branchPath);
-                    this.editService.setEditor(false);
+
+                    if (this.urlParamsService.getBranchParam()) {
+                        this.branchingService.setBranchPath(this.urlParamsService.getBranchParam());
+                    } else {
+                        if (user.roles.includes('ROLE_int-sca-author')) {
+                            this.branchingService.setBranchPath(versions.items[0].branchPath);
+                        } else {
+                            this.branchingService.setBranchPath(versions.items[1].branchPath);
+                        }
+                    }
+
+                    if (user.roles.includes('ROLE_mrcm-author')) {
+                        this.editService.setEditor(true);
+                    } else {
+                        this.editService.setEditor(false);
+                    }
+
                     this.branchingService.setVersions(versions);
                     this.mrcmmtService.setupDomains();
-                }
+                });
             });
         });
-        this.assignFavicon();
     }
 
     setLatestReleaseDomains() {
