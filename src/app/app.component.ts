@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
     }
 
     publicConfig() {
-        this.terminologyService.getVersions(!this.public).subscribe(versions => {
+        this.terminologyService.getVersions(false).subscribe(versions => {
             this.branchingService.setLatestReleaseBranchPath(versions.items.reduce((a, b) => {
                 return a.effectiveDate > b.effectiveDate ? a : b;
             }).branchPath);
@@ -67,6 +67,7 @@ export class AppComponent implements OnInit {
             });
 
             versions.items.reverse();
+            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint = '/snowstorm';
             this.branchingService.setBranchPath(versions.items[0].branchPath);
             this.editService.setEditor(false);
             this.branchingService.setVersions(versions);
@@ -85,7 +86,7 @@ export class AppComponent implements OnInit {
         this.authoringService.getUIConfiguration().subscribe(data => {
             this.authoringService.uiConfiguration = data;
 
-            this.terminologyService.getVersions(!this.public).subscribe(versions => {
+            this.terminologyService.getVersions(true).subscribe(versions => {
                 this.branchingService.setLatestReleaseBranchPath(versions.items.reduce((a, b) => {
                     return a.effectiveDate > b.effectiveDate ? a : b;
                 }).branchPath);
