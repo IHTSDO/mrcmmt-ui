@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
         this.public = window.location.host.includes('browser');
 
-        this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct', '');
+        this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '');
 
         if (this.public) {
             this.publicConfig();
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
     }
 
     publicConfig() {
-        this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct', '');
+        this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '');
 
         this.terminologyService.getVersions(false).subscribe(versions => {
             this.branchingService.setLatestReleaseBranchPath(versions.items.reduce((a, b) => {
