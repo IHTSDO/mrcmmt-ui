@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
             'imsEndpoint': '',
             'collectorEndpoint': ''
         };
-        this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint = '/snowstorm/snomed-ct';
+        this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint = '/snowstorm/snomed-ct/';
 
         this.terminologyService.getVersions(false).subscribe(versions => {
             this.branchingService.setLatestReleaseBranchPath(versions.items.reduce((a, b) => {
