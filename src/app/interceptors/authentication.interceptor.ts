@@ -13,8 +13,10 @@ import { AuthoringService } from '../services/authoring.service';
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
 
-    constructor(private authoringService: AuthoringService) {
+    public: boolean;
 
+    constructor(private authoringService: AuthoringService) {
+        this.public = window.location.host.includes('browser');
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -23,7 +25,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
                 return event;
             }),
             catchError(err => {
-                if (err.status === 403 ) {
+                if (err.status === 403 && !this.public) {
                     let config: any = {};
                     this.authoringService.getUIConfiguration().subscribe(data => {
                         config = data;
