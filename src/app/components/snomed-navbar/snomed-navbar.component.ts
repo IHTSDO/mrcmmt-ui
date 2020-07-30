@@ -6,6 +6,9 @@ import { MrcmmtService } from '../../services/mrcmmt.service';
 import { User } from '../../models/user';
 import { AuthenticationService } from '../../services/authentication.service';
 import { EditService } from '../../services/edit.service';
+import { DomainService } from '../../services/domain.service';
+import { AttributeService } from '../../services/attribute.service';
+import { RangeService } from '../../services/range.service';
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -28,7 +31,10 @@ export class SnomedNavbarComponent implements OnInit {
     constructor(private branchingService: BranchingService,
                 private mrcmmtService: MrcmmtService,
                 private authenticationService: AuthenticationService,
-                private editService: EditService) {
+                private editService: EditService,
+                private domainService: DomainService,
+                private attributeService: AttributeService,
+                private rangeService: RangeService) {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
         this.public = window.location.host.includes('browser');
         this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => {
@@ -58,5 +64,8 @@ export class SnomedNavbarComponent implements OnInit {
 
     setPath(path) {
         this.branchingService.setBranchPath(path);
+        this.domainService.clearActiveDomain();
+        this.attributeService.clearActiveAttribute();
+        this.rangeService.clearActiveRange();
     }
 }
