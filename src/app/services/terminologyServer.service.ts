@@ -53,12 +53,8 @@ export class TerminologyServerService {
     }
 
     getRangeConstraints(rangeConstraint): Observable<SnomedResponseObject> {
-        const params = {
-            eclFilter: rangeConstraint
-        };
-
-        return this.http.post<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint
-            + this.branchPath + '/concepts/search', params).pipe(map(responseData => {
+        return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint
+            + this.branchPath + '/concepts?ecl=' + rangeConstraint).pipe(map(responseData => {
                 return responseData;
             }),
             catchError(err => {
