@@ -3,6 +3,7 @@ import { AuthoringService } from './services/authoring.service';
 import { Versions } from './models/versions';
 import { Title } from '@angular/platform-browser';
 import 'jquery';
+import { UIConfiguration } from './models/uiConfiguration';
 import { TerminologyServerService } from './services/terminologyServer.service';
 import { DomainService } from './services/domain.service';
 import { AttributeService } from './services/attribute.service';
@@ -54,6 +55,12 @@ export class AppComponent implements OnInit {
     }
 
     publicConfig() {
+        this.authoringService.uiConfiguration = new UIConfiguration;
+        this.authoringService.uiConfiguration.endpoints = {
+            'terminologyServerEndpoint': '',
+            'imsEndpoint': '',
+            'collectorEndpoint': ''
+        };
         this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint = '/snowstorm';
 
         this.terminologyService.getVersions(false).subscribe(versions => {
