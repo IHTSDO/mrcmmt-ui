@@ -6,8 +6,10 @@ export class UIConfiguration {
     };
 
     constructor(imsEndpoint, terminologyServerEndpoint, collectorEndpoint) {
-        this.endpoints.imsEndpoint = imsEndpoint;
-        this.endpoints.terminologyServerEndpoint = terminologyServerEndpoint;
-        this.endpoints.collectorEndpoint = collectorEndpoint;
+        this.endpoints = {
+            imsEndpoint: imsEndpoint,
+            terminologyServerEndpoint: terminologyServerEndpoint,
+            collectorEndpoint: collectorEndpoint
+        };
     }
 }
