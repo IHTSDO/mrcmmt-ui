@@ -96,12 +96,18 @@ export class DomainPanelComponent implements OnDestroy {
             this.detailsExpanded = true;
             this.latestReleaseDomain = null;
             this.setActives(null, this.activeAttribute, this.activeRange);
+
+            if (this.activeDomain.memberId) {
+                this.latestReleaseDomain = this.domainService.getLatestReleaseDomains().find(item => {
+                    return item.memberId === this.activeDomain.memberId;
+                });
+            }
         } else {
             this.activeDomain = domain;
             this.shortFormConcept = null;
 
             this.latestReleaseDomain = this.domainService.getLatestReleaseDomains().find(item => {
-                return item.referencedComponentId === this.activeDomain.referencedComponentId;
+                return item.memberId === this.activeDomain.memberId;
             });
 
             if (this.activeDomain.referencedComponentId) {

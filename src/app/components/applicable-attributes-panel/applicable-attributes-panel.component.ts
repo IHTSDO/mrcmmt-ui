@@ -78,6 +78,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
             this.activeAttribute = data;
+            this.setLatestActiveAttribute();
             this.urlParamsService.updateActiveRefsetParams(this.domainService, data, this.activeRange);
         });
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
@@ -113,13 +114,13 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
             this.setActives(this.activeDomain, null, null);
             this.attributeService.clearMatchedDomains();
             this.rangeService.clearRanges();
+
+            this.setLatestActiveAttribute();
         } else {
             this.activeAttribute = attribute;
             this.shortFormConcept = null;
 
-            this.latestReleaseAttribute = this.attributeService.getLatestReleaseAttributes().find(item => {
-                return item.referencedComponentId === this.activeAttribute.referencedComponentId;
-            });
+            this.setLatestActiveAttribute();
 
             if (this.activeAttribute.referencedComponentId) {
                 this.terminologyService.getConcept(this.activeAttribute.referencedComponentId).subscribe(data => {
@@ -139,6 +140,14 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
             this.automaticDomainSelect(this.activeAttribute, attributeMatchedDomains);
 
             this.setRange();
+        }
+    }
+
+    setLatestActiveAttribute() {
+        if (this.activeAttribute) {
+            this.latestReleaseAttribute = this.attributeService.getLatestReleaseAttributes().find(item => {
+                return item.memberId === this.activeAttribute.memberId;
+            });
         }
     }
 
