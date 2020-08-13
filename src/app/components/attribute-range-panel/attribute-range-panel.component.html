@@ -18,10 +18,10 @@
                               [(ngModel)]="activeRange.additionalFields.rangeConstraint"
                               [class.short]="rangeConstraint"
                               (ngModelChange)="validateEcl()"
-                              [class.changed]="latestReleaseRange?.additionalFields.rangeConstraint !== activeRange.additionalFields.rangeConstraint"></textarea>
+                              [class.changed]="latestReleaseRange?.additionalFields.rangeConstraint !== activeRange.additionalFields.rangeConstraint && !activeRange.effectiveTime"></textarea>
                     <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 pr-5 rounded"
                          (click)="modalService.open('range-constraint-modal')"
-                         [class.changed]="latestReleaseRange?.additionalFields.rangeConstraint !== activeRange.additionalFields.rangeConstraint">
+                         [class.changed]="latestReleaseRange?.additionalFields.rangeConstraint !== activeRange.additionalFields.rangeConstraint && !activeRange.effectiveTime && !activeRange.effectiveTime">
                         {{activeRange.additionalFields.rangeConstraint}}
                         <span class="p-1"><i class="fas fa-external-link-alt"></i></span>
                     </div>
@@ -30,7 +30,7 @@
                     <h5 class="label m-2 mb-3">Attribute Rule</h5>
                     <div class="detail m-2 mb-3 pl-2 pr-5 rounded"
                          (click)="modalService.open('attribute-rule-modal')"
-                         [class.changed]="latestReleaseRange?.additionalFields.attributeRule !== activeRange.additionalFields.attributeRule">
+                         [class.changed]="latestReleaseRange?.additionalFields.attributeRule !== activeRange.additionalFields.attributeRule && !activeRange.effectiveTime && !activeRange.effectiveTime">
                         {{activeRange.additionalFields.attributeRule}}
                         <span class="p-1"><i class="fas fa-external-link-alt"></i></span>
                     </div>
@@ -40,11 +40,11 @@
                     <select class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
                             [(ngModel)]="activeRange.additionalFields.ruleStrengthId"
                             (ngModelChange)="updateRange()"
-                            [class.changed]="latestReleaseRange?.additionalFields.ruleStrengthId !== activeRange.additionalFields.ruleStrengthId">
+                            [class.changed]="latestReleaseRange?.additionalFields.ruleStrengthId !== activeRange.additionalFields.ruleStrengthId && !activeRange.effectiveTime">
                         <option *ngFor="let ruleStrength of mrcmmtService.ruleStrengthFields" [value]="ruleStrength.id" >{{ruleStrength.term}}</option>
                     </select>
                     <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded"
-                         [class.changed]="latestReleaseRange?.additionalFields.ruleStrengthId !== activeRange.additionalFields.ruleStrengthId">
+                         [class.changed]="latestReleaseRange?.additionalFields.ruleStrengthId !== activeRange.additionalFields.ruleStrengthId && !activeRange.effectiveTime && !activeRange.effectiveTime">
                         {{mrcmmtService.getRuleStrength(activeRange.additionalFields.ruleStrengthId)}}
                     </div>
                 </ng-container>
@@ -53,11 +53,11 @@
                     <select class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
                             [(ngModel)]="activeRange.additionalFields.contentTypeId"
                             (ngModelChange)="updateRange()"
-                            [class.changed]="latestReleaseRange?.additionalFields.contentTypeId !== activeRange.additionalFields.contentTypeId">
+                            [class.changed]="latestReleaseRange?.additionalFields.contentTypeId !== activeRange.additionalFields.contentTypeId && !activeRange.effectiveTime">
                         <option *ngFor="let contentType of mrcmmtService.contentTypeFields" [value]="contentType.id">{{contentType.term}}</option>
                     </select>
                     <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded"
-                         [class.changed]="latestReleaseRange?.additionalFields.contentTypeId !== activeRange.additionalFields.contentTypeId">
+                         [class.changed]="latestReleaseRange?.additionalFields.contentTypeId !== activeRange.additionalFields.contentTypeId && !activeRange.effectiveTime">
                         {{mrcmmtService.getContentType(activeRange.additionalFields.contentTypeId)}}
                     </div>
                 </ng-container>

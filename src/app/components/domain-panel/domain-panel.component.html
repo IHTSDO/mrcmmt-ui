@@ -29,7 +29,7 @@
                    [ngbTypeahead]="search" placement="bottom"
                    (ngModelChange)="setActiveConceptId(); updateDomain()"
                    [disabled]="!editable"
-                   [class.changed]="latestReleaseDomain?.referencedComponentId !== activeDomain.referencedComponentId"/>
+                   [class.changed]="latestReleaseDomain?.referencedComponentId !== activeDomain.referencedComponentId && !activeDomain.effectiveTime"/>
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainConstraint || editable">
             <h5 class="label m-2">Domain Constraint<span *ngIf="editable" class="mandatory"> *</span></h5>
@@ -38,7 +38,7 @@
                    [(ngModel)]="activeDomain.additionalFields.domainConstraint"
                    [disabled]="!editable"
                    (ngModelChange)="validateEcl('domainConstraint', activeDomain.additionalFields.domainConstraint)"
-                   [class.changed]="latestReleaseDomain?.additionalFields.domainConstraint !== activeDomain.additionalFields.domainConstraint">
+                   [class.changed]="latestReleaseDomain?.additionalFields.domainConstraint !== activeDomain.additionalFields.domainConstraint && !activeDomain.effectiveTime">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.parentDomain || editable">
             <h5 class="label m-2">Parent Domain</h5>
@@ -46,7 +46,7 @@
                    [(ngModel)]="activeDomain.additionalFields.parentDomain"
                    [disabled]="!editable"
                    (ngModelChange)="updateDomain()"
-                   [class.changed]="latestReleaseDomain?.additionalFields.parentDomain !== activeDomain.additionalFields.parentDomain">
+                   [class.changed]="latestReleaseDomain?.additionalFields.parentDomain !== activeDomain.additionalFields.parentDomain  && !activeDomain.effectiveTime">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.proximalPrimitiveConstraint || editable">
             <h5 class="label m-2">Proximal Primitive Constraint<span *ngIf="editable" class="mandatory"> *</span></h5>
@@ -55,7 +55,7 @@
                    [(ngModel)]="activeDomain.additionalFields.proximalPrimitiveConstraint"
                    [disabled]="!editable"
                    (ngModelChange)="validateEcl('proxPrim', activeDomain.additionalFields.proximalPrimitiveConstraint)"
-                   [class.changed]="latestReleaseDomain?.additionalFields.proximalPrimitiveConstraint !== activeDomain.additionalFields.proximalPrimitiveConstraint">
+                   [class.changed]="latestReleaseDomain?.additionalFields.proximalPrimitiveConstraint !== activeDomain.additionalFields.proximalPrimitiveConstraint  && !activeDomain.effectiveTime">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.proximalPrimitiveRefinement || editable">
             <h5 class="label m-2">Proximal Primitive Refinement</h5>
@@ -63,7 +63,7 @@
                    [(ngModel)]="activeDomain.additionalFields.proximalPrimitiveRefinement"
                    [disabled]="!editable"
                    (ngModelChange)="updateDomain()"
-                   [class.changed]="latestReleaseDomain?.additionalFields.proximalPrimitiveRefinement !== activeDomain.additionalFields.proximalPrimitiveRefinement">
+                   [class.changed]="latestReleaseDomain?.additionalFields.proximalPrimitiveRefinement !== activeDomain.additionalFields.proximalPrimitiveRefinement  && !activeDomain.effectiveTime">
         </ng-container>
         <ng-container *ngIf="editable">
             <h5 class="label m-2">Guide URL</h5>
@@ -71,12 +71,12 @@
                    [(ngModel)]="activeDomain.additionalFields.guideURL"
                    [disabled]="!editable"
                    (ngModelChange)="updateDomain()"
-                   [class.changed]="latestReleaseDomain?.additionalFields.guideURL !== activeDomain.additionalFields.guideURL">
+                   [class.changed]="latestReleaseDomain?.additionalFields.guideURL !== activeDomain.additionalFields.guideURL  && !activeDomain.effectiveTime">
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.guideURL && !editable">
             <h5 class="label m-2">Guide URL</h5>
             <div class="detail m-2 mb-3 p-0 px-2 rounded" 
-                 [class.changed]="latestReleaseDomain?.additionalFields.guideURL !== activeDomain.additionalFields.guideURL">
+                 [class.changed]="latestReleaseDomain?.additionalFields.guideURL !== activeDomain.additionalFields.guideURL  && !activeDomain.effectiveTime">
                 <a href="{{activeDomain.additionalFields.guideURL}}" target="_blank">{{activeDomain.additionalFields.guideURL}}</a>
             </div>
         </ng-container>
@@ -84,7 +84,7 @@
             <h5 class="label m-2 mb-3">Precoordination Domain Template</h5>
             <div class="detail expandable m-2 mb-4 pl-2 pr-5 rounded short"
                  (click)="modalService.open('precoordination-modal')"
-                 [class.changed]="latestReleaseDomain?.additionalFields.domainTemplateForPrecoordination !== activeDomain.additionalFields.domainTemplateForPrecoordination">
+                 [class.changed]="latestReleaseDomain?.additionalFields.domainTemplateForPrecoordination !== activeDomain.additionalFields.domainTemplateForPrecoordination && !activeDomain.effectiveTime">
                 {{activeDomain.additionalFields.domainTemplateForPrecoordination}}
                 <span class="p-1"><i class="fas fa-external-link-alt"></i></span>
             </div>
@@ -93,7 +93,7 @@
             <h5 class="label m-2 mb-3">Postcoordination Domain Template</h5>
             <div class="detail expandable m-2 mb-4 pl-2 pr-5 rounded short"
                  (click)="modalService.open('postcoordination-modal')"
-                 [class.changed]="latestReleaseDomain?.additionalFields.domainTemplateForPostcoordination !== activeDomain.additionalFields.domainTemplateForPostcoordination">
+                 [class.changed]="latestReleaseDomain?.additionalFields.domainTemplateForPostcoordination !== activeDomain.additionalFields.domainTemplateForPostcoordination && !activeDomain.effectiveTime">
                 {{activeDomain.additionalFields.domainTemplateForPostcoordination}}
                 <span class="p-1"><i class="fas fa-external-link-alt"></i></span>
             </div>
