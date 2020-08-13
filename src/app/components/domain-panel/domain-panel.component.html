@@ -65,13 +65,20 @@
                    (ngModelChange)="updateDomain()"
                    [class.changed]="latestReleaseDomain?.additionalFields.proximalPrimitiveRefinement !== activeDomain.additionalFields.proximalPrimitiveRefinement">
         </ng-container>
-        <ng-container *ngIf="activeDomain.additionalFields.guideURL || editable">
+        <ng-container *ngIf="editable">
             <h5 class="label m-2">Guide URL</h5>
             <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded"
                    [(ngModel)]="activeDomain.additionalFields.guideURL"
                    [disabled]="!editable"
                    (ngModelChange)="updateDomain()"
                    [class.changed]="latestReleaseDomain?.additionalFields.guideURL !== activeDomain.additionalFields.guideURL">
+        </ng-container>
+        <ng-container *ngIf="activeDomain.additionalFields.guideURL && !editable">
+            <h5 class="label m-2">Guide URL</h5>
+            <div class="detail m-2 mb-3 p-0 px-2 rounded" 
+                 [class.changed]="latestReleaseDomain?.additionalFields.guideURL !== activeDomain.additionalFields.guideURL">
+                <a href="{{activeDomain.additionalFields.guideURL}}" target="_blank">{{activeDomain.additionalFields.guideURL}}</a>
+            </div>
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPrecoordination">
             <h5 class="label m-2 mb-3">Precoordination Domain Template</h5>
