@@ -54,7 +54,7 @@ export class TerminologyServerService {
 
     getRangeConstraints(rangeConstraint): Observable<SnomedResponseObject> {
         return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint
-            + this.branchPath + '/concepts?ecl=' + rangeConstraint).pipe(map(responseData => {
+            + this.branchPath + '/concepts?ecl=' + encodeURIComponent(rangeConstraint)).pipe(map(responseData => {
                 return responseData;
             }),
             catchError(err => {
