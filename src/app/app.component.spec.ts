@@ -20,7 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CustomOrderPipe } from './pipes/custom-order.pipe';
 import { ModalComponent } from './components/modal/modal.component';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('AppComponent', () => {
     beforeEach(async(() => {
@@ -34,7 +34,8 @@ describe('AppComponent', () => {
                 NgbTypeaheadModule
             ],
             providers: [
-                CustomOrderPipe
+                CustomOrderPipe,
+                {provide: APP_BASE_HREF, useValue : '/mrcm/' }
             ],
             declarations: [
                 AppComponent,
