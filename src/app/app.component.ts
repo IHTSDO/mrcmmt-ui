@@ -35,8 +35,8 @@ export class AppComponent implements OnInit {
                 private branchingService: BranchingService,
                 private mrcmmtService: MrcmmtService,
                 private authenticationService: AuthenticationService,
-                private modalService: ModalService,
-                private editService: EditService,
+                public modalService: ModalService,
+                public editService: EditService,
                 private urlParamsService: UrlParamsService) {
     }
 

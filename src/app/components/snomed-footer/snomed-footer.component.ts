@@ -18,7 +18,8 @@ export class SnomedFooterComponent implements OnDestroy {
 
     year: number = new Date().getFullYear();
 
-    constructor(private editService: EditService, private modalService: ModalService) {
+    constructor(private editService: EditService,
+                public modalService: ModalService) {
         this.editableSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
         this.changeLogSubscription = this.editService.getChangeLog().subscribe(data => this.changeLog = data);
     }

@@ -17,16 +17,16 @@ import { RangeService } from '../../services/range.service';
 })
 export class SnomedNavbarComponent implements OnInit {
 
-    private environment: string;
-    private public: boolean;
-    private branchPath: string;
-    private branchPathSubscription: Subscription;
-    private versions: SnomedResponseObject;
-    private versionsSubscription: Subscription;
-    private user: User;
-    private userSubscription: Subscription;
-    private editable: boolean;
-    private editableSubscription: Subscription;
+    environment: string;
+    public: boolean;
+    branchPath: string;
+    branchPathSubscription: Subscription;
+    versions: SnomedResponseObject;
+    versionsSubscription: Subscription;
+    user: User;
+    userSubscription: Subscription;
+    editable: boolean;
+    editableSubscription: Subscription;
 
     constructor(private branchingService: BranchingService,
                 private mrcmmtService: MrcmmtService,

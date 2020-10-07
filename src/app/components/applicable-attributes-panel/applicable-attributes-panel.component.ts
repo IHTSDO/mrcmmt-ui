@@ -30,9 +30,9 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
 
     latestReleaseRange: RefSet;
     latestReleaseRangeSubscription: Subscription;
-    domains: object;
+    domains: SnomedResponseObject;
     domainSubscription: Subscription;
-    attributes: object;
+    attributes: SnomedResponseObject;
     attributeSubscription: Subscription;
     attributeFilter: string;
     attributeFilterSubscription: Subscription;
@@ -69,7 +69,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                 private terminologyService: TerminologyServerService,
                 private customOrder: CustomOrderPipe,
                 private editService: EditService,
-                private mrcmmtService: MrcmmtService,
+                public mrcmmtService: MrcmmtService,
                 private validationService: ValidationService,
                 private urlParamsService: UrlParamsService,
                 private branchingService: BranchingService) {

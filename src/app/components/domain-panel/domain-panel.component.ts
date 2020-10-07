@@ -11,6 +11,7 @@ import { UrlParamsService } from '../../services/url-params.service';
 import { debounceTime, distinctUntilChanged, switchMap, map, catchError } from 'rxjs/operators';
 import { SnomedUtilityService } from '../../services/snomedUtility.service';
 import { ModalService } from '../../services/modal.service';
+import { SnomedResponseObject } from '../../models/snomedResponseObject';
 
 @Component({
     selector: 'app-domain-panel',
@@ -27,7 +28,7 @@ export class DomainPanelComponent implements OnDestroy {
 
     latestReleaseDomain: RefSet;
 
-    domains: object;
+    domains: SnomedResponseObject;
     domainSubscription: Subscription;
     domainFilter: string;
     domainFilterSubscription: Subscription;
@@ -65,7 +66,7 @@ export class DomainPanelComponent implements OnDestroy {
                 private editService: EditService,
                 private urlParamsService: UrlParamsService,
                 private terminologyService: TerminologyServerService,
-                private modalService: ModalService) {
+                public modalService: ModalService) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => {
             this.activeDomain = data;

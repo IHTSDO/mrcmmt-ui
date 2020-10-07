@@ -36,8 +36,8 @@ export class BreadcrumbBarComponent implements OnDestroy {
                 private rangeService: RangeService,
                 private editService: EditService,
                 private branchingService: BranchingService,
-                private mrcmmtService: MrcmmtService,
-                private modalService: ModalService) {
+                public mrcmmtService: MrcmmtService,
+                public modalService: ModalService) {
             this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
             this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => this.activeAttribute = data);
             this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
