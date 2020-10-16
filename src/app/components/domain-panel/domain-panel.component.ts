@@ -98,7 +98,7 @@ export class DomainPanelComponent implements OnDestroy {
             this.latestReleaseDomain = null;
             this.setActives(null, this.activeAttribute, this.activeRange);
 
-            if (this.activeDomain.memberId) {
+            if (this.activeDomain) {
                 this.latestReleaseDomain = this.domainService.getLatestReleaseDomains().find(item => {
                     return item.memberId === this.activeDomain.memberId;
                 });
@@ -239,7 +239,7 @@ export class DomainPanelComponent implements OnDestroy {
         }
     }
 
-    ETLexpressionBuilder(expression: any, originalExpression: any) {
+    ETLexpressionBuilder(expression: any, originalExpression?: any) {
         if (expression && !originalExpression) {
             return SnomedUtilityService.ETLexpressionBuilder(expression);
         }

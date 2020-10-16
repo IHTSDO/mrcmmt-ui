@@ -135,7 +135,7 @@
                 <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.rangeConstraint); let odd = odd" [class.odd]="odd">{{line}}</p>
             </div>
 
-            <div *ngIf="!rangeConstraintModal" class="expression-container p-5">
+            <div *ngIf="!rangeConstraintModal">
                 <div *ngIf="latestReleaseRange" class="expression-container p-5">
                     <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.rangeConstraint, latestReleaseRange?.additionalFields.rangeConstraint); let odd = odd" [class.added]="line.type === 'added'" [class.removed]="line.type === 'removed'">{{line.text}}</p>
                 </div>
@@ -198,7 +198,7 @@
             <div *ngIf="attributeRuleModal" class="expression-container p-5">
                 <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.attributeRule); let odd = odd" [class.odd]="odd">{{line}}</p>
             </div>
-            <div *ngIf="!attributeRuleModal" class="expression-container p-5">
+            <div *ngIf="!attributeRuleModal">
                 <div *ngIf="latestReleaseRange" class="expression-container p-5">
                     <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.attributeRule, latestReleaseRange?.additionalFields.attributeRule); let odd = odd" [class.added]="line.type === 'added'" [class.removed]="line.type === 'removed'">{{line.text}}</p>
                 </div>
