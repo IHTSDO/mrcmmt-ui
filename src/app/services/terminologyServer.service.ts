@@ -94,6 +94,12 @@ export class TerminologyServerService {
             '/members?referenceSet=723562003&referencedComponentId=' + componentReferenceId + '&active=true&limit=1000');
     }
 
+    getAttributeHierarchy(branchPath?: string): Observable<SnomedResponseObject> {
+        return this.http.get<SnomedResponseObject>(
+            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + 'mrcm/' + this.branchPath +
+            '/concept-model-attribute-hierarchy');
+    }
+
     putRefsetMember(member): Observable<SnomedResponseObject> {
         return this.http.put<SnomedResponseObject>(
             this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +

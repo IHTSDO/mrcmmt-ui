@@ -130,6 +130,10 @@ export class AppComponent implements OnInit {
 
                     this.branchingService.setVersions(versions);
                     this.mrcmmtService.setupDomains();
+
+                    this.terminologyService.getAttributeHierarchy().subscribe(attributes => {
+                        this.attributeService.setAttributeHierarchy(attributes.items);
+                    });
                 });
             });
         });

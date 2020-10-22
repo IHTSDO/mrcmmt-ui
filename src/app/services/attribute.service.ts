@@ -16,6 +16,7 @@ export class AttributeService {
     private attributeFilter = new Subject<any>();
     private latestReleaseAttributes: RefSet[];
     private latestReleaseActiveAttribute = new Subject<any>();
+    private attributeHierarchy = new Subject<any>();
 
     // Setters & Getters: Attributes
     setAttributes(attributes) {
@@ -77,6 +78,15 @@ export class AttributeService {
 
     getLatestReleaseAttributes() {
         return this.latestReleaseAttributes;
+    }
+
+    // Setters & Getters: Attribute Hierarchy
+    setAttributeHierarchy(attributes) {
+        this.attributeHierarchy = attributes;
+    }
+
+    getAttributeHierarchy() {
+        return this.attributeHierarchy;
     }
 
     // New Attribute
