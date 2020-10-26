@@ -66,6 +66,7 @@ export class MrcmmtService {
     setupAttributes() {
         this.terminologyService.getAttributes().subscribe(attributes => {
             this.attributeService.setAttributes(attributes);
+            this.addConcreteDomainParameters();
 
             if (this.urlParamsService.getAttributeParam()) {
                 const activeAttribute = attributes.items.find(result => {
@@ -89,6 +90,19 @@ export class MrcmmtService {
                 this.rangeService.setActiveRange(activeRange);
             });
         }
+    }
+
+    addConcreteDomainParameters() {
+        const attributesWithConcreteDomains = this.attributeService.getAttributesWithConcreteDomains();
+        this.attributeService.getAttributes().subscribe(attributes => {
+            attributes.items.forEach(attribute => {
+                attributesWithConcreteDomains.forEach(item => {
+                    if (attribute.referencedComponentId === item.conceptId) {
+                        attribute.concreteDomainAttribute = true;
+                    }
+                });
+            });
+        });
     }
 
     getRuleStrength(id) {

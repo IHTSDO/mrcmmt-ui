@@ -63,7 +63,9 @@ export class BreadcrumbBarComponent implements OnDestroy {
     }
 
     enableEditing() {
-        this.branchingService.setBranchPath('MAIN/MRCMMAINT1');
+        if (this.branchPath !== 'MAIN/CDITEST1') {
+            this.branchingService.setBranchPath('MAIN/MRCMMAINT1');
+        }
         this.editService.setEditable(true);
     }
 

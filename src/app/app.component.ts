@@ -109,6 +109,7 @@ export class AppComponent implements OnInit {
                     }
 
                     versions.items.push({branchPath: 'MAIN'});
+                    versions.items.push({branchPath: 'MAIN/CDITEST1'});
 
                     versions.items.reverse();
 
@@ -129,10 +130,14 @@ export class AppComponent implements OnInit {
                     }
 
                     this.branchingService.setVersions(versions);
-                    this.mrcmmtService.setupDomains();
 
                     this.terminologyService.getAttributeHierarchy().subscribe(attributes => {
                         this.attributeService.setAttributeHierarchy(attributes.items);
+                    });
+
+                    this.terminologyService.getAttributesWithConcreteDomains().subscribe(attributes => {
+                        this.attributeService.setAttributesWithConcreteDomains(attributes.items);
+                        this.mrcmmtService.setupDomains();
                     });
                 });
             });

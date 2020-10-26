@@ -17,6 +17,7 @@ export class AttributeService {
     private latestReleaseAttributes: RefSet[];
     private latestReleaseActiveAttribute = new Subject<any>();
     private attributeHierarchy = new Subject<any>();
+    private attributesWithConcreteDomains = new Subject<any>();
 
     // Setters & Getters: Attributes
     setAttributes(attributes) {
@@ -87,6 +88,15 @@ export class AttributeService {
 
     getAttributeHierarchy() {
         return this.attributeHierarchy;
+    }
+
+    // Setters & Getters: Attributes with Concrete Domains
+    setAttributesWithConcreteDomains(attributes) {
+        this.attributesWithConcreteDomains = attributes;
+    }
+
+    getAttributesWithConcreteDomains() {
+        return this.attributesWithConcreteDomains;
     }
 
     // New Attribute

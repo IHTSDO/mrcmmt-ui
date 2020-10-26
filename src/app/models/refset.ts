@@ -12,6 +12,7 @@ export class RefSet {
     changed: boolean;
     deleted: boolean;
     errors: RefsetError[];
+    concreteDomainAttribute?: boolean;
 
     constructor(additonalFields: AdditionalFields,
                 referencedComponentId: string,

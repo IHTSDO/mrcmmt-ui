@@ -27,6 +27,7 @@
             <i *ngIf="detailsExpanded" class="fas fa-caret-down"></i>
             <i *ngIf="!detailsExpanded" class="fas fa-caret-up"></i>
         </span>
+        <p>{{activeAttribute | json}}</p>
         <ng-container *ngIf="editable">
             <h5 class="label m-2">Referenced Component<span *ngIf="editable" class="mandatory"> *</span></h5>
             <input type="text" class="detail m-2 mb-3 p-0 px-2 rounded"
