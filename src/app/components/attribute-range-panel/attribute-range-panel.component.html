@@ -11,7 +11,66 @@
                 <button *ngIf="editable && !range.released" class="delete float-right p-0" (click)="deleteRange($event, range)"><i class="fas fa-minus"></i></button>
             </div>
             <div *ngIf="ranges?.items && activeAttribute && activeRange" class="details">
-                <ng-container *ngIf="activeRange.additionalFields.rangeConstraint || editable">
+                <ng-container *ngIf="activeAttribute.concreteDomainAttribute">
+                    <h5 class="label m-2">Concrete Attribute Type<span *ngIf="editable" class="mandatory"> *</span></h5>
+                    <select class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
+                            [(ngModel)]="activeRange.concreteDomainParameters.attributeType"
+                            (ngModelChange)="updateAttributeType()">
+                        <option *ngFor="let attributeType of mrcmmtService.concreteAttributeTypes" [value]="attributeType" >{{attributeType}}</option>
+                    </select>
+                    <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded">
+                        {{activeRange.concreteDomainParameters.attributeType}}
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="activeAttribute.concreteDomainAttribute">
+                    <h5 class="label m-2">Range Constraint<span *ngIf="editable" class="mandatory"> *</span></h5>
+                    <div class="row">
+                        <div class="col pr-0">
+                            <select class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
+                                    [(ngModel)]="activeRange.concreteDomainParameters.minimumQualifierValue"
+                                    (ngModelChange)="updateAttributeType()">
+                                <option *ngFor="let qualifierValue of mrcmmtService.qualifierValueFields" [value]="qualifierValue" >{{qualifierValue}}</option>
+                            </select>
+                            <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded">
+                                {{activeRange.concreteDomainParameters.minimumQualifierValue}}
+                            </div>
+                        </div>
+
+                        <div class="col px-0">
+                            <input class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
+                                   placeholder="minimum"
+                                   [(ngModel)]="activeRange.concreteDomainParameters.minimumValue"
+                                   (ngModelChange)="updateAttributeType()">
+                            <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded">
+                                {{activeRange.concreteDomainParameters.minimumValue}}
+                            </div>
+                        </div>
+
+                        <div class="col px-0">
+                            <select class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
+                                    [(ngModel)]="activeRange.concreteDomainParameters.maximumQualifierValue"
+                                    (ngModelChange)="updateAttributeType()">
+                                <option *ngFor="let qualifierValue of mrcmmtService.qualifierValueFields" [value]="qualifierValue" >{{qualifierValue}}</option>
+                            </select>
+                            <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded">
+                                {{activeRange.concreteDomainParameters.maximumQualifierValue}}
+                            </div>
+                        </div>
+
+                        <div class="col pl-0">
+                            <input class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
+                                   placeholder="maximum"
+                                   [(ngModel)]="activeRange.concreteDomainParameters.maximumValue"
+                                   (ngModelChange)="updateAttributeType()">
+                            <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded">
+                                {{activeRange.concreteDomainParameters.maximumValue}}
+                            </div>
+                        </div>
+                    </div>
+
+                </ng-container>
+
+                <ng-container *ngIf="activeRange.additionalFields.rangeConstraint && !activeAttribute?.concreteDomainAttribute">
                     <h5 class="label m-2">Range Constraint<span *ngIf="editable" class="mandatory"> *</span></h5>
                     <div *ngIf="attributeRuleInvalid" class="detail m-2 mb-3 p-0 px-2 warning">No ECL results</div>
                     <textarea type="text" class="detail m-2 mb-3 p-0 px-2 rounded" *ngIf="editable"

@@ -158,6 +158,10 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.clearResults();
     }
 
+    updateAttributeType() {
+
+    }
+
     addNewRange() {
         const newRange = this.rangeService.getNewRange(this.activeAttribute);
         if (!this.ranges) {

@@ -41,6 +41,9 @@ export class MrcmmtService {
         }
     ];
 
+    concreteAttributeTypes = ['Decimal', 'Integer', 'String'];
+    qualifierValueFields = ['>', '>=', '<', '<='];
+
     constructor(private domainService: DomainService,
                 private attributeService: AttributeService,
                 private rangeService: RangeService,

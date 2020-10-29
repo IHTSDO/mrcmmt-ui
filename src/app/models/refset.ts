@@ -13,6 +13,7 @@ export class RefSet {
     deleted: boolean;
     errors: RefsetError[];
     concreteDomainAttribute?: boolean;
+    concreteDomainParameters?: ConcreteDomainParameters;
 
     constructor(additonalFields: AdditionalFields,
                 referencedComponentId: string,
@@ -70,5 +71,21 @@ export class RefsetError {
     constructor(message: string, fieldReference: string) {
         this.message = message;
         this.fieldReference = fieldReference;
+    }
+}
+
+export class ConcreteDomainParameters {
+    attributeType: string;
+    minimumQualifierValue: string;
+    minimumValue: string;
+    maximumQualifierValue: string;
+    maximumValue: string;
+
+    constructor() {
+        this.attributeType = 'Decimal';
+        this.minimumQualifierValue = '>';
+        this.minimumValue = '';
+        this.maximumQualifierValue = '>';
+        this.maximumValue = '';
     }
 }
