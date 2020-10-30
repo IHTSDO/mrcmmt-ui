@@ -24,6 +24,7 @@
                 </ng-container>
                 <ng-container *ngIf="activeAttribute.concreteDomainAttribute">
                     <h5 class="label m-2">Range Constraint<span *ngIf="editable" class="mandatory"> *</span></h5>
+                    <p>{{activeRange.additionalFields.rangeConstraint | json}}</p>
                     <div class="row">
                         <div class="col pr-0">
                             <select class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"

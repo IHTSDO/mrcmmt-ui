@@ -42,7 +42,7 @@ export class MrcmmtService {
     ];
 
     concreteAttributeTypes = ['Decimal', 'Integer', 'String'];
-    qualifierValueFields = ['>', '>=', '<', '<='];
+    qualifierValueFields = ['', '>', '>=', '<', '<='];
 
     constructor(private domainService: DomainService,
                 private attributeService: AttributeService,

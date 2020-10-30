@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { RefSet } from '../../models/refset';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
-import { Subscription } from 'rxjs';
+import { range, Subscription } from 'rxjs';
 import { RangeService } from '../../services/range.service';
 import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';
@@ -12,6 +12,7 @@ import { BranchingService } from '../../services/branching.service';
 import { ModalService } from '../../services/modal.service';
 import { SnomedUtilityService } from '../../services/snomedUtility.service';
 import { SnomedResponseObject } from '../../models/snomedResponseObject';
+import { max, min } from 'rxjs/operators';
 
 export class Results {
     items: object[];
@@ -159,7 +160,69 @@ export class AttributeRangePanelComponent implements OnDestroy {
     }
 
     updateAttributeType() {
+        const minQualVal = this.activeRange.concreteDomainParameters.minimumQualifierValue;
+        const minVal = this.activeRange.concreteDomainParameters.minimumValue;
+        const maxQualVal = this.activeRange.concreteDomainParameters.maximumQualifierValue;
+        const maxVal = this.activeRange.concreteDomainParameters.maximumValue;
+        let rangeConstraint = this.activeRange.additionalFields.rangeConstraint;
 
+        switch (this.activeRange.concreteDomainParameters.attributeType) {
+            case 'Decimal':
+                rangeConstraint = 'dec(';
+
+                if (minQualVal) {
+                    if (minQualVal === '>' || minQualVal === '<') {
+                        rangeConstraint += minQualVal;
+                        rangeConstraint += minVal;
+                    } else if (minQualVal === '>=' || minQualVal === '<=') {
+                        rangeConstraint += minVal;
+                    }
+                } else if (maxQualVal) {
+                    if (maxQualVal === '>' || maxQualVal === '<') {
+                        rangeConstraint += maxQualVal;
+                        rangeConstraint += maxVal;
+                    } else if (maxQualVal === '>=' || maxQualVal === '<=') {
+                        rangeConstraint += maxVal;
+                    }
+                }
+                rangeConstraint += '..)';
+                break;
+            case 'Integer':
+                rangeConstraint = 'int(';
+
+                if (!minQualVal && !maxQualVal) {
+                    if (minVal && !maxVal) {
+                        rangeConstraint += minVal;
+                    } else if (!minVal && maxVal) {
+                        rangeConstraint += maxVal;
+                    } else if (minVal && maxVal) {
+                        rangeConstraint += minVal + ' ' + maxVal;
+                    }
+                } else if (minQualVal && maxQualVal) {
+                    if (minQualVal === '>' || minQualVal === '<') {
+                        rangeConstraint += minQualVal;
+                    }
+                    rangeConstraint += minVal + '..';
+                    if (maxQualVal === '>' || maxQualVal === '<') {
+                        rangeConstraint += minQualVal;
+                    }
+                    rangeConstraint += maxVal;
+                }
+                rangeConstraint += ')';
+                break;
+            case 'String':
+                rangeConstraint = 'str(';
+
+                if (!maxVal) {
+                    rangeConstraint += '"' + minVal + '"';
+                } else {
+                    rangeConstraint += '"' + minVal + '" "' + maxVal + '"';
+                }
+                rangeConstraint += ')';
+                break;
+        }
+
+        this.activeRange.additionalFields.rangeConstraint = rangeConstraint;
     }
 
     addNewRange() {
