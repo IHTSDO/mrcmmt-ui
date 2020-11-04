@@ -162,18 +162,19 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
 
         if (this.activeAttribute.referencedComponentId) {
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(data => {
+                data.items.forEach(item => {
+                    if (item.additionalFields.rangeConstraint.startsWith('dec')
+                        || item.additionalFields.rangeConstraint.startsWith('int')
+                        || item.additionalFields.rangeConstraint.startsWith('str')) {
+                        this.mrcmmtService.rangeConstraintToConcreteDomainParameters(item);
+                    }
+                });
+
                 const ranges: SnomedResponseObject = { items: data.items, total: data.total, errorMessage: null};
 
                 ranges.items = ranges.items.concat(this.changeLog.filter(item => {
                     return this.activeAttribute.referencedComponentId === item.referencedComponentId;
                 }));
-
-//                if (!ranges.items.length) {
-//                    const range = this.rangeService.getNewRange(this.activeAttribute);
-//                    this.changeLog.push(range);
-//                    this.editService.setChangeLog(this.changeLog);
-//                    ranges.items.push(range);
-//                }
 
                 ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
                 this.rangeService.setRanges(ranges);

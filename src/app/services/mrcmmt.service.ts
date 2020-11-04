@@ -5,6 +5,7 @@ import { RangeService } from './range.service';
 import { TerminologyServerService } from './terminologyServer.service';
 import { CustomOrderPipe } from '../pipes/custom-order.pipe';
 import { UrlParamsService } from './url-params.service';
+import { ConcreteDomainParameters } from '../models/refset';
 
 @Injectable({
     providedIn: 'root'
@@ -42,7 +43,8 @@ export class MrcmmtService {
     ];
 
     concreteAttributeTypes = ['Decimal', 'Integer', 'String'];
-    qualifierValueFields = ['', '>', '>=', '<', '<='];
+    minimumQualifierValueFields = ['>', '>='];
+    maximumQualifierValueFields = ['<', '<='];
 
     constructor(private domainService: DomainService,
                 private attributeService: AttributeService,
@@ -84,6 +86,13 @@ export class MrcmmtService {
     setupRanges(activeAttribute) {
         if (this.urlParamsService.getRangeParam()) {
             this.terminologyService.getRanges(activeAttribute.referencedComponentId).subscribe(ranges => {
+                ranges.items.forEach(item => {
+                    if (item.additionalFields.rangeConstraint.startsWith('dec')
+                        || item.additionalFields.rangeConstraint.startsWith('int')
+                        || item.additionalFields.rangeConstraint.startsWith('str')) {
+                        this.rangeConstraintToConcreteDomainParameters(item);
+                    }
+                });
                 ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
                 this.rangeService.setRanges(ranges);
 
@@ -122,6 +131,116 @@ export class MrcmmtService {
         } else {
             return '';
         }
+    }
+
+    rangeConstraintToConcreteDomainParameters(range) {
+        let rangeConstraint = range.additionalFields.rangeConstraint;
+        range.concreteDomainParameters = new ConcreteDomainParameters();
+
+        if (rangeConstraint.startsWith('dec')) {
+            range.concreteDomainParameters.attributeType = 'Decimal';
+            rangeConstraint = rangeConstraint.substring(rangeConstraint.indexOf('(') + 1, rangeConstraint.length);
+
+            if (rangeConstraint.startsWith('>')) {
+                range.concreteDomainParameters.minimumQualifierValue = '>';
+                rangeConstraint = rangeConstraint.substring(1, rangeConstraint.length);
+            } else {
+                range.concreteDomainParameters.minimumQualifierValue = '>=';
+            }
+            range.concreteDomainParameters.minimumValue = rangeConstraint.substring(1, rangeConstraint.indexOf('.'));
+
+        } else if (rangeConstraint.startsWith('int')) {
+            range.concreteDomainParameters.attributeType = 'Integer';
+            rangeConstraint = rangeConstraint.substring(rangeConstraint.indexOf('(') + 1, rangeConstraint.length);
+
+            if (rangeConstraint.startsWith('>')) {
+                range.concreteDomainParameters.minimumQualifierValue = '>';
+                rangeConstraint = rangeConstraint.substring(1, rangeConstraint.length);
+            } else {
+                range.concreteDomainParameters.minimumQualifierValue = '>=';
+            }
+
+            range.concreteDomainParameters.minimumValue = rangeConstraint.substring(1, rangeConstraint.indexOf('..'));
+            rangeConstraint = rangeConstraint.substring(rangeConstraint.indexOf('..') + 1, rangeConstraint.length);
+
+            if (rangeConstraint.startsWith('<')) {
+                range.concreteDomainParameters.maximumQualifierValue = '<';
+                rangeConstraint = rangeConstraint.substring(1, rangeConstraint.length);
+            } else {
+                range.concreteDomainParameters.maximumQualifierValue = '<=';
+            }
+
+            range.concreteDomainParameters.maximumValue = rangeConstraint.substring(rangeConstraint.indexOf('#') + 1, rangeConstraint.indexOf(')'));
+        } else if (rangeConstraint.startsWith('str')) {
+            range.concreteDomainParameters.attributeType = 'String';
+            rangeConstraint = rangeConstraint.substring(rangeConstraint.indexOf('"') + 1, rangeConstraint.length);
+            range.concreteDomainParameters.minimumValue = rangeConstraint.substring(0, rangeConstraint.indexOf('"'));
+
+            if (rangeConstraint.includes(' ')) {
+                rangeConstraint = rangeConstraint.substring(rangeConstraint.indexOf(' "') + 1, rangeConstraint.length);
+                range.concreteDomainParameters.maximumValue = rangeConstraint.substring(1, rangeConstraint.indexOf('")'));
+            }
+        }
+
+        console.log('params: ', range.concreteDomainParameters);
+    }
+
+    concreteDomainParametersToRangeConstraint(range) {
+        const minQualVal = range.concreteDomainParameters.minimumQualifierValue;
+        const minVal = range.concreteDomainParameters.minimumValue;
+        const maxQualVal = range.concreteDomainParameters.maximumQualifierValue;
+        const maxVal = range.concreteDomainParameters.maximumValue;
+        let rangeConstraint = range.additionalFields.rangeConstraint;
+
+        switch (range.concreteDomainParameters.attributeType) {
+            case 'Decimal':
+                rangeConstraint = 'dec(';
+
+                if (minQualVal === '>') {
+                    rangeConstraint += minQualVal;
+                    rangeConstraint += '>#' + minVal;
+                } else {
+                    rangeConstraint += '#' + minVal;
+                }
+
+                rangeConstraint += '..)';
+                break;
+            case 'Integer':
+                rangeConstraint = 'int(';
+
+                if (!minQualVal && !maxQualVal) {
+                    if (minVal && !maxVal) {
+                        rangeConstraint += '#' + minVal;
+                    } else if (!minVal && maxVal) {
+                        rangeConstraint += '#' + maxVal;
+                    } else if (minVal && maxVal) {
+                        rangeConstraint += '#' + minVal + ' #' + maxVal;
+                    }
+                } else if (minQualVal && maxQualVal) {
+                    if (minQualVal === '>') {
+                        rangeConstraint += minQualVal;
+                    }
+                    rangeConstraint += '#' + minVal + '..';
+                    if (maxQualVal === '<') {
+                        rangeConstraint += minQualVal;
+                    }
+                    rangeConstraint += '#' + maxVal;
+                }
+                rangeConstraint += ')';
+                break;
+            case 'String':
+                rangeConstraint = 'str(';
+
+                if (!maxVal) {
+                    rangeConstraint += '"' + minVal + '"';
+                } else {
+                    rangeConstraint += '"' + minVal + '" "' + maxVal + '"';
+                }
+                rangeConstraint += ')';
+                break;
+        }
+
+        return rangeConstraint;
     }
 
     resetTool() {

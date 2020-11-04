@@ -85,7 +85,7 @@ export class ConcreteDomainParameters {
         this.attributeType = 'Decimal';
         this.minimumQualifierValue = '>';
         this.minimumValue = '';
-        this.maximumQualifierValue = '>';
+        this.maximumQualifierValue = '<';
         this.maximumValue = '';
     }
 }
