@@ -7,6 +7,7 @@ import { User } from '../../models/user';
 import { AuthenticationService } from '../../services/authentication.service';
 import { EditService } from '../../services/edit.service';
 import { DomainService } from '../../services/domain.service';
+import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
 
@@ -34,6 +35,7 @@ export class SnomedNavbarComponent implements OnInit {
                 private editService: EditService,
                 private domainService: DomainService,
                 private attributeService: AttributeService,
+                private terminologyService: TerminologyServerService,
                 private rangeService: RangeService) {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
         this.public = window.location.host.includes('browser');
@@ -67,5 +69,9 @@ export class SnomedNavbarComponent implements OnInit {
         this.domainService.clearActiveDomain();
         this.attributeService.clearActiveAttribute();
         this.rangeService.clearActiveRange();
+        this.terminologyService.getAttributesWithConcreteDomains().subscribe(attributes => {
+                this.attributeService.setAttributesWithConcreteDomains(attributes.items);
+                this.mrcmmtService.setupDomains();
+            });
     }
 }

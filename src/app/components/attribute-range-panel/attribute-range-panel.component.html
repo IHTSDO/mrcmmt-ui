@@ -2,7 +2,6 @@
     <ng-container *ngIf="activeAttribute; else noAttribute">
         <ng-container *ngIf="ranges?.items.length; else noRanges">
             <h3 class="pt-3 px-3">Attribute Range</h3>
-            <p>{{activeRange | json}}</p>
             <button type="button" *ngIf="editable && activeAttribute" class="btn-default fas fa-plus float-right add" (click)="addNewRange()"></button>
             <div *ngFor="let range of ranges?.items | alphabetical; let odd = odd" class="px-3 py-2 range" (click)="makeActiveRange(range)" [class.odd]="odd" [class.active]="range === activeRange">
                 {{mrcmmtService.getContentType(range.additionalFields?.contentTypeId)}} - {{mrcmmtService.getRuleStrength(range.additionalFields?.ruleStrengthId)}}
