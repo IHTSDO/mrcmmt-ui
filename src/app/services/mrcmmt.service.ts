@@ -170,7 +170,8 @@ export class MrcmmtService {
                 range.concreteDomainParameters.maximumQualifierValue = '<=';
             }
 
-            range.concreteDomainParameters.maximumValue = rangeConstraint.substring(rangeConstraint.indexOf('#') + 1, rangeConstraint.indexOf(')'));
+            range.concreteDomainParameters.maximumValue = rangeConstraint.substring(rangeConstraint.indexOf('#') + 1,
+                rangeConstraint.indexOf(')'));
         } else if (rangeConstraint.startsWith('str')) {
             range.concreteDomainParameters.attributeType = 'String';
             rangeConstraint = rangeConstraint.substring(rangeConstraint.indexOf('"') + 1, rangeConstraint.length);

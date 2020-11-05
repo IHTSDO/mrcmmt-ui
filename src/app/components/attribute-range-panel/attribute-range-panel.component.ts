@@ -83,15 +83,15 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.changeLogSubscription.unsubscribe();
     }
 
-    makeActiveRange(range) {
+    makeActiveRange(activeRange) {
         this.clearResults();
 
-        if (this.activeRange === range) {
+        if (this.activeRange === activeRange) {
             this.rangeService.clearLatestReleaseActiveRange();
             this.rangeService.clearRanges();
             this.setActives(this.activeDomain, this.activeAttribute, null);
         } else {
-            this.activeRange = range;
+            this.activeRange = activeRange;
 
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId,
                 this.branchingService.getLatestReleaseBranchPath()).subscribe(ranges => {
@@ -186,10 +186,10 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.results = { items: [], total: '' };
     }
 
-    setActives(domain, attribute, range) {
+    setActives(domain, attribute, activeRange) {
         this.domainService.setActiveDomain(domain);
         this.attributeService.setActiveAttribute(attribute);
-        this.rangeService.setActiveRange(range);
+        this.rangeService.setActiveRange(activeRange);
     }
 
     ECLexpressionBuilder(expression: any, originalExpression?: any) {
