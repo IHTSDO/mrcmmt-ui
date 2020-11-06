@@ -46,7 +46,7 @@
                             </div>
                         </div>
 
-                        <div class="col" *ngIf="activeRange.concreteDomainParameters?.attributeType === 'Integer'">
+                        <div class="col" *ngIf="activeRange.concreteDomainParameters?.attributeType !== 'String'">
                             <select class="detail mt-0 mb-3 px-2 rounded" *ngIf="editable"
                                     [(ngModel)]="activeRange.concreteDomainParameters.maximumQualifierValue"
                                     (ngModelChange)="updateAttributeType()">
@@ -57,7 +57,7 @@
                             </div>
                         </div>
 
-                        <div class="col" *ngIf="activeRange.concreteDomainParameters?.attributeType !== 'Decimal'">
+                        <div class="col" *ngIf="activeRange.concreteDomainParameters?.attributeType !== 'String'">
                             <input class="detail mt-0 mb-3 px-2 rounded" *ngIf="editable"
                                    placeholder="maximum"
                                    [(ngModel)]="activeRange.concreteDomainParameters.maximumValue"
