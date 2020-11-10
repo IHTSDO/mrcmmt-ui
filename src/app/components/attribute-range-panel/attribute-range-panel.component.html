@@ -121,7 +121,7 @@
                     </div>
                 </ng-container>
             </div>
-            <div class="results" *ngIf="ranges?.items && activeRange && results">
+            <div class="results" *ngIf="ranges?.items && activeRange && results && !activeAttribute.concreteDomainAttribute">
                 <div *ngIf="results?.total">
                     <h4 class="pt-3 px-3">{{results.total | number:'1.'}} Results Matching Range</h4>
                 </div>

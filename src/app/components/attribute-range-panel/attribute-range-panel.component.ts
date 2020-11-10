@@ -175,7 +175,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
     }
 
     getResults() {
-        if (this.activeRange) {
+        if (this.activeRange && !this.activeAttribute.concreteDomainAttribute) {
             this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
                 this.results = data;
             });

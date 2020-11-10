@@ -14,6 +14,7 @@ export class RefSet {
     errors: RefsetError[];
     concreteDomainAttribute?: boolean;
     concreteDomainParameters?: ConcreteDomainParameters;
+    effectiveTime: string;
 
     constructor(additonalFields: AdditionalFields,
                 referencedComponentId: string,
