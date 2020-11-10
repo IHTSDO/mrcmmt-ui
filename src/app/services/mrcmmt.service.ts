@@ -139,15 +139,15 @@ export class MrcmmtService {
 
         if (rangeConstraint.startsWith('dec')) {
             range.concreteDomainParameters.attributeType = 'Decimal';
-            range.concreteDomainParameters.displayRange = 
+            range.concreteDomainParameters.displayRange =
                 rangeConstraint.substring(rangeConstraint.indexOf('(') + 1, rangeConstraint.indexOf(')'));
         } else if (rangeConstraint.startsWith('int')) {
             range.concreteDomainParameters.attributeType = 'Integer';
-            range.concreteDomainParameters.displayRange = 
+            range.concreteDomainParameters.displayRange =
                 rangeConstraint.substring(rangeConstraint.indexOf('(') + 1, rangeConstraint.indexOf(')'));
         } else if (rangeConstraint.startsWith('str')) {
             range.concreteDomainParameters.attributeType = 'String';
-            range.concreteDomainParameters.displayRange = 
+            range.concreteDomainParameters.displayRange =
                 rangeConstraint.substring(rangeConstraint.indexOf('(') + 1, rangeConstraint.indexOf(')'));
         }
         console.log(range.concreteDomainParameters.displayRange);
