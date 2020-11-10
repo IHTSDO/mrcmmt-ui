@@ -12,62 +12,32 @@
             </div>
             <div *ngIf="ranges?.items && activeAttribute && activeRange" class="details">
                 <ng-container *ngIf="activeAttribute.concreteDomainAttribute">
-                    <h5 class="label m-2">Concrete Attribute Type<span *ngIf="editable" class="mandatory"> *</span></h5>
-                    <select class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
-                            [(ngModel)]="activeRange.concreteDomainParameters.attributeType"
-                            (ngModelChange)="updateAttributeType()">
-                        <option *ngFor="let attributeType of mrcmmtService.concreteAttributeTypes" [value]="attributeType" >{{attributeType}}</option>
-                    </select>
-                    <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded">
-                        {{activeRange.concreteDomainParameters?.attributeType}}
-                    </div>
+                    
                 </ng-container>
                 <ng-container *ngIf="activeAttribute.concreteDomainAttribute">
-                    <h5 class="label m-2">Range Constraint<span *ngIf="editable" class="mandatory"> *</span></h5>
-                    <div class="row px-3">
-                        <div class="col" *ngIf="activeRange.concreteDomainParameters?.attributeType !== 'String'">
-                            <select class="detail mt-0 mb-3 px-2 rounded" *ngIf="editable"
-                                    [(ngModel)]="activeRange.concreteDomainParameters.minimumQualifierValue"
+                    <div class="row">
+                        <div class="col-3">
+                            <h5 class="label m-2">Concrete Attribute Type<span *ngIf="editable" class="mandatory"> *</span></h5>
+                            <select class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
+                                    [(ngModel)]="activeRange.concreteDomainParameters.attributeType"
                                     (ngModelChange)="updateAttributeType()">
-                                <option *ngFor="let qualifierValue of mrcmmtService.minimumQualifierValueFields" [value]="qualifierValue" >{{qualifierValue}}</option>
+                                <option *ngFor="let attributeType of mrcmmtService.concreteAttributeTypes" [value]="attributeType" >{{attributeType}}</option>
                             </select>
                             <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded">
-                                {{activeRange.concreteDomainParameters.minimumQualifierValue}}
+                                {{activeRange.concreteDomainParameters?.attributeType}}
                             </div>
                         </div>
-
-                        <div class="col">
+                        <div class="col-9">
+                            <h5 class="label m-2">Range Constraint<span *ngIf="editable" class="mandatory"> *</span></h5>
                             <input class="detail mt-0 mb-3 px-2 rounded" *ngIf="editable"
                                    placeholder="minimum"
-                                   [(ngModel)]="activeRange.concreteDomainParameters.minimumValue"
+                                   [(ngModel)]="activeRange.concreteDomainParameters.displayRange"
                                    (ngModelChange)="updateAttributeType()">
                             <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded">
-                                {{activeRange.concreteDomainParameters.minimumValue ? activeRange.concreteDomainParameters.minimumValue : '0'}}
-                            </div>
-                        </div>
-
-                        <div class="col" *ngIf="activeRange.concreteDomainParameters?.attributeType !== 'String'">
-                            <select class="detail mt-0 mb-3 px-2 rounded" *ngIf="editable"
-                                    [(ngModel)]="activeRange.concreteDomainParameters.maximumQualifierValue"
-                                    (ngModelChange)="updateAttributeType()">
-                                <option *ngFor="let qualifierValue of mrcmmtService.maximumQualifierValueFields" [value]="qualifierValue" >{{qualifierValue}}</option>
-                            </select>
-                            <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded">
-                                {{activeRange.concreteDomainParameters.maximumQualifierValue}}
-                            </div>
-                        </div>
-
-                        <div class="col" *ngIf="activeRange.concreteDomainParameters?.attributeType !== 'String'">
-                            <input class="detail mt-0 mb-3 px-2 rounded" *ngIf="editable"
-                                   placeholder="maximum"
-                                   [(ngModel)]="activeRange.concreteDomainParameters.maximumValue"
-                                   (ngModelChange)="updateAttributeType()">
-                            <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded">
-                                {{activeRange.concreteDomainParameters.maximumValue ? activeRange.concreteDomainParameters.maximumValue : '0'}}
+                                {{activeRange.concreteDomainParameters?.displayRange}}
                             </div>
                         </div>
                     </div>
-
                 </ng-container>
 
                 <ng-container *ngIf="!activeAttribute?.concreteDomainAttribute || activeAttribute?.concreteDomainAttribute === undefined">

@@ -139,109 +139,36 @@ export class MrcmmtService {
 
         if (rangeConstraint.startsWith('dec')) {
             range.concreteDomainParameters.attributeType = 'Decimal';
-            rangeConstraint = rangeConstraint.substring(rangeConstraint.indexOf('(') + 1, rangeConstraint.length);
-
-            if (rangeConstraint.startsWith('>')) {
-                range.concreteDomainParameters.minimumQualifierValue = '>';
-                rangeConstraint = rangeConstraint.substring(1, rangeConstraint.length);
-            } else {
-                range.concreteDomainParameters.minimumQualifierValue = '>=';
-            }
-            range.concreteDomainParameters.minimumValue = rangeConstraint.substring(1, rangeConstraint.indexOf('.'));
-
+            range.concreteDomainParameters.displayRange = rangeConstraint.substring(rangeConstraint.indexOf('(') + 1, rangeConstraint.indexOf(')'));
         } else if (rangeConstraint.startsWith('int')) {
             range.concreteDomainParameters.attributeType = 'Integer';
-            rangeConstraint = rangeConstraint.substring(rangeConstraint.indexOf('(') + 1, rangeConstraint.length);
-
-            if (rangeConstraint.startsWith('>')) {
-                range.concreteDomainParameters.minimumQualifierValue = '>';
-                rangeConstraint = rangeConstraint.substring(1, rangeConstraint.length);
-            } else {
-                range.concreteDomainParameters.minimumQualifierValue = '>=';
-            }
-
-            range.concreteDomainParameters.minimumValue = rangeConstraint.substring(1, rangeConstraint.indexOf('..'));
-            rangeConstraint = rangeConstraint.substring(rangeConstraint.indexOf('..') + 1, rangeConstraint.length);
-
-            if (rangeConstraint.startsWith('<')) {
-                range.concreteDomainParameters.maximumQualifierValue = '<';
-                rangeConstraint = rangeConstraint.substring(1, rangeConstraint.length);
-            } else {
-                range.concreteDomainParameters.maximumQualifierValue = '<=';
-            }
-
-            range.concreteDomainParameters.maximumValue = rangeConstraint.substring(rangeConstraint.indexOf('#') + 1,
-                rangeConstraint.indexOf(')'));
+            range.concreteDomainParameters.displayRange = rangeConstraint.substring(rangeConstraint.indexOf('(') + 1, rangeConstraint.indexOf(')'));
         } else if (rangeConstraint.startsWith('str')) {
             range.concreteDomainParameters.attributeType = 'String';
-            rangeConstraint = rangeConstraint.substring(rangeConstraint.indexOf('"') + 1, rangeConstraint.length);
-            range.concreteDomainParameters.minimumValue = rangeConstraint.substring(0, rangeConstraint.indexOf('"'));
-
-            if (rangeConstraint.includes(' ')) {
-                rangeConstraint = rangeConstraint.substring(rangeConstraint.indexOf(' "') + 1, rangeConstraint.length);
-                range.concreteDomainParameters.maximumValue = rangeConstraint.substring(1, rangeConstraint.indexOf('")'));
-            }
+            range.concreteDomainParameters.displayRange = rangeConstraint.substring(rangeConstraint.indexOf('(') + 1, rangeConstraint.indexOf(')'));
         }
-
-        console.log('params: ', range.concreteDomainParameters);
+        console.log(range.concreteDomainParameters.displayRange);
     }
 
     concreteDomainParametersToRangeConstraint(range) {
-        const minQualVal = range.concreteDomainParameters.minimumQualifierValue;
-        const minVal = range.concreteDomainParameters.minimumValue;
-        const maxQualVal = range.concreteDomainParameters.maximumQualifierValue;
-        const maxVal = range.concreteDomainParameters.maximumValue;
-        let rangeConstraint = range.additionalFields.rangeConstraint;
-
         switch (range.concreteDomainParameters.attributeType) {
             case 'Decimal':
-                rangeConstraint = 'dec(';
-
-                if (minQualVal === '>') {
-                    rangeConstraint += minQualVal;
-                    rangeConstraint += '>#' + minVal;
-                } else {
-                    rangeConstraint += '#' + minVal;
-                }
-
-                rangeConstraint += '..)';
+                range.additionalFields.rangeConstraint = 'dec(';
+                range.additionalFields.rangeConstraint += range.concreteDomainParameters.displayRange;
+                range.additionalFields.rangeConstraint += ')';
                 break;
             case 'Integer':
-                rangeConstraint = 'int(';
-
-                if (!minQualVal && !maxQualVal) {
-                    if (minVal && !maxVal) {
-                        rangeConstraint += '#' + minVal;
-                    } else if (!minVal && maxVal) {
-                        rangeConstraint += '#' + maxVal;
-                    } else if (minVal && maxVal) {
-                        rangeConstraint += '#' + minVal + ' #' + maxVal;
-                    }
-                } else if (minQualVal && maxQualVal) {
-                    if (minQualVal === '>') {
-                        rangeConstraint += minQualVal;
-                    }
-                    rangeConstraint += '#' + minVal + '..';
-                    if (maxQualVal === '<') {
-                        rangeConstraint += minQualVal;
-                    }
-                    rangeConstraint += '#' + maxVal;
-                }
-                rangeConstraint += ')';
+                range.additionalFields.rangeConstraint = 'int(';
+                range.additionalFields.rangeConstraint += range.concreteDomainParameters.displayRange;
+                range.additionalFields.rangeConstraint += ')';
                 break;
             case 'String':
-                rangeConstraint = 'str(';
-
-                if (!maxVal) {
-                    rangeConstraint += '"' + minVal + '"';
-                } else {
-                    rangeConstraint += '"' + minVal + '" "' + maxVal + '"';
-                }
-                rangeConstraint += ')';
-                break;
+                range.additionalFields.rangeConstraint = 'str(';
+                range.additionalFields.rangeConstraint += range.concreteDomainParameters.displayRange;
+                range.additionalFields.rangeConstraint += ')';
         }
 
-        return rangeConstraint;
+        return range.additionalFields.rangeConstraint;
     }
 
     resetTool() {

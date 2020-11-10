@@ -77,16 +77,10 @@ export class RefsetError {
 
 export class ConcreteDomainParameters {
     attributeType: string;
-    minimumQualifierValue: string;
-    minimumValue: string;
-    maximumQualifierValue: string;
-    maximumValue: string;
+    displayRange: string;
 
     constructor() {
         this.attributeType = 'Decimal';
-        this.minimumQualifierValue = '>';
-        this.minimumValue = '';
-        this.maximumQualifierValue = '<';
-        this.maximumValue = '';
+        this.displayRange = '';
     }
 }
