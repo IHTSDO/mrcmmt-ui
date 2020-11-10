@@ -17,7 +17,7 @@
                 <ng-container *ngIf="activeAttribute.concreteDomainAttribute">
                     <div class="row">
                         <div class="col-3">
-                            <h5 class="label m-2">Concrete Attribute Type<span *ngIf="editable" class="mandatory"> *</span></h5>
+                            <h5 class="label m-2">Concrete Type<span *ngIf="editable" class="mandatory"> *</span></h5>
                             <select class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
                                     [(ngModel)]="activeRange.concreteDomainParameters.attributeType"
                                     (ngModelChange)="updateAttributeType()">
