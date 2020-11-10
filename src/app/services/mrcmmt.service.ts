@@ -148,7 +148,7 @@ export class MrcmmtService {
         } else if (rangeConstraint.startsWith('str')) {
             range.concreteDomainParameters.attributeType = 'String';
             range.concreteDomainParameters.displayRange =
-                rangeConstraint.substring(rangeConstraint.indexOf('(') + 1, rangeConstraint.indexOf(')'));
+                rangeConstraint.substring(rangeConstraint.indexOf('("') + 2, rangeConstraint.indexOf('")'));
         }
         console.log(range.concreteDomainParameters.displayRange);
     }
@@ -166,9 +166,9 @@ export class MrcmmtService {
                 range.additionalFields.rangeConstraint += ')';
                 break;
             case 'String':
-                range.additionalFields.rangeConstraint = 'str(';
+                range.additionalFields.rangeConstraint = 'str("';
                 range.additionalFields.rangeConstraint += range.concreteDomainParameters.displayRange;
-                range.additionalFields.rangeConstraint += ')';
+                range.additionalFields.rangeConstraint += '")';
         }
 
         return range.additionalFields.rangeConstraint;
