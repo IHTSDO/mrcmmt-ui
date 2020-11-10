@@ -159,9 +159,14 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.clearResults();
     }
 
-    updateAttributeType() {
+    updateAttribute() {
         this.updateRange();
         this.activeRange.additionalFields.rangeConstraint = this.mrcmmtService.concreteDomainParametersToRangeConstraint(this.activeRange);
+    }
+
+    updateAttributeType() {
+        this.updateRange();
+        this.activeRange.concreteDomainParameters.displayRange = '';
     }
 
     addNewRange() {

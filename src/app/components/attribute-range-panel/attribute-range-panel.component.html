@@ -30,9 +30,8 @@
                         <div class="col-9">
                             <h5 class="label m-2">Range Constraint<span *ngIf="editable" class="mandatory"> *</span></h5>
                             <input class="detail mt-0 mb-3 px-2 rounded" *ngIf="editable"
-                                   placeholder="minimum"
                                    [(ngModel)]="activeRange.concreteDomainParameters.displayRange"
-                                   (ngModelChange)="updateAttributeType()">
+                                   (ngModelChange)="updateAttribute()">
                             <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded">
                                 {{activeRange.concreteDomainParameters?.displayRange}}
                             </div>
