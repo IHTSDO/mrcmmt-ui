@@ -101,7 +101,7 @@ export class AttributeService {
 
     // New Attribute
     getNewAttribute(activeDomain): RefSet {
-        return new RefSet(
+        const attribute = new RefSet(
             new AdditionalFields(activeDomain.referencedComponentId),
             null,
             { id: null, fsn: { term: 'New Attribute' }},
@@ -110,5 +110,10 @@ export class AttributeService {
             true,
             []
         );
+
+        attribute.additionalFields.ruleStrengthId = '723597001';
+        attribute.additionalFields.contentTypeId = '723596005';
+
+        return attribute;
     }
 }

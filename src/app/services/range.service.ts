@@ -66,6 +66,9 @@ export class RangeService {
             []
         );
 
+        newRange.additionalFields.ruleStrengthId = '723597001';
+        newRange.additionalFields.contentTypeId = '723596005';
+
         if (activeAttribute.concreteDomainAttribute) {
             newRange.concreteDomainParameters = new ConcreteDomainParameters();
         }
