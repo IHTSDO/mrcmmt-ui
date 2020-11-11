@@ -12,9 +12,6 @@
             </div>
             <div *ngIf="ranges?.items && activeAttribute && activeRange" class="details">
                 <ng-container *ngIf="activeAttribute.concreteDomainAttribute">
-                    
-                </ng-container>
-                <ng-container *ngIf="activeAttribute.concreteDomainAttribute">
                     <div class="row">
                         <div class="col-3">
                             <h5 class="label m-2">Concrete Type<span *ngIf="editable" class="mandatory"> *</span></h5>
@@ -23,16 +20,16 @@
                                     (ngModelChange)="updateAttributeType()">
                                 <option *ngFor="let attributeType of mrcmmtService.concreteAttributeTypes" [value]="attributeType" >{{attributeType}}</option>
                             </select>
-                            <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded">
+                            <div *ngIf="!editable" class="detail mx-2 mt-0 mb-3 px-2 rounded">
                                 {{activeRange.concreteDomainParameters?.attributeType}}
                             </div>
                         </div>
                         <div class="col-9">
                             <h5 class="label m-2">Range Constraint<span *ngIf="editable" class="mandatory"> *</span></h5>
-                            <input class="detail mt-0 mb-3 px-2 rounded" *ngIf="editable"
+                            <input class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
                                    [(ngModel)]="activeRange.concreteDomainParameters.displayRange"
                                    (ngModelChange)="updateAttribute()">
-                            <div *ngIf="!editable" class="detail m-2 mb-3 pl-2 rounded">
+                            <div *ngIf="!editable" class="detail mx-2 mt-0 mb-3 px-2 rounded">
                                 {{activeRange.concreteDomainParameters?.displayRange}}
                             </div>
                         </div>
