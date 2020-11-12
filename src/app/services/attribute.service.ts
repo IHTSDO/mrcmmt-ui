@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { AdditionalFields, RefSet } from '../models/refset';
+import { Hierarchy } from '../models/hierarchy';
 
 @Injectable({
     providedIn: 'root'

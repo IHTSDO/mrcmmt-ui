@@ -6,6 +6,7 @@ import { TerminologyServerService } from './terminologyServer.service';
 import { CustomOrderPipe } from '../pipes/custom-order.pipe';
 import { UrlParamsService } from './url-params.service';
 import { ConcreteDomainParameters } from '../models/refset';
+import { Hierarchy } from '../models/hierarchy';
 
 @Injectable({
     providedIn: 'root'
@@ -70,9 +71,9 @@ export class MrcmmtService {
 
     setupAttributes() {
         this.terminologyService.getAttributes().subscribe(attributes => {
+            attributes = this.buildAttributeHierarchy(attributes);
             this.attributeService.setAttributes(attributes);
             this.addConcreteDomainParameters();
-
             if (this.urlParamsService.getAttributeParam()) {
                 const activeAttribute = attributes.items.find(result => {
                     return result.referencedComponentId === this.urlParamsService.getAttributeParam();
@@ -115,6 +116,35 @@ export class MrcmmtService {
                 });
             });
         });
+    }
+
+    parseNestedLevel(level, depth, parentId, attributes) {
+        attributes.items.forEach(item => {
+            if (item.referencedComponentId === level.conceptId) {
+                item.additionalFields.depth = depth;
+                item.additionalFields.parentId = parentId;
+            }
+        });
+        if (level.children) {
+            depth = depth += 1;
+            level.children.forEach((item) => {
+                this.parseNestedLevel(item, depth, level.conceptId, attributes);
+            });
+        }
+    }
+
+    buildAttributeHierarchy(attributes) {
+        const response = this.attributeService.getAttributeHierarchy();
+        const hierarchy = new Hierarchy;
+        hierarchy.conceptId = response['conceptId'];
+        hierarchy.children = response['children'];
+        const depth = 0;
+        if (hierarchy.children) {
+            hierarchy.children.forEach((item) => {
+                this.parseNestedLevel(item, depth, hierarchy.conceptId, attributes);
+            });
+        }
+        return attributes;
     }
 
     getRuleStrength(id) {

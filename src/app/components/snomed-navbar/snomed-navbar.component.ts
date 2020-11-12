@@ -69,9 +69,12 @@ export class SnomedNavbarComponent implements OnInit {
         this.domainService.clearActiveDomain();
         this.attributeService.clearActiveAttribute();
         this.rangeService.clearActiveRange();
-        this.terminologyService.getAttributesWithConcreteDomains().subscribe(attributes => {
-                this.attributeService.setAttributesWithConcreteDomains(attributes.items);
-                this.mrcmmtService.setupDomains();
+        this.terminologyService.getAttributesWithConcreteDomains().subscribe(ConcreteAttributes => {
+                this.terminologyService.getAttributeHierarchy().subscribe(attributes => {
+                    this.attributeService.setAttributeHierarchy(attributes);
+                    this.attributeService.setAttributesWithConcreteDomains(ConcreteAttributes.items);
+                    this.mrcmmtService.setupDomains();
+                });
             });
     }
 }

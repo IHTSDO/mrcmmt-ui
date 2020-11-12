@@ -3,6 +3,7 @@ import { RefSet } from '../../models/refset';
 import { RefsetError } from '../../models/refset';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
+import { AttributeNestingPipe } from '../../pipes/attribute-nesting.pipe';
 import { Observable, Subscription } from 'rxjs';
 import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';

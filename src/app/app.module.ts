@@ -14,6 +14,7 @@ import { DomainPanelComponent } from './components/domain-panel/domain-panel.com
 import { AttributeRangePanelComponent } from './components/attribute-range-panel/attribute-range-panel.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { TextMatchPipe } from './pipes/text-match.pipe';
+import { AttributeNestingPipe } from './pipes/attribute-nesting.pipe';
 import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
 import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
 import { CustomOrderPipe } from './pipes/custom-order.pipe';
@@ -48,6 +49,7 @@ import { HeaderInterceptor } from './interceptors/header.interceptor';
         TextMatchPipe,
         DuplicateFilterPipe,
         DomainMatchPipe,
+        AttributeNestingPipe,
         BreadcrumbBarComponent,
         AlphabeticalPipe,
         TopLevelDomainPipe,

@@ -135,7 +135,7 @@ export class AppComponent implements OnInit {
                     this.branchingService.setVersions(versions);
 
                     this.terminologyService.getAttributeHierarchy().subscribe(attributes => {
-                        this.attributeService.setAttributeHierarchy(attributes.items);
+                        this.attributeService.setAttributeHierarchy(attributes);
                     });
 
                     this.terminologyService.getAttributesWithConcreteDomains().subscribe(attributes => {
