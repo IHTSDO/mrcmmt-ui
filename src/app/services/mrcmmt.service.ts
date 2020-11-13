@@ -72,8 +72,8 @@ export class MrcmmtService {
     setupAttributes() {
         this.terminologyService.getAttributes().subscribe(attributes => {
             attributes = this.buildAttributeHierarchy(attributes);
-            this.attributeService.setAttributes(attributes);
             this.addConcreteDomainParameters();
+            this.attributeService.setAttributes(attributes);
             if (this.urlParamsService.getAttributeParam()) {
                 const activeAttribute = attributes.items.find(result => {
                     return result.referencedComponentId === this.urlParamsService.getAttributeParam();
