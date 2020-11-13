@@ -6,7 +6,7 @@ export class UIConfiguration {
     };
     features: {
         mrcmmtEditableBranches: string;
-    }
+    };
 
     constructor(imsEndpoint, terminologyServerEndpoint, collectorEndpoint, mrcmmtEditableBranches) {
         this.endpoints = {
