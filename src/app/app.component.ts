@@ -108,10 +108,10 @@ export class AppComponent implements OnInit {
                 this.authenticationService.getLoggedInUser().subscribe(user => {
 
                     if (user.roles.includes('ROLE_int-sca-author')) {
-                        let array = this.authoringService.uiConfiguration.features.mrcmmtEditableBranches.split(',');
+                        const array = this.authoringService.uiConfiguration.features.mrcmmtEditableBranches.split(',');
                         array.forEach((item) => {
                             item = item.replace(/['"]+/g, '');
-                            item = item.replace(/[\[\]']+/g,'');
+                            item = item.replace(/[\[\]']+/g, '');
                             versions.items.push({branchPath: item});
                         });
 //                        versions.items.push({branchPath: 'MAIN/MRCMMAINT1'});
