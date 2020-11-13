@@ -4,12 +4,18 @@ export class UIConfiguration {
         terminologyServerEndpoint: string;
         collectorEndpoint: string;
     };
+    features: {
+        mrcmmtEditableBranches: string;
+    }
 
-    constructor(imsEndpoint, terminologyServerEndpoint, collectorEndpoint) {
+    constructor(imsEndpoint, terminologyServerEndpoint, collectorEndpoint, mrcmmtEditableBranches) {
         this.endpoints = {
             imsEndpoint: imsEndpoint,
             terminologyServerEndpoint: terminologyServerEndpoint,
             collectorEndpoint: collectorEndpoint
+        };
+        this.features = {
+            mrcmmtEditableBranches: mrcmmtEditableBranches
         };
     }
 }

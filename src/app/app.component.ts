@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
         this.public = window.location.host.includes('browser');
 
-        this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '');
+        this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '', []);
 
         if (this.public) {
             this.publicConfig();
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
     }
 
     publicConfig() {
-        this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '');
+        this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '', []);
 
         this.terminologyService.getVersions(false).subscribe(versions => {
             this.branchingService.setLatestReleaseBranchPath(versions.items.reduce((a, b) => {
@@ -108,8 +108,14 @@ export class AppComponent implements OnInit {
                 this.authenticationService.getLoggedInUser().subscribe(user => {
 
                     if (user.roles.includes('ROLE_int-sca-author')) {
-                        versions.items.push({branchPath: 'MAIN/MRCMMAINT1'});
-                        versions.items.push({branchPath: 'MAIN/CDITEST1'});
+                        let array = this.authoringService.uiConfiguration.features.mrcmmtEditableBranches.split(',');
+                        array.forEach((item) => {
+                            item = item.replace(/['"]+/g, '');
+                            item = item.replace(/[\[\]']+/g,'');
+                            versions.items.push({branchPath: item});
+                        });
+//                        versions.items.push({branchPath: 'MAIN/MRCMMAINT1'});
+//                        versions.items.push({branchPath: 'MAIN/CDITEST1'});
                     }
 
                     versions.items.push({branchPath: 'MAIN'});
