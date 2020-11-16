@@ -3,6 +3,7 @@ import { RefSet } from '../../models/refset';
 import { RefsetError } from '../../models/refset';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
+import { AttributeNestingPipe } from '../../pipes/attribute-nesting.pipe';
 import { Observable, Subscription } from 'rxjs';
 import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';
@@ -30,9 +31,9 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
 
     latestReleaseRange: RefSet;
     latestReleaseRangeSubscription: Subscription;
-    domains: object;
+    domains: SnomedResponseObject;
     domainSubscription: Subscription;
-    attributes: object;
+    attributes: SnomedResponseObject;
     attributeSubscription: Subscription;
     attributeFilter: string;
     attributeFilterSubscription: Subscription;
@@ -69,7 +70,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                 private terminologyService: TerminologyServerService,
                 private customOrder: CustomOrderPipe,
                 private editService: EditService,
-                private mrcmmtService: MrcmmtService,
+                public mrcmmtService: MrcmmtService,
                 private validationService: ValidationService,
                 private urlParamsService: UrlParamsService,
                 private branchingService: BranchingService) {
@@ -162,18 +163,19 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
 
         if (this.activeAttribute.referencedComponentId) {
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(data => {
+                data.items.forEach(item => {
+                    if (item.additionalFields.rangeConstraint.startsWith('dec')
+                        || item.additionalFields.rangeConstraint.startsWith('int')
+                        || item.additionalFields.rangeConstraint.startsWith('str')) {
+                        this.mrcmmtService.rangeConstraintToConcreteDomainParameters(item);
+                    }
+                });
+
                 const ranges: SnomedResponseObject = { items: data.items, total: data.total, errorMessage: null};
 
                 ranges.items = ranges.items.concat(this.changeLog.filter(item => {
                     return this.activeAttribute.referencedComponentId === item.referencedComponentId;
                 }));
-
-//                if (!ranges.items.length) {
-//                    const range = this.rangeService.getNewRange(this.activeAttribute);
-//                    this.changeLog.push(range);
-//                    this.editService.setChangeLog(this.changeLog);
-//                    ranges.items.push(range);
-//                }
 
                 ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
                 this.rangeService.setRanges(ranges);

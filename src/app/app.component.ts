@@ -35,8 +35,8 @@ export class AppComponent implements OnInit {
                 private branchingService: BranchingService,
                 private mrcmmtService: MrcmmtService,
                 private authenticationService: AuthenticationService,
-                private modalService: ModalService,
-                private editService: EditService,
+                public modalService: ModalService,
+                public editService: EditService,
                 private urlParamsService: UrlParamsService) {
     }
 
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
         this.public = window.location.host.includes('browser');
 
-        this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '');
+        this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '', []);
 
         if (this.public) {
             this.publicConfig();
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
     }
 
     publicConfig() {
-        this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '');
+        this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '', []);
 
         this.terminologyService.getVersions(false).subscribe(versions => {
             this.branchingService.setLatestReleaseBranchPath(versions.items.reduce((a, b) => {
@@ -75,7 +75,10 @@ export class AppComponent implements OnInit {
             this.branchingService.setBranchPath(versions.items[0].branchPath);
             this.editService.setEditor(false);
             this.branchingService.setVersions(versions);
-            this.mrcmmtService.setupDomains();
+            this.terminologyService.getAttributesWithConcreteDomains().subscribe(attributes => {
+                this.attributeService.setAttributesWithConcreteDomains(attributes.items);
+                this.mrcmmtService.setupDomains();
+            });
         });
     }
 
@@ -105,7 +108,14 @@ export class AppComponent implements OnInit {
                 this.authenticationService.getLoggedInUser().subscribe(user => {
 
                     if (user.roles.includes('ROLE_int-sca-author')) {
-                        versions.items.push({branchPath: 'MAIN/MRCMMAINT1'});
+                        const array = this.authoringService.uiConfiguration.features.mrcmmtEditableBranches.split(',');
+                        array.forEach((item) => {
+                            item = item.replace(/['"]+/g, '');
+                            item = item.replace(/[\[\]']+/g, '');
+                            versions.items.push({branchPath: item});
+                        });
+//                        versions.items.push({branchPath: 'MAIN/MRCMMAINT1'});
+//                        versions.items.push({branchPath: 'MAIN/CDITEST1'});
                     }
 
                     versions.items.push({branchPath: 'MAIN'});
@@ -129,7 +139,15 @@ export class AppComponent implements OnInit {
                     }
 
                     this.branchingService.setVersions(versions);
-                    this.mrcmmtService.setupDomains();
+
+                    this.terminologyService.getAttributeHierarchy().subscribe(attributes => {
+                        this.attributeService.setAttributeHierarchy(attributes);
+                    });
+
+                    this.terminologyService.getAttributesWithConcreteDomains().subscribe(attributes => {
+                        this.attributeService.setAttributesWithConcreteDomains(attributes.items);
+                        this.mrcmmtService.setupDomains();
+                    });
                 });
             });
         });

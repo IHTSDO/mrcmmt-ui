@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { AdditionalFields, RefSet } from '../models/refset';
+import { Hierarchy } from '../models/hierarchy';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +17,8 @@ export class AttributeService {
     private attributeFilter = new Subject<any>();
     private latestReleaseAttributes: RefSet[];
     private latestReleaseActiveAttribute = new Subject<any>();
+    private attributeHierarchy = new Subject<any>();
+    private attributesWithConcreteDomains = new Subject<any>();
 
     // Setters & Getters: Attributes
     setAttributes(attributes) {
@@ -79,9 +82,27 @@ export class AttributeService {
         return this.latestReleaseAttributes;
     }
 
+    // Setters & Getters: Attribute Hierarchy
+    setAttributeHierarchy(attributes) {
+        this.attributeHierarchy = attributes;
+    }
+
+    getAttributeHierarchy() {
+        return this.attributeHierarchy;
+    }
+
+    // Setters & Getters: Attributes with Concrete Domains
+    setAttributesWithConcreteDomains(attributes) {
+        this.attributesWithConcreteDomains = attributes;
+    }
+
+    getAttributesWithConcreteDomains() {
+        return this.attributesWithConcreteDomains;
+    }
+
     // New Attribute
     getNewAttribute(activeDomain): RefSet {
-        return new RefSet(
+        const attribute = new RefSet(
             new AdditionalFields(activeDomain.referencedComponentId),
             null,
             { id: null, fsn: { term: 'New Attribute' }},
@@ -90,5 +111,10 @@ export class AttributeService {
             true,
             []
         );
+
+        attribute.additionalFields.ruleStrengthId = '723597001';
+        attribute.additionalFields.contentTypeId = '723596005';
+
+        return attribute;
     }
 }

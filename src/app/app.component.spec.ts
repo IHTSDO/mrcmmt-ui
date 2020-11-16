@@ -10,6 +10,7 @@ import { ApplicableAttributesPanelComponent } from './components/applicable-attr
 import { AttributeRangePanelComponent } from './components/attribute-range-panel/attribute-range-panel.component';
 import { DuplicateFilterPipe } from './pipes/duplicate-filter.pipe';
 import { DomainMatchPipe } from './pipes/domain-match.pipe';
+import { AttributeNestingPipe } from './pipes/attribute-nesting.pipe';
 import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
 import { TextMatchPipe } from './pipes/text-match.pipe';
 import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
@@ -20,7 +21,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CustomOrderPipe } from './pipes/custom-order.pipe';
 import { ModalComponent } from './components/modal/modal.component';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('AppComponent', () => {
     beforeEach(async(() => {
@@ -34,7 +35,8 @@ describe('AppComponent', () => {
                 NgbTypeaheadModule
             ],
             providers: [
-                CustomOrderPipe
+                CustomOrderPipe,
+                {provide: APP_BASE_HREF, useValue : '/mrcm/' }
             ],
             declarations: [
                 AppComponent,
@@ -48,6 +50,7 @@ describe('AppComponent', () => {
                 DuplicateFilterPipe,
                 DomainMatchPipe,
                 InheritedDomainMatchPipe,
+                AttributeNestingPipe,
                 TextMatchPipe,
                 AlphabeticalPipe,
                 TopLevelDomainPipe

@@ -12,6 +12,9 @@ export class RefSet {
     changed: boolean;
     deleted: boolean;
     errors: RefsetError[];
+    concreteDomainAttribute?: boolean;
+    concreteDomainParameters?: ConcreteDomainParameters;
+    effectiveTime: string;
 
     constructor(additonalFields: AdditionalFields,
                 referencedComponentId: string,
@@ -49,6 +52,8 @@ export class AdditionalFields {
     rangeConstraint: string;
     attributeRule: string;
     guideURL: string;
+    parentId: string;
+    depth: string;
 
     constructor(domainId: string) {
         this.domainId = domainId;
@@ -69,5 +74,15 @@ export class RefsetError {
     constructor(message: string, fieldReference: string) {
         this.message = message;
         this.fieldReference = fieldReference;
+    }
+}
+
+export class ConcreteDomainParameters {
+    attributeType: string;
+    displayRange: string;
+
+    constructor() {
+        this.attributeType = 'Decimal';
+        this.displayRange = '';
     }
 }

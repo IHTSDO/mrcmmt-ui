@@ -11,7 +11,32 @@
                 <button *ngIf="editable && !range.released" class="delete float-right p-0" (click)="deleteRange($event, range)"><i class="fas fa-minus"></i></button>
             </div>
             <div *ngIf="ranges?.items && activeAttribute && activeRange" class="details">
-                <ng-container *ngIf="activeRange.additionalFields.rangeConstraint || editable">
+                <ng-container *ngIf="activeAttribute.concreteDomainAttribute">
+                    <div class="row">
+                        <div class="col-3">
+                            <h5 class="label m-2">Concrete Type<span *ngIf="editable" class="mandatory"> *</span></h5>
+                            <select class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
+                                    [(ngModel)]="activeRange.concreteDomainParameters.attributeType"
+                                    (ngModelChange)="updateAttributeType()">
+                                <option *ngFor="let attributeType of mrcmmtService.concreteAttributeTypes" [value]="attributeType" >{{attributeType}}</option>
+                            </select>
+                            <div *ngIf="!editable" class="detail mx-2 mt-0 mb-3 px-2 rounded">
+                                {{activeRange.concreteDomainParameters?.attributeType}}
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <h5 class="label m-2">Range Constraint<span *ngIf="editable" class="mandatory"> *</span></h5>
+                            <input class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
+                                   [(ngModel)]="activeRange.concreteDomainParameters.displayRange"
+                                   (ngModelChange)="updateAttribute()">
+                            <div *ngIf="!editable" class="detail mx-2 mt-0 mb-3 px-2 rounded">
+                                {{activeRange.concreteDomainParameters?.displayRange}}
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="!activeAttribute?.concreteDomainAttribute || activeAttribute?.concreteDomainAttribute === undefined">
                     <h5 class="label m-2">Range Constraint<span *ngIf="editable" class="mandatory"> *</span></h5>
                     <div *ngIf="attributeRuleInvalid" class="detail m-2 mb-3 p-0 px-2 warning">No ECL results</div>
                     <textarea type="text" class="detail m-2 mb-3 p-0 px-2 rounded" *ngIf="editable"
@@ -62,7 +87,7 @@
                     </div>
                 </ng-container>
             </div>
-            <div class="results" *ngIf="ranges?.items && activeRange && results">
+            <div class="results" *ngIf="ranges?.items && activeRange && results && !activeAttribute.concreteDomainAttribute">
                 <div *ngIf="results?.total">
                     <h4 class="pt-3 px-3">{{results.total | number:'1.'}} Results Matching Range</h4>
                 </div>
@@ -135,7 +160,7 @@
                 <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.rangeConstraint); let odd = odd" [class.odd]="odd">{{line}}</p>
             </div>
 
-            <div *ngIf="!rangeConstraintModal" class="expression-container p-5">
+            <div *ngIf="!rangeConstraintModal">
                 <div *ngIf="latestReleaseRange" class="expression-container p-5">
                     <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.rangeConstraint, latestReleaseRange?.additionalFields.rangeConstraint); let odd = odd" [class.added]="line.type === 'added'" [class.removed]="line.type === 'removed'">{{line.text}}</p>
                 </div>
@@ -198,7 +223,7 @@
             <div *ngIf="attributeRuleModal" class="expression-container p-5">
                 <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.attributeRule); let odd = odd" [class.odd]="odd">{{line}}</p>
             </div>
-            <div *ngIf="!attributeRuleModal" class="expression-container p-5">
+            <div *ngIf="!attributeRuleModal">
                 <div *ngIf="latestReleaseRange" class="expression-container p-5">
                     <p class="mb-0" *ngFor="let line of ECLexpressionBuilder(activeRange?.additionalFields.attributeRule, latestReleaseRange?.additionalFields.attributeRule); let odd = odd" [class.added]="line.type === 'added'" [class.removed]="line.type === 'removed'">{{line.text}}</p>
                 </div>

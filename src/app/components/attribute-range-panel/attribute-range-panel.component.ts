@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { RefSet } from '../../models/refset';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
-import { Subscription } from 'rxjs';
+import { range, Subscription } from 'rxjs';
 import { RangeService } from '../../services/range.service';
 import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';
@@ -12,6 +12,7 @@ import { BranchingService } from '../../services/branching.service';
 import { ModalService } from '../../services/modal.service';
 import { SnomedUtilityService } from '../../services/snomedUtility.service';
 import { SnomedResponseObject } from '../../models/snomedResponseObject';
+import { max, min } from 'rxjs/operators';
 
 export class Results {
     items: object[];
@@ -50,11 +51,11 @@ export class AttributeRangePanelComponent implements OnDestroy {
                 private attributeService: AttributeService,
                 private rangeService: RangeService,
                 private terminologyService: TerminologyServerService,
-                private mrcmmtService: MrcmmtService,
+                public mrcmmtService: MrcmmtService,
                 private editService: EditService,
                 private urlParamsService: UrlParamsService,
                 private branchingService: BranchingService,
-                private modalService: ModalService) {
+                public modalService: ModalService) {
         this.rangeSubscription = this.rangeService.getRanges().subscribe(data => this.ranges = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
@@ -82,15 +83,15 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.changeLogSubscription.unsubscribe();
     }
 
-    makeActiveRange(range) {
+    makeActiveRange(activeRange) {
         this.clearResults();
 
-        if (this.activeRange === range) {
+        if (this.activeRange === activeRange) {
             this.rangeService.clearLatestReleaseActiveRange();
             this.rangeService.clearRanges();
             this.setActives(this.activeDomain, this.activeAttribute, null);
         } else {
-            this.activeRange = range;
+            this.activeRange = activeRange;
 
             this.terminologyService.getRanges(this.activeAttribute.referencedComponentId,
                 this.branchingService.getLatestReleaseBranchPath()).subscribe(ranges => {
@@ -158,6 +159,16 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.clearResults();
     }
 
+    updateAttribute() {
+        this.updateRange();
+        this.activeRange.additionalFields.rangeConstraint = this.mrcmmtService.concreteDomainParametersToRangeConstraint(this.activeRange);
+    }
+
+    updateAttributeType() {
+        this.updateRange();
+        this.activeRange.concreteDomainParameters.displayRange = '';
+    }
+
     addNewRange() {
         const newRange = this.rangeService.getNewRange(this.activeAttribute);
         if (!this.ranges) {
@@ -169,7 +180,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
     }
 
     getResults() {
-        if (this.activeRange) {
+        if (this.activeRange && !this.activeAttribute.concreteDomainAttribute) {
             this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
                 this.results = data;
             });
@@ -180,13 +191,13 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.results = { items: [], total: '' };
     }
 
-    setActives(domain, attribute, range) {
+    setActives(domain, attribute, activeRange) {
         this.domainService.setActiveDomain(domain);
         this.attributeService.setActiveAttribute(attribute);
-        this.rangeService.setActiveRange(range);
+        this.rangeService.setActiveRange(activeRange);
     }
 
-    ECLexpressionBuilder(expression: any, originalExpression: any) {
+    ECLexpressionBuilder(expression: any, originalExpression?: any) {
         if (expression && !originalExpression) {
             return SnomedUtilityService.ECLexpressionBuilder(expression);
         }

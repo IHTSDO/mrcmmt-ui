@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { AdditionalFields, RefSet } from '../models/refset';
+import { AdditionalFields, ConcreteDomainParameters, RefSet } from '../models/refset';
 
 @Injectable({
     providedIn: 'root'
@@ -56,7 +56,7 @@ export class RangeService {
 
     // New Range
     getNewRange(activeAttribute): RefSet {
-        return new RefSet(
+        const newRange = new RefSet(
             new AdditionalFields(null),
             activeAttribute.referencedComponentId,
             { id: activeAttribute.referencedComponentId, fsn: { term: activeAttribute.referencedComponent.fsn }},
@@ -65,5 +65,14 @@ export class RangeService {
             true,
             []
         );
+
+        newRange.additionalFields.ruleStrengthId = '723597001';
+        newRange.additionalFields.contentTypeId = '723596005';
+
+        if (activeAttribute.concreteDomainAttribute) {
+            newRange.concreteDomainParameters = new ConcreteDomainParameters();
+        }
+
+        return newRange;
     }
 }

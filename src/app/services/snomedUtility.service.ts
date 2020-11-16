@@ -56,29 +56,33 @@ export class SnomedUtilityService {
         let whitespaceCount = 0;
 
         for (let i = 0; i < response.length; i++) {
+            let shiftCount = 0;
+
             if (i !== 0) {
+                if (response[i].startsWith('OR')) {
+                    if (!response[i - 1].endsWith(',') && !response[i - 1].startsWith('OR')) {
+                        shiftCount = response[i - 1].indexOf('=');
+                    }
+
+                    if (!response[i - 1].endsWith(',') && response[i - 1].includes('OR')) {
+                        shiftCount = response[i - 1].indexOf('OR');
+                    }
+                }
+
                 if (response[i - 1].includes(':')) {
-                    whitespaceCount++;
+                    whitespaceCount += 4;
                 }
 
                 if (response[i - 1].includes('{') && !response[i - 1].includes('}')) {
-                    whitespaceCount++;
+                    whitespaceCount += 4;
                 }
 
                 if (!response[i - 1].includes('{') && response[i - 1].includes('}')) {
-                    whitespaceCount--;
-                }
-
-                if (!response[i - 1].includes('OR') && response[i].startsWith('OR')) {
-                    whitespaceCount++;
-                }
-
-                if (response[i - 1].includes('OR') && response[i - 1].trim().endsWith(',')) {
-                    whitespaceCount--;
+                    whitespaceCount -= 4;
                 }
             }
 
-            response[i] =  '    '.repeat(whitespaceCount) + response[i].trim();
+            response[i] =  ' '.repeat(shiftCount > 0 ? shiftCount : whitespaceCount) + response[i].trim();
         }
 
         return response;

@@ -7,6 +7,7 @@ import { User } from '../../models/user';
 import { AuthenticationService } from '../../services/authentication.service';
 import { EditService } from '../../services/edit.service';
 import { DomainService } from '../../services/domain.service';
+import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
 
@@ -17,16 +18,16 @@ import { RangeService } from '../../services/range.service';
 })
 export class SnomedNavbarComponent implements OnInit {
 
-    private environment: string;
-    private public: boolean;
-    private branchPath: string;
-    private branchPathSubscription: Subscription;
-    private versions: SnomedResponseObject;
-    private versionsSubscription: Subscription;
-    private user: User;
-    private userSubscription: Subscription;
-    private editable: boolean;
-    private editableSubscription: Subscription;
+    environment: string;
+    public: boolean;
+    branchPath: string;
+    branchPathSubscription: Subscription;
+    versions: SnomedResponseObject;
+    versionsSubscription: Subscription;
+    user: User;
+    userSubscription: Subscription;
+    editable: boolean;
+    editableSubscription: Subscription;
 
     constructor(private branchingService: BranchingService,
                 private mrcmmtService: MrcmmtService,
@@ -34,6 +35,7 @@ export class SnomedNavbarComponent implements OnInit {
                 private editService: EditService,
                 private domainService: DomainService,
                 private attributeService: AttributeService,
+                private terminologyService: TerminologyServerService,
                 private rangeService: RangeService) {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
         this.public = window.location.host.includes('browser');
@@ -67,5 +69,12 @@ export class SnomedNavbarComponent implements OnInit {
         this.domainService.clearActiveDomain();
         this.attributeService.clearActiveAttribute();
         this.rangeService.clearActiveRange();
+        this.terminologyService.getAttributesWithConcreteDomains().subscribe(ConcreteAttributes => {
+                this.terminologyService.getAttributeHierarchy().subscribe(attributes => {
+                    this.attributeService.setAttributeHierarchy(attributes);
+                    this.attributeService.setAttributesWithConcreteDomains(ConcreteAttributes.items);
+                    this.mrcmmtService.setupDomains();
+                });
+            });
     }
 }
