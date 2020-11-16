@@ -144,6 +144,11 @@ export class MrcmmtService {
                 this.parseNestedLevel(item, depth, hierarchy.conceptId, attributes);
             });
         }
+        attributes.items.forEach(item => {
+            if (!item.additionalFields.depth) {
+                item.additionalFields.depth = 1;
+            }
+        });
         return attributes;
     }
 
