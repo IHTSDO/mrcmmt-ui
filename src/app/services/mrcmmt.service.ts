@@ -222,6 +222,8 @@ export class MrcmmtService {
             this.domainService.setDomains(domains);
         });
         this.terminologyService.getAttributes().subscribe(attributes => {
+            attributes = this.buildAttributeHierarchy(attributes);
+            this.addConcreteDomainParameters();
             this.attributeService.setAttributes(attributes);
         });
     }
