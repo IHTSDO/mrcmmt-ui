@@ -107,12 +107,24 @@ export class TerminologyServerService {
     }
 
     putRefsetMember(member): Observable<SnomedResponseObject> {
+        if (member.additionalFields.depth) {
+            delete member.additionalFields.depth;
+        }
+        if (member.additionalFields.parentId) {
+            delete member.additionalFields.parentId;
+        }
         return this.http.put<SnomedResponseObject>(
             this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +
             '/members/' + member.memberId, member);
     }
 
     postRefsetMember(member): Observable<SnomedResponseObject> {
+        if (member.additionalFields.depth) {
+            delete member.additionalFields.depth;
+        }
+        if (member.additionalFields.parentId) {
+            delete member.additionalFields.parentId;
+        }
         return this.http.post<SnomedResponseObject>(
             this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +
             '/members', member);

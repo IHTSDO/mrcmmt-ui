@@ -173,9 +173,9 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
 
                 const ranges: SnomedResponseObject = { items: data.items, total: data.total, errorMessage: null};
 
-                ranges.items = ranges.items.concat(this.changeLog.filter(item => {
-                    return this.activeAttribute.referencedComponentId === item.referencedComponentId;
-                }));
+//                ranges.items = ranges.items.concat(this.changeLog.filter(item => {
+//                    return this.activeAttribute.referencedComponentId === item.referencedComponentId;
+//                }));
 
                 ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
                 this.rangeService.setRanges(ranges);
