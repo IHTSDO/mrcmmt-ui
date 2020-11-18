@@ -115,6 +115,7 @@ export class AttributeService {
         attribute.additionalFields.ruleStrengthId = '723597001';
         attribute.additionalFields.contentTypeId = '723596005';
         attribute.additionalFields.depth = 1;
+        attribute.additionalFields.grouped = "0";
 
         return attribute;
     }
