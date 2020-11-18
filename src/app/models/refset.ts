@@ -53,7 +53,7 @@ export class AdditionalFields {
     attributeRule: string;
     guideURL: string;
     parentId: string;
-    depth: string;
+    depth: number;
 
     constructor(domainId: string) {
         this.domainId = domainId;
