@@ -74,7 +74,13 @@ export class AppComponent implements OnInit {
             versions.items.reverse();
             this.branchingService.setBranchPath(versions.items[0].branchPath);
             this.editService.setEditor(false);
+            
             this.branchingService.setVersions(versions);
+            
+            this.terminologyService.getAttributeHierarchy().subscribe(attributes => {
+                this.attributeService.setAttributeHierarchy(attributes);
+            });
+            
             this.terminologyService.getAttributesWithConcreteDomains().subscribe(attributes => {
                 this.attributeService.setAttributesWithConcreteDomains(attributes.items);
                 this.mrcmmtService.setupDomains();
