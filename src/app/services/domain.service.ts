@@ -18,7 +18,7 @@ export class DomainService {
 
     // Setters & Getters: Domains
     setDomains(domains) {
-        console.log('DOMAINS: ', domains);
+        // console.log('DOMAINS: ', domains);
         this.domains.next(domains);
     }
 

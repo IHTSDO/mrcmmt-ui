@@ -185,7 +185,6 @@ export class MrcmmtService {
             range.concreteDomainParameters.displayRange =
                 rangeConstraint.substring(rangeConstraint.indexOf('("') + 2, rangeConstraint.indexOf('")'));
         }
-        console.log(range.concreteDomainParameters.displayRange);
     }
 
     concreteDomainParametersToRangeConstraint(range) {

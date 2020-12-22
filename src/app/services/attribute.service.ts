@@ -22,7 +22,7 @@ export class AttributeService {
 
     // Setters & Getters: Attributes
     setAttributes(attributes) {
-        console.log('ATTRIBUTES: ', attributes);
+        // console.log('ATTRIBUTES: ', attributes);
         this.attributes.next(attributes);
     }
 

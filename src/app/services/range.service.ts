@@ -16,7 +16,7 @@ export class RangeService {
 
     // Setters & Getters: Ranges
     setRanges(ranges) {
-        console.log('RANGES: ', ranges);
+        // console.log('RANGES: ', ranges);
         this.ranges.next(ranges);
     }
 

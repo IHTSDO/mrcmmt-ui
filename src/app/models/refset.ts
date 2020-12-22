@@ -12,6 +12,7 @@ export class RefSet {
     changed: boolean;
     deleted: boolean;
     errors: RefsetError[];
+    etlError?: string;
     concreteDomainAttribute?: boolean;
     concreteDomainParameters?: ConcreteDomainParameters;
     effectiveTime: string;

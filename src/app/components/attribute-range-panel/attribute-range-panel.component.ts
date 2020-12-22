@@ -108,12 +108,18 @@ export class AttributeRangePanelComponent implements OnDestroy {
 
     validateEcl() {
         this.attributeRuleInvalid = false;
-        this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
-            if (data.items.length === 0) {
-                    this.attributeRuleInvalid = true;
-                }
-            });
-        this.updateRange();
+        if (this.activeRange.additionalFields.rangeConstraint.length) {
+            this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
+                    this.activeRange.etlError = null;
+                    if (data.items.length === 0) {
+                        this.attributeRuleInvalid = true;
+                    }
+                },
+                error => {
+                    this.activeRange.etlError = error.error.message;
+                });
+            this.updateRange();
+        }
     }
 
     updateRange() {
@@ -180,7 +186,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
     }
 
     getResults() {
-        if (this.activeRange && !this.activeAttribute.concreteDomainAttribute) {
+        if (this.activeRange && !this.activeAttribute.concreteDomainAttribute && this.activeRange.additionalFields.rangeConstraint) {
             this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
                 this.results = data;
             });

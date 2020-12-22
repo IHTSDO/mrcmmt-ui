@@ -124,6 +124,11 @@ div#attribute-range-panel {
             cursor: none;
         }
 
+        p.error {
+            color: $indianred;
+            font-size: 1.2rem;
+        }
+
         &.short {
             white-space: nowrap;
             overflow: hidden;
