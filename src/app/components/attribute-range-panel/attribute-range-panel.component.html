@@ -24,7 +24,7 @@
                                 {{activeRange.concreteDomainParameters?.attributeType}}
                             </div>
                         </div>
-                        <div class="col-9">
+                        <div *ngIf="activeRange.concreteDomainParameters.attributeType !== 'String'" class="col-9">
                             <h5 class="label m-2">Range Constraint<span *ngIf="editable" class="mandatory"> *</span></h5>
                             <input class="detail mx-2 mt-0 mb-3 px-2 rounded" *ngIf="editable"
                                    [(ngModel)]="activeRange.concreteDomainParameters.displayRange"
