@@ -81,6 +81,7 @@ export class RefsetError {
 export class ConcreteDomainParameters {
     attributeType: string;
     displayRange: string;
+    rangeConstraint: string;
 
     constructor() {
         this.attributeType = 'Decimal';
