@@ -172,8 +172,8 @@ export class AttributeRangePanelComponent implements OnDestroy {
 
     updateAttributeType() {
         this.updateRange();
-        if(this.activeRange.concreteDomainParameters.attributeType === 'String'){
-            this.activeRange.additionalFields.rangeConstraint = 'str(\"*\")'
+        if (this.activeRange.concreteDomainParameters.attributeType === 'String') {
+            this.activeRange.additionalFields.rangeConstraint = 'str(\"*\")';
         }
         this.activeRange.concreteDomainParameters.displayRange = '';
     }
