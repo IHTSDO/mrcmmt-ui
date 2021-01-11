@@ -58,8 +58,11 @@ export class AppComponent implements OnInit {
 
     publicConfig() {
         this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '', []);
-
-        this.terminologyService.getVersions(false).subscribe(versions => {
+        let showFuture = false;
+        if (window.location.hostname.includes('concrete') || window.location.hostname.includes('preview')) {
+            showFuture = true;
+        }
+        this.terminologyService.getVersions(showFuture).subscribe(versions => {
             this.branchingService.setLatestReleaseBranchPath(versions.items.reduce((a, b) => {
                 return a.effectiveDate > b.effectiveDate ? a : b;
             }).branchPath);
