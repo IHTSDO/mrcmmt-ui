@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.ihtsdo.otf</groupId>
     <artifactId>mrcmmt-ui</artifactId>
-    <version>1.2.11-SNAPSHOT</version>
+    <version>1.2.12-SNAPSHOT</version>
     <properties>
         <packageName>${project.artifactId}</packageName>
     </properties>
