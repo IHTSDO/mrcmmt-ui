@@ -32,8 +32,8 @@
                             <div *ngIf="!editable" class="detail mx-2 mt-0 px-2 rounded">
                                 {{activeRange.concreteDomainParameters?.displayRange}}
                             </div>
-                            <p class="px-3 error" *ngIf="activeRange.etlError">{{activeRange.etlError}}</p>
                         </div>
+                        <p class="px-5 error" *ngIf="activeRange.etlError">{{activeRange.etlError}}</p>
                     </div>
                 </ng-container>
 

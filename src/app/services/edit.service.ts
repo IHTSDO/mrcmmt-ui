@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { RefSet } from '../models/refset';
 import { TerminologyServerService } from './terminologyServer.service';
 import { MrcmmtService } from './mrcmmt.service';
+import { RangeService } from './range.service';
 
 @Injectable({
     providedIn: 'root'
@@ -10,9 +11,14 @@ import { MrcmmtService } from './mrcmmt.service';
 export class EditService {
     localChanges: RefSet[];
     changeLogSubscription: Subscription;
+    activeRange: RefSet;
+    activeRangeSubscription: Subscription;
 
-    constructor(private terminologyService: TerminologyServerService, private mrcmmtService: MrcmmtService) {
+    constructor(private terminologyService: TerminologyServerService,
+                private mrcmmtService: MrcmmtService,
+                private rangeService: RangeService) {
         this.changeLogSubscription = this.getChangeLog().subscribe(data => this.localChanges = data);
+        this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
     }
 
     private editable = new Subject<boolean>();
@@ -71,16 +77,25 @@ export class EditService {
             this.terminologyService.deleteRefsetMember(item).subscribe(
                 () => {
                     this.nextIterable(changes);
+                },
+                (error) => {
+                    this.activeRange.etlError = error.error.message;
                 });
         } else if (item.newRefset) {
             this.terminologyService.postRefsetMember(item).subscribe(
                 () => {
                     this.nextIterable(changes);
+                },
+                (error) => {
+                    this.activeRange.etlError = error.error.message;
                 });
         } else if (item.memberId && !item.newRefset) {
             this.terminologyService.putRefsetMember(item).subscribe(
                 () => {
                     this.nextIterable(changes);
+                },
+                (error) => {
+                    this.activeRange.etlError = error.error.message;
                 });
         } else {
             console.error('Attempted to save Refset that was neither DELETED, POSTED, nor UPDATED');
