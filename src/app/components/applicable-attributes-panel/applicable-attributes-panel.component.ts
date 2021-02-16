@@ -62,7 +62,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                 return this.terminologyService.getTypeahead(term);
             }
         })
-    );
+    )
 
     constructor(private domainService: DomainService,
                 private attributeService: AttributeService,
