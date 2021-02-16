@@ -21,6 +21,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CustomOrderPipe } from './pipes/custom-order.pipe';
 import { ModalComponent } from './components/modal/modal.component';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { APP_BASE_HREF } from '@angular/common';
 
 describe('AppComponent', () => {
@@ -32,7 +33,8 @@ describe('AppComponent', () => {
                 RouterTestingModule,
                 BrowserDynamicTestingModule,
                 AppRoutingModule,
-                NgbTypeaheadModule
+                NgbTypeaheadModule,
+                MatCheckboxModule
             ],
             providers: [
                 CustomOrderPipe,
