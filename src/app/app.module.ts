@@ -37,6 +37,7 @@ import { ModalService } from './services/modal.service';
 import { UrlParamsService } from './services/url-params.service';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
 import { HeaderInterceptor } from './interceptors/header.interceptor';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
     declarations: [
@@ -62,7 +63,8 @@ import { HeaderInterceptor } from './interceptors/header.interceptor';
         HttpClientModule,
         BrowserAnimationsModule,
         NgbTypeaheadModule,
-        AppRoutingModule
+        AppRoutingModule,
+        MatCheckboxModule
     ],
     providers: [
         TerminologyServerService,

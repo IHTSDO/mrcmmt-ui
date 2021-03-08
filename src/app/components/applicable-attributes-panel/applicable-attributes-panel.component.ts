@@ -1,27 +1,27 @@
-import { Component, OnDestroy } from '@angular/core';
-import { RefSet } from '../../models/refset';
-import { RefsetError } from '../../models/refset';
-import { TerminologyServerService } from '../../services/terminologyServer.service';
-import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
-import { AttributeNestingPipe } from '../../pipes/attribute-nesting.pipe';
-import { Observable, Subscription } from 'rxjs';
-import { DomainService } from '../../services/domain.service';
-import { AttributeService } from '../../services/attribute.service';
-import { RangeService } from '../../services/range.service';
-import { EditService } from '../../services/edit.service';
-import { MrcmmtService } from '../../services/mrcmmt.service';
-import { UrlParamsService } from '../../services/url-params.service';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { SnomedUtilityService } from '../../services/snomedUtility.service';
-import { ValidationService } from '../../services/validation.service';
-import { SnomedResponseObject } from '../../models/snomedResponseObject';
-import { BranchingService } from '../../services/branching.service';
+import {Component, OnDestroy} from '@angular/core';
+import {RefSet} from '../../models/refset';
+import {RefsetError} from '../../models/refset';
+import {TerminologyServerService} from '../../services/terminologyServer.service';
+import {CustomOrderPipe} from '../../pipes/custom-order.pipe';
+import {AttributeNestingPipe} from '../../pipes/attribute-nesting.pipe';
+import {Observable, Subscription} from 'rxjs';
+import {DomainService} from '../../services/domain.service';
+import {AttributeService} from '../../services/attribute.service';
+import {RangeService} from '../../services/range.service';
+import {EditService} from '../../services/edit.service';
+import {MrcmmtService} from '../../services/mrcmmt.service';
+import {UrlParamsService} from '../../services/url-params.service';
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {SnomedUtilityService} from '../../services/snomedUtility.service';
+import {ValidationService} from '../../services/validation.service';
+import {SnomedResponseObject} from '../../models/snomedResponseObject';
+import {BranchingService} from '../../services/branching.service';
 
 @Component({
     selector: 'app-applicable-attributes-panel',
     templateUrl: './applicable-attributes-panel.component.html',
     styleUrls: ['./applicable-attributes-panel.component.scss'],
-    providers: [ CustomOrderPipe ]
+    providers: [CustomOrderPipe]
 })
 export class ApplicableAttributesPanelComponent implements OnDestroy {
 
@@ -171,7 +171,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                     }
                 });
 
-                const ranges: SnomedResponseObject = { items: data.items, total: data.total, errorMessage: null};
+                const ranges: SnomedResponseObject = {items: data.items, total: data.total, errorMessage: null};
 
 //                ranges.items = ranges.items.concat(this.changeLog.filter(item => {
 //                    return this.activeAttribute.referencedComponentId === item.referencedComponentId;

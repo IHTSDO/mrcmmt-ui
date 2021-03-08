@@ -67,9 +67,6 @@ export class AppComponent implements OnInit {
                 return a.effectiveDate > b.effectiveDate ? a : b;
             }).branchPath);
 
-            this.setLatestReleaseDomains();
-            this.setLatestReleaseAttributes();
-
             versions.items = versions.items.filter(item => {
                 return item.effectiveDate >= 20170731;
             });
@@ -80,13 +77,14 @@ export class AppComponent implements OnInit {
 
             this.branchingService.setVersions(versions);
 
-            this.terminologyService.getAttributeHierarchy().subscribe(attributes => {
-                this.attributeService.setAttributeHierarchy(attributes);
-            });
-
-            this.terminologyService.getAttributesWithConcreteDomains().subscribe(attributes => {
-                this.attributeService.setAttributesWithConcreteDomains(attributes.items);
-                this.mrcmmtService.setupDomains();
+            this.terminologyService.getAttributeHierarchy().subscribe(hierarchyAttributes => {
+                this.attributeService.setAttributeHierarchy(hierarchyAttributes);
+                this.setLatestReleaseDomains();
+                this.setLatestReleaseAttributes();
+                this.terminologyService.getAttributesWithConcreteDomains().subscribe(attributes => {
+                    this.attributeService.setAttributesWithConcreteDomains(attributes.items);
+                    this.mrcmmtService.setupDomains();
+                });
             });
         });
     }
@@ -106,9 +104,6 @@ export class AppComponent implements OnInit {
                 this.branchingService.setLatestReleaseBranchPath(versions.items.reduce((a, b) => {
                     return a.effectiveDate > b.effectiveDate ? a : b;
                 }).branchPath);
-
-                this.setLatestReleaseDomains();
-                this.setLatestReleaseAttributes();
 
                 versions.items = versions.items.filter(item => {
                     return item.effectiveDate >= 20170731;
@@ -149,13 +144,14 @@ export class AppComponent implements OnInit {
 
                     this.branchingService.setVersions(versions);
 
-                    this.terminologyService.getAttributeHierarchy().subscribe(attributes => {
-                        this.attributeService.setAttributeHierarchy(attributes);
-                    });
-
-                    this.terminologyService.getAttributesWithConcreteDomains().subscribe(attributes => {
-                        this.attributeService.setAttributesWithConcreteDomains(attributes.items);
-                        this.mrcmmtService.setupDomains();
+                    this.terminologyService.getAttributeHierarchy().subscribe(hierarchyAttributes => {
+                        this.attributeService.setAttributeHierarchy(hierarchyAttributes);
+                        this.setLatestReleaseDomains();
+                        this.setLatestReleaseAttributes();
+                        this.terminologyService.getAttributesWithConcreteDomains().subscribe(attributes => {
+                            this.attributeService.setAttributesWithConcreteDomains(attributes.items);
+                            this.mrcmmtService.setupDomains();
+                        });
                     });
                 });
             });
