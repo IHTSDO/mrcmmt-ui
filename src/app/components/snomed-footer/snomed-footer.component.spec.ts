@@ -4,6 +4,8 @@ import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
 import { SnomedFooterComponent } from './snomed-footer.component';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('SnomedFooterComponent', () => {
   let component: SnomedFooterComponent;
@@ -13,7 +15,9 @@ describe('SnomedFooterComponent', () => {
     TestBed.configureTestingModule({
         imports: [
             HttpClientTestingModule,
-            RouterTestingModule
+            RouterTestingModule,
+            BrowserAnimationsModule,
+            ToastrModule.forRoot()
         ],
         declarations: [ SnomedFooterComponent ],
         providers: [ CustomOrderPipe ]

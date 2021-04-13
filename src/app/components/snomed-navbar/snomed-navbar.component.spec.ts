@@ -5,6 +5,8 @@ import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('SnomedNavbarComponent', () => {
     let component: SnomedNavbarComponent;
@@ -15,7 +17,9 @@ describe('SnomedNavbarComponent', () => {
             imports: [
                 HttpClientTestingModule,
                 RouterTestingModule,
-                BrowserDynamicTestingModule
+                BrowserDynamicTestingModule,
+                BrowserAnimationsModule,
+                ToastrModule.forRoot()
             ],
             providers: [
                 CustomOrderPipe

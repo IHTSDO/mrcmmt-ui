@@ -11,6 +11,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../../components/modal/modal.component';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('DomainPanelComponent', () => {
     let component: DomainPanelComponent;
@@ -23,7 +25,9 @@ describe('DomainPanelComponent', () => {
                 BrowserDynamicTestingModule,
                 RouterTestingModule,
                 HttpClientTestingModule,
-                NgbTypeaheadModule
+                NgbTypeaheadModule,
+                BrowserAnimationsModule,
+                ToastrModule.forRoot()
             ],
             providers: [
                 CustomOrderPipe

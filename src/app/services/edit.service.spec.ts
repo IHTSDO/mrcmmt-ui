@@ -4,12 +4,16 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CustomOrderPipe } from '../pipes/custom-order.pipe';
 
 import { EditService } from './edit.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToastrModule} from 'ngx-toastr';
 
 describe('editService', () => {
     beforeEach(() => TestBed.configureTestingModule({
         imports: [
             HttpClientTestingModule,
-            RouterTestingModule
+            RouterTestingModule,
+            BrowserAnimationsModule,
+            ToastrModule.forRoot()
         ],
         providers: [
                 CustomOrderPipe

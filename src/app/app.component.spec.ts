@@ -23,6 +23,8 @@ import { ModalComponent } from './components/modal/modal.component';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { APP_BASE_HREF } from '@angular/common';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
     beforeEach(async(() => {
@@ -34,7 +36,9 @@ describe('AppComponent', () => {
                 BrowserDynamicTestingModule,
                 AppRoutingModule,
                 NgbTypeaheadModule,
-                MatCheckboxModule
+                MatCheckboxModule,
+                BrowserAnimationsModule,
+                ToastrModule.forRoot()
             ],
             providers: [
                 CustomOrderPipe,

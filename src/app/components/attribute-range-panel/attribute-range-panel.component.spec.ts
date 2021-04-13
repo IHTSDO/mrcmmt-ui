@@ -8,6 +8,8 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { RouterTestingModule } from '@angular/router/testing';
 import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
 import { ModalComponent } from '../modal/modal.component';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AttributeRangePanelComponent', () => {
     let component: AttributeRangePanelComponent;
@@ -19,7 +21,9 @@ describe('AttributeRangePanelComponent', () => {
                 FormsModule,
                 HttpClientTestingModule,
                 BrowserDynamicTestingModule,
-                RouterTestingModule
+                RouterTestingModule,
+                BrowserAnimationsModule,
+                ToastrModule.forRoot()
             ],
             providers: [
                 CustomOrderPipe

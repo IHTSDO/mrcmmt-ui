@@ -6,6 +6,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
 import { ModalComponent } from '../modal/modal.component';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('BreadcrumbBarComponent', () => {
     let component: BreadcrumbBarComponent;
@@ -16,7 +18,9 @@ describe('BreadcrumbBarComponent', () => {
             imports: [
                 BrowserDynamicTestingModule,
                 RouterTestingModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                BrowserAnimationsModule,
+                ToastrModule.forRoot()
             ],
             declarations: [
                 BreadcrumbBarComponent,

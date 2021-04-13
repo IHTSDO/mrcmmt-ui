@@ -13,6 +13,8 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {CustomOrderPipe} from '../../pipes/custom-order.pipe';
 import {NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('ApplicableAttributesPanelComponent', () => {
     let component: ApplicableAttributesPanelComponent;
@@ -26,7 +28,9 @@ describe('ApplicableAttributesPanelComponent', () => {
                 RouterTestingModule,
                 BrowserDynamicTestingModule,
                 NgbTypeaheadModule,
-                MatCheckboxModule
+                MatCheckboxModule,
+                BrowserAnimationsModule,
+                ToastrModule.forRoot()
             ],
             providers: [
                 CustomOrderPipe
