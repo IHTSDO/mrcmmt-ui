@@ -4,6 +4,7 @@ import { RefSet } from '../models/refset';
 import { TerminologyServerService } from './terminologyServer.service';
 import { MrcmmtService } from './mrcmmt.service';
 import { RangeService } from './range.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +17,8 @@ export class EditService {
 
     constructor(private terminologyService: TerminologyServerService,
                 private mrcmmtService: MrcmmtService,
-                private rangeService: RangeService) {
+                private rangeService: RangeService,
+                private toastr: ToastrService) {
         this.changeLogSubscription = this.getChangeLog().subscribe(data => this.localChanges = data);
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
     }
@@ -80,6 +82,7 @@ export class EditService {
                 },
                 (error) => {
                     this.activeRange.etlError = error.error.message;
+                    this.toastr.error(error.error.message, 'ERROR', {closeButton: true, disableTimeOut: true});
                 });
         } else if (item.newRefset) {
             this.terminologyService.postRefsetMember(item).subscribe(
@@ -88,6 +91,7 @@ export class EditService {
                 },
                 (error) => {
                     this.activeRange.etlError = error.error.message;
+                    this.toastr.error(error.error.message, 'ERROR', {closeButton: true, disableTimeOut: true});
                 });
         } else if (item.memberId && !item.newRefset) {
             this.terminologyService.putRefsetMember(item).subscribe(
@@ -96,6 +100,7 @@ export class EditService {
                 },
                 (error) => {
                     this.activeRange.etlError = error.error.message;
+                    this.toastr.error(error.error.message, 'ERROR', {closeButton: true, disableTimeOut: true});
                 });
         } else {
             console.error('Attempted to save Refset that was neither DELETED, POSTED, nor UPDATED');

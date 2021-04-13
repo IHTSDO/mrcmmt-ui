@@ -38,6 +38,7 @@ import { UrlParamsService } from './services/url-params.service';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
 import { HeaderInterceptor } from './interceptors/header.interceptor';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
     declarations: [
@@ -64,7 +65,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         BrowserAnimationsModule,
         NgbTypeaheadModule,
         AppRoutingModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        ToastrModule.forRoot()
     ],
     providers: [
         TerminologyServerService,
