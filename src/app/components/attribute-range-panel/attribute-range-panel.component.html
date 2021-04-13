@@ -55,9 +55,9 @@
                 </ng-container>
                 <ng-container *ngIf="activeRange.additionalFields.attributeRule">
                     <h5 class="label m-2 mb-3">Attribute Rule</h5>
-                    <div class="detail m-2 mb-3 pl-2 pr-5 rounded"
-                         (click)="modalService.open('attribute-rule-modal')"
-                         [class.changed]="latestReleaseRange?.additionalFields.attributeRule !== activeRange.additionalFields.attributeRule && !activeRange.effectiveTime && !activeRange.effectiveTime">
+                    <div class="detail m-2 mb-3 pl-2 pr-5 rounded" (click)="modalService.open('attribute-rule-modal')"
+                         [class.changed]="latestReleaseRange?.additionalFields.attributeRule !== activeRange.additionalFields.attributeRule && !activeRange.effectiveTime && !activeRange.effectiveTime"
+                         [class.uneditable]="editable">
                         {{activeRange.additionalFields.attributeRule}}
                         <span class="p-1"><i class="fas fa-external-link-alt"></i></span>
                     </div>

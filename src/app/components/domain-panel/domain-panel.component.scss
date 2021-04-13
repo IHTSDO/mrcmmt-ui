@@ -160,6 +160,11 @@ div#domain-panel {
             &.changed {
                 border-left: 5px solid $mango-orange;
             }
+
+            &.uneditable {
+                color: $scorpion-grey;
+                background-color: $alto-white;
+            }
         }
 
         input.detail {
