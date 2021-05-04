@@ -198,6 +198,14 @@ div#attribute-range-panel {
     div.results {
         overflow-x: hidden;
 
+        div.result-search {
+            background-color: #D2D2D2;
+            
+            input {
+                font-size: 1.2rem;
+            }
+        }
+
         div.result {
             &.odd {
                 background-color: $almost-white;

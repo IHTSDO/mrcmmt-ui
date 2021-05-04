@@ -62,6 +62,16 @@ export class TerminologyServerService {
             }));
     }
 
+    getRangeConstraintsWithTerm(rangeConstraint, term): Observable<SnomedResponseObject> {
+        return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint
+            + this.branchPath + '/concepts?ecl=' + encodeURIComponent(rangeConstraint) + '&term=' + term).pipe(map(responseData => {
+                return responseData;
+            }),
+            catchError(err => {
+                return throwError(err);
+            }));
+    }
+
     getDomains(branchPath?: string): Observable<SnomedResponseObject> {
         return this.http.get<SnomedResponseObject>(
             this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (branchPath ? branchPath : this.branchPath) +
