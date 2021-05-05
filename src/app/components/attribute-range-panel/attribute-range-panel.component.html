@@ -89,13 +89,16 @@
                     </div>
                 </ng-container>
             </div>
-            <div class="results" *ngIf="ranges?.items && activeRange && results && !activeAttribute.concreteDomainAttribute">
+            <div class="results col" *ngIf="ranges?.items && activeRange && results && !activeAttribute.concreteDomainAttribute">
                 <div *ngIf="results?.total">
-                    <h4 class="pt-3 px-3">{{results.total | number:'1.'}} Results Matching Range</h4>
+                    <div class="p-2 result-search row">
+                        <input class="form-control col-9" [(ngModel)]="filterTerm" (ngModelChange)="getResultsWithTerm()">
+                        <span class="pt-2 px-3 col-3">{{results.total | number:'1.'}} Results</span>
+                    </div>
                 </div>
-                <div *ngIf="results?.items" class="results">
-                    <div class="py-2 px-4 result" *ngFor="let result of results.items; let odd = odd" [class.odd]="odd">{{result?.fsn.term}}</div>
-                </div>
+                <ng-container *ngIf="results?.items">
+                    <div class="py-2 px-4 result row" *ngFor="let result of results.items; let odd = odd" [class.odd]="odd">{{result?.fsn.term}}</div>
+                </ng-container>
             </div>
         </ng-container>
         <ng-template #noRanges>

@@ -31,6 +31,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
     attributeRuleInvalid: boolean;
     rangeConstraintModal = true;
     attributeRuleModal = true;
+    filterTerm: string;
 
     latestReleaseRange: RefSet;
     latestReleaseRangeSubscription: Subscription;
@@ -193,6 +194,18 @@ export class AttributeRangePanelComponent implements OnDestroy {
             this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
                 this.results = data;
             });
+        }
+    }
+
+    getResultsWithTerm() {
+        if (this.activeRange && !this.activeAttribute.concreteDomainAttribute && this.activeRange.additionalFields.rangeConstraint && this.filterTerm) {
+            this.terminologyService.getRangeConstraintsWithTerm(this.activeRange.additionalFields.rangeConstraint, this.filterTerm).subscribe(data => {
+                this.results = data;
+            });
+        }
+
+        if (this.activeRange && !this.activeAttribute.concreteDomainAttribute && this.activeRange.additionalFields.rangeConstraint && !this.filterTerm) {
+            this.getResults();
         }
     }
 
