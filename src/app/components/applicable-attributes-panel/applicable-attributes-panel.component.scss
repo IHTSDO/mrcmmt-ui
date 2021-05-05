@@ -34,11 +34,11 @@ div#applicable-attributes-panel {
         &.odd {
             background-color: #F3F3F3;
         }
-        
+
         span.subdomain {
             margin-left:1rem;
         }
-        
+
         span.subdomain:before {
             content: "-";
         }
@@ -46,7 +46,7 @@ div#applicable-attributes-panel {
         span.tertiary {
             margin-left:2rem;
         }
-        
+
         span.tertiary:before {
             content: "-";
         }
@@ -76,7 +76,7 @@ div#applicable-attributes-panel {
 
         &.attached {
             color: $dove-grey;
-            cursor: not-allowed;
+            //cursor: not-allowed;
         }
 
         span.content-type {
