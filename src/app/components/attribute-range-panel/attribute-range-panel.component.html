@@ -89,15 +89,21 @@
                     </div>
                 </ng-container>
             </div>
-            <div class="results col" *ngIf="ranges?.items && activeRange && results && !activeAttribute.concreteDomainAttribute">
-                <div *ngIf="results?.total">
-                    <div class="p-2 result-search row">
-                        <input class="form-control col-9" [(ngModel)]="filterTerm" (ngModelChange)="getResultsWithTerm()">
+            <div class="results col" *ngIf="ranges?.items && activeRange && !activeAttribute.concreteDomainAttribute">
+                <div class="p-2 result-search row">
+                    <input class="form-control col-9" (keyup)="searchResults($event.target.value)">
+                    <ng-container *ngIf="results?.items && !(results$ | async)">
                         <span class="pt-2 px-3 col-3">{{results.total | number:'1.'}} Results</span>
-                    </div>
+                    </ng-container>
+                    <ng-container *ngIf="(results$ | async) as results2">
+                        <span class="pt-2 px-3 col-3">{{results2.total | number:'1.'}} Results</span>
+                    </ng-container>
                 </div>
-                <ng-container *ngIf="results?.items">
+                <ng-container *ngIf="results?.items && !(results$ | async)">
                     <div class="py-2 px-4 result row" *ngFor="let result of results.items; let odd = odd" [class.odd]="odd">{{result?.fsn.term}}</div>
+                </ng-container>
+                <ng-container *ngIf="(results$ | async) as results2">
+                    <div class="py-2 px-4 result row" *ngFor="let result of results2.items; let odd = odd" [class.odd]="odd">{{result?.fsn.term}}</div>
                 </ng-container>
             </div>
         </ng-container>

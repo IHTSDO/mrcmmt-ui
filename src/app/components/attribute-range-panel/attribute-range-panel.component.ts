@@ -1,7 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { RefSet } from '../../models/refset';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
-import { range, Subscription } from 'rxjs';
+import {Observable, range, Subject, Subscription} from 'rxjs';
 import { RangeService } from '../../services/range.service';
 import { DomainService } from '../../services/domain.service';
 import { AttributeService } from '../../services/attribute.service';
@@ -12,7 +12,7 @@ import { BranchingService } from '../../services/branching.service';
 import { ModalService } from '../../services/modal.service';
 import { SnomedUtilityService } from '../../services/snomedUtility.service';
 import { SnomedResponseObject } from '../../models/snomedResponseObject';
-import { max, min } from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, filter, max, min, switchMap, tap, catchError} from 'rxjs/operators';
 
 export class Results {
     items: object[];
@@ -48,6 +48,14 @@ export class AttributeRangePanelComponent implements OnDestroy {
     changeLog: RefSet[];
     changeLogSubscription: Subscription;
 
+    private searchSubject = new Subject<string>();
+    readonly results$ = this.searchSubject.pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        filter((text) => text?.length > 2),
+        switchMap(text => this.terminologyService.getRangeConstraintsWithTerm(this.activeRange.additionalFields.rangeConstraint, text))
+    );
+
     constructor(private domainService: DomainService,
                 private attributeService: AttributeService,
                 private rangeService: RangeService,
@@ -82,6 +90,10 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.activeRangeSubscription.unsubscribe();
         this.editSubscription.unsubscribe();
         this.changeLogSubscription.unsubscribe();
+    }
+
+    searchResults(text: string) {
+        this.searchSubject.next(text);
     }
 
     makeActiveRange(activeRange) {
@@ -194,18 +206,6 @@ export class AttributeRangePanelComponent implements OnDestroy {
             this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
                 this.results = data;
             });
-        }
-    }
-
-    getResultsWithTerm() {
-        if (this.activeRange && !this.activeAttribute.concreteDomainAttribute && this.activeRange.additionalFields.rangeConstraint && this.filterTerm) {
-            this.terminologyService.getRangeConstraintsWithTerm(this.activeRange.additionalFields.rangeConstraint, this.filterTerm).subscribe(data => {
-                this.results = data;
-            });
-        }
-
-        if (this.activeRange && !this.activeAttribute.concreteDomainAttribute && this.activeRange.additionalFields.rangeConstraint && !this.filterTerm) {
-            this.getResults();
         }
     }
 
