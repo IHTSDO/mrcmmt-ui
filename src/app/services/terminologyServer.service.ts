@@ -4,7 +4,7 @@ import { Observable, Subscription, throwError } from 'rxjs';
 import { AuthoringService } from './authoring.service';
 import { SnomedResponseObject } from '../models/snomedResponseObject';
 import { BranchingService } from './branching.service';
-import { map, catchError } from 'rxjs/operators';
+import {map, catchError, debounceTime, distinctUntilChanged, filter, delay} from 'rxjs/operators';
 import { SnomedUtilityService } from './snomedUtility.service';
 
 @Injectable({
@@ -60,6 +60,11 @@ export class TerminologyServerService {
             catchError(err => {
                 return throwError(err);
             }));
+    }
+
+    getRangeConstraintsWithTerm(rangeConstraint, term) {
+        return this.http.get(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint
+            + this.branchPath + '/concepts?ecl=' + encodeURIComponent(rangeConstraint) + '&term=' + term);
     }
 
     getDomains(branchPath?: string): Observable<SnomedResponseObject> {

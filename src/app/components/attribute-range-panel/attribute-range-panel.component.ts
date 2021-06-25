@@ -1,23 +1,18 @@
-import { Component, OnDestroy } from '@angular/core';
-import { RefSet } from '../../models/refset';
-import { TerminologyServerService } from '../../services/terminologyServer.service';
-import { range, Subscription } from 'rxjs';
-import { RangeService } from '../../services/range.service';
-import { DomainService } from '../../services/domain.service';
-import { AttributeService } from '../../services/attribute.service';
-import { MrcmmtService } from '../../services/mrcmmt.service';
-import { EditService } from '../../services/edit.service';
-import { UrlParamsService } from '../../services/url-params.service';
-import { BranchingService } from '../../services/branching.service';
-import { ModalService } from '../../services/modal.service';
-import { SnomedUtilityService } from '../../services/snomedUtility.service';
-import { SnomedResponseObject } from '../../models/snomedResponseObject';
-import { max, min } from 'rxjs/operators';
-
-export class Results {
-    items: object[];
-    total: string;
-}
+import {Component, OnDestroy} from '@angular/core';
+import {RefSet} from '../../models/refset';
+import {TerminologyServerService} from '../../services/terminologyServer.service';
+import {Subject, Subscription} from 'rxjs';
+import {RangeService} from '../../services/range.service';
+import {DomainService} from '../../services/domain.service';
+import {AttributeService} from '../../services/attribute.service';
+import {MrcmmtService} from '../../services/mrcmmt.service';
+import {EditService} from '../../services/edit.service';
+import {UrlParamsService} from '../../services/url-params.service';
+import {BranchingService} from '../../services/branching.service';
+import {ModalService} from '../../services/modal.service';
+import {SnomedUtilityService} from '../../services/snomedUtility.service';
+import {SnomedResponseObject} from '../../models/snomedResponseObject';
+import {debounceTime, switchMap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-attribute-range-panel',
@@ -26,8 +21,6 @@ export class Results {
 })
 export class AttributeRangePanelComponent implements OnDestroy {
 
-    results: Results;
-    // rangeConstraint: boolean;
     attributeRuleInvalid: boolean;
     rangeConstraintModal = true;
     attributeRuleModal = true;
@@ -47,6 +40,18 @@ export class AttributeRangePanelComponent implements OnDestroy {
     changeLog: RefSet[];
     changeLogSubscription: Subscription;
 
+    private searchSubject = new Subject<string>();
+    readonly results$ = this.searchSubject.pipe(
+        debounceTime(300),
+        switchMap(text => {
+            if (text && text.length > 2) {
+                return this.terminologyService.getRangeConstraintsWithTerm(this.activeRange.additionalFields.rangeConstraint, text);
+            } else {
+                return this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint);
+            }
+        })
+    );
+
     constructor(private domainService: DomainService,
                 private attributeService: AttributeService,
                 private rangeService: RangeService,
@@ -60,12 +65,12 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
             this.activeAttribute = data;
-            this.clearResults();
+            // this.clearResults();
         });
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => {
             this.activeRange = data;
             this.urlParamsService.updateActiveRefsetParams(this.activeDomain, this.activeAttribute, data);
-            this.getResults();
+            this.getInitialResults();
         });
         this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
         this.changeLogSubscription = this.editService.getChangeLog().subscribe(data => this.changeLog = data);
@@ -83,8 +88,12 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.changeLogSubscription.unsubscribe();
     }
 
+    searchResults(text: string) {
+        this.searchSubject.next(text);
+    }
+
     makeActiveRange(activeRange) {
-        this.clearResults();
+        // this.clearResults();
 
         if (this.activeRange === activeRange) {
             this.rangeService.clearLatestReleaseActiveRange();
@@ -102,7 +111,8 @@ export class AttributeRangePanelComponent implements OnDestroy {
             });
 
             this.setActives(this.activeDomain, this.activeAttribute, this.activeRange);
-            this.getResults();
+            // this.getInitialResults();
+            // this.getResults();
         }
     }
 
@@ -162,7 +172,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
             this.editService.setChangeLog(this.changeLog);
         }
         this.setActives(this.activeDomain, this.activeAttribute, null);
-        this.clearResults();
+        // this.clearResults();
     }
 
     updateAttribute() {
@@ -188,16 +198,12 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.makeActiveRange(newRange);
     }
 
-    getResults() {
+    getInitialResults() {
         if (this.activeRange && !this.activeAttribute.concreteDomainAttribute && this.activeRange.additionalFields.rangeConstraint) {
-            this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(data => {
-                this.results = data;
+            this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).subscribe(() => {
+                this.searchResults('');
             });
         }
-    }
-
-    clearResults() {
-        this.results = { items: [], total: '' };
     }
 
     setActives(domain, attribute, activeRange) {

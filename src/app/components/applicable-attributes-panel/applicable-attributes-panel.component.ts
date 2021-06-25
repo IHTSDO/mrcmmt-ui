@@ -103,7 +103,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.changeLogSubscription.unsubscribe();
     }
 
-    makeActiveAttribute(attribute) {
+    makeActiveAttribute(attribute, reverse?) {
         const attributeMatchedDomains = [];
         this.attributeService.clearMatchedDomains();
         this.rangeService.clearRanges();
@@ -138,7 +138,15 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
             });
 
             this.attributeService.setMatchedDomains(attributeMatchedDomains);
-            this.automaticDomainSelect(this.activeAttribute, attributeMatchedDomains);
+
+            if (reverse) {
+                const activeDomain = this.domains.items.find((domain) => {
+                    return domain.referencedComponentId === this.activeAttribute.additionalFields.domainId;
+                });
+                this.setActives(activeDomain, this.activeAttribute, null);
+            } else {
+                this.automaticDomainSelect(this.activeAttribute, attributeMatchedDomains);
+            }
 
             this.setRange();
         }

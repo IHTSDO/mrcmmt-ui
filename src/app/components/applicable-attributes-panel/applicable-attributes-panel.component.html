@@ -20,7 +20,8 @@
     </ng-container>
 
     <ng-container *ngIf="activeDomain?.additionalFields.parentDomain">
-        <div class="px-3 py-2 attribute attached" *ngFor="let attribute of attributes?.items | alphabetical | inheritedDomainMatch:activeDomain:domains.items | duplicateFilter:activeDomain?.referencedComponentId | attributeNesting">
+        <div class="px-3 py-2 attribute attached" *ngFor="let attribute of attributes?.items | alphabetical | inheritedDomainMatch:activeDomain:domains.items | duplicateFilter:activeDomain?.referencedComponentId | attributeNesting"
+             [class.active]="attribute?.referencedComponentId === activeAttribute?.referencedComponentId" (click)="makeActiveAttribute(attribute, true)">
             <span [class.subdomain]="attribute.additionalFields.depth === 2" [class.tertiary]="attribute.additionalFields.depth === 3">
                 {{attribute.referencedComponent.fsn?.term}}
             </span>
