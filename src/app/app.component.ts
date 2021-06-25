@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { AuthoringService } from './services/authoring.service';
 import { Versions } from './models/versions';
 import { Title } from '@angular/platform-browser';
@@ -14,6 +14,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { ModalService } from './services/modal.service';
 import { EditService } from './services/edit.service';
 import { UrlParamsService } from './services/url-params.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-root',
@@ -25,6 +26,9 @@ export class AppComponent implements OnInit {
     environment: string;
     public: boolean;
     versions: Versions;
+
+    unsavedChanges: any[];
+    unsavedChangesSubscription: Subscription;
 
     constructor(private domainService: DomainService,
                 private attributeService: AttributeService,
@@ -38,6 +42,15 @@ export class AppComponent implements OnInit {
                 public modalService: ModalService,
                 public editService: EditService,
                 private urlParamsService: UrlParamsService) {
+        this.unsavedChangesSubscription = this.editService.getChangeLog().subscribe((response) => this.unsavedChanges = response);
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    onWindowClose(event: any): void {
+        if (this.unsavedChanges.length) {
+            event.preventDefault();
+            event.returnValue = true;
+        }
     }
 
     ngOnInit() {
