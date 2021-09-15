@@ -39,6 +39,7 @@ import { AuthenticationInterceptor } from './interceptors/authentication.interce
 import { HeaderInterceptor } from './interceptors/header.interceptor';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {ToastrModule} from 'ngx-toastr';
+import { ProjectAlphabeticalPipe } from './pipes/project-alphabetical.pipe';
 
 @NgModule({
     declarations: [
@@ -56,7 +57,8 @@ import {ToastrModule} from 'ngx-toastr';
         AlphabeticalPipe,
         TopLevelDomainPipe,
         InheritedDomainMatchPipe,
-        ModalComponent
+        ModalComponent,
+        ProjectAlphabeticalPipe
     ],
     imports: [
         BrowserModule,

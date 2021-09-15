@@ -103,59 +103,34 @@ export class AppComponent implements OnInit {
     }
 
     privateConfig() {
-        this.authoringService.getVersion().subscribe(
-            data => {
-                this.versions = data;
-                console.log('Snowstorm Version:', data.versions['snowstorm']);
-            }
-        );
-
         this.authoringService.getUIConfiguration().subscribe(data => {
+            console.log('config: ', data);
             this.authoringService.uiConfiguration = data;
+            this.branchingService.setBranchPath('MAIN');
 
             this.terminologyService.getVersions(true).subscribe(versions => {
                 this.branchingService.setLatestReleaseBranchPath(versions.items.reduce((a, b) => {
                     return a.effectiveDate > b.effectiveDate ? a : b;
                 }).branchPath);
 
-                versions.items = versions.items.filter(item => {
-                    return item.effectiveDate >= 20170731;
-                });
-
                 this.authenticationService.getLoggedInUser().subscribe(user => {
+                    this.authoringService.getProjects().subscribe(projects => {
+                        projects.unshift({key: 'MAIN', branchPath: 'MAIN'});
 
-                    if (user.roles.includes('ROLE_int-sca-author')) {
-                        const array = this.authoringService.uiConfiguration.features.mrcmmtEditableBranches.split(',');
-                        array.forEach((item) => {
-                            item = item.replace(/['"]+/g, '');
-                            item = item.replace(/[\[\]']+/g, '');
-                            versions.items.push({branchPath: item});
-                        });
-//                        versions.items.push({branchPath: 'MAIN/MRCMMAINT1'});
-//                        versions.items.push({branchPath: 'MAIN/CDITEST1'});
-                    }
-
-                    versions.items.push({branchPath: 'MAIN'});
-
-                    versions.items.reverse();
-
-                    if (this.urlParamsService.getBranchParam()) {
-                        this.branchingService.setBranchPath(this.urlParamsService.getBranchParam());
-                    } else {
-                        if (user.roles.includes('ROLE_int-sca-author')) {
-                            this.branchingService.setBranchPath(versions.items[0].branchPath);
+                        if (this.urlParamsService.getBranchParam()) {
+                            this.branchingService.setBranchPath(this.urlParamsService.getBranchParam());
                         } else {
-                            this.branchingService.setBranchPath(versions.items[1].branchPath);
+                            this.branchingService.setBranchPath(projects[0]['branchPath']);
                         }
-                    }
 
-                    if (user.roles.includes('ROLE_mrcm-author')) {
-                        this.editService.setEditor(true);
-                    } else {
-                        this.editService.setEditor(false);
-                    }
+                        if (user.roles.includes('ROLE_mrcm-author')) {
+                            this.editService.setEditor(true);
+                        } else {
+                            this.editService.setEditor(false);
+                        }
 
-                    this.branchingService.setVersions(versions);
+                        this.branchingService.setVersions(projects);
+                    });
 
                     this.terminologyService.getAttributeHierarchy().subscribe(hierarchyAttributes => {
                         this.attributeService.setAttributeHierarchy(hierarchyAttributes);
