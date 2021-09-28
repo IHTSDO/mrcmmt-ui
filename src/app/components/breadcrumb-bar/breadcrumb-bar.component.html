@@ -6,10 +6,10 @@
         <span *ngIf="activeAttribute && activeRange" class="px-2 slash">/</span>
         <span *ngIf="activeRange && activeRange.additionalFields.contentTypeId" class="concept">{{mrcmmtService.getContentType(activeRange.additionalFields.contentTypeId)}}</span>
     </div>
-    <div class="float-right">
+    <div class="float-end">
         <button type="button" class="btn-purple m-0 py-0 px-3" (click)="openResetModal()">RESET</button>
-        <button *ngIf="editable" type="button" class="btn-green m-0 py-0 px-3 float-right" (click)="openSwitchModal()">BROWSE</button>
-        <button *ngIf="!editable && editor" class="btn-green m-0 py-0 px-3 float-right" (click)="enableEditing()">EDIT</button>
+        <button *ngIf="editable" type="button" class="btn-green m-0 py-0 px-3 float-end" (click)="openSwitchModal()">BROWSE</button>
+        <button *ngIf="!editable && editor" class="btn-green m-0 py-0 px-3 float-end" (click)="enableEditing()">EDIT</button>
     </div>
 </nav>
 

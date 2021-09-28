@@ -19,12 +19,16 @@ app-modal {
                     line-height: inherit;
                 }
 
-                button > span {
-                    font-size: 2rem;
-                    color: $white;
-                    font-weight: 300;
-                    text-shadow: none;
-                    line-height: 0.8rem;
+                button {
+                    background-color: transparent;
+
+                    span {
+                        font-size: 2rem;
+                        color: $white;
+                        font-weight: 300;
+                        text-shadow: none;
+                        line-height: 0.8rem;
+                    }
                 }
             }
 
