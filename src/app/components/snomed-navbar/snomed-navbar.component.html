@@ -5,12 +5,12 @@
     </a>
     <ul class="dropdown-nav me-auto my-2">
         <li class="nav-item dropdown">
-            <a class="nav-link px-3 rounded dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link px-3 rounded dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{branchPath}}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <ng-container *ngFor="let version of versions | projectAlphabetical">
-                    <a class="dropdown-item ps-3" href="#" (click)="setPath(version.branchPath)">{{version.branchPath}}</a>
+                    <a class="dropdown-item ps-3" (click)="setPath(version.branchPath)">{{version.branchPath}}</a>
                 </ng-container>
             </div>
         </li>
