@@ -40,6 +40,7 @@ import { HeaderInterceptor } from './interceptors/header.interceptor';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {ToastrModule} from 'ngx-toastr';
 import { ProjectAlphabeticalPipe } from './pipes/project-alphabetical.pipe';
+import { ManagedServicePipe } from './pipes/managed-service.pipe';
 
 @NgModule({
     declarations: [
@@ -58,7 +59,8 @@ import { ProjectAlphabeticalPipe } from './pipes/project-alphabetical.pipe';
         TopLevelDomainPipe,
         InheritedDomainMatchPipe,
         ModalComponent,
-        ProjectAlphabeticalPipe
+        ProjectAlphabeticalPipe,
+        ManagedServicePipe
     ],
     imports: [
         BrowserModule,
@@ -85,6 +87,7 @@ import { ProjectAlphabeticalPipe } from './pipes/project-alphabetical.pipe';
         CustomOrderPipe,
         ModalService,
         UrlParamsService,
+        ManagedServicePipe,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthenticationInterceptor,

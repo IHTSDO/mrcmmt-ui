@@ -9,7 +9,7 @@
                 {{branchPath}}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <ng-container *ngFor="let version of versions | projectAlphabetical">
+                <ng-container *ngFor="let version of versions | projectAlphabetical | managedService">
                     <a class="dropdown-item ps-3" (click)="setPath(version.branchPath)">{{version.branchPath}}</a>
                 </ng-container>
             </div>

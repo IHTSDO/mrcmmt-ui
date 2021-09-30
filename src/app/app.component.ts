@@ -104,7 +104,6 @@ export class AppComponent implements OnInit {
 
     privateConfig() {
         this.authoringService.getUIConfiguration().subscribe(data => {
-            console.log('config: ', data);
             this.authoringService.uiConfiguration = data;
             this.branchingService.setBranchPath('MAIN');
 
