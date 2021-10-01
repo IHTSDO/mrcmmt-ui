@@ -1,6 +1,6 @@
 <div id="domain-panel" [class.details-open]="activeDomain" [class.details-minimized]="!detailsExpanded">
     <h3 class="pt-3 px-3 m-0">Domain</h3>
-    <button type="button" *ngIf="editable" class="btn-default fas fa-plus float-right add" (click)="addNewDomain()"></button>
+    <button type="button" *ngIf="editable" class="btn-default fas fa-plus float-end add" (click)="addNewDomain()"></button>
     <div class="p-3">
         <input type="search" class="form-control" [(ngModel)]="domainFilter" placeholder="Filter Domains...">
     </div>
@@ -15,10 +15,10 @@
         <span *ngIf="domain.changed && !domain.deleted" class="marker new d-inline-block px-2 m-1">UNSAVED</span>
         <span *ngIf="!domain.effectiveTime && !domain.changed && !domain.deleted" class="marker edited d-inline-block px-2 m-1">UNPUBLISHED</span>
         <span *ngIf="domain.deleted" class="marker deleted d-inline-block px-2 m-1">TO BE DELETED</span>
-        <button *ngIf="editable && !domain.released" class="delete float-right p-0" (click)="deleteDomain($event, domain)"><i class="fas fa-minus"></i></button>
+        <button *ngIf="editable && !domain.released" class="delete float-end p-0" (click)="deleteDomain($event, domain)"><i class="fas fa-minus"></i></button>
     </div>
     <div *ngIf="activeDomain" class="details" [class.minimized]="!detailsExpanded">
-            <span class="float-right my-1 mx-3" (click)="detailsExpanded = !detailsExpanded">
+            <span class="float-end my-1 mx-3" (click)="detailsExpanded = !detailsExpanded">
                 <i *ngIf="detailsExpanded" class="fas fa-caret-down"></i>
                 <i *ngIf="!detailsExpanded" class="fas fa-caret-up"></i>
             </span>
@@ -82,7 +82,7 @@
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPrecoordination">
             <h5 class="label m-2 mb-3">Precoordination Domain Template</h5>
-            <div class="detail expandable m-2 mb-4 pl-2 pr-5 rounded short"
+            <div class="detail expandable m-2 mb-4 ps-2 pe-5 p rounded short"
                  (click)="modalService.open('precoordination-modal')"
                  [class.changed]="latestReleaseDomain?.additionalFields.domainTemplateForPrecoordination !== activeDomain.additionalFields.domainTemplateForPrecoordination && !activeDomain.effectiveTime"
                  [class.uneditable]="editable">
@@ -92,7 +92,7 @@
         </ng-container>
         <ng-container *ngIf="activeDomain.additionalFields.domainTemplateForPostcoordination">
             <h5 class="label m-2 mb-3">Postcoordination Domain Template</h5>
-            <div class="detail expandable m-2 mb-4 pl-2 pr-5 rounded short"
+            <div class="detail expandable m-2 mb-4 ps-2 pe-5 rounded short"
                  (click)="modalService.open('postcoordination-modal')"
                  [class.changed]="latestReleaseDomain?.additionalFields.domainTemplateForPostcoordination !== activeDomain.additionalFields.domainTemplateForPostcoordination && !activeDomain.effectiveTime"
                  [class.uneditable]="editable">
@@ -109,10 +109,10 @@
     <ng-container body>
         <ul class="nav nav-tabs nav-fill" id="precoordinationTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="pure-precoordination-tab" data-toggle="tab" href="#pure-precoordination"  role="tab" aria-controls="pure-precoordination" aria-selected="true">Expression</a>
+                <a class="nav-link active" id="pure-precoordination-tab" data-bs-toggle="tab" data-bs-target="#pure-precoordination"  role="tab" aria-controls="pure-precoordination" aria-selected="true">Expression</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="modified-precoordination-tab" data-toggle="tab" href="#modified-precoordination" role="tab" aria-controls="modified-precoordination" aria-selected="false">Modifications</a>
+                <a class="nav-link" id="modified-precoordination-tab" data-bs-toggle="tab" data-bs-target="#modified-precoordination" role="tab" aria-controls="modified-precoordination" aria-selected="false">Modifications</a>
             </li>
         </ul>
 
@@ -143,10 +143,10 @@
     <ng-container body>
         <ul class="nav nav-tabs nav-fill" id="postcoordinationTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="pure-postcoordination-tab" data-toggle="tab" href="#pure-postcoordination"  role="tab" aria-controls="pure-postcoordination" aria-selected="true">Expression</a>
+                <a class="nav-link active" id="pure-postcoordination-tab" data-bs-toggle="tab" data-bs-target="#pure-postcoordination" role="tab" aria-controls="pure-postcoordination" aria-selected="true">Expression</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="modified-postcoordination-tab" data-toggle="tab" href="#modified-postcoordination" role="tab" aria-controls="modified-postcoordination" aria-selected="false">Modifications</a>
+                <a class="nav-link" id="modified-postcoordination-tab" data-bs-toggle="tab" data-bs-target="#modified-postcoordination" role="tab" aria-controls="modified-postcoordination" aria-selected="false">Modifications</a>
             </li>
         </ul>
 

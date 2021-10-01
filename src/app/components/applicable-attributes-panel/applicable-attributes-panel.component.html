@@ -1,6 +1,6 @@
 <div id="applicable-attributes-panel" [class.details-open]="activeAttribute" [class.details-minimized]="!detailsExpanded">
     <h3 class="pt-3 px-3 m-0">Applicable Attributes</h3>
-    <button type="button" *ngIf="editable && activeDomain" class="btn-default fas fa-plus float-right add" (click)="addNewAttribute()"></button>
+    <button type="button" *ngIf="editable && activeDomain" class="btn-default fas fa-plus float-end add" (click)="addNewAttribute()"></button>
     <div class="p-3">
         <input type="search" class="form-control" [(ngModel)]="attributeFilter" placeholder="Filter Attributes...">
     </div>
@@ -15,7 +15,7 @@
             <span *ngIf="attribute.changed && !attribute.deleted" class="marker new d-inline-block px-2 m-1">UNSAVED</span>
             <span *ngIf="!attribute.effectiveTime && !attribute.changed && !attribute.deleted" class="marker edited d-inline-block px-2 m-1">UNPUBLISHED</span>
             <span *ngIf="attribute.deleted" class="marker deleted d-inline-block px-2 m-1">TO BE DELETED</span>
-            <button *ngIf="editable && !attribute.released" class="delete float-right p-0" (click)="deleteAttribute($event, attribute)"><i class="fas fa-minus"></i></button>
+            <button *ngIf="editable && !attribute.released" class="delete float-end p-0" (click)="deleteAttribute($event, attribute)"><i class="fas fa-minus"></i></button>
         </div>
     </ng-container>
 
@@ -28,7 +28,7 @@
         </div>
     </ng-container>
     <div *ngIf="activeAttribute" class="details" [class.minimized]="!detailsExpanded">
-        <span class="float-right my-1 mx-3" (click)="detailsExpanded = !detailsExpanded">
+        <span class="float-end my-1 mx-3" (click)="detailsExpanded = !detailsExpanded">
             <i *ngIf="detailsExpanded" class="fas fa-caret-down"></i>
             <i *ngIf="!detailsExpanded" class="fas fa-caret-up"></i>
         </span>
@@ -74,7 +74,7 @@
                     [class.changed]="latestReleaseAttribute?.additionalFields.ruleStrengthId !== activeAttribute.additionalFields.ruleStrengthId && !activeAttribute.effectiveTime">
                 <option *ngFor="let ruleStrength of mrcmmtService.ruleStrengthFields" [value]="ruleStrength.id" >{{ruleStrength.term}}</option>
             </select>
-            <div *ngIf="!editable" class="detail m-2 mb-4 pl-2 rounded">{{mrcmmtService.getRuleStrength(activeAttribute.additionalFields.ruleStrengthId)}}</div>
+            <div *ngIf="!editable" class="detail m-2 mb-4 ps-2 rounded">{{mrcmmtService.getRuleStrength(activeAttribute.additionalFields.ruleStrengthId)}}</div>
         </ng-container>
         <ng-container *ngIf="activeAttribute.additionalFields.contentTypeId || editable">
             <h5 class="label m-2 mb-3">Content Type<span *ngIf="editable" class="mandatory"> *</span></h5>
@@ -84,7 +84,7 @@
                     [class.changed]="latestReleaseAttribute?.additionalFields.contentTypeId !== activeAttribute.additionalFields.contentTypeId && !activeAttribute.effectiveTime">
                 <option *ngFor="let contentType of mrcmmtService.contentTypeFields" [value]="contentType.id">{{contentType.term}}</option>
             </select>
-            <div *ngIf="!editable" class="detail m-2 mb-4 pl-2 rounded">{{mrcmmtService.getContentType(activeAttribute.additionalFields.contentTypeId)}}</div>
+            <div *ngIf="!editable" class="detail m-2 mb-4 ps-2 rounded">{{mrcmmtService.getContentType(activeAttribute.additionalFields.contentTypeId)}}</div>
         </ng-container>
     </div>
 </div>

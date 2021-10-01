@@ -6,10 +6,10 @@
         <span *ngIf="activeAttribute && activeRange" class="px-2 slash">/</span>
         <span *ngIf="activeRange && activeRange.additionalFields.contentTypeId" class="concept">{{mrcmmtService.getContentType(activeRange.additionalFields.contentTypeId)}}</span>
     </div>
-    <div class="float-right">
+    <div class="float-end">
         <button type="button" class="btn-purple m-0 py-0 px-3" (click)="openResetModal()">RESET</button>
-        <button *ngIf="editable" type="button" class="btn-green m-0 py-0 px-3 float-right" (click)="openSwitchModal()">BROWSE</button>
-        <button *ngIf="!editable && editor" class="btn-green m-0 py-0 px-3 float-right" (click)="enableEditing()">EDIT</button>
+        <button *ngIf="editable" type="button" class="btn-green m-0 py-0 px-3 float-end" (click)="openSwitchModal()">BROWSE</button>
+        <button *ngIf="!editable && editor" class="btn-green m-0 py-0 px-3 float-end" (click)="enableEditing()">EDIT</button>
     </div>
 </nav>
 
@@ -26,9 +26,9 @@
 <!-- SWITCH MODAL -->
 <app-modal id="switch-modal" class="modal">
     <h3 header class="mb-0">Discard Edits?</h3>
-    <div body class="text-center p-5">You are about to discard all edits you have made so far and switch back to BROWSE</div>
+    <div body class="text-center p-5">There are unsaved MRCM changes. Switching to browse will abandon your modifications. Continue?</div>
     <div footer>
-        <button type="button" class="btn btn" (click)="modalService.close('switch-modal')">CANCEL</button>
-        <button type="button" class="btn btn-primary" (click)="disableEditing(); modalService.close('switch-modal')">DISCARD</button>
+        <button type="button" class="btn btn" (click)="modalService.close('switch-modal')">No</button>
+        <button type="button" class="btn btn-primary" (click)="disableEditing(); modalService.close('switch-modal')">Yes</button>
     </div>
 </app-modal>

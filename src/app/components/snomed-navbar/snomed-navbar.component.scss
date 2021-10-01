@@ -99,6 +99,9 @@ nav {
             div.dropdown-menu {
                 background-color: $dark;
                 z-index: auto;
+                height: auto;
+                overflow-y: scroll;
+                max-height: 80vh;
 
                 &.show {
                     display: block;

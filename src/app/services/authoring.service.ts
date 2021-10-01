@@ -17,7 +17,7 @@ export class AuthoringService {
     }
 
     getProjects(): Observable<object[]> {
-        return this.http.get<object[]>('/authoring-services/projects');
+        return this.http.get<object[]>('/authoring-services/projects?lightweight=true');
     }
 
     getUIConfiguration(): Observable<UIConfiguration> {

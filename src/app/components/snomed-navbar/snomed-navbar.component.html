@@ -1,16 +1,16 @@
-<nav class="navbar sticky-top navbar-dark bg-dark p-2 pr-2">
+<nav class="navbar sticky-top navbar-dark bg-dark p-2 pe-2">
     <a class="logo" routerLink="/">
         <img class="logo mr-2 p-0" src="/mrcm/assets/small_logo.png">
         <span class="title">SNOMED CT MRCM Maintenance Tool</span>
     </a>
-    <ul class="dropdown-nav mr-auto my-2">
+    <ul class="dropdown-nav me-auto my-2">
         <li class="nav-item dropdown">
-            <a class="nav-link px-3 rounded" [class.editable]="editable" [class.dropdown-toggle]="!editable" href="#" data-target="#navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link px-3 rounded dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{branchPath}}
             </a>
-            <div *ngIf="!editable" id="navbarDropdown" class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <ng-container *ngFor="let version of versions?.items">
-                    <a class="dropdown-item pl-3" (click)="setPath(version.branchPath)">{{version.branchPath}}</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <ng-container *ngFor="let version of versions | projectAlphabetical | managedService">
+                    <a class="dropdown-item ps-3" (click)="setPath(version.branchPath)">{{version.branchPath}}</a>
                 </ng-container>
             </div>
         </li>
@@ -27,7 +27,7 @@
         <div *ngSwitchDefault class="banner d-none"></div>
     </ng-container>
 
-    <div *ngIf="user && !public" class="float-right mx-3">
+    <div *ngIf="user && !public" class="float-end mx-3">
         <div class="logout d-inline-block m-2" (click)="logout()">
             <span class="px-2">Logout</span>
         </div>
