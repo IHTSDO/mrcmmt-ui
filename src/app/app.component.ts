@@ -76,16 +76,16 @@ export class AppComponent implements OnInit {
             showFuture = true;
         }
         this.terminologyService.getVersions(showFuture).subscribe(versions => {
-            this.branchingService.setLatestReleaseBranchPath(versions.items.reduce((a, b) => {
+            this.branchingService.setLatestReleaseBranchPath(versions.reduce((a, b) => {
                 return a.effectiveDate > b.effectiveDate ? a : b;
             }).branchPath);
 
-            versions.items = versions.items.filter(item => {
+            versions = versions.filter(item => {
                 return item.effectiveDate >= 20170731;
             });
 
-            versions.items.reverse();
-            this.branchingService.setBranchPath(versions.items[0].branchPath);
+            versions.reverse();
+            this.branchingService.setBranchPath(versions[0].branchPath);
             this.editService.setEditor(false);
 
             this.branchingService.setVersions(versions);
@@ -108,7 +108,7 @@ export class AppComponent implements OnInit {
             this.branchingService.setBranchPath('MAIN');
 
             this.terminologyService.getVersions(true).subscribe(versions => {
-                this.branchingService.setLatestReleaseBranchPath(versions.items.reduce((a, b) => {
+                this.branchingService.setLatestReleaseBranchPath(versions.reduce((a, b) => {
                     return a.effectiveDate > b.effectiveDate ? a : b;
                 }).branchPath);
 
