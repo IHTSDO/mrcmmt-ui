@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.titleService.setTitle('SNOMED CT MRCM Maintenance Tool');
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
-        this.public = window.location.host.includes('browser');
+        this.public = window.location.host.includes('browser') ||  window.location.host.includes('dailybuild');
 
         this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '', []);
 
