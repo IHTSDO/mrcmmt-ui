@@ -24,7 +24,7 @@ import {Subscription} from 'rxjs';
 export class AppComponent implements OnInit {
 
     environment: string;
-    public: boolean;
+    instance: string;
     versions: Versions;
 
     unsavedChanges: any[];
@@ -56,12 +56,14 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.titleService.setTitle('SNOMED CT MRCM Maintenance Tool');
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
-        this.public = window.location.host.includes('browser');
+        this.instance = window.location.host;
 
         this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '', []);
 
-        if (this.public) {
+        if (this.instance.includes('browser')) {
             this.publicConfig();
+        } else if (this.instance.includes('dailybuild')) {
+            this.dailybuildConfig();
         } else {
             this.privateConfig();
         }
@@ -98,6 +100,25 @@ export class AppComponent implements OnInit {
                     this.attributeService.setAttributesWithConcreteDomains(attributes.items);
                     this.mrcmmtService.setupDomains();
                 });
+            });
+        });
+    }
+
+    dailybuildConfig() {
+        console.log('dailyBuild Config');
+        this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '', []);
+        this.branchingService.setLatestReleaseBranchPath('MAIN');
+        this.branchingService.setBranchPath('MAIN');
+        this.editService.setEditor(false);
+        this.branchingService.setVersions([{branchPath: 'MAIN'}]);
+
+        this.terminologyService.getAttributeHierarchy().subscribe(hierarchyAttributes => {
+            this.attributeService.setAttributeHierarchy(hierarchyAttributes);
+            this.setLatestReleaseDomains();
+            this.setLatestReleaseAttributes();
+            this.terminologyService.getAttributesWithConcreteDomains().subscribe(attributes => {
+                this.attributeService.setAttributesWithConcreteDomains(attributes.items);
+                this.mrcmmtService.setupDomains();
             });
         });
     }
