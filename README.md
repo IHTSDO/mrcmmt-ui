@@ -1,7 +1,3 @@
-[![Build Status](https://travis-ci.org/IHTSDO/mrcmmt-ui.svg?branch=master)](https://travis-ci.org/IHTSDO/mrcmmt-ui)
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/IHTSDO/mrcmmt-ui.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/IHTSDO/mrcmmt-ui/context:javascript)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/IHTSDO/mrcmmt-ui.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/IHTSDO/mrcmmt-ui/alerts/)
-
 # MRCMMT UI
 
 This Angular project contains a UI for navigating and editing SNOMED CT MRCM refsets contained within a terminology server. Intended primarily for use with Snowstorm.
