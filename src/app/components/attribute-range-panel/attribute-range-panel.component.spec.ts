@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
-import { AlphabeticalPipe } from '../../pipes/alphabetical.pipe';
+import { AlphabeticalPipe } from '../../pipes/alphabetical/alphabetical.pipe';
 
 import { AttributeRangePanelComponent } from './attribute-range-panel.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';

@@ -5,11 +5,13 @@
         <input type="search" class="form-control" [(ngModel)]="attributeFilter" placeholder="Filter Attributes...">
     </div>
 
-    <ng-container *ngIf="(attributes?.items | alphabetical | textMatch:attributeFilter | domainMatch:activeDomain | duplicateFilter:activeDomain?.referencedComponentId | attributeNesting) as result ">
+    <ng-container *ngIf="(attributes?.items | fsnAlphabetical | textMatch:attributeFilter | domainMatch:activeDomain | duplicateFilter:activeDomain?.referencedComponentId | attributeNesting) as result ">
         <div class="px-3 py-2 attribute" *ngFor="let attribute of result; let odd = odd" [class.odd]="odd" (click)="makeActiveAttribute(attribute)"
              [class.active]="attribute?.referencedComponentId === activeAttribute?.referencedComponentId">
             <span [class.subdomain]="attribute.additionalFields.depth === 2" [class.tertiary]="attribute.additionalFields.depth === 3">
                 {{attribute.referencedComponent.fsn?.term}}
+<!--                            <span class="fi fi-de flag"></span>-->
+<!--            <span>{{attribute | json}}</span>-->
             </span>
             <span *ngIf="duplicateAttributes(attribute, result)" class="content-type">{{mrcmmtService.getContentType(attribute.additionalFields.contentTypeId)}}</span>
             <span *ngIf="attribute.changed && !attribute.deleted" class="marker new d-inline-block px-2 m-1">UNSAVED</span>
@@ -20,10 +22,12 @@
     </ng-container>
 
     <ng-container *ngIf="activeDomain?.additionalFields.parentDomain">
-        <div class="px-3 py-2 attribute attached" *ngFor="let attribute of attributes?.items | alphabetical | inheritedDomainMatch:activeDomain:domains.items | duplicateFilter:activeDomain?.referencedComponentId | attributeNesting"
+        <div class="px-3 py-2 attribute attached" *ngFor="let attribute of attributes?.items | fsnAlphabetical | inheritedDomainMatch:activeDomain:domains.items | duplicateFilter:activeDomain?.referencedComponentId | attributeNesting"
              [class.active]="attribute?.referencedComponentId === activeAttribute?.referencedComponentId" (click)="makeActiveAttribute(attribute, true)">
             <span [class.subdomain]="attribute.additionalFields.depth === 2" [class.tertiary]="attribute.additionalFields.depth === 3">
                 {{attribute.referencedComponent.fsn?.term}}
+<!--                            <span class="fi fi-de flag"></span>-->
+<!--            <span>{{attribute.moduleId}}</span>-->
             </span>
         </div>
     </ng-container>

@@ -6,19 +6,27 @@ import { SnomedResponseObject } from '../models/snomedResponseObject';
 import { BranchingService } from './branching.service';
 import {map, catchError, debounceTime, distinctUntilChanged, filter, delay} from 'rxjs/operators';
 import { SnomedUtilityService } from './snomedUtility.service';
+import {PathingService} from './pathing/pathing.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TerminologyServerService {
 
-    private branchPath: string;
-    private branchPathSubscription: Subscription;
+    // private branchPath: string;
+    // private branchPathSubscription: Subscription;
+    activeBranch: any;
+    activeBranchSubscription: Subscription;
+    activeProject: any;
+    activeProjectSubscription: Subscription;
 
     constructor(private http: HttpClient,
                 private authoringService: AuthoringService,
-                private branchingService: BranchingService) {
-        this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => this.branchPath = data);
+                private branchingService: BranchingService,
+                private pathingService: PathingService) {
+        this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
+        this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => this.activeProject = data);
+        // this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => this.branchPath = data);
     }
 
     getTypeahead(term) {
@@ -29,9 +37,8 @@ export class TerminologyServerService {
             activeFilter: true,
             termActive: true
         };
-        return this.http
-            .post(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath + '/concepts/search', params)
-            .pipe(map(responseData => {
+        return this.http.post(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeBranch ? this.activeBranch.branchPath : '') + (this.activeProject ? '/' + this.activeProject.key : '') + '/concepts/search', params)
+            .pipe(map((responseData: any) => {
                 const typeaheads = [];
 
                 responseData['items'].forEach((item) => {
@@ -42,21 +49,18 @@ export class TerminologyServerService {
             }));
     }
 
-    getConcept(id): Observable<object> {
-        return this.http.get<object>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath
-            + '/concepts/' + id);
+    getConcept(id): Observable<any> {
+        return this.http.get<any>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeBranch ? this.activeBranch.branchPath : '') + (this.activeProject ? '/' + this.activeProject.key : '') + '/concepts/' + id);
     }
 
     getVersions(showFutureVersions) {
-        return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint +
-        'codesystems/SNOMEDCT/versions?showFutureVersions=' + showFutureVersions).pipe(map(responseData => {
+        return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + 'codesystems/SNOMEDCT/versions?showFutureVersions=' + showFutureVersions).pipe(map(responseData => {
             return responseData.items;
         }));
     }
 
     getRangeConstraints(rangeConstraint): Observable<SnomedResponseObject> {
-        return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint
-            + this.branchPath + '/concepts?ecl=' + encodeURIComponent(rangeConstraint)).pipe(map(responseData => {
+        return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeBranch ? this.activeBranch.branchPath : '') + (this.activeProject ? '/' + this.activeProject.key : '') + '/concepts?ecl=' + encodeURIComponent(rangeConstraint)).pipe(map(responseData => {
                 return responseData;
             }),
             catchError(err => {
@@ -65,20 +69,15 @@ export class TerminologyServerService {
     }
 
     getRangeConstraintsWithTerm(rangeConstraint, term) {
-        return this.http.get(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint
-            + this.branchPath + '/concepts?ecl=' + encodeURIComponent(rangeConstraint) + '&term=' + term);
+        return this.http.get(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeBranch ? this.activeBranch.branchPath : '') + (this.activeProject ? '/' + this.activeProject.key : '') + '/concepts?ecl=' + encodeURIComponent(rangeConstraint) + '&term=' + term);
     }
 
     getDomains(branchPath?: string): Observable<SnomedResponseObject> {
-        return this.http.get<SnomedResponseObject>(
-            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (branchPath ? branchPath : this.branchPath) +
-            '/members?referenceSet=723560006&active=true&limit=1000');
+        return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeBranch ? this.activeBranch.branchPath : '') + (this.activeProject ? '/' + this.activeProject.key : '') + '/members?referenceSet=723560006&active=true&limit=1000');
     }
 
     getAttributes(branchPath?: string): Observable<SnomedResponseObject> {
-        return this.http.get<SnomedResponseObject>(
-            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (branchPath ? branchPath : this.branchPath) +
-            '/members?referenceSet=723561005&active=true&limit=1000').pipe(map(response => {
+        return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeBranch ? this.activeBranch.branchPath : '') + (this.activeProject ? '/' + this.activeProject.key : '') + '/members?referenceSet=723561005&active=true&limit=1000').pipe(map(response => {
                 response.items.forEach(item => {
                     if (item.additionalFields.grouped) {
                         switch (item.additionalFields.grouped) {
@@ -96,21 +95,15 @@ export class TerminologyServerService {
     }
 
     getRanges(componentReferenceId, branchPath?: string): Observable<SnomedResponseObject> {
-        return this.http.get<SnomedResponseObject>(
-            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (branchPath ? branchPath : this.branchPath) +
-            '/members?referenceSet=723562003&referencedComponentId=' + componentReferenceId + '&active=true&limit=1000');
+        return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeBranch ? this.activeBranch.branchPath : '') + (this.activeProject ? '/' + this.activeProject.key : '') + '/members?referenceSet=723562003&referencedComponentId=' + componentReferenceId + '&active=true&limit=1000');
     }
 
     getAttributeHierarchy(): Observable<SnomedResponseObject> {
-        return this.http.get<SnomedResponseObject>(
-            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + 'mrcm/' + this.branchPath +
-            '/concept-model-attribute-hierarchy');
+        return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + 'mrcm/' + (this.activeBranch ? this.activeBranch.branchPath : '') + (this.activeProject ? '/' + this.activeProject.key : '') + '/concept-model-attribute-hierarchy');
     }
 
     getAttributesWithConcreteDomains(branchPath?: string): Observable<SnomedResponseObject> {
-        return this.http.get<SnomedResponseObject>(
-            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (branchPath ? branchPath : this.branchPath) +
-            '/concepts?ecl=%3C%3C762706009');
+        return this.http.get<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeBranch ? this.activeBranch.branchPath : '') + (this.activeProject ? '/' + this.activeProject.key : '') + '/concepts?ecl=%3C%3C762706009');
     }
 
     putRefsetMember(member): Observable<SnomedResponseObject> {
@@ -120,9 +113,7 @@ export class TerminologyServerService {
         if (member.additionalFields.parentId) {
             delete member.additionalFields.parentId;
         }
-        return this.http.put<SnomedResponseObject>(
-            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +
-            '/members/' + member.memberId, member);
+        return this.http.put<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeBranch ? this.activeBranch.branchPath : '') + (this.activeProject ? '/' + this.activeProject.key : '') + '/members/' + member.memberId, member);
     }
 
     postRefsetMember(member): Observable<SnomedResponseObject> {
@@ -132,14 +123,10 @@ export class TerminologyServerService {
         if (member.additionalFields.parentId) {
             delete member.additionalFields.parentId;
         }
-        return this.http.post<SnomedResponseObject>(
-            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +
-            '/members', member);
+        return this.http.post<SnomedResponseObject>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeBranch ? this.activeBranch.branchPath : '') + (this.activeProject ? '/' + this.activeProject.key : '') + '/members', member);
     }
 
     deleteRefsetMember(member): Observable<any> {
-        return this.http.delete<any>(
-            this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + this.branchPath +
-            '/members/' + member.memberId);
+        return this.http.delete<any>(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + (this.activeBranch ? this.activeBranch.branchPath : '') + (this.activeProject ? '/' + this.activeProject.key : '') + '/members/' + member.memberId);
     }
 }

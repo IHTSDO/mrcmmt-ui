@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {DuplicateFilterPipe} from '../../pipes/duplicate-filter.pipe';
 import {DomainMatchPipe} from '../../pipes/domain-match.pipe';
 import {TextMatchPipe} from '../../pipes/text-match.pipe';
-import {AlphabeticalPipe} from '../../pipes/alphabetical.pipe';
+import {AlphabeticalPipe} from '../../pipes/alphabetical/alphabetical.pipe';
 import {AttributeNestingPipe} from '../../pipes/attribute-nesting.pipe';
 import {ApplicableAttributesPanelComponent} from './applicable-attributes-panel.component';
 import {InheritedDomainMatchPipe} from '../../pipes/inherited-domain-match.pipe';

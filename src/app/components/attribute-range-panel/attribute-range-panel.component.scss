@@ -1,4 +1,4 @@
-@import "~src/variables";
+@import "src/variables";
 
 div#attribute-range-panel {
     position: fixed;
@@ -199,7 +199,7 @@ div#attribute-range-panel {
 
         div.result-search {
             background-color: #D2D2D2;
-            
+
             input {
                 font-size: 1.2rem;
             }

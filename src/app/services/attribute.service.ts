@@ -27,7 +27,7 @@ export class AttributeService {
     }
 
     clearAttributes() {
-        this.attributes.next();
+        this.attributes.next(null);
     }
 
     getAttributes(): Observable<any> {
@@ -40,7 +40,7 @@ export class AttributeService {
     }
 
     clearActiveAttribute() {
-        this.activeAttribute.next();
+        this.activeAttribute.next(null);
     }
 
     getActiveAttribute(): Observable<any> {
@@ -53,7 +53,7 @@ export class AttributeService {
     }
 
     clearMatchedDomains() {
-        this.matchedDomains.next();
+        this.matchedDomains.next(null);
     }
 
     getMatchedDomains() {
@@ -66,7 +66,7 @@ export class AttributeService {
     }
 
     clearAttributeFilter() {
-        this.attributeFilter.next();
+        this.attributeFilter.next(null);
     }
 
     getAttributeFilter(): Observable<any> {

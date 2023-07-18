@@ -23,7 +23,7 @@ export class DomainService {
     }
 
     clearDomains() {
-        this.domains.next();
+        this.domains.next(null);
     }
 
     getDomains(): Observable<any> {
@@ -36,7 +36,7 @@ export class DomainService {
     }
 
     clearActiveDomain() {
-        this.activeDomain.next();
+        this.activeDomain.next(null);
     }
 
     getActiveDomain(): Observable<any> {
@@ -49,7 +49,7 @@ export class DomainService {
     }
 
     clearDomainFilter() {
-        this.domainFilter.next();
+        this.domainFilter.next(null);
     }
 
     getDomainFilter(): Observable<any> {

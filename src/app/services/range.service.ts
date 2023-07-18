@@ -21,7 +21,7 @@ export class RangeService {
     }
 
     clearRanges() {
-        this.ranges.next();
+        this.ranges.next(null);
     }
 
     getRanges(): Observable<any> {
@@ -34,7 +34,7 @@ export class RangeService {
     }
 
     clearActiveRange() {
-        this.activeRange.next();
+        this.activeRange.next(null);
     }
 
     getActiveRange(): Observable<any> {
@@ -47,7 +47,7 @@ export class RangeService {
     }
 
     clearLatestReleaseActiveRange() {
-        this.latestReleaseActiveRange.next();
+        this.latestReleaseActiveRange.next(null);
     }
 
     getLatestReleaseActiveRange(): Observable<any> {

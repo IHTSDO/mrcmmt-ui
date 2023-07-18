@@ -16,8 +16,8 @@ export class AuthoringService {
         this.environmentEndpoint = window.location.origin + '/';
     }
 
-    getProjects(): Observable<object[]> {
-        return this.http.get<object[]>('/authoring-services/projects?lightweight=true');
+    getProjects(): Observable<any[]> {
+        return this.http.get<any[]>('/authoring-services/projects?lightweight=true');
     }
 
     getUIConfiguration(): Observable<UIConfiguration> {

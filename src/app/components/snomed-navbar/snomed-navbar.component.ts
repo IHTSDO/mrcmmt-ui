@@ -10,6 +10,7 @@ import { DomainService } from '../../services/domain.service';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
+import {PathingService} from '../../services/pathing/pathing.service';
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -20,14 +21,24 @@ export class SnomedNavbarComponent implements OnInit {
 
     environment: string;
     public: boolean;
-    branchPath: string;
-    branchPathSubscription: Subscription;
-    versions: SnomedResponseObject;
+    // branchPath: string;
+    // branchPathSubscription: Subscription;
+    versions: any;
     versionsSubscription: Subscription;
     user: User;
     userSubscription: Subscription;
     editable: boolean;
     editableSubscription: Subscription;
+
+    branches: any;
+    branchesSubscription: Subscription;
+    activeBranch: any;
+    activeBranchSubscription: Subscription;
+
+    projects: any;
+    projectsSubscription: Subscription;
+    activeProject: any;
+    activeProjectSubscription: Subscription;
 
     constructor(private branchingService: BranchingService,
                 private mrcmmtService: MrcmmtService,
@@ -36,13 +47,18 @@ export class SnomedNavbarComponent implements OnInit {
                 private domainService: DomainService,
                 private attributeService: AttributeService,
                 private terminologyService: TerminologyServerService,
-                private rangeService: RangeService) {
+                private rangeService: RangeService,
+                private pathingService: PathingService) {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
         this.public = window.location.host.includes('browser');
-        this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => {
-            this.branchPath = data;
-            this.mrcmmtService.setupDomains();
-        });
+        // this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => {
+        //     this.branchPath = data;
+        //     this.mrcmmtService.setupDomains();
+        // });
+        this.branchesSubscription = this.pathingService.getBranches().subscribe(data => this.branches = data);
+        this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
+        this.projectsSubscription = this.pathingService.getProjects().subscribe(data => this.projects = data);
+        this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => this.activeProject = data);
         this.versionsSubscription = this.branchingService.getVersions().subscribe(data => this.versions = data);
         this.versionsSubscription = this.branchingService.getVersions().subscribe(data => this.versions = data);
         this.userSubscription = this.getUser();
@@ -50,6 +66,14 @@ export class SnomedNavbarComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.pathingService.httpGetBranches().subscribe(branches => {
+            this.pathingService.setBranches(branches);
+            this.pathingService.setActiveBranch(branches[0]);
+        });
+
+        this.pathingService.httpGetProjects().subscribe(projects => {
+            this.pathingService.setProjects(projects);
+        });
     }
 
     getUser() {
@@ -64,17 +88,35 @@ export class SnomedNavbarComponent implements OnInit {
         this.authenticationService.logout();
     }
 
-    setPath(path) {
-        this.branchingService.setBranchPath(path);
+    clearActiveItems() {
         this.domainService.clearActiveDomain();
         this.attributeService.clearActiveAttribute();
         this.rangeService.clearActiveRange();
+    }
+
+    getAttributesWithConcreteDomains() {
         this.terminologyService.getAttributesWithConcreteDomains().subscribe(ConcreteAttributes => {
-                this.terminologyService.getAttributeHierarchy().subscribe(attributes => {
-                    this.attributeService.setAttributeHierarchy(attributes);
-                    this.attributeService.setAttributesWithConcreteDomains(ConcreteAttributes.items);
-                    this.mrcmmtService.setupDomains();
-                });
+            this.terminologyService.getAttributeHierarchy().subscribe(attributes => {
+                this.attributeService.setAttributeHierarchy(attributes);
+                this.attributeService.setAttributesWithConcreteDomains(ConcreteAttributes.items);
+                this.mrcmmtService.setupDomains();
             });
+        });
+    }
+
+    setBranch(branch) {
+        this.pathingService.setActiveBranch(branch);
+        this.pathingService.setActiveProject(null);
+        this.clearActiveItems();
+        this.getAttributesWithConcreteDomains();
+    }
+
+    setProject(project) {
+        const proj = this.projects.find(item => item.key === project.key);
+        this.pathingService.setActiveProject(proj);
+    }
+
+    noProject() {
+        this.pathingService.setActiveProject(null);
     }
 }

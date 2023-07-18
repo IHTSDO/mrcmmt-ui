@@ -15,6 +15,7 @@ import { ModalService } from './services/modal.service';
 import { EditService } from './services/edit.service';
 import { UrlParamsService } from './services/url-params.service';
 import {Subscription} from 'rxjs';
+import {PathingService} from './services/pathing/pathing.service';
 
 @Component({
     selector: 'app-root',
@@ -41,7 +42,8 @@ export class AppComponent implements OnInit {
                 private authenticationService: AuthenticationService,
                 public modalService: ModalService,
                 public editService: EditService,
-                private urlParamsService: UrlParamsService) {
+                private urlParamsService: UrlParamsService,
+                private pathingService: PathingService) {
         this.unsavedChangesSubscription = this.editService.getChangeLog().subscribe((response) => this.unsavedChanges = response);
     }
 
@@ -60,13 +62,22 @@ export class AppComponent implements OnInit {
 
         this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '', []);
 
-        if (this.instance.includes('browser')) {
-            this.publicConfig();
-        } else if (this.instance.includes('dailybuild')) {
-            this.dailybuildConfig();
-        } else {
-            this.privateConfig();
-        }
+        this.pathingService.httpGetBranches().subscribe(branches => {
+            this.pathingService.setBranches(branches);
+            this.pathingService.setActiveBranch(branches[0]);
+
+            if (this.instance.includes('browser')) {
+                this.publicConfig();
+            } else if (this.instance.includes('dailybuild')) {
+                this.dailybuildConfig();
+            } else {
+                this.privateConfig();
+            }
+        });
+
+        this.pathingService.httpGetProjects().subscribe(projects => {
+            this.pathingService.setProjects(projects);
+        });
 
         this.assignFavicon();
     }
@@ -87,7 +98,7 @@ export class AppComponent implements OnInit {
             });
 
             versions.reverse();
-            this.branchingService.setBranchPath(versions[0].branchPath);
+            // this.branchingService.setBranchPath(versions[0].branchPath);
             this.editService.setEditor(false);
 
             this.branchingService.setVersions(versions);
@@ -108,7 +119,7 @@ export class AppComponent implements OnInit {
         console.log('dailyBuild Config');
         this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '', []);
         this.branchingService.setLatestReleaseBranchPath('MAIN');
-        this.branchingService.setBranchPath('MAIN');
+        // this.branchingService.setBranchPath('MAIN');
         this.editService.setEditor(false);
         this.branchingService.setVersions([{branchPath: 'MAIN'}]);
 
@@ -126,7 +137,7 @@ export class AppComponent implements OnInit {
     privateConfig() {
         this.authoringService.getUIConfiguration().subscribe(data => {
             this.authoringService.uiConfiguration = data;
-            this.branchingService.setBranchPath('MAIN');
+            // this.branchingService.setBranchPath('MAIN');
 
             this.terminologyService.getVersions(true).subscribe(versions => {
                 this.branchingService.setLatestReleaseBranchPath(versions.reduce((a, b) => {
@@ -137,11 +148,11 @@ export class AppComponent implements OnInit {
                     this.authoringService.getProjects().subscribe(projects => {
                         projects.unshift({key: 'MAIN', branchPath: 'MAIN'});
 
-                        if (this.urlParamsService.getBranchParam()) {
-                            this.branchingService.setBranchPath(this.urlParamsService.getBranchParam());
-                        } else {
-                            this.branchingService.setBranchPath(projects[0]['branchPath']);
-                        }
+                        // if (this.urlParamsService.getBranchParam()) {
+                        //     this.branchingService.setBranchPath(this.urlParamsService.getBranchParam());
+                        // } else {
+                        //     this.branchingService.setBranchPath(projects[0]['branchPath']);
+                        // }
 
                         if (user.roles.includes('ROLE_mrcm-author')) {
                             this.editService.setEditor(true);

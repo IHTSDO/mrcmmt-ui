@@ -224,7 +224,7 @@ export class DomainPanelComponent implements OnDestroy {
         this.setActives(newDomain, null, null);
     }
 
-    highlightDomains(referencedComponentId) {
+    highlightDomains(referencedComponentId): any {
         const domains = [];
         if (this.matchedDomains && this.matchedDomains.length > 1) {
             this.matchedDomains.forEach((item) => {
@@ -239,7 +239,7 @@ export class DomainPanelComponent implements OnDestroy {
         }
     }
 
-    ETLexpressionBuilder(expression: any, originalExpression?: any) {
+    ETLexpressionBuilder(expression: any, originalExpression?: any): any {
         if (expression && !originalExpression) {
             return SnomedUtilityService.ETLexpressionBuilder(expression);
         }

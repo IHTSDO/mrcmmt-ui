@@ -1,11 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'alphabetical',
-    pure: false
+  name: 'fsnAlphabetical'
 })
-export class AlphabeticalPipe implements PipeTransform {
-
+export class FsnAlphabeticalPipe implements PipeTransform {
     transform(items: any[]): any {
         if (!items) {
             return [];
@@ -19,6 +17,8 @@ export class AlphabeticalPipe implements PipeTransform {
             if (item1.referencedComponent.fsn.term < item2.referencedComponent.fsn.term) {
                 return -1;
             }
+
+            return null;
         });
 
         return items;

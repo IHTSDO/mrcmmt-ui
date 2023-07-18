@@ -31,9 +31,9 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
 
     latestReleaseRange: RefSet;
     latestReleaseRangeSubscription: Subscription;
-    domains: SnomedResponseObject;
+    domains: any;
     domainSubscription: Subscription;
-    attributes: SnomedResponseObject;
+    attributes: any;
     attributeSubscription: Subscription;
     attributeFilter: string;
     attributeFilterSubscription: Subscription;

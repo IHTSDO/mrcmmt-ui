@@ -3,21 +3,64 @@
         <img class="logo mr-2 p-0" src="/mrcm/assets/small_logo.png">
         <span class="title">SNOMED CT MRCM Maintenance Tool</span>
     </a>
-    <ul class="dropdown-nav me-auto my-2">
+<!--    <ul class="dropdown-nav me-auto my-2">-->
+<!--        <li class="nav-item dropdown">-->
+<!--            <a class="nav-link px-3 py-2 rounded dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                {{branchPath}}-->
+<!--            </a>-->
+<!--            <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                <ng-container *ngFor="let version of versions | projectAlphabetical | managedService">-->
+<!--                    <a class="dropdown-item ps-3" (click)="setPath(version.branchPath)">{{version.branchPath}}</a>-->
+<!--                </ng-container>-->
+<!--            </div>-->
+<!--        </li>-->
+<!--        <li *ngIf="editable" class="nav-item m-0 px-3">-->
+<!--            <a class="nav-link editing-mode">- EDITING MODE -</a>-->
+<!--        </li>-->
+<!--    </ul>-->
+
+
+    <ul *ngIf="projects; else loading" class="dropdown-nav me-auto my-2">
         <li class="nav-item dropdown">
-            <a class="nav-link px-3 rounded dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{branchPath}}
+            <a class="nav-link px-3 py-2 rounded dropdown-toggle text-end" id="branchDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{activeBranch?.branchPath}}
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <ng-container *ngFor="let version of versions | projectAlphabetical | managedService">
-                    <a class="dropdown-item ps-3" (click)="setPath(version.branchPath)">{{version.branchPath}}</a>
+            <div *ngIf="branches" class="dropdown-menu py-0" aria-labelledby="branchDropdown">
+                <ng-container *ngFor="let branch of branches | alphabetical:'branchPath' | branch:projects">
+                    <a class="dropdown-item ps-3" (click)="setBranch(branch)">{{branch?.branchPath}}</a>
                 </ng-container>
+            </div>
+        </li>
+        <li *ngIf="activeBranch && activeProject" class="ms-3 text-ghost-grey">/</li>
+        <li *ngIf="activeBranch" class="ms-3 nav-item dropdown">
+            <a class="nav-link px-3 py-2 rounded dropdown-toggle text-end" id="projectDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [class.add]="!activeProject?.key">
+                {{activeProject?.key ? activeProject.key : 'PROJECT'}}
+            </a>
+            <div class="dropdown-menu py-0" aria-labelledby="projectDropdown">
+                <ng-container *ngFor="let project of projects | alphabetical:'key' | project:activeBranch">
+                    <a class="dropdown-item ps-3" (click)="setProject(project)">{{project?.key}}</a>
+                </ng-container>
+                <a *ngIf="activeProject" class="dropdown-item ps-3" (click)="noProject()">
+                    <button class="btn py-0 m-0 w-100 text-white bg-mandy">REMOVE</button>
+                </a>
             </div>
         </li>
         <li *ngIf="editable" class="nav-item m-0 px-3">
             <a class="nav-link editing-mode">- EDITING MODE -</a>
         </li>
     </ul>
+
+    <ng-template #loading>
+        <ul class="dropdown-nav me-auto my-2">
+            <li class="nav-item">
+                <a class="nav-link px-3 py-2 rounded loading">
+                    <div class="spinner-border" style="font-size: 1rem" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </ng-template>
 
     <ng-container [ngSwitch]="environment">
         <div *ngSwitchCase="'local'" class="banner local"></div>

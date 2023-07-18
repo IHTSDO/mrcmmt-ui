@@ -1,4 +1,4 @@
-@import '~src/variables.scss';
+@import 'src/variables.scss';
 
 nav {
     a.logo {
@@ -66,11 +66,11 @@ nav {
         list-style-type: none;
         max-height: 3rem;
 
-
         li {
             display: inline-block;
 
             a {
+                //min-width: 8rem;
                 font-size: 1.4rem;
                 height: 3rem;
                 color: $white;
@@ -78,23 +78,16 @@ nav {
                 line-height: 2rem;
                 font-weight: 300;
                 letter-spacing: 0.2rem;
+                cursor: pointer;
 
-                &.editable {
-                    color: $regent-grey;
-                    cursor: not-allowed;
+                &.add {
+                    background-color: $fruit-salad;
                 }
 
-                &.editing-mode {
-                    max-height: 3rem;
-                    font-size: 1.6rem;
-                    color: $apple-green;
-                    background-color: transparent;
-                    font-weight: 300;
-                    letter-spacing: 0.2rem;
+                &.loading {
+                    min-width: unset;
                 }
             }
-
-
 
             div.dropdown-menu {
                 background-color: $dark;
@@ -112,7 +105,7 @@ nav {
                     z-index: auto;
 
                     &:hover {
-                        background-color: $darkish;
+                        background-color: darken($dark, 10%);
                         cursor: pointer;
                     }
                 }

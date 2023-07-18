@@ -1,4 +1,22 @@
 // SNOMED COLOURS
+$white: #FFFFFF;
+$gallery-white: #FAFAFA;
+$alto-white: #E0E0E0;
+$ghost-grey: #C8CFD6;
+$utility-grey: #B4BAC0;
+$slate-grey: #708090;
+$river-bed-grey: #434A55;
+$bootstrap-black: #343A40;
+$black: #000000;
+$wisteria: #A060AE;
+$mandy: #EB4C59;
+$fruit-salad: #4EA24E;
+$anakiwa: #C3E7FE;
+$cerulean: #49A8DB;
+$blumine: #124F6B;
+$sea-buckthorn: #F8A73D;
+$candlelight: #FBDB13;
+
 
 // WHITES
 $almost-white: #D2D2D2;
@@ -55,3 +73,11 @@ $lightyellow: lightyellow;
 
 // PURPLES
 $purple: #6A1D85;
+
+.text-ghost-grey {
+    color: $ghost-grey;
+}
+
+.bg-mandy {
+    background-color: $mandy;
+}

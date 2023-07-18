@@ -1,4 +1,4 @@
-@import "~src/variables";
+@import "src/variables";
 
 div#domain-panel {
     position: fixed;
@@ -44,6 +44,10 @@ div#domain-panel {
 
         &.odd {
             background-color: #D9D9D9;
+        }
+
+        span.flag {
+            border-radius: 2px;
         }
 
         span.subdomain {

@@ -18,6 +18,8 @@ export class ProjectAlphabeticalPipe implements PipeTransform {
             if (item1.branchPath < item2.branchPath) {
                 return -1;
             }
+
+            return null;
         });
 
         return items;

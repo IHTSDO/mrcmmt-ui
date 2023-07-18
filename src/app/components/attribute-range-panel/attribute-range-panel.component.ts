@@ -1,7 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
 import {RefSet} from '../../models/refset';
 import {TerminologyServerService} from '../../services/terminologyServer.service';
-import {Subject, Subscription} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {RangeService} from '../../services/range.service';
 import {DomainService} from '../../services/domain.service';
 import {AttributeService} from '../../services/attribute.service';
@@ -41,7 +41,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
     changeLogSubscription: Subscription;
 
     private searchSubject = new Subject<string>();
-    readonly results$ = this.searchSubject.pipe(
+    readonly results$:Observable<any> = this.searchSubject.pipe(
         debounceTime(300),
         switchMap(text => {
             if (text && text.length > 2) {
@@ -88,8 +88,8 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.changeLogSubscription.unsubscribe();
     }
 
-    searchResults(text: string) {
-        this.searchSubject.next(text);
+    searchResults(target: any) {
+        this.searchSubject.next(target.value);
     }
 
     makeActiveRange(activeRange) {
@@ -212,7 +212,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.rangeService.setActiveRange(activeRange);
     }
 
-    ECLexpressionBuilder(expression: any, originalExpression?: any) {
+    ECLexpressionBuilder(expression: any, originalExpression?: any): any {
         if (expression && !originalExpression) {
             return SnomedUtilityService.ECLexpressionBuilder(expression);
         }
