@@ -68,7 +68,7 @@ export class SnomedNavbarComponent implements OnInit {
     ngOnInit() {
         this.pathingService.httpGetBranches().subscribe(branches => {
             this.pathingService.setBranches(branches);
-            this.pathingService.setActiveBranch(branches[0]);
+            this.pathingService.setActiveBranch(branches.find(branch => branch.shortName === 'SNOMEDCT'));
         });
 
         this.pathingService.httpGetProjects().subscribe(projects => {
@@ -107,6 +107,9 @@ export class SnomedNavbarComponent implements OnInit {
     setBranch(branch) {
         this.pathingService.setActiveBranch(branch);
         this.pathingService.setActiveProject(null);
+        this.domainService.httpGetExtensionModuleId(branch.shortName).subscribe((data: any) => {
+            this.domainService.setExtensionModuleId(data.metadata.defaultModuleId);
+        });
         this.clearActiveItems();
         this.getAttributesWithConcreteDomains();
     }

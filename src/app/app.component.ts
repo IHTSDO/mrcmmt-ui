@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
 
         this.pathingService.httpGetBranches().subscribe(branches => {
             this.pathingService.setBranches(branches);
-            this.pathingService.setActiveBranch(branches[0]);
+            this.pathingService.setActiveBranch(branches.find(branch => branch.shortName === 'SNOMEDCT'));
 
             if (this.instance.includes('browser')) {
                 this.publicConfig();
@@ -116,7 +116,6 @@ export class AppComponent implements OnInit {
     }
 
     dailybuildConfig() {
-        console.log('dailyBuild Config');
         this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '', []);
         this.branchingService.setLatestReleaseBranchPath('MAIN');
         // this.branchingService.setBranchPath('MAIN');

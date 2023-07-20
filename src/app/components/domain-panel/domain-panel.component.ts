@@ -12,6 +12,7 @@ import { debounceTime, distinctUntilChanged, switchMap, map, catchError } from '
 import { SnomedUtilityService } from '../../services/snomedUtility.service';
 import { ModalService } from '../../services/modal.service';
 import { SnomedResponseObject } from '../../models/snomedResponseObject';
+import {PathingService} from '../../services/pathing/pathing.service';
 
 @Component({
     selector: 'app-domain-panel',
@@ -44,6 +45,8 @@ export class DomainPanelComponent implements OnDestroy {
     editSubscription: Subscription;
     changeLog: RefSet[];
     changeLogSubscription: Subscription;
+    activeBranch: any;
+    activeBranchSubscription: Subscription;
 
     // typeahead
     shortFormConcept: string;
@@ -66,12 +69,14 @@ export class DomainPanelComponent implements OnDestroy {
                 private editService: EditService,
                 private urlParamsService: UrlParamsService,
                 private terminologyService: TerminologyServerService,
-                public modalService: ModalService) {
+                public modalService: ModalService,
+                private pathingService: PathingService) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => {
             this.activeDomain = data;
             this.urlParamsService.updateActiveRefsetParams(data, this.activeAttribute, this.activeRange);
         });
+        this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => this.activeAttribute = data);
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
         this.domainFilterSubscription = this.domainService.getDomainFilter().subscribe(data => this.domainFilter = data);
@@ -92,6 +97,7 @@ export class DomainPanelComponent implements OnDestroy {
     }
 
     makeActiveDomain(domain) {
+        // console.log('domain: ', domain);
         let domainFound = false;
         if (this.activeDomain === domain) {
             this.detailsExpanded = true;
