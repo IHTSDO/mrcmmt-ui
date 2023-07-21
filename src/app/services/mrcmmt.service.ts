@@ -108,7 +108,7 @@ export class MrcmmtService {
     addConcreteDomainParameters() {
         const attributesWithConcreteDomains = this.attributeService.getAttributesWithConcreteDomains();
         this.attributeService.getAttributes().subscribe(attributes => {
-            attributes.items.forEach(attribute => {
+            attributes?.items.forEach(attribute => {
                 attributesWithConcreteDomains.forEach(item => {
                     if (attribute.referencedComponentId === item.conceptId) {
                         attribute.concreteDomainAttribute = true;

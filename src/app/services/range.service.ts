@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import { AdditionalFields, ConcreteDomainParameters, RefSet } from '../models/refset';
+import {DomainService} from './domain.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class RangeService {
 
-    constructor() {
+    constructor(private domainService: DomainService) {
+        this.extensionModuleIdSubscription = this.domainService.getExtensionModuleId().subscribe(data => this.extensionModuleId = data);
     }
 
     private ranges = new Subject<any>();
     private activeRange = new Subject<any>();
     private latestReleaseActiveRange = new Subject<any>();
+
+    private extensionModuleId: string;
+    private extensionModuleIdSubscription: Subscription;
 
     // Setters & Getters: Ranges
     setRanges(ranges) {
@@ -71,6 +76,8 @@ export class RangeService {
         if (activeAttribute.concreteDomainAttribute) {
             newRange.concreteDomainParameters = new ConcreteDomainParameters();
         }
+
+        newRange.moduleId = this.extensionModuleId;
 
         return newRange;
     }

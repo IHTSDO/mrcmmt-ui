@@ -107,6 +107,9 @@ export class SnomedNavbarComponent implements OnInit {
     setBranch(branch) {
         this.pathingService.setActiveBranch(branch);
         this.pathingService.setActiveProject(null);
+        this.domainService.setDomains(null);
+        this.attributeService.setAttributes(null);
+        this.rangeService.setRanges(null);
         this.domainService.httpGetExtensionModuleId(branch.shortName).subscribe((data: any) => {
             this.domainService.setExtensionModuleId(data.metadata.defaultModuleId);
         });
