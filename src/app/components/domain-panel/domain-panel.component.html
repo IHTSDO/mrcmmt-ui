@@ -11,8 +11,7 @@
          [class.attached]="highlightDomains(domain.referencedComponentId)">
         <span [class.subdomain]="domain.additionalFields.parentDomain" [class.tertiary]="domain.tertiary">
             {{domain.referencedComponent?.fsn.term}}
-<!--            <span class="fi fi-de flag"></span>-->
-<!--            <span>{{domain.moduleId}}</span>-->
+            <span *ngIf="extensionRefset(domain)" class="px-3 fi fi-{{activeBranch.countryCode}} flag"></span>
         </span>
         <span *ngIf="domain.changed && !domain.deleted" class="marker new d-inline-block px-2 m-1">UNSAVED</span>
         <span *ngIf="!domain.effectiveTime && !domain.changed && !domain.deleted" class="marker edited d-inline-block px-2 m-1">UNPUBLISHED</span>

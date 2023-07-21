@@ -97,7 +97,6 @@ export class DomainPanelComponent implements OnDestroy {
     }
 
     makeActiveDomain(domain) {
-        // console.log('domain: ', domain);
         let domainFound = false;
         if (this.activeDomain === domain) {
             this.detailsExpanded = true;
@@ -255,6 +254,10 @@ export class DomainPanelComponent implements OnDestroy {
             const original = SnomedUtilityService.ETLexpressionBuilder(originalExpression);
             return SnomedUtilityService.expressionComparator(current, original);
         }
+    }
+
+    extensionRefset(domain): boolean {
+        return !this.domainService.internationalModuleIds.find(item => item.conceptId === domain.moduleId);
     }
 }
 

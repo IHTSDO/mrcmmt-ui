@@ -11,6 +11,7 @@ import {AuthoringService} from './authoring.service';
 export class DomainService {
 
     private extensionModuleId = new BehaviorSubject<any>('900000000000012004');
+    internationalModuleIds: any[];
     private domains = new Subject<any>();
     private activeDomain = new Subject<any>();
     private domainFilter = new Subject<any>();

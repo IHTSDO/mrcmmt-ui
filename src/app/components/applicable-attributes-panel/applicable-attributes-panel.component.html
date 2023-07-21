@@ -10,7 +10,7 @@
              [class.active]="attribute?.referencedComponentId === activeAttribute?.referencedComponentId">
             <span [class.subdomain]="attribute.additionalFields.depth === 2" [class.tertiary]="attribute.additionalFields.depth === 3">
                 {{attribute.referencedComponent.fsn?.term}}
-<!--                            <span class="fi fi-de flag"></span>-->
+                <span *ngIf="extensionRefset(attribute)" class="px-3 fi fi-{{activeBranch.countryCode}} flag"></span>
 <!--            <span>{{attribute | json}}</span>-->
             </span>
             <span *ngIf="duplicateAttributes(attribute, result)" class="content-type">{{mrcmmtService.getContentType(attribute.additionalFields.contentTypeId)}}</span>

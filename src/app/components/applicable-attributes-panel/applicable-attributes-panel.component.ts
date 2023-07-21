@@ -16,6 +16,7 @@ import {SnomedUtilityService} from '../../services/snomedUtility.service';
 import {ValidationService} from '../../services/validation.service';
 import {SnomedResponseObject} from '../../models/snomedResponseObject';
 import {BranchingService} from '../../services/branching.service';
+import {PathingService} from '../../services/pathing/pathing.service';
 
 @Component({
     selector: 'app-applicable-attributes-panel',
@@ -49,6 +50,8 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     editSubscription: Subscription;
     changeLog: RefSet[];
     changeLogSubscription: Subscription;
+    activeBranch: any;
+    activeBranchSubscription: Subscription;
 
     // typeahead
     shortFormConcept: string;
@@ -73,7 +76,8 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                 public mrcmmtService: MrcmmtService,
                 private validationService: ValidationService,
                 private urlParamsService: UrlParamsService,
-                private branchingService: BranchingService) {
+                private branchingService: BranchingService,
+                private pathingService: PathingService) {
         this.domainSubscription = this.domainService.getDomains().subscribe(data => this.domains = data);
         this.attributeSubscription = this.attributeService.getAttributes().subscribe(data => this.attributes = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
@@ -82,6 +86,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
             this.setLatestActiveAttribute();
             this.urlParamsService.updateActiveRefsetParams(this.domainService, data, this.activeRange);
         });
+        this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
         this.activeRangeSubscription = this.rangeService.getActiveRange().subscribe(data => this.activeRange = data);
         this.matchedDomainsSubscription = this.attributeService.getMatchedDomains().subscribe(data => this.matchedDomains = data);
         this.attributeFilterSubscription = this.attributeService.getAttributeFilter().subscribe(data => this.attributeFilter = data);
@@ -306,5 +311,9 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
 
             this.setActives(activeDomain, attribute, null);
         }
+    }
+
+    extensionRefset(attribute): boolean {
+        return !this.domainService.internationalModuleIds.find(item => item.conceptId === attribute.moduleId);
     }
 }

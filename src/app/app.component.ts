@@ -64,7 +64,11 @@ export class AppComponent implements OnInit {
 
         this.pathingService.httpGetBranches().subscribe(branches => {
             this.pathingService.setBranches(branches);
-            this.pathingService.setActiveBranch(branches.find(branch => branch.shortName === 'SNOMEDCT'));
+
+            const international = branches.find(branch => branch.shortName === 'SNOMEDCT');
+
+            this.pathingService.setActiveBranch(international);
+            this.domainService.internationalModuleIds = international.modules;
 
             if (this.instance.includes('browser')) {
                 this.publicConfig();
