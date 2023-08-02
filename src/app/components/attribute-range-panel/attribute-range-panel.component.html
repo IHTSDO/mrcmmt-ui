@@ -5,7 +5,16 @@
             <button type="button" *ngIf="editable && activeAttribute" class="btn-default fas fa-plus float-end add" (click)="addNewRange()"></button>
             <div *ngFor="let range of ranges?.items | fsnAlphabetical; let odd = odd" class="px-3 py-2 range" (click)="makeActiveRange(range)" [class.odd]="odd" [class.active]="range === activeRange">
                 {{mrcmmtService.getContentType(range.additionalFields?.contentTypeId)}} - {{mrcmmtService.getRuleStrength(range.additionalFields?.ruleStrengthId)}}
-                <span *ngIf="extensionRefset(range)" class="px-3 fi fi-{{activeBranch.countryCode}} flag"></span>
+                <ng-container *ngIf="extensionRefset(range)">
+                    <ng-container *ngIf="activeBranch.shortName.includes('LOINC'); else flag">
+                    <span class="loinc px-1">
+                        <img src="assets/loinc-avatar-on-white.png">
+                    </span>
+                    </ng-container>
+                    <ng-template #flag>
+                        <span class="px-3 fi fi-{{activeBranch.countryCode}} flag"></span>
+                    </ng-template>
+                </ng-container>
                 <span *ngIf="range.changed && !range.deleted" class="marker new d-inline-block px-2 m-1">UNSAVED</span>
                 <span *ngIf="!range.effectiveTime && !range.changed && !range.deleted" class="marker edited d-inline-block px-2 m-1">UNPUBLISHED</span>
                 <span *ngIf="range.deleted" class="marker deleted d-inline-block px-2 m-1">TO BE DELETED</span>

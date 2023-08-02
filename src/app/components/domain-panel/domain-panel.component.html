@@ -11,7 +11,16 @@
          [class.attached]="highlightDomains(domain.referencedComponentId)">
         <span [class.subdomain]="domain.additionalFields.parentDomain" [class.tertiary]="domain.tertiary">
             {{domain.referencedComponent?.fsn.term}}
-            <span *ngIf="extensionRefset(domain)" class="px-3 fi fi-{{activeBranch.countryCode}} flag"></span>
+            <ng-container *ngIf="extensionRefset(domain)">
+                <ng-container *ngIf="activeBranch.shortName.includes('LOINC'); else flag">
+                    <span class="loinc px-1">
+                        <img src="assets/loinc-avatar-on-white.png">
+                    </span>
+                </ng-container>
+                <ng-template #flag>
+                    <span class="px-3 fi fi-{{activeBranch.countryCode}} flag"></span>
+                </ng-template>
+            </ng-container>
         </span>
         <span *ngIf="domain.changed && !domain.deleted" class="marker new d-inline-block px-2 m-1">UNSAVED</span>
         <span *ngIf="!domain.effectiveTime && !domain.changed && !domain.deleted" class="marker edited d-inline-block px-2 m-1">UNPUBLISHED</span>

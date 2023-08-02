@@ -35,6 +35,17 @@ div#applicable-attributes-panel {
             background-color: #F3F3F3;
         }
 
+        span.flag {
+            border-radius: 2px;
+        }
+
+        span.loinc {
+            img {
+                height: 2rem;
+                width: 2rem;
+            }
+        }
+
         span.subdomain {
             margin-left:1rem;
         }

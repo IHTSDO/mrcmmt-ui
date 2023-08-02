@@ -10,8 +10,16 @@
              [class.active]="attribute?.referencedComponentId === activeAttribute?.referencedComponentId">
             <span [class.subdomain]="attribute.additionalFields.depth === 2" [class.tertiary]="attribute.additionalFields.depth === 3">
                 {{attribute.referencedComponent.fsn?.term}}
-                <span *ngIf="extensionRefset(attribute)" class="px-3 fi fi-{{activeBranch.countryCode}} flag"></span>
-<!--            <span>{{attribute | json}}</span>-->
+                <ng-container *ngIf="extensionRefset(attribute)">
+                <ng-container *ngIf="activeBranch.shortName.includes('LOINC'); else flag">
+                    <span class="loinc px-1">
+                        <img src="assets/loinc-avatar-on-white.png">
+                    </span>
+                </ng-container>
+                <ng-template #flag>
+                    <span class="px-3 fi fi-{{activeBranch.countryCode}} flag"></span>
+                </ng-template>
+            </ng-container>
             </span>
             <span *ngIf="duplicateAttributes(attribute, result)" class="content-type">{{mrcmmtService.getContentType(attribute.additionalFields.contentTypeId)}}</span>
             <span *ngIf="attribute.changed && !attribute.deleted" class="marker new d-inline-block px-2 m-1">UNSAVED</span>
@@ -26,8 +34,6 @@
              [class.active]="attribute?.referencedComponentId === activeAttribute?.referencedComponentId" (click)="makeActiveAttribute(attribute, true)">
             <span [class.subdomain]="attribute.additionalFields.depth === 2" [class.tertiary]="attribute.additionalFields.depth === 3">
                 {{attribute.referencedComponent.fsn?.term}}
-<!--                            <span class="fi fi-de flag"></span>-->
-<!--            <span>{{attribute.moduleId}}</span>-->
             </span>
         </div>
     </ng-container>

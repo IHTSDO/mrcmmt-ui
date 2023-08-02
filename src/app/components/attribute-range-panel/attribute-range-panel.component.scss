@@ -43,6 +43,17 @@ div#attribute-range-panel {
             background-color: #D9D9D9;
         }
 
+        span.flag {
+            border-radius: 2px;
+        }
+
+        span.loinc {
+            img {
+                height: 2rem;
+                width: 2rem;
+            }
+        }
+
         span.marker {
             font-size: 1rem;
             border-radius: 1rem;
