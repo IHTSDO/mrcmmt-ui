@@ -69,14 +69,16 @@ export class SnomedNavbarComponent implements OnInit {
     ngOnInit() {
         this.instance = window.location.host;
 
-        this.pathingService.httpGetBranches().subscribe(branches => {
-            this.pathingService.setBranches(branches);
-            this.pathingService.setActiveBranch(branches.find(branch => branch.shortName === 'SNOMEDCT'));
-        });
+        if (!this.instance.includes('browser') && !this.instance.includes('dailybuild')) {
+            this.pathingService.httpGetBranches().subscribe(branches => {
+                this.pathingService.setBranches(branches);
+                this.pathingService.setActiveBranch(branches.find(branch => branch.shortName === 'SNOMEDCT'));
+            });
 
-        this.pathingService.httpGetProjects().subscribe(projects => {
-            this.pathingService.setProjects(projects);
-        });
+            this.pathingService.httpGetProjects().subscribe(projects => {
+                this.pathingService.setProjects(projects);
+            });
+        }
     }
 
     getUser() {

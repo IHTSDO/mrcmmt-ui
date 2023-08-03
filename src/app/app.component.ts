@@ -79,9 +79,9 @@ export class AppComponent implements OnInit {
             }
         });
 
-        this.pathingService.httpGetProjects().subscribe(projects => {
-            this.pathingService.setProjects(projects);
-        });
+        // this.pathingService.httpGetProjects().subscribe(projects => {
+        //     this.pathingService.setProjects(projects);
+        // });
 
         this.assignFavicon();
     }
@@ -102,11 +102,8 @@ export class AppComponent implements OnInit {
             });
 
             versions.reverse();
-            // this.branchingService.setBranchPath(versions[0].branchPath);
+            this.branchingService.setBranchPath(versions[0].branchPath);
 
-            // const international = versions.find(version => version.shortName === 'SNOMEDCT');
-            //
-            // this.pathingService.setActiveBranch(international);
             this.editService.setEditor(false);
 
             this.branchingService.setVersions(versions);
@@ -126,7 +123,7 @@ export class AppComponent implements OnInit {
     dailybuildConfig() {
         this.authoringService.uiConfiguration = new UIConfiguration('', '/snowstorm/snomed-ct/', '', []);
         this.branchingService.setLatestReleaseBranchPath('MAIN');
-        // this.branchingService.setBranchPath('MAIN');
+        this.branchingService.setBranchPath('MAIN');
         this.editService.setEditor(false);
         this.branchingService.setVersions([{branchPath: 'MAIN'}]);
 
