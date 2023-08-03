@@ -94,7 +94,8 @@ export class SnomedNavbarComponent implements OnInit {
     }
 
     setPath(path) {
-        this.branchingService.setBranchPath(path);
+        // this.branchingService.setBranchPath(path);
+        this.pathingService.setActiveBranch({branchPath: path});
         this.domainService.clearActiveDomain();
         this.attributeService.clearActiveAttribute();
         this.rangeService.clearActiveRange();

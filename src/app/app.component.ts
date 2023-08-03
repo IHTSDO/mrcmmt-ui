@@ -103,6 +103,7 @@ export class AppComponent implements OnInit {
 
             versions.reverse();
             this.branchingService.setBranchPath(versions[0].branchPath);
+            this.pathingService.setActiveBranch(versions[0]);
 
             this.editService.setEditor(false);
 
