@@ -11,19 +11,19 @@ export class BranchingService {
     constructor(private urlParamsService: UrlParamsService) {
     }
 
-    // private branchPath = new Subject<string>();
+    private branchPath = new Subject<string>();
     private versions = new Subject<SnomedResponseObject>();
     private latestReleaseBranchPath: string;
 
     // Setters & Getters: BranchPath
-    // setBranchPath(path) {
-    //     this.urlParamsService.updateBranchParam(path);
-    //     this.branchPath.next(path);
-    // }
+    setBranchPath(path) {
+        this.urlParamsService.updateBranchParam(path);
+        this.branchPath.next(path);
+    }
 
-    // getBranchPath(): Observable<string> {
-    //     return this.branchPath.asObservable();
-    // }
+    getBranchPath(): Observable<string> {
+        return this.branchPath.asObservable();
+    }
 
     // Setters & Getters: Versions
     setVersions(versions) {

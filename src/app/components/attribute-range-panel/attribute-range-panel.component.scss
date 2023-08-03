@@ -47,6 +47,18 @@ div#attribute-range-panel {
             border-radius: 2px;
         }
 
+        span.l {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 1.6rem;
+            font-weight: 700;
+            background-color: $cerulean;
+            color: $white;
+            width: 1.6rem;
+            height: 1.6rem;
+        }
+
         span.loinc {
             img {
                 height: 2rem;

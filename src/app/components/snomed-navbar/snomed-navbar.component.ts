@@ -19,10 +19,11 @@ import {PathingService} from '../../services/pathing/pathing.service';
 })
 export class SnomedNavbarComponent implements OnInit {
 
+    instance: string;
     environment: string;
     public: boolean;
-    // branchPath: string;
-    // branchPathSubscription: Subscription;
+    branchPath: string;
+    branchPathSubscription: Subscription;
     versions: any;
     versionsSubscription: Subscription;
     user: User;
@@ -51,10 +52,10 @@ export class SnomedNavbarComponent implements OnInit {
                 private pathingService: PathingService) {
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
         this.public = window.location.host.includes('browser');
-        // this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => {
-        //     this.branchPath = data;
-        //     this.mrcmmtService.setupDomains();
-        // });
+        this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => {
+            this.branchPath = data;
+            this.mrcmmtService.setupDomains();
+        });
         this.branchesSubscription = this.pathingService.getBranches().subscribe(data => this.branches = data);
         this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
         this.projectsSubscription = this.pathingService.getProjects().subscribe(data => this.projects = data);
@@ -66,6 +67,8 @@ export class SnomedNavbarComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.instance = window.location.host;
+
         this.pathingService.httpGetBranches().subscribe(branches => {
             this.pathingService.setBranches(branches);
             this.pathingService.setActiveBranch(branches.find(branch => branch.shortName === 'SNOMEDCT'));
@@ -86,6 +89,20 @@ export class SnomedNavbarComponent implements OnInit {
 
     logout() {
         this.authenticationService.logout();
+    }
+
+    setPath(path) {
+        this.branchingService.setBranchPath(path);
+        this.domainService.clearActiveDomain();
+        this.attributeService.clearActiveAttribute();
+        this.rangeService.clearActiveRange();
+        this.terminologyService.getAttributesWithConcreteDomains().subscribe(ConcreteAttributes => {
+            this.terminologyService.getAttributeHierarchy().subscribe(attributes => {
+                this.attributeService.setAttributeHierarchy(attributes);
+                this.attributeService.setAttributesWithConcreteDomains(ConcreteAttributes.items);
+                this.mrcmmtService.setupDomains();
+            });
+        });
     }
 
     clearActiveItems() {

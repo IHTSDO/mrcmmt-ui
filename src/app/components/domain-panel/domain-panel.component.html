@@ -13,9 +13,10 @@
             {{domain.referencedComponent?.fsn.term}}
             <ng-container *ngIf="extensionRefset(domain)">
                 <ng-container *ngIf="activeBranch.shortName.includes('LOINC'); else flag">
-                    <span class="loinc px-1">
-                        <img src="assets/loinc-avatar-on-white.png">
-                    </span>
+                    <span class="l rounded-circle mx-2">L</span>
+                    <!--                    <span class="loinc px-1">-->
+                    <!--                        <img src="assets/loinc-avatar-on-white.png">-->
+                    <!--                    </span>-->
                 </ng-container>
                 <ng-template #flag>
                     <span class="px-3 fi fi-{{activeBranch.countryCode}} flag"></span>

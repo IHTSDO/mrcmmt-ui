@@ -103,6 +103,10 @@ export class AppComponent implements OnInit {
 
             versions.reverse();
             // this.branchingService.setBranchPath(versions[0].branchPath);
+
+            // const international = versions.find(version => version.shortName === 'SNOMEDCT');
+            //
+            // this.pathingService.setActiveBranch(international);
             this.editService.setEditor(false);
 
             this.branchingService.setVersions(versions);
