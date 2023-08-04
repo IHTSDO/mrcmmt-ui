@@ -36,15 +36,15 @@ import { AuthenticationService } from './services/authentication.service';
 import { ModalService } from './services/modal.service';
 import { UrlParamsService } from './services/url-params.service';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
-import { HeaderInterceptor } from './interceptors/header.interceptor';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {ToastrModule} from 'ngx-toastr';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ToastrModule } from 'ngx-toastr';
 import { ProjectAlphabeticalPipe } from './pipes/project-alphabetical.pipe';
 import { ManagedServicePipe } from './pipes/managed-service.pipe';
-import {PathingService} from './services/pathing/pathing.service';
-import {BranchPipe} from './pipes/branch/branch.pipe';
-import {ProjectPipe} from './pipes/project/project.pipe';
+import { PathingService } from './services/pathing/pathing.service';
+import { BranchPipe } from './pipes/branch/branch.pipe';
+import { ProjectPipe} from './pipes/project/project.pipe';
 import { FsnAlphabeticalPipe } from './pipes/fsn-alphabetical.pipe';
+import { EffectiveTimeDescendantPipe } from './pipes/effective-time-descendant.pipe';
 
 @NgModule({
     declarations: [
@@ -67,7 +67,8 @@ import { FsnAlphabeticalPipe } from './pipes/fsn-alphabetical.pipe';
         ManagedServicePipe,
         BranchPipe,
         ProjectPipe,
-        FsnAlphabeticalPipe
+        FsnAlphabeticalPipe,
+        EffectiveTimeDescendantPipe
     ],
     imports: [
         BrowserModule,

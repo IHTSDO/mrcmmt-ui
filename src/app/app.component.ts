@@ -102,11 +102,25 @@ export class AppComponent implements OnInit {
             });
 
             versions.reverse();
-            this.branchingService.setBranchPath(versions[0].branchPath);
-            this.pathingService.setActiveBranch(versions[0]);
+            
+            let versionFound = false;
+            const branch = this.urlParamsService.getBranchParam();            
+            if (branch) {
+                const filteredVersions = versions.filter(item => {
+                    return item.branchPath === branch;
+                });
+                if (filteredVersions.length === 1) {
+                    this.branchingService.setBranchPath(filteredVersions[0].branchPath);
+                    this.pathingService.setActiveBranch(filteredVersions[0]);
+                    versionFound = true;
+                }
+            }
+            if (!versionFound) {
+                this.branchingService.setBranchPath(versions[0].branchPath);
+                this.pathingService.setActiveBranch(versions[0]);
+            }            
 
             this.editService.setEditor(false);
-
             this.branchingService.setVersions(versions);
 
             this.terminologyService.getAttributeHierarchy().subscribe(hierarchyAttributes => {

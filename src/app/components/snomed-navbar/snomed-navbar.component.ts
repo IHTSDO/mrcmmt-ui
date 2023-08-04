@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { SnomedResponseObject } from '../../models/snomedResponseObject';
 import { BranchingService } from '../../services/branching.service';
 import { MrcmmtService } from '../../services/mrcmmt.service';
 import { User } from '../../models/user';
@@ -10,7 +9,7 @@ import { DomainService } from '../../services/domain.service';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
-import {PathingService} from '../../services/pathing/pathing.service';
+import { PathingService} from '../../services/pathing/pathing.service';
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -61,7 +60,6 @@ export class SnomedNavbarComponent implements OnInit {
         this.projectsSubscription = this.pathingService.getProjects().subscribe(data => this.projects = data);
         this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => this.activeProject = data);
         this.versionsSubscription = this.branchingService.getVersions().subscribe(data => this.versions = data);
-        this.versionsSubscription = this.branchingService.getVersions().subscribe(data => this.versions = data);
         this.userSubscription = this.getUser();
         this.editableSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
     }
@@ -94,18 +92,21 @@ export class SnomedNavbarComponent implements OnInit {
     }
 
     setPath(path) {
-        // this.branchingService.setBranchPath(path);
-        this.pathingService.setActiveBranch({branchPath: path});
-        this.domainService.clearActiveDomain();
-        this.attributeService.clearActiveAttribute();
-        this.rangeService.clearActiveRange();
-        this.terminologyService.getAttributesWithConcreteDomains().subscribe(ConcreteAttributes => {
-            this.terminologyService.getAttributeHierarchy().subscribe(attributes => {
-                this.attributeService.setAttributeHierarchy(attributes);
-                this.attributeService.setAttributesWithConcreteDomains(ConcreteAttributes.items);
-                this.mrcmmtService.setupDomains();
+        this.branchingService.setBranchPath(path);
+        let self = this;       
+        setTimeout(function(){
+            self.pathingService.setActiveBranch({branchPath: path});
+            self.domainService.clearActiveDomain();
+            self.attributeService.clearActiveAttribute();
+            self.rangeService.clearActiveRange();
+            self.terminologyService.getAttributesWithConcreteDomains().subscribe(ConcreteAttributes => {
+                self.terminologyService.getAttributeHierarchy().subscribe(attributes => {
+                    self.attributeService.setAttributeHierarchy(attributes);
+                    self.attributeService.setAttributesWithConcreteDomains(ConcreteAttributes.items);
+                    self.mrcmmtService.setupDomains();
+                });
             });
-        });
+        }, 0);
     }
 
     clearActiveItems() {
