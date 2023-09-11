@@ -1,7 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
 import {RefSet} from '../../models/refset';
 import {TerminologyServerService} from '../../services/terminologyServer.service';
-import {Subject, Subscription} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {RangeService} from '../../services/range.service';
 import {DomainService} from '../../services/domain.service';
 import {AttributeService} from '../../services/attribute.service';
@@ -13,6 +13,7 @@ import {ModalService} from '../../services/modal.service';
 import {SnomedUtilityService} from '../../services/snomedUtility.service';
 import {SnomedResponseObject} from '../../models/snomedResponseObject';
 import {debounceTime, switchMap} from 'rxjs/operators';
+import {PathingService} from '../../services/pathing/pathing.service';
 
 @Component({
     selector: 'app-attribute-range-panel',
@@ -39,9 +40,11 @@ export class AttributeRangePanelComponent implements OnDestroy {
     editSubscription: Subscription;
     changeLog: RefSet[];
     changeLogSubscription: Subscription;
+    activeBranch: any;
+    activeBranchSubscription: Subscription;
 
     private searchSubject = new Subject<string>();
-    readonly results$ = this.searchSubject.pipe(
+    readonly results$:Observable<any> = this.searchSubject.pipe(
         debounceTime(300),
         switchMap(text => {
             if (text && text.length > 2) {
@@ -60,7 +63,8 @@ export class AttributeRangePanelComponent implements OnDestroy {
                 private editService: EditService,
                 private urlParamsService: UrlParamsService,
                 private branchingService: BranchingService,
-                public modalService: ModalService) {
+                public modalService: ModalService,
+                private pathingService: PathingService) {
         this.rangeSubscription = this.rangeService.getRanges().subscribe(data => this.ranges = data);
         this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
         this.activeAttributeSubscription = this.attributeService.getActiveAttribute().subscribe(data => {
@@ -72,6 +76,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
             this.urlParamsService.updateActiveRefsetParams(this.activeDomain, this.activeAttribute, data);
             this.getInitialResults();
         });
+        this.activeBranchSubscription = this.pathingService.getActiveBranch().subscribe(data => this.activeBranch = data);
         this.editSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
         this.changeLogSubscription = this.editService.getChangeLog().subscribe(data => this.changeLog = data);
         this.latestReleaseRangeSubscription = this.rangeService.getLatestReleaseActiveRange().subscribe(data => {
@@ -88,8 +93,8 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.changeLogSubscription.unsubscribe();
     }
 
-    searchResults(text: string) {
-        this.searchSubject.next(text);
+    searchResults(target: any) {
+        this.searchSubject.next(target.value);
     }
 
     makeActiveRange(activeRange) {
@@ -212,7 +217,7 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.rangeService.setActiveRange(activeRange);
     }
 
-    ECLexpressionBuilder(expression: any, originalExpression?: any) {
+    ECLexpressionBuilder(expression: any, originalExpression?: any): any {
         if (expression && !originalExpression) {
             return SnomedUtilityService.ECLexpressionBuilder(expression);
         }
@@ -222,5 +227,9 @@ export class AttributeRangePanelComponent implements OnDestroy {
             const original = SnomedUtilityService.ECLexpressionBuilder(originalExpression);
             return SnomedUtilityService.expressionComparator(current, original);
         }
+    }
+
+    extensionRefset(range): boolean {
+        return !this.domainService.internationalModuleIds.find(item => item.conceptId === range.moduleId);
     }
 }

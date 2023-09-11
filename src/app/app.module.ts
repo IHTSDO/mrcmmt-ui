@@ -16,7 +16,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { TextMatchPipe } from './pipes/text-match.pipe';
 import { AttributeNestingPipe } from './pipes/attribute-nesting.pipe';
 import { InheritedDomainMatchPipe } from './pipes/inherited-domain-match.pipe';
-import { AlphabeticalPipe } from './pipes/alphabetical.pipe';
+import { AlphabeticalPipe } from './pipes/alphabetical/alphabetical.pipe';
 import { CustomOrderPipe } from './pipes/custom-order.pipe';
 import { TopLevelDomainPipe } from './pipes/top-level-domain.pipe';
 import { DuplicateFilterPipe } from './pipes/duplicate-filter.pipe';
@@ -36,11 +36,15 @@ import { AuthenticationService } from './services/authentication.service';
 import { ModalService } from './services/modal.service';
 import { UrlParamsService } from './services/url-params.service';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
-import { HeaderInterceptor } from './interceptors/header.interceptor';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {ToastrModule} from 'ngx-toastr';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ToastrModule } from 'ngx-toastr';
 import { ProjectAlphabeticalPipe } from './pipes/project-alphabetical.pipe';
 import { ManagedServicePipe } from './pipes/managed-service.pipe';
+import { PathingService } from './services/pathing/pathing.service';
+import { BranchPipe } from './pipes/branch/branch.pipe';
+import { ProjectPipe} from './pipes/project/project.pipe';
+import { FsnAlphabeticalPipe } from './pipes/fsn-alphabetical.pipe';
+import { EffectiveTimeDescendantPipe } from './pipes/effective-time-descendant.pipe';
 
 @NgModule({
     declarations: [
@@ -60,7 +64,11 @@ import { ManagedServicePipe } from './pipes/managed-service.pipe';
         InheritedDomainMatchPipe,
         ModalComponent,
         ProjectAlphabeticalPipe,
-        ManagedServicePipe
+        ManagedServicePipe,
+        BranchPipe,
+        ProjectPipe,
+        FsnAlphabeticalPipe,
+        EffectiveTimeDescendantPipe
     ],
     imports: [
         BrowserModule,
@@ -88,6 +96,7 @@ import { ManagedServicePipe } from './pipes/managed-service.pipe';
         ModalService,
         UrlParamsService,
         ManagedServicePipe,
+        PathingService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthenticationInterceptor,

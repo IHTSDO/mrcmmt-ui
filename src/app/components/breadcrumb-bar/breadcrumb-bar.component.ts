@@ -28,14 +28,14 @@ export class BreadcrumbBarComponent implements OnDestroy {
     editableSubscription: Subscription;
     changeLog: RefSet[];
     changeLogSubscription: Subscription;
-    branchPath: string;
-    branchPathSubscription: Subscription;
+    // branchPath: string;
+    // branchPathSubscription: Subscription;
 
     constructor(private domainService: DomainService,
                 private attributeService: AttributeService,
                 private rangeService: RangeService,
                 private editService: EditService,
-                private branchingService: BranchingService,
+                // private branchingService: BranchingService,
                 public mrcmmtService: MrcmmtService,
                 public modalService: ModalService) {
             this.activeDomainSubscription = this.domainService.getActiveDomain().subscribe(data => this.activeDomain = data);
@@ -44,9 +44,9 @@ export class BreadcrumbBarComponent implements OnDestroy {
             this.editableSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
             this.editorSubscription = this.editService.getEditor().subscribe(data => this.editor = data);
             this.changeLogSubscription = this.editService.getChangeLog().subscribe(data => this.changeLog = data);
-            this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => {
-                this.branchPath = data;
-            });
+            // this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => {
+            //     this.branchPath = data;
+            // });
     }
 
     openResetModal() {

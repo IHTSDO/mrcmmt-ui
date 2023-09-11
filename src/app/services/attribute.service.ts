@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import { AdditionalFields, RefSet } from '../models/refset';
 import { Hierarchy } from '../models/hierarchy';
+import {DomainService} from './domain.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AttributeService {
 
-    constructor() {
+    constructor(private domainService: DomainService) {
+        this.extensionModuleIdSubscription = this.domainService.getExtensionModuleId().subscribe(data => this.extensionModuleId = data);
     }
 
     private attributes = new Subject<any>();
@@ -20,14 +22,16 @@ export class AttributeService {
     private attributeHierarchy = new Subject<any>();
     private attributesWithConcreteDomains = new Subject<any>();
 
+    private extensionModuleId: string;
+    private extensionModuleIdSubscription: Subscription;
+
     // Setters & Getters: Attributes
     setAttributes(attributes) {
-        // console.log('ATTRIBUTES: ', attributes);
         this.attributes.next(attributes);
     }
 
     clearAttributes() {
-        this.attributes.next();
+        this.attributes.next(null);
     }
 
     getAttributes(): Observable<any> {
@@ -40,7 +44,7 @@ export class AttributeService {
     }
 
     clearActiveAttribute() {
-        this.activeAttribute.next();
+        this.activeAttribute.next(null);
     }
 
     getActiveAttribute(): Observable<any> {
@@ -53,7 +57,7 @@ export class AttributeService {
     }
 
     clearMatchedDomains() {
-        this.matchedDomains.next();
+        this.matchedDomains.next(null);
     }
 
     getMatchedDomains() {
@@ -66,7 +70,7 @@ export class AttributeService {
     }
 
     clearAttributeFilter() {
-        this.attributeFilter.next();
+        this.attributeFilter.next(null);
     }
 
     getAttributeFilter(): Observable<any> {
@@ -116,6 +120,8 @@ export class AttributeService {
         attribute.additionalFields.contentTypeId = '723596005';
         attribute.additionalFields.depth = 1;
         attribute.additionalFields.grouped = '1';
+
+        attribute.moduleId = this.extensionModuleId;
 
         return attribute;
     }

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { TopLevelDomainPipe } from '../../pipes/top-level-domain.pipe';
 import { TextMatchPipe } from '../../pipes/text-match.pipe';
-import { AlphabeticalPipe } from '../../pipes/alphabetical.pipe';
+import { AlphabeticalPipe } from '../../pipes/alphabetical/alphabetical.pipe';
 import { CustomOrderPipe } from '../../pipes/custom-order.pipe';
 
 import { DomainPanelComponent } from './domain-panel.component';

@@ -1,29 +1,37 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import { RefSet } from '../models/refset';
 import { AdditionalFields } from '../models/refset';
+import {HttpClient} from '@angular/common/http';
+import {AuthoringService} from './authoring.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DomainService {
 
-    constructor() {
-    }
-
+    private extensionModuleId = new BehaviorSubject<any>('900000000000012004');
+    internationalModuleIds: any[];
     private domains = new Subject<any>();
     private activeDomain = new Subject<any>();
     private domainFilter = new Subject<any>();
     private latestReleaseDomains: RefSet[];
 
+    private _extensionModuleId: string;
+    private _extensionModuleIdSubscription: Subscription;
+
+    constructor(private http: HttpClient,
+                private authoringService: AuthoringService) {
+        this._extensionModuleIdSubscription = this.getExtensionModuleId().subscribe(data => this._extensionModuleId = data);
+    }
+
     // Setters & Getters: Domains
     setDomains(domains) {
-        // console.log('DOMAINS: ', domains);
         this.domains.next(domains);
     }
 
     clearDomains() {
-        this.domains.next();
+        this.domains.next(null);
     }
 
     getDomains(): Observable<any> {
@@ -36,7 +44,7 @@ export class DomainService {
     }
 
     clearActiveDomain() {
-        this.activeDomain.next();
+        this.activeDomain.next(null);
     }
 
     getActiveDomain(): Observable<any> {
@@ -49,7 +57,7 @@ export class DomainService {
     }
 
     clearDomainFilter() {
-        this.domainFilter.next();
+        this.domainFilter.next(null);
     }
 
     getDomainFilter(): Observable<any> {
@@ -65,9 +73,18 @@ export class DomainService {
         return this.latestReleaseDomains;
     }
 
+    // Setters & Getters: Latest Release
+    setExtensionModuleId(id) {
+        this.extensionModuleId.next(id);
+    }
+
+    getExtensionModuleId() {
+        return this.extensionModuleId.asObservable();
+    }
+
     // New Domain
     getNewDomain(): RefSet {
-        return new RefSet(
+        let newRefset = new RefSet(
             new AdditionalFields(null),
             null,
             { id: null, fsn: { term: 'New Domain' }},
@@ -76,6 +93,13 @@ export class DomainService {
             true,
             []
         );
+
+        newRefset.moduleId = this._extensionModuleId;
+
+        return newRefset;
     }
 
+    httpGetExtensionModuleId(path: string) {
+        return this.http.get(this.authoringService.uiConfiguration.endpoints.terminologyServerEndpoint + 'branches/MAIN' + (path === 'SNOMEDCT' ? '' : '/' + path));
+    }
 }
