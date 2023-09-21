@@ -93,7 +93,7 @@ export class SnomedNavbarComponent implements OnInit {
 
     setPath(path) {
         this.branchingService.setBranchPath(path);
-        let self = this;       
+        let self = this;
         setTimeout(function(){
             self.pathingService.setActiveBranch({branchPath: path});
             self.domainService.clearActiveDomain();
@@ -141,6 +141,16 @@ export class SnomedNavbarComponent implements OnInit {
     setProject(project) {
         const proj = this.projects.find(item => item.key === project.key);
         this.pathingService.setActiveProject(proj);
+        this.domainService.setDomains(null);
+        this.attributeService.setAttributes(null);
+        this.rangeService.setRanges(null);
+        this.terminologyService.getAttributesWithConcreteDomains().subscribe(ConcreteAttributes => {
+            this.terminologyService.getAttributeHierarchy().subscribe(attributes => {
+                this.attributeService.setAttributeHierarchy(attributes);
+                this.attributeService.setAttributesWithConcreteDomains(ConcreteAttributes.items);
+                this.mrcmmtService.setupDomains();
+            });
+        });
     }
 
     noProject() {
