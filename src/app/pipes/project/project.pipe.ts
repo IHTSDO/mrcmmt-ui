@@ -1,8 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
-@Pipe({
-    name: 'project'
-})
+@Pipe({ name: 'project' })
 export class ProjectPipe implements PipeTransform {
 
     transform(items: any[], branch): any {

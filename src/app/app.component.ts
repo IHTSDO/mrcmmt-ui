@@ -16,11 +16,19 @@ import { EditService } from './services/edit.service';
 import { UrlParamsService } from './services/url-params.service';
 import {Subscription} from 'rxjs';
 import {PathingService} from './services/pathing/pathing.service';
+import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
+import { BreadcrumbBarComponent } from './components/breadcrumb-bar/breadcrumb-bar.component';
+import { DomainPanelComponent } from './components/domain-panel/domain-panel.component';
+import { AttributeRangePanelComponent } from './components/attribute-range-panel/attribute-range-panel.component';
+import { ApplicableAttributesPanelComponent } from './components/applicable-attributes-panel/applicable-attributes-panel.component';
+import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    imports: [SnomedNavbarComponent, BreadcrumbBarComponent, DomainPanelComponent, AttributeRangePanelComponent, ApplicableAttributesPanelComponent, SnomedFooterComponent, ModalComponent]
 })
 export class AppComponent implements OnInit {
 

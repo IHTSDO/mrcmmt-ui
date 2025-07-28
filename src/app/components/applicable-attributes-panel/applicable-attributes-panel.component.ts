@@ -17,12 +17,22 @@ import {ValidationService} from '../../services/validation.service';
 import {SnomedResponseObject} from '../../models/snomedResponseObject';
 import {BranchingService} from '../../services/branching.service';
 import {PathingService} from '../../services/pathing/pathing.service';
+import { NgIf, NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { TextMatchPipe } from '../../pipes/text-match.pipe';
+import { DuplicateFilterPipe } from '../../pipes/duplicate-filter.pipe';
+import { DomainMatchPipe } from '../../pipes/domain-match.pipe';
+import { InheritedDomainMatchPipe } from '../../pipes/inherited-domain-match.pipe';
+import { FsnAlphabeticalPipe } from '../../pipes/fsn-alphabetical.pipe';
 
 @Component({
     selector: 'app-applicable-attributes-panel',
     templateUrl: './applicable-attributes-panel.component.html',
     styleUrls: ['./applicable-attributes-panel.component.scss'],
-    providers: [CustomOrderPipe]
+    providers: [CustomOrderPipe],
+    imports: [NgIf, FormsModule, NgFor, NgbTypeahead, MatCheckbox, TextMatchPipe, DuplicateFilterPipe, DomainMatchPipe, AttributeNestingPipe, InheritedDomainMatchPipe, FsnAlphabeticalPipe]
 })
 export class ApplicableAttributesPanelComponent implements OnDestroy {
 

@@ -1,4 +1,4 @@
-@import "src/variables";
+@use "src/variables" as *;
 
 div#domain-panel {
     position: fixed;

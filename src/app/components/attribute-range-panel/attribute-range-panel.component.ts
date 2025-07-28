@@ -14,11 +14,16 @@ import {SnomedUtilityService} from '../../services/snomedUtility.service';
 import {SnomedResponseObject} from '../../models/snomedResponseObject';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import {PathingService} from '../../services/pathing/pathing.service';
+import { NgIf, NgFor, AsyncPipe, DecimalPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ModalComponent } from '../modal/modal.component';
+import { FsnAlphabeticalPipe } from '../../pipes/fsn-alphabetical.pipe';
 
 @Component({
     selector: 'app-attribute-range-panel',
     templateUrl: './attribute-range-panel.component.html',
-    styleUrls: ['./attribute-range-panel.component.scss']
+    styleUrls: ['./attribute-range-panel.component.scss'],
+    imports: [NgIf, NgFor, FormsModule, ModalComponent, AsyncPipe, DecimalPipe, FsnAlphabeticalPipe]
 })
 export class AttributeRangePanelComponent implements OnDestroy {
 

@@ -15,24 +15,31 @@
             "prefix": "app",
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular/build:application",
                     "options": {
-                        "outputPath": "dist/mrcmmt-ui",
+                        "outputPath": {
+                          "base": "dist/mrcmmt-ui"
+                        },
                         "index": "src/index.html",
-                        "main": "src/main.ts",
                         "polyfills": [
                             "zone.js"
                         ],
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
-                        "assets": [
+                    "assets": [
                             "src/favicon.ico",
                             "src/favicon_grey.ico",
                             "src/favicon_red.ico",
                             "src/favicon_green.ico",
                             "src/favicon_yellow.ico",
-                            "src/assets"
-                        ],
+                            "src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/flag-icons/flags/4x3",
+                                "output": "assets/flags/4x3"
+                            }
+                            ],
+
                         "styles": [
                             "./node_modules/bootstrap/dist/css/bootstrap.min.css",
                             "./node_modules/@fortawesome/fontawesome-free/css/all.css",
@@ -44,7 +51,13 @@
                             "./node_modules/jquery/dist/jquery.min.js",
                             "./node_modules/@popperjs/core/dist/umd/popper.min.js",
                             "./node_modules/bootstrap/dist/js/bootstrap.min.js"
-                        ]
+                        ],
+                        "browser": "src/main.ts",
+                        "stylePreprocessorOptions": {
+                          "includePaths": [
+                            "."
+                          ]
+                        }
                     },
                     "configurations": {
                         "production": {
@@ -64,35 +77,34 @@
                         },
                         "development": {
                             "baseHref": "/",
-                            "buildOptimizer": false,
                             "optimization": false,
-                            "vendorChunk": true,
                             "extractLicenses": false,
                             "sourceMap": true,
-                            "namedChunks": true
+                            "namedChunks": true,
+                            "outputHashing": "media"
                         }
                     },
                     "defaultConfiguration": "production"
                 },
                 "serve": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "builder": "@angular/build:dev-server",
                     "options": {
                         "liveReload": false
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "mrcmmt-ui:build:production"
+                          "buildTarget": "mrcmmt-ui:build:production"
                         },
                         "development": {
-                            "browserTarget": "mrcmmt-ui:build:development"
+                          "buildTarget": "mrcmmt-ui:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
                 },
                 "extract-i18n": {
-                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "builder": "@angular/build:extract-i18n",
                     "options": {
-                        "browserTarget": "mrcmmt-ui:build"
+                      "buildTarget": "mrcmmt-ui:build"
                     }
                 }
             }

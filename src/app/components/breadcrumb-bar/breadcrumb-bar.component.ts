@@ -8,11 +8,14 @@ import { EditService } from '../../services/edit.service';
 import { BranchingService } from '../../services/branching.service';
 import { MrcmmtService } from '../../services/mrcmmt.service';
 import { ModalService } from '../../services/modal.service';
+import { NgIf } from '@angular/common';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
     selector: 'app-breadcrumb-bar',
     templateUrl: './breadcrumb-bar.component.html',
-    styleUrls: ['./breadcrumb-bar.component.scss']
+    styleUrls: ['./breadcrumb-bar.component.scss'],
+    imports: [NgIf, ModalComponent]
 })
 export class BreadcrumbBarComponent implements OnDestroy {
 

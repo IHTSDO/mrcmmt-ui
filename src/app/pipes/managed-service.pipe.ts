@@ -1,8 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
-@Pipe({
-    name: 'managedService'
-})
+@Pipe({ name: 'managedService' })
 export class ManagedServicePipe implements PipeTransform {
 
     transform(items: any[]): any[] {

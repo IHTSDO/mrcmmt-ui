@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'effectiveTimeDescendant'
-})
+@Pipe({ name: 'effectiveTimeDescendant' })
 export class EffectiveTimeDescendantPipe implements PipeTransform {
 
   transform(items: any[]): any {

@@ -2,9 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { RefSet } from '../models/refset';
 import { SnomedUtilityService } from '../services/snomedUtility.service';
 
-@Pipe({
-    name: 'inheritedDomainMatch'
-})
+@Pipe({ name: 'inheritedDomainMatch' })
 export class InheritedDomainMatchPipe implements PipeTransform {
 
     transform(items: any[], activeDomain: RefSet, domains: RefSet[]): any {

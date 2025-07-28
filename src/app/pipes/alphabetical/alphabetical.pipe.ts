@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-    name: 'alphabetical'
-})
+@Pipe({ name: 'alphabetical' })
 export class AlphabeticalPipe implements PipeTransform {
 
     transform(items: any[], key): any {

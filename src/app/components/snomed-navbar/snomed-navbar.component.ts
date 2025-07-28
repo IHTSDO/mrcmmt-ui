@@ -10,11 +10,18 @@ import { TerminologyServerService } from '../../services/terminologyServer.servi
 import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
 import { PathingService} from '../../services/pathing/pathing.service';
+import { RouterLink } from '@angular/router';
+import { NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { AlphabeticalPipe } from '../../pipes/alphabetical/alphabetical.pipe';
+import { BranchPipe } from '../../pipes/branch/branch.pipe';
+import { ProjectPipe } from '../../pipes/project/project.pipe';
+import { EffectiveTimeDescendantPipe } from '../../pipes/effective-time-descendant.pipe';
 
 @Component({
     selector: 'app-snomed-navbar',
     templateUrl: './snomed-navbar.component.html',
-    styleUrls: ['./snomed-navbar.component.scss']
+    styleUrls: ['./snomed-navbar.component.scss'],
+    imports: [RouterLink, NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, AlphabeticalPipe, BranchPipe, ProjectPipe, EffectiveTimeDescendantPipe]
 })
 export class SnomedNavbarComponent implements OnInit {
 

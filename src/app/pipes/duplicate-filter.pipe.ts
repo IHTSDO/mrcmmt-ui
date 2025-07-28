@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-    name: 'duplicateFilter'
-})
+@Pipe({ name: 'duplicateFilter' })
 export class DuplicateFilterPipe implements PipeTransform {
 
     transform(items: any[], domainIdFilter): any[] {
