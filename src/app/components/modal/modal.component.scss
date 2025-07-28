@@ -1,4 +1,4 @@
-@import 'src/variables.scss';
+@use "src/variables" as *;
 
 app-modal {
     /* modals are hidden by default */
@@ -12,6 +12,7 @@ app-modal {
                 background-color: $bootstrap-black;
                 border-top-left-radius: initial;
                 border-top-right-radius: initial;
+                justify-content: space-between;
 
                 h3 {
                     color: $white;

@@ -1,5 +1,5 @@
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
-@import 'src/variables.scss';
+@use '@angular/material/prebuilt-themes/indigo-pink.css';
+@use 'src/variables' as *;
 
 html {
     font-size: 62.5%;
@@ -107,7 +107,7 @@ ngb-typeahead-window.dropdown-menu {
     background-color:transparent;
 }
 ::-webkit-scrollbar-thumb {
-    border-radius:rem(10);
+    border-radius:10rem;
     background-color:darkgrey;
     -webkit-box-shadow: inset 0 0 0 ;
 }

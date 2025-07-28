@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {Project} from '../../models/project';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {map} from 'rxjs/operators';
 
 @Injectable({

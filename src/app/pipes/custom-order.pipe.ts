@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-    name: 'customOrder'
-})
+@Pipe({ name: 'customOrder'})
 export class CustomOrderPipe implements PipeTransform {
 
     transform(items: any[], orderIds: string[]): any {

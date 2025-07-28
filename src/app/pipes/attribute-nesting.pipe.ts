@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-    name: 'attributeNesting'
-})
+@Pipe({ name: 'attributeNesting' })
 export class AttributeNestingPipe implements PipeTransform {
 
     transform(items: any[]): any[] {

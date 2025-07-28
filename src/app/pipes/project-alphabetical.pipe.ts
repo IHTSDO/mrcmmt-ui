@@ -1,8 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
-@Pipe({
-    name: 'projectAlphabetical'
-})
+@Pipe({ name: 'projectAlphabetical' })
 export class ProjectAlphabeticalPipe implements PipeTransform {
 
     transform(items: any[]): any {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import { RefSet } from '../models/refset';
 import { AdditionalFields } from '../models/refset';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {AuthoringService} from './authoring.service';
 
 @Injectable({

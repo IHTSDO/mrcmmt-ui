@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'fsnAlphabetical'
-})
+@Pipe({ name: 'fsnAlphabetical' })
 export class FsnAlphabeticalPipe implements PipeTransform {
     transform(items: any[]): any {
         if (!items) {

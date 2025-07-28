@@ -13,11 +13,19 @@ import { SnomedUtilityService } from '../../services/snomedUtility.service';
 import { ModalService } from '../../services/modal.service';
 import { SnomedResponseObject } from '../../models/snomedResponseObject';
 import {PathingService} from '../../services/pathing/pathing.service';
+import { NgIf, NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from '../modal/modal.component';
+import { TextMatchPipe } from '../../pipes/text-match.pipe';
+import { TopLevelDomainPipe } from '../../pipes/top-level-domain.pipe';
+import { FsnAlphabeticalPipe } from '../../pipes/fsn-alphabetical.pipe';
 
 @Component({
     selector: 'app-domain-panel',
     templateUrl: './domain-panel.component.html',
-    styleUrls: ['./domain-panel.component.scss']
+    styleUrls: ['./domain-panel.component.scss'],
+    imports: [NgIf, FormsModule, NgFor, NgbTypeahead, ModalComponent, TextMatchPipe, TopLevelDomainPipe, FsnAlphabeticalPipe]
 })
 export class DomainPanelComponent implements OnDestroy {
 

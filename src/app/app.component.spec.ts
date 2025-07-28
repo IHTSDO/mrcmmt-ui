@@ -17,14 +17,15 @@ import { AlphabeticalPipe } from './pipes/alphabetical/alphabetical.pipe';
 import { TopLevelDomainPipe } from './pipes/top-level-domain.pipe';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { AppRoutingModule } from './app-routing.module';
 import { CustomOrderPipe } from './pipes/custom-order.pipe';
 import { ModalComponent } from './components/modal/modal.component';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { APP_BASE_HREF } from '@angular/common';
-import {ToastrModule} from 'ngx-toastr';
+import {provideToastr, ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
 
 describe('AppComponent', () => {
     beforeEach(async(() => {
@@ -34,11 +35,11 @@ describe('AppComponent', () => {
                 HttpClientTestingModule,
                 RouterTestingModule,
                 BrowserDynamicTestingModule,
-                AppRoutingModule,
+                provideRouter(routes),
                 NgbTypeaheadModule,
                 MatCheckboxModule,
                 BrowserAnimationsModule,
-                ToastrModule.forRoot()
+                provideToastr()
             ],
             providers: [
                 CustomOrderPipe,

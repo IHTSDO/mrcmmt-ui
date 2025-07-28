@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-    name: 'textMatch'
-})
+@Pipe({ name: 'textMatch' })
 export class TextMatchPipe implements PipeTransform {
 
     transform(items: any[], text: string): any[] {
