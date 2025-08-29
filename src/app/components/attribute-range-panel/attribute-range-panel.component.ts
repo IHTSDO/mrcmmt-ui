@@ -1,7 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
 import {RefSet} from '../../models/refset';
 import {TerminologyServerService} from '../../services/terminologyServer.service';
-import {Observable, Subject, Subscription} from 'rxjs';
+import {EMPTY, Observable, Subject, Subscription} from 'rxjs';
 import {RangeService} from '../../services/range.service';
 import {DomainService} from '../../services/domain.service';
 import {AttributeService} from '../../services/attribute.service';
@@ -12,7 +12,7 @@ import {BranchingService} from '../../services/branching.service';
 import {ModalService} from '../../services/modal.service';
 import {SnomedUtilityService} from '../../services/snomedUtility.service';
 import {SnomedResponseObject} from '../../models/snomedResponseObject';
-import {debounceTime, switchMap} from 'rxjs/operators';
+import {catchError, debounceTime, map, switchMap, tap} from 'rxjs/operators';
 import {PathingService} from '../../services/pathing/pathing.service';
 import { NgIf, NgFor, AsyncPipe, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -49,13 +49,41 @@ export class AttributeRangePanelComponent implements OnDestroy {
     activeBranchSubscription: Subscription;
 
     private searchSubject = new Subject<string>();
+    spinner = document.createElement('div');
+
     readonly results$:Observable<any> = this.searchSubject.pipe(
         debounceTime(300),
+        tap(() => {
+            document.activeElement.parentElement.classList.add("hide-x");
+            document.activeElement.parentElement.appendChild(this.spinner);
+        }),
         switchMap(text => {
             if (text && text.length > 2) {
-                return this.terminologyService.getRangeConstraintsWithTerm(this.activeRange.additionalFields.rangeConstraint, text);
+                return this.terminologyService.getRangeConstraintsWithTerm(this.activeRange.additionalFields.rangeConstraint, text).pipe(
+                    map(results => {
+                        this.removeSpinner();
+                        document.activeElement.parentElement.classList.remove("hide-x");
+                        return results;
+                    }),
+                    catchError((error) => {
+                        console.log(error);
+                        this.removeSpinner();
+                        document.activeElement.parentElement.classList.remove("hide-x");
+                        return EMPTY;
+                    }));
             } else {
-                return this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint);
+                return this.terminologyService.getRangeConstraints(this.activeRange.additionalFields.rangeConstraint).pipe(
+                    map(results => {
+                        this.removeSpinner();
+                        document.activeElement.parentElement.classList.remove("hide-x");
+                        return results;
+                    }),
+                    catchError((error) => {
+                        console.log(error);
+                        this.removeSpinner();
+                        document.activeElement.parentElement.classList.remove("hide-x");
+                        return EMPTY;
+                    }));
             }
         })
     );
@@ -87,6 +115,11 @@ export class AttributeRangePanelComponent implements OnDestroy {
         this.latestReleaseRangeSubscription = this.rangeService.getLatestReleaseActiveRange().subscribe(data => {
             this.latestReleaseRange = data;
         });
+
+        this.spinner.id = 'spinner';
+        this.spinner.classList.add('spinner-border', 'spinner-border-sm', 'position-absolute');
+        this.spinner.style.top = '10px';
+        this.spinner.style.right = '10px';
     }
 
     ngOnDestroy() {
@@ -236,5 +269,12 @@ export class AttributeRangePanelComponent implements OnDestroy {
 
     extensionRefset(range): boolean {
         return !this.domainService.internationalModuleIds.find(item => item.conceptId === range.moduleId);
+    }
+
+    private removeSpinner() {
+        const spinnerElem = document.getElementById('spinner');
+        if (spinnerElem) {
+            spinnerElem.remove();
+        }
     }
 }

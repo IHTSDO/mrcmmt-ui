@@ -102,7 +102,9 @@
             </div>
             <div class="results col" *ngIf="ranges?.items && activeRange && !activeAttribute.concreteDomainAttribute">
                 <div class="p-2 px-4 result-search row">
-                    <input type="search" class="form-control col-9" (keyup)="searchResults($event.target)">
+                    <div class="search-container position-relative px-0">
+                        <input type="search" class="form-control col-9" (keyup)="searchResults($event.target)">
+                    </div>
                     <ng-container *ngIf="(results$ | async) as results2">
                         <span class="pt-2 px-3 col-3">{{results2.total | number:'1.'}} Results</span>
                     </ng-container>
