@@ -16,6 +16,7 @@ import { AlphabeticalPipe } from '../../pipes/alphabetical/alphabetical.pipe';
 import { BranchPipe } from '../../pipes/branch/branch.pipe';
 import { ProjectPipe } from '../../pipes/project/project.pipe';
 import { EffectiveTimeDescendantPipe } from '../../pipes/effective-time-descendant.pipe';
+import {DrawerService} from '../../services/drawer.service';
 
 @Component({
     selector: 'app-snomed-navbar',
@@ -53,9 +54,11 @@ export class SnomedNavbarComponent implements OnInit {
                 private editService: EditService,
                 private domainService: DomainService,
                 private attributeService: AttributeService,
+                private drawerService: DrawerService,
                 private terminologyService: TerminologyServerService,
                 private rangeService: RangeService,
                 private pathingService: PathingService) {
+        this.userSubscription = this.authenticationService.getUser().subscribe(data => this.user = data);
         this.environment = window.location.host.split(/[.]/)[0].split(/[-]/)[0];
         this.public = window.location.host.includes('browser');
         this.branchPathSubscription = this.branchingService.getBranchPath().subscribe(data => {
@@ -67,7 +70,6 @@ export class SnomedNavbarComponent implements OnInit {
         this.projectsSubscription = this.pathingService.getProjects().subscribe(data => this.projects = data);
         this.activeProjectSubscription = this.pathingService.getActiveProject().subscribe(data => this.activeProject = data);
         this.versionsSubscription = this.branchingService.getVersions().subscribe(data => this.versions = data);
-        this.userSubscription = this.getUser();
         this.editableSubscription = this.editService.getEditable().subscribe(data => this.editable = data);
     }
 
@@ -83,14 +85,6 @@ export class SnomedNavbarComponent implements OnInit {
             this.pathingService.httpGetProjects().subscribe(projects => {
                 this.pathingService.setProjects(projects);
             });
-        }
-    }
-
-    getUser() {
-        if (!this.public) {
-            return this.authenticationService.getLoggedInUser().subscribe(data => this.user = data);
-        } else {
-            return null;
         }
     }
 
@@ -162,5 +156,10 @@ export class SnomedNavbarComponent implements OnInit {
 
     noProject() {
         this.pathingService.setActiveProject(null);
+    }
+
+    openDrawer() {
+        this.drawerService.setDrawerOpen(true);
+        document.body.classList.add('app-drawer-open');
     }
 }

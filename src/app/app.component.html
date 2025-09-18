@@ -1,6 +1,6 @@
 <app-snomed-navbar></app-snomed-navbar>
 <app-breadcrumb-bar></app-breadcrumb-bar>
-
+<app-drawer *ngIf="drawerOpen" [user]="user"></app-drawer>
 <app-domain-panel></app-domain-panel>
 <app-attribute-range-panel></app-attribute-range-panel>
 <app-applicable-attributes-panel></app-applicable-attributes-panel>

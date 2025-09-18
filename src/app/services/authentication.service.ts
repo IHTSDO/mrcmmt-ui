@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
-import { Observable } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { AuthoringService } from './authoring.service';
 
 @Injectable({
@@ -9,7 +9,17 @@ import { AuthoringService } from './authoring.service';
 })
 export class AuthenticationService {
 
+    private user = new Subject<User>();
+
     constructor(private http: HttpClient, private authoringService: AuthoringService) {
+    }
+
+    setUser(user) {
+        this.user.next(user);
+    }
+
+    getUser() {
+        return this.user.asObservable();
     }
 
     getLoggedInUser(): Observable<User> {

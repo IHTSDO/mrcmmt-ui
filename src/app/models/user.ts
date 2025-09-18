@@ -5,4 +5,5 @@ export class User {
     login: string;
     langKey: string;
     roles: string[];
+    clientAccess: string[];
 }

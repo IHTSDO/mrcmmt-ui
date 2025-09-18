@@ -1,0 +1,40 @@
+<div class="drawer-screen" (click)="closeDrawer()">
+    <div class="drawer p-2" (click)="$event.stopPropagation()">
+
+        <!-- Group 1 -->
+        <div class="row row-cols-4 app-row" *ngIf="appsByGroup(1).length">
+            <div *ngFor="let app of appsByGroup(1)" class="text-center col app-logo" (click)="redirectTo(app.link)" [title]="app.description">
+                <i class="{{app.colour}}" [class]="'fa-solid ' + app.faIcon" [ngClass]="{'text-cerulean': true}"></i>
+                <p class="m-0" [style]="app.textStyle">{{app.Application}}</p>
+            </div>
+        </div>
+        <!-- Group 2 -->
+        <div class="row row-cols-4 app-row" *ngIf="appsByGroup(2).length">
+            <div *ngFor="let app of appsByGroup(2)" class="text-center col app-logo" (click)="redirectTo(app.link)" [title]="app.description">
+                <i class="" [class]="'fa-solid ' + app.faIcon" [ngClass]="{'text-wisteria': true}"></i>
+                <p class="m-0" [style]="app.textStyle">{{app.Application}}</p>
+            </div>
+        </div>
+        <!-- Group 3 -->
+        <div class="row row-cols-4 app-row" *ngIf="appsByGroup(3).length">
+            <div *ngFor="let app of appsByGroup(3)" class="text-center col app-logo" (click)="redirectTo(app.link)" [title]="app.description">
+                <i class="" [class]="'fa-solid ' + app.faIcon" [ngClass]="{'text-fruit-salad': true}"></i>
+                <p class="m-0" [style]="app.textStyle">{{app.Application}}</p>
+            </div>
+        </div>
+        <!-- Group 4 -->
+        <div class="row row-cols-4 app-row" *ngIf="appsByGroup(4).length">
+            <div *ngFor="let app of appsByGroup(4)" class="text-center col app-logo" (click)="redirectTo(app.link)" [title]="app.description">
+                <i class="" [class]="'fa-solid ' + app.faIcon" [ngClass]="{'text-sea-buckthorn': true}"></i>
+                <p class="m-0" [style]="app.textStyle">{{app.Application}}</p>
+            </div>
+        </div>
+        <!-- Group 5 -->
+        <div class="row row-cols-4 app-row border-0" *ngIf="appsByGroup(5).length">
+            <div *ngFor="let app of appsByGroup(5)" class="text-center col app-logo" (click)="redirectTo(app.link)" [title]="app.description">
+                <i class="" [class]="'fa-solid ' + app.faIcon" [ngClass]="{'text-mandy': true}"></i>
+                <p class="m-0" [style]="app.textStyle">{{app.Application}}</p>
+            </div>
+        </div>
+    </div>
+</div>

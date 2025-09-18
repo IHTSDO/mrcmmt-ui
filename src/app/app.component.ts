@@ -23,14 +23,23 @@ import { AttributeRangePanelComponent } from './components/attribute-range-panel
 import { ApplicableAttributesPanelComponent } from './components/applicable-attributes-panel/applicable-attributes-panel.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
 import { ModalComponent } from './components/modal/modal.component';
+import {DrawerComponent} from './components/drawer/drawer.component';
+import {User} from './models/user';
+import {DrawerService} from './services/drawer.service';
+import {ConfigService} from './services/config.service';
+import {NgIf} from '@angular/common';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    imports: [SnomedNavbarComponent, BreadcrumbBarComponent, DomainPanelComponent, AttributeRangePanelComponent, ApplicableAttributesPanelComponent, SnomedFooterComponent, ModalComponent]
+    imports: [NgIf, SnomedNavbarComponent, BreadcrumbBarComponent, DomainPanelComponent, AttributeRangePanelComponent, ApplicableAttributesPanelComponent, SnomedFooterComponent, ModalComponent, DrawerComponent]
 })
 export class AppComponent implements OnInit {
+
+    user: User;
+    drawerOpen: any;
+    drawerOpenSubscription: Subscription;
 
     environment: string;
     instance: string;
@@ -46,6 +55,8 @@ export class AppComponent implements OnInit {
                 private terminologyService: TerminologyServerService,
                 private titleService: Title,
                 private branchingService: BranchingService,
+                private drawerService: DrawerService,
+                private configService: ConfigService,
                 private mrcmmtService: MrcmmtService,
                 private authenticationService: AuthenticationService,
                 public modalService: ModalService,
@@ -53,6 +64,7 @@ export class AppComponent implements OnInit {
                 private urlParamsService: UrlParamsService,
                 private pathingService: PathingService) {
         this.unsavedChangesSubscription = this.editService.getChangeLog().subscribe((response) => this.unsavedChanges = response);
+        this.drawerOpenSubscription = this.drawerService.getDrawerOpen().subscribe(data => this.drawerOpen = data);
     }
 
     @HostListener('window:beforeunload', ['$event'])
@@ -110,9 +122,9 @@ export class AppComponent implements OnInit {
             });
 
             versions.reverse();
-            
+
             let versionFound = false;
-            const branch = this.urlParamsService.getBranchParam();            
+            const branch = this.urlParamsService.getBranchParam();
             if (branch) {
                 const filteredVersions = versions.filter(item => {
                     return item.branchPath === branch;
@@ -126,7 +138,7 @@ export class AppComponent implements OnInit {
             if (!versionFound) {
                 this.branchingService.setBranchPath(versions[0].branchPath);
                 this.pathingService.setActiveBranch(versions[0]);
-            }            
+            }
 
             this.editService.setEditor(false);
             this.branchingService.setVersions(versions);
@@ -171,32 +183,38 @@ export class AppComponent implements OnInit {
                     return a.effectiveDate > b.effectiveDate ? a : b;
                 }).branchPath);
 
-                this.authenticationService.getLoggedInUser().subscribe(user => {
-                    this.authoringService.getProjects().subscribe(projects => {
-                        projects.unshift({key: 'MAIN', branchPath: 'MAIN'});
 
-                        // if (this.urlParamsService.getBranchParam()) {
-                        //     this.branchingService.setBranchPath(this.urlParamsService.getBranchParam());
-                        // } else {
-                        //     this.branchingService.setBranchPath(projects[0]['branchPath']);
-                        // }
+                this.configService.loadConfig().subscribe(config => {
+                    this.authenticationService.getLoggedInUser().subscribe(user => {
+                        this.user = user;
+                        this.authenticationService.setUser(user);
 
-                        if (user.roles.includes('ROLE_mrcm-author')) {
-                            this.editService.setEditor(true);
-                        } else {
-                            this.editService.setEditor(false);
-                        }
+                        this.authoringService.getProjects().subscribe(projects => {
+                            projects.unshift({key: 'MAIN', branchPath: 'MAIN'});
 
-                        this.branchingService.setVersions(projects);
-                    });
+                            // if (this.urlParamsService.getBranchParam()) {
+                            //     this.branchingService.setBranchPath(this.urlParamsService.getBranchParam());
+                            // } else {
+                            //     this.branchingService.setBranchPath(projects[0]['branchPath']);
+                            // }
 
-                    this.terminologyService.getAttributeHierarchy().subscribe(hierarchyAttributes => {
-                        this.attributeService.setAttributeHierarchy(hierarchyAttributes);
-                        this.setLatestReleaseDomains();
-                        this.setLatestReleaseAttributes();
-                        this.terminologyService.getAttributesWithConcreteDomains().subscribe(attributes => {
-                            this.attributeService.setAttributesWithConcreteDomains(attributes.items);
-                            this.mrcmmtService.setupDomains();
+                            if (user.roles.includes('ROLE_mrcm-author')) {
+                                this.editService.setEditor(true);
+                            } else {
+                                this.editService.setEditor(false);
+                            }
+
+                            this.branchingService.setVersions(projects);
+                        });
+
+                        this.terminologyService.getAttributeHierarchy().subscribe(hierarchyAttributes => {
+                            this.attributeService.setAttributeHierarchy(hierarchyAttributes);
+                            this.setLatestReleaseDomains();
+                            this.setLatestReleaseAttributes();
+                            this.terminologyService.getAttributesWithConcreteDomains().subscribe(attributes => {
+                                this.attributeService.setAttributesWithConcreteDomains(attributes.items);
+                                this.mrcmmtService.setupDomains();
+                            });
                         });
                     });
                 });

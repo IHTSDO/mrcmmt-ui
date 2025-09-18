@@ -147,4 +147,26 @@ nav {
             }
         }
     }
+
+    div.drawer {
+        cursor: pointer;
+        height: 3rem;
+        width: 3rem;
+        background-color: $dark;
+        border-radius: 3rem;
+        text-align: center;
+
+        span {
+            font-size: 1.2rem;
+            line-height: 3rem;
+            font-weight: 300;
+            letter-spacing: 0.1rem;
+        }
+
+        span.queue-count {
+            color: $gallery-white;
+            background-color: $slate-grey;
+            letter-spacing: 0;
+        }
+    }
 }

@@ -1,0 +1,40 @@
+@use '../../../variables' as *;
+@use 'sass:color';
+
+div.drawer-screen {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    //background-color: rgba(0,0,0,0.5);
+    z-index: 9000;
+
+    div.drawer {
+        position: absolute;
+        border-radius: 1rem;
+        top: 6rem;
+        right: 1rem;
+        width: 40rem;
+        background-color: $gallery-white;
+
+        div.app-row {
+            border-bottom: 1px solid $alto-white;
+
+            div.app-logo {
+                height: 8rem;
+                align-content: center;
+
+                i {
+                    font-size: 3rem;
+                }
+
+                &:hover {
+                    border-radius: 1rem;
+                    cursor: pointer;
+                    background-color: $alto-white;
+                }
+            }
+        }
+    }
+}
