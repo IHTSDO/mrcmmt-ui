@@ -3,13 +3,13 @@ import { Subscription } from 'rxjs';
 import { EditService } from '../../services/edit.service';
 import { ModalService } from '../../services/modal.service';
 import { RefSet } from '../../models/refset';
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-snomed-footer',
     templateUrl: './snomed-footer.component.html',
     styleUrls: ['./snomed-footer.component.scss'],
-    imports: [NgIf]
+    imports: [CommonModule]
 })
 export class SnomedFooterComponent implements OnDestroy {
 

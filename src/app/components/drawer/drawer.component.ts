@@ -1,12 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DrawerService} from '../../services/drawer.service';
-import {NgClass, NgFor, NgIf} from '@angular/common';
+import {NgClass, CommonModule} from '@angular/common';
 import {ConfigService} from '../../services/config.service';
 import {User} from '../../models/user';
 
 @Component({
     selector: 'app-drawer',
-    imports: [NgIf, NgFor, NgClass],
+    imports: [CommonModule, NgClass],
     templateUrl: './drawer.component.html',
     styleUrl: './drawer.component.scss'
 })

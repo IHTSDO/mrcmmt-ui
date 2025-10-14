@@ -27,13 +27,13 @@ import {DrawerComponent} from './components/drawer/drawer.component';
 import {User} from './models/user';
 import {DrawerService} from './services/drawer.service';
 import {ConfigService} from './services/config.service';
-import {NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    imports: [NgIf, SnomedNavbarComponent, BreadcrumbBarComponent, DomainPanelComponent, AttributeRangePanelComponent, ApplicableAttributesPanelComponent, SnomedFooterComponent, ModalComponent, DrawerComponent]
+    imports: [CommonModule, SnomedNavbarComponent, BreadcrumbBarComponent, DomainPanelComponent, AttributeRangePanelComponent, ApplicableAttributesPanelComponent, SnomedFooterComponent, ModalComponent, DrawerComponent]
 })
 export class AppComponent implements OnInit {
 
