@@ -1,4 +1,4 @@
-import { Component, NgModule, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { RefSet } from '../../models/refset';
 import { Observable, Subscription } from 'rxjs';
 import { DomainService } from '../../services/domain.service';
@@ -8,12 +8,12 @@ import { MrcmmtService } from '../../services/mrcmmt.service';
 import { EditService } from '../../services/edit.service';
 import { TerminologyServerService } from '../../services/terminologyServer.service';
 import { UrlParamsService } from '../../services/url-params.service';
-import { debounceTime, distinctUntilChanged, switchMap, map, catchError } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/operators';
 import { SnomedUtilityService } from '../../services/snomedUtility.service';
 import { ModalService } from '../../services/modal.service';
 import { SnomedResponseObject } from '../../models/snomedResponseObject';
 import {PathingService} from '../../services/pathing/pathing.service';
-import { NgIf, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../modal/modal.component';
@@ -25,7 +25,7 @@ import { FsnAlphabeticalPipe } from '../../pipes/fsn-alphabetical.pipe';
     selector: 'app-domain-panel',
     templateUrl: './domain-panel.component.html',
     styleUrls: ['./domain-panel.component.scss'],
-    imports: [NgIf, FormsModule, NgFor, NgbTypeahead, ModalComponent, TextMatchPipe, TopLevelDomainPipe, FsnAlphabeticalPipe]
+    imports: [CommonModule, FormsModule, NgbTypeahead, ModalComponent, TextMatchPipe, TopLevelDomainPipe, FsnAlphabeticalPipe]
 })
 export class DomainPanelComponent implements OnDestroy {
 

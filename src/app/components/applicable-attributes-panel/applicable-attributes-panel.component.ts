@@ -17,7 +17,7 @@ import {ValidationService} from '../../services/validation.service';
 import {SnomedResponseObject} from '../../models/snomedResponseObject';
 import {BranchingService} from '../../services/branching.service';
 import {PathingService} from '../../services/pathing/pathing.service';
-import { NgIf, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -32,7 +32,7 @@ import { FsnAlphabeticalPipe } from '../../pipes/fsn-alphabetical.pipe';
     templateUrl: './applicable-attributes-panel.component.html',
     styleUrls: ['./applicable-attributes-panel.component.scss'],
     providers: [CustomOrderPipe],
-    imports: [NgIf, FormsModule, NgFor, NgbTypeahead, MatCheckbox, TextMatchPipe, DuplicateFilterPipe, DomainMatchPipe, AttributeNestingPipe, InheritedDomainMatchPipe, FsnAlphabeticalPipe]
+    imports: [CommonModule, FormsModule, NgbTypeahead, MatCheckbox, TextMatchPipe, DuplicateFilterPipe, DomainMatchPipe, AttributeNestingPipe, InheritedDomainMatchPipe, FsnAlphabeticalPipe]
 })
 export class ApplicableAttributesPanelComponent implements OnDestroy {
 
