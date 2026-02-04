@@ -2,30 +2,30 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "baseUrl": "./",
-        "outDir": "./dist/out-tsc",
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true,
-        "strict": false,
-        "noImplicitOverride": true,
-        "noPropertyAccessFromIndexSignature": true,
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
-        "sourceMap": true,
-        "declaration": false,
-        "experimentalDecorators": true,
-        "moduleResolution": "node",
-        "importHelpers": true,
-        "target": "ES2022",
-        "module": "ES2022",
-        "useDefineForClassFields": false,
-        "lib": [
-            "ES2022",
-            "dom"
-        ],
-        "typeRoots": [
-            "node_modules/@types"
-        ]
+      "baseUrl": "./",
+      "outDir": "./dist/out-tsc",
+      "forceConsistentCasingInFileNames": true,
+      "esModuleInterop": true,
+      "strict": false,
+      "noImplicitOverride": true,
+      "noPropertyAccessFromIndexSignature": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "sourceMap": true,
+      "declaration": false,
+      "experimentalDecorators": true,
+      "moduleResolution": "bundler",
+      "importHelpers": true,
+      "target": "ES2022",
+      "module": "ES2022",
+      "useDefineForClassFields": false,
+      "lib": [
+        "ES2022",
+        "dom"
+      ],
+      "typeRoots": [
+        "node_modules/@types"
+      ]
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,

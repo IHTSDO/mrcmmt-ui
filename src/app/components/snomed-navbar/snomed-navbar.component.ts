@@ -11,7 +11,7 @@ import { AttributeService } from '../../services/attribute.service';
 import { RangeService } from '../../services/range.service';
 import { PathingService} from '../../services/pathing/pathing.service';
 import { RouterLink } from '@angular/router';
-import { NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { AlphabeticalPipe } from '../../pipes/alphabetical/alphabetical.pipe';
 import { BranchPipe } from '../../pipes/branch/branch.pipe';
 import { ProjectPipe } from '../../pipes/project/project.pipe';
@@ -22,7 +22,7 @@ import {DrawerService} from '../../services/drawer.service';
     selector: 'app-snomed-navbar',
     templateUrl: './snomed-navbar.component.html',
     styleUrls: ['./snomed-navbar.component.scss'],
-    imports: [RouterLink, NgIf, NgFor, NgSwitch, NgSwitchCase, NgSwitchDefault, AlphabeticalPipe, BranchPipe, ProjectPipe, EffectiveTimeDescendantPipe]
+    imports: [RouterLink, CommonModule, AlphabeticalPipe, BranchPipe, ProjectPipe, EffectiveTimeDescendantPipe]
 })
 export class SnomedNavbarComponent implements OnInit {
 

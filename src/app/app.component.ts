@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { AuthoringService } from './services/authoring.service';
 import { Versions } from './models/versions';
 import { Title } from '@angular/platform-browser';
@@ -14,8 +14,8 @@ import { AuthenticationService } from './services/authentication.service';
 import { ModalService } from './services/modal.service';
 import { EditService } from './services/edit.service';
 import { UrlParamsService } from './services/url-params.service';
-import {Subscription} from 'rxjs';
-import {PathingService} from './services/pathing/pathing.service';
+import { filter, Subscription, take } from 'rxjs';
+import { PathingService } from './services/pathing/pathing.service';
 import { SnomedNavbarComponent } from './components/snomed-navbar/snomed-navbar.component';
 import { BreadcrumbBarComponent } from './components/breadcrumb-bar/breadcrumb-bar.component';
 import { DomainPanelComponent } from './components/domain-panel/domain-panel.component';
@@ -23,17 +23,18 @@ import { AttributeRangePanelComponent } from './components/attribute-range-panel
 import { ApplicableAttributesPanelComponent } from './components/applicable-attributes-panel/applicable-attributes-panel.component';
 import { SnomedFooterComponent } from './components/snomed-footer/snomed-footer.component';
 import { ModalComponent } from './components/modal/modal.component';
-import {DrawerComponent} from './components/drawer/drawer.component';
-import {User} from './models/user';
-import {DrawerService} from './services/drawer.service';
-import {ConfigService} from './services/config.service';
-import {NgIf} from '@angular/common';
+import { DrawerComponent } from './components/drawer/drawer.component';
+import { User } from './models/user';
+import { DrawerService } from './services/drawer.service';
+import { ConfigService } from './services/config.service';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    imports: [NgIf, SnomedNavbarComponent, BreadcrumbBarComponent, DomainPanelComponent, AttributeRangePanelComponent, ApplicableAttributesPanelComponent, SnomedFooterComponent, ModalComponent, DrawerComponent]
+    imports: [CommonModule, SnomedNavbarComponent, BreadcrumbBarComponent, DomainPanelComponent, AttributeRangePanelComponent, ApplicableAttributesPanelComponent, SnomedFooterComponent, ModalComponent, DrawerComponent]
 })
 export class AppComponent implements OnInit {
 
@@ -47,22 +48,26 @@ export class AppComponent implements OnInit {
 
     unsavedChanges: any[];
     unsavedChangesSubscription: Subscription;
+    private deepLinkRestored = false;
+    private currentDomains: any;
+
+
 
     constructor(private domainService: DomainService,
-                private attributeService: AttributeService,
-                private rangeService: RangeService,
-                private authoringService: AuthoringService,
-                private terminologyService: TerminologyServerService,
-                private titleService: Title,
-                private branchingService: BranchingService,
-                private drawerService: DrawerService,
-                private configService: ConfigService,
-                private mrcmmtService: MrcmmtService,
-                private authenticationService: AuthenticationService,
-                public modalService: ModalService,
-                public editService: EditService,
-                private urlParamsService: UrlParamsService,
-                private pathingService: PathingService) {
+        private attributeService: AttributeService,
+        private rangeService: RangeService,
+        private authoringService: AuthoringService,
+        private terminologyService: TerminologyServerService,
+        private titleService: Title,
+        private branchingService: BranchingService,
+        private drawerService: DrawerService,
+        private configService: ConfigService,
+        private mrcmmtService: MrcmmtService,
+        private authenticationService: AuthenticationService,
+        public modalService: ModalService,
+        public editService: EditService,
+        private urlParamsService: UrlParamsService,
+        private pathingService: PathingService, private route: ActivatedRoute) {
         this.unsavedChangesSubscription = this.editService.getChangeLog().subscribe((response) => this.unsavedChanges = response);
         this.drawerOpenSubscription = this.drawerService.getDrawerOpen().subscribe(data => this.drawerOpen = data);
     }
@@ -104,6 +109,23 @@ export class AppComponent implements OnInit {
         // });
 
         this.assignFavicon();
+
+
+        this.domainService.getDomains()
+            .pipe(
+                filter(domains => !!domains?.items?.length),
+                take(1)
+            )
+            .subscribe(domains => {
+                this.currentDomains = domains;
+
+                this.route.queryParams
+                    .pipe(take(1))
+                    .subscribe(params => {
+                        this.restoreFromUrl(params);
+                    });
+            });
+
     }
 
     publicConfig() {
@@ -160,7 +182,7 @@ export class AppComponent implements OnInit {
         this.branchingService.setLatestReleaseBranchPath('MAIN');
         this.branchingService.setBranchPath('MAIN');
         this.editService.setEditor(false);
-        this.branchingService.setVersions([{branchPath: 'MAIN'}]);
+        this.branchingService.setVersions([{ branchPath: 'MAIN' }]);
 
         this.terminologyService.getAttributeHierarchy().subscribe(hierarchyAttributes => {
             this.attributeService.setAttributeHierarchy(hierarchyAttributes);
@@ -190,7 +212,7 @@ export class AppComponent implements OnInit {
                         this.authenticationService.setUser(user);
 
                         this.authoringService.getProjects().subscribe(projects => {
-                            projects.unshift({key: 'MAIN', branchPath: 'MAIN'});
+                            projects.unshift({ key: 'MAIN', branchPath: 'MAIN' });
 
                             // if (this.urlParamsService.getBranchParam()) {
                             //     this.branchingService.setBranchPath(this.urlParamsService.getBranchParam());
@@ -232,6 +254,86 @@ export class AppComponent implements OnInit {
         this.terminologyService.getAttributes(this.branchingService.getLatestReleaseBranchPath()).subscribe(data => {
             this.attributeService.setLatestReleaseAttributes(data);
         });
+    }
+
+
+    private restoreFromUrl(params: any): void {
+
+        if (this.deepLinkRestored) {
+            return;
+        }
+
+        const domainId = params['domain'];
+        const attributeId = params['attribute'];
+        const rangeId = params['range'];
+
+        if (!domainId) {
+            this.finishRestore();
+            return;
+        }
+
+        this.urlParamsService.startRestore();
+
+        const domain = this.getCurrentDomains()?.items?.find(
+            d => d.referencedComponentId === domainId
+        );
+
+        if (!domain) {
+
+            this.finishRestore();
+            return;
+        }
+
+        this.domainService.setActiveDomain(domain);
+
+        if (attributeId) {
+            this.attributeService.getAttributes()
+                .pipe(
+                    filter(a => !!a?.items?.length),
+                    take(1)
+                )
+                .subscribe(attributes => {
+                    const attr = attributes.items.find(
+                        a => a.referencedComponentId === attributeId
+                    );
+
+                    if (attr) {
+                        this.attributeService.setActiveAttribute(attr);
+                    }
+
+                    if (rangeId) {
+                        this.rangeService.getRanges()
+                            .pipe(
+                                filter(r => !!r?.items?.length),
+                                take(1)
+                            )
+                            .subscribe(ranges => {
+                                const range = ranges.items.find(
+                                    r => r.referencedComponentId === rangeId
+                                );
+
+                                if (range) {
+                                    this.rangeService.setActiveRange(range);
+                                }
+
+                                this.finishRestore();
+                            });
+                    } else {
+                        this.finishRestore();
+                    }
+                });
+        } else {
+            this.finishRestore();
+        }
+    }
+
+    private finishRestore(): void {
+        this.deepLinkRestored = true;
+        this.urlParamsService.endRestore();
+    }
+
+    private getCurrentDomains() {
+        return this.currentDomains;
     }
 
     assignFavicon() {
