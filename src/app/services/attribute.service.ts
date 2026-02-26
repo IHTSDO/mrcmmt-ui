@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable, Subject, Subscription} from 'rxjs';
+import { Observable, ReplaySubject, Subscription } from 'rxjs';
 import { AdditionalFields, RefSet } from '../models/refset';
 import { Hierarchy } from '../models/hierarchy';
 import {DomainService} from './domain.service';
@@ -13,14 +13,16 @@ export class AttributeService {
         this.extensionModuleIdSubscription = this.domainService.getExtensionModuleId().subscribe(data => this.extensionModuleId = data);
     }
 
-    private attributes = new Subject<any>();
-    private activeAttribute = new Subject<any>();
-    private matchedDomains = new Subject<any>();
-    private attributeFilter = new Subject<any>();
+    private attributes = new ReplaySubject<any>(1);
+    private activeAttribute = new ReplaySubject<any>(1);
+    private matchedDomains = new ReplaySubject<any>(1);
+    private attributeFilter = new ReplaySubject<any>(1);
     private latestReleaseAttributes: RefSet[];
-    private latestReleaseActiveAttribute = new Subject<any>();
-    private attributeHierarchy = new Subject<any>();
-    private attributesWithConcreteDomains = new Subject<any>();
+    private latestReleaseActiveAttribute = new ReplaySubject<any>(1);
+    private attributeHierarchy = new ReplaySubject<any>(1);
+    private attributeHierarchyData: any;
+    private attributesWithConcreteDomains = new ReplaySubject<any>(1);
+    private attributesWithConcreteDomainsData: any[];
 
     private extensionModuleId: string;
     private extensionModuleIdSubscription: Subscription;
@@ -88,20 +90,22 @@ export class AttributeService {
 
     // Setters & Getters: Attribute Hierarchy
     setAttributeHierarchy(attributes) {
-        this.attributeHierarchy = attributes;
+        this.attributeHierarchyData = attributes;
+        this.attributeHierarchy.next(attributes);
     }
 
     getAttributeHierarchy() {
-        return this.attributeHierarchy;
+        return this.attributeHierarchyData;
     }
 
     // Setters & Getters: Attributes with Concrete Domains
     setAttributesWithConcreteDomains(attributes) {
-        this.attributesWithConcreteDomains = attributes;
+        this.attributesWithConcreteDomainsData = attributes;
+        this.attributesWithConcreteDomains.next(attributes);
     }
 
     getAttributesWithConcreteDomains() {
-        return this.attributesWithConcreteDomains;
+        return this.attributesWithConcreteDomainsData;
     }
 
     // New Attribute

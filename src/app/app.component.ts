@@ -299,25 +299,29 @@ export class AppComponent implements OnInit {
 
                     if (attr) {
                         this.attributeService.setActiveAttribute(attr);
-                    }
 
-                    if (rangeId) {
-                        this.rangeService.getRanges()
-                            .pipe(
-                                filter(r => !!r?.items?.length),
-                                take(1)
-                            )
-                            .subscribe(ranges => {
-                                const range = ranges.items.find(
-                                    r => r.referencedComponentId === rangeId
-                                );
+                        
+                        this.mrcmmtService.setupRanges(attr);
 
-                                if (range) {
-                                    this.rangeService.setActiveRange(range);
-                                }
+                        if (rangeId) {
+                            this.rangeService.getRanges()
+                                .pipe(
+                                    filter(r => !!r?.items?.length),
+                                    take(1)
+                                )
+                                .subscribe(ranges => {
+                                    const range = ranges.items.find(
+                                        r => r.referencedComponentId === rangeId || r.additionalFields?.contentTypeId === rangeId
+                                    );
 
-                                this.finishRestore();
-                            });
+                                    if (range) {
+                                        this.rangeService.setActiveRange(range);
+                                    } 
+                                    this.finishRestore();
+                                });
+                        } else {
+                            this.finishRestore();
+                        }
                     } else {
                         this.finishRestore();
                     }

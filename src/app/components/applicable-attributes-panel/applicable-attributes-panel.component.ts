@@ -62,6 +62,7 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     changeLogSubscription: Subscription;
     activeBranch: any;
     activeBranchSubscription: Subscription;
+    rangeFetchSubscription: Subscription;
 
     // typeahead
     shortFormConcept: string;
@@ -116,6 +117,9 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
         this.matchedDomainsSubscription.unsubscribe();
         this.editSubscription.unsubscribe();
         this.changeLogSubscription.unsubscribe();
+        if (this.rangeFetchSubscription) {
+            this.rangeFetchSubscription.unsubscribe();
+        }
     }
 
     makeActiveAttribute(attribute, reverse?) {
@@ -182,10 +186,17 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
     }
 
     setRange() {
-        this.rangeService.setRanges(new SnomedResponseObject());
+        if (this.rangeFetchSubscription) {
+            this.rangeFetchSubscription.unsubscribe();
+        }
 
         if (this.activeAttribute.referencedComponentId) {
-            this.terminologyService.getRanges(this.activeAttribute.referencedComponentId).subscribe(data => {
+            const currentAttributeId = this.activeAttribute.referencedComponentId;
+            this.rangeFetchSubscription = this.terminologyService.getRanges(currentAttributeId).subscribe(data => {
+                if (this.activeAttribute.referencedComponentId !== currentAttributeId) {
+                    return;
+                }
+
                 data.items.forEach(item => {
                     if (item.additionalFields.rangeConstraint.startsWith('dec')
                         || item.additionalFields.rangeConstraint.startsWith('int')
@@ -194,23 +205,32 @@ export class ApplicableAttributesPanelComponent implements OnDestroy {
                     }
                 });
 
-                const ranges: SnomedResponseObject = {items: data.items, total: data.total, errorMessage: null};
-
-//                ranges.items = ranges.items.concat(this.changeLog.filter(item => {
-//                    return this.activeAttribute.referencedComponentId === item.referencedComponentId;
-//                }));
+                const ranges: SnomedResponseObject = { items: data.items, total: data.total, errorMessage: null };
 
                 ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
                 this.rangeService.setRanges(ranges);
 
-                this.terminologyService.getRanges(this.activeAttribute.referencedComponentId,
-                    this.branchingService.getLatestReleaseBranchPath()).subscribe(response => {
-                    this.rangeService.setLatestReleaseActiveRange(response.items.find(item => {
-                        return item.referencedComponentId === ranges.items[0].referencedComponentId;
-                    }));
+                if (ranges.items.length > 0) {
+                    this.rangeService.setActiveRange(ranges.items[0]);
+                } else {
+                    this.rangeService.setActiveRange(null);
+                }
 
-                    this.setActives(this.activeDomain, this.activeAttribute, ranges.items[0]);
-                });
+                this.terminologyService.getRanges(currentAttributeId,
+                    this.branchingService.getLatestReleaseBranchPath()).subscribe(response => {
+                        if (this.activeAttribute.referencedComponentId !== currentAttributeId) {
+                            return;
+                        }
+
+                        this.rangeService.setLatestReleaseActiveRange(response.items.find(item => {
+                            if (ranges.items.length > 0) {
+                                return item.referencedComponentId === ranges.items[0].referencedComponentId;
+                            }
+                            return false;
+                        }));
+
+                        this.setActives(this.activeDomain, this.activeAttribute, ranges.items[0]);
+                    });
             });
         }
     }

@@ -58,13 +58,6 @@ export class MrcmmtService {
     setupDomains() {
         this.terminologyService.getDomains().subscribe(domains => {
             this.domainService.setDomains(domains);
-
-            if (this.urlParamsService.getDomainParam()) {
-                const activeDomain = domains.items.find(result => {
-                    return result.referencedComponentId === this.urlParamsService.getDomainParam();
-                });
-                this.domainService.setActiveDomain(activeDomain);
-            }
         });
         this.setupAttributes();
     }
@@ -74,35 +67,23 @@ export class MrcmmtService {
             attributes = this.buildAttributeHierarchy(attributes);
             this.addConcreteDomainParameters();
             this.attributeService.setAttributes(attributes);
-            if (this.urlParamsService.getAttributeParam()) {
-                const activeAttribute = attributes.items.find(result => {
-                    return result.referencedComponentId === this.urlParamsService.getAttributeParam();
-                });
-                this.attributeService.setActiveAttribute(activeAttribute);
-                this.setupRanges(activeAttribute);
-            }
         });
     }
 
     setupRanges(activeAttribute) {
-        if (this.urlParamsService.getRangeParam()) {
-            this.terminologyService.getRanges(activeAttribute.referencedComponentId).subscribe(ranges => {
-                ranges.items.forEach(item => {
-                    if (item.additionalFields.rangeConstraint.startsWith('dec')
-                        || item.additionalFields.rangeConstraint.startsWith('int')
-                        || item.additionalFields.rangeConstraint.startsWith('str')) {
-                        this.rangeConstraintToConcreteDomainParameters(item);
-                    }
-                });
-                ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
-                this.rangeService.setRanges(ranges);
-
-                const activeRange = ranges.items.find(result => {
-                    return result.additionalFields.contentTypeId === this.urlParamsService.getRangeParam();
-                });
-                this.rangeService.setActiveRange(activeRange);
+        this.rangeService.clearRanges();
+        this.rangeService.clearActiveRange();
+        this.terminologyService.getRanges(activeAttribute.referencedComponentId).subscribe(ranges => {
+            ranges.items.forEach(item => {
+                if (item.additionalFields.rangeConstraint.startsWith('dec')
+                    || item.additionalFields.rangeConstraint.startsWith('int')
+                    || item.additionalFields.rangeConstraint.startsWith('str')) {
+                    this.rangeConstraintToConcreteDomainParameters(item);
+                }
             });
-        }
+            ranges.items = this.customOrder.transform(ranges.items, ['723596005', '723594008', '723593002', '723595009']);
+            this.rangeService.setRanges(ranges);
+        });
     }
 
     addConcreteDomainParameters() {

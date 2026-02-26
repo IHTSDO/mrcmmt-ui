@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subscription } from 'rxjs';
 import { RefSet } from '../models/refset';
 import { AdditionalFields } from '../models/refset';
 import { HttpClient } from '@angular/common/http';
@@ -12,9 +12,9 @@ export class DomainService {
 
     private extensionModuleId = new BehaviorSubject<any>('900000000000012004');
     internationalModuleIds: any[];
-    private domains = new Subject<any>();
-    private activeDomain = new Subject<any>();
-    private domainFilter = new Subject<any>();
+    private domains = new ReplaySubject<any>(1);
+    private activeDomain = new ReplaySubject<any>(1);
+    private domainFilter = new ReplaySubject<any>(1);
     private latestReleaseDomains: RefSet[];
 
     private _extensionModuleId: string;
