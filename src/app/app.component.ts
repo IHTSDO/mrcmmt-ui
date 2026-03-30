@@ -220,7 +220,7 @@ export class AppComponent implements OnInit {
                             //     this.branchingService.setBranchPath(projects[0]['branchPath']);
                             // }
 
-                            if (user.roles.includes('ROLE_mrcm-author')) {
+                            if (user.roles.includes('ROLE_ap-mrcm-author')) {
                                 this.editService.setEditor(true);
                             } else {
                                 this.editService.setEditor(false);
